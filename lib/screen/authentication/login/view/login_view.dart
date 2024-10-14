@@ -115,6 +115,11 @@ class LoginView extends StatelessWidget {
                     CommonButtonWidget(
                       top: twenty,
                       onPressed: () {
+
+                        pushNamedAndRemoveUntil(
+                            context: context,
+                            routeName: RouteName.dashboardScreen);
+
                         // provider.login(context);
                       },
                       text: continueBtn,

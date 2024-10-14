@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/image/image_path.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../app_constants.dart';
@@ -72,11 +75,10 @@ commonTextFiledView(
   );
 }
 
-
 commonDivider() {
   return Divider(
     thickness: 0.3,
-    color:colorGreen,
+    color: colorGreen,
   );
 }
 
@@ -93,16 +95,26 @@ Widget commonInkWell({
 }
 
 AppBar commonAppBar(
-    {String? title, Color? color, List<Widget>? actions, Color? colorText}) {
+    {String? title,
+    Color? color,
+    List<Widget>? actions,
+    Color? colorText,
+    Widget? leading,
+    double? leadingWidth,
+    PreferredSizeWidget? bottom}) {
   return AppBar(
-    backgroundColor: color ?? colorWhite,
-    centerTitle: false,
+    leadingWidth: leadingWidth,
+    backgroundColor: color ?? colorGreen,
+    centerTitle: true,
+    bottom: bottom,
+    leading: leading,
+    iconTheme: const IconThemeData(color: Colors.white),
     actions: actions,
     title: CommonTextWidget(
       text: title,
       fontSize: sixteen,
       fontWeight: FontWeight.w500,
-      textColor: Colors.black,
+      textColor: colorText ?? Colors.white,
     ),
   );
 }
@@ -183,5 +195,36 @@ Widget showLoaderList() {
           color: Colors.white,
           animating: true,
         )),
+  );
+}
+
+Widget commonImageNetworkWidget(
+    {String? path,
+    double? width,
+    double? height,
+    Alignment? alignment,
+    bool? isNotification = false,
+    bool? isCircle = true,
+    Color? iconColor,
+    BoxFit? boxFit}) {
+  return Center(
+    child: ClipOval(
+      clipBehavior: isCircle == false ? Clip.none : Clip.antiAliasWithSaveLayer,
+      child: CachedNetworkImage(
+        cacheManager: CacheManager(Config(
+          "fluttercampus",
+          stalePeriod: const Duration(days: 7),
+
+//one week cache period
+        )),
+        imageUrl: path??'',
+        width: width,
+        height: height,
+        placeholder: (context, url) => showLoaderList(),
+        errorWidget: (context, url, error) => Image.asset(icLoginLogo),
+        color: iconColor,
+        fit: boxFit ?? BoxFit.cover,
+      ),
+    ),
   );
 }
