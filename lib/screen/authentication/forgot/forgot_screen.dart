@@ -8,7 +8,7 @@ import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../core/common/commons_screen_container.dart';
+import '../../../core/common/app_scaffold.dart';
 
 
 class ForgotScreen extends StatelessWidget {
@@ -17,57 +17,54 @@ class ForgotScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
-    return Scaffold(
-      backgroundColor: Colors.white,
+    return AppScaffold(
+
       appBar: commonAppBar(title: forgotPasswordText),
-      body: CommonsScreenContainer(
+      child: ListView(
+        children: [
+          SizedBox(height: size.height*0.05,),
 
-        child: ListView(
-          children: [
-            SizedBox(height: size.height*0.05,),
-
-            Align(
-                alignment: Alignment.center,
-                child: CommonTextWidget(
-                  text: "Forgot Password",
-                  textStyle: GoogleFonts.agbalumo(
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                    fontSize: 25,
-                  ),
-
-                  top: 15,
-
-                )),
-            const SizedBox(height: 20,),
-            setAssetImage(image: icLoginLogo,width: 200,height: 180,  fit:BoxFit.scaleDown),
-
-
-            Align(
+          Align(
               alignment: Alignment.center,
               child: CommonTextWidget(
-                top: size.height * zero002,
-                textColor: Colors.black,
-                text: forgotPasswordTextDesc,
-              ),
-            ),
-            commonTextFiledView(
-                title: yourEmail,
-                hint: enterYourEmail,
-                topText: size.height * 0.04,
-                topTextField: ten),
-            CommonButtonWidget(
-              onPressed: () {
-                pushScreen(
-                    context: context,
-                    routeName: RouteName.forgotPasswordOptView);
+                text: "Forgot Password",
+                textStyle: GoogleFonts.agbalumo(
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
+                  fontSize: 25,
+                ),
 
-              },
-              top: size.height * zero004,
-              text: resetPassword,
+                top: 15,
+
+              )),
+          const SizedBox(height: 20,),
+          setAssetImage(image: icLoginLogo,width: 200,height: 180,  fit:BoxFit.scaleDown),
+
+
+          Align(
+            alignment: Alignment.center,
+            child: CommonTextWidget(
+              top: size.height * zero002,
+              textColor: Colors.black,
+              text: forgotPasswordTextDesc,
             ),
-          ],
-        ),
+          ),
+          commonTextFiledView(
+              title: yourEmail,
+              hint: enterYourEmail,
+              topText: size.height * 0.04,
+              topTextField: ten),
+          CommonButtonWidget(
+            onPressed: () {
+              pushScreen(
+                  context: context,
+                  routeName: RouteName.forgotPasswordOptView);
+
+            },
+            top: size.height * zero004,
+            text: resetPassword,
+          ),
+        ],
       ),
     );
   }

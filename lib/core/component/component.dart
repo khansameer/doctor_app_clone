@@ -93,16 +93,21 @@ Widget commonInkWell({
 }
 
 AppBar commonAppBar(
-    {String? title, Color? color, List<Widget>? actions, Color? colorText}) {
+    {String? title, Color? color, List<Widget>? actions, Color? colorText,Widget ?leading,double? leadingWidth}) {
   return AppBar(
-    backgroundColor: color ?? colorWhite,
-    centerTitle: false,
+    leadingWidth: leadingWidth,
+    backgroundColor: color ?? colorGreen,
+    centerTitle: true,
+    leading: leading,
+    iconTheme: IconThemeData(
+      color: Colors.white
+    ),
     actions: actions,
     title: CommonTextWidget(
       text: title,
       fontSize: sixteen,
       fontWeight: FontWeight.w500,
-      textColor: Colors.black,
+      textColor: colorText??Colors.white,
     ),
   );
 }

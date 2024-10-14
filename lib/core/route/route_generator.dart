@@ -4,6 +4,9 @@ import 'package:doctor_app/screen/authentication/forgot/forgot_password_reset_vi
 import 'package:doctor_app/screen/authentication/forgot/forgot_screen.dart';
 import 'package:doctor_app/screen/authentication/login/login_screen.dart';
 import 'package:doctor_app/screen/authentication/login/view/signup_view.dart';
+import 'package:doctor_app/screen/dashboard/dashboard_screen.dart';
+import 'package:doctor_app/screen/dashboard/notification/notificatio_screen.dart';
+import 'package:doctor_app/screen/dashboard/setting/setting_screen.dart';
 import 'package:doctor_app/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -40,6 +43,21 @@ class RouteGenerator {
             builder: (_) => const ForgotPasswordResetView(),
             settings:
                 const RouteSettings(name: RouteName.forgotPasswordResetView));
+      case RouteName.dashboardScreen:
+        return MaterialPageRoute(
+            builder: (_) => const DashboardScreen(),
+            settings:
+            const RouteSettings(name: RouteName.dashboardScreen));
+      case RouteName.notificationScreen:
+        return MaterialPageRoute(
+            builder: (_) => const NotificationScreen(),
+            settings:
+            const RouteSettings(name: RouteName.notificationScreen));
+      case RouteName.settingScreen:
+        return MaterialPageRoute(
+            builder: (_) => const SettingScreen(),
+            settings:
+            const RouteSettings(name: RouteName.settingScreen));
 
 
 
