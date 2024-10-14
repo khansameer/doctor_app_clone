@@ -21,7 +21,7 @@ class NotificationScreen extends StatelessWidget {
           title: "Notification".toUpperCase()),
       child: Consumer<DashboardProvider>(
         builder: (context,provider,child) {
-          return Container(
+          return SizedBox(
           width: size.width,
             height: size.height,
             child: ListView.builder(

@@ -1,9 +1,11 @@
 class DummyModel
 {
 String ?date;
+String ?content;
+String ?icon;
 List<SubItem> items;
 
-DummyModel({required this.items,this.date});
+DummyModel({required this.items,this.date,this.icon,this.content});
 }
 
 class SubItem{

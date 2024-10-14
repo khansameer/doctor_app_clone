@@ -19,7 +19,7 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-  WidgetsBinding.instance.addPostFrameCallback((_) {
+ WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<AuthProviders>().redirectToLogin(context: context);
     });
   }
@@ -41,8 +41,8 @@ class SplashScreenState extends State<SplashScreen> {
           child: Container(
             width: size.width,
             height: size.height,
-            color: Colors.white.withOpacity(0.40),
-            child: Center(child:CommonTextWidget(text: "Doctor App",fontWeight: FontWeight.w700,
+            color: colorGreen.withOpacity(0.40),
+            child: Center(child:CommonTextWidget(text: "",fontWeight: FontWeight.w700,
 fontSize: 30,
             textColor: colorGreen,
             ),),

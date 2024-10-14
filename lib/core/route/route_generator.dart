@@ -5,10 +5,15 @@ import 'package:doctor_app/screen/authentication/forgot/forgot_screen.dart';
 import 'package:doctor_app/screen/authentication/login/login_screen.dart';
 import 'package:doctor_app/screen/authentication/login/view/signup_view.dart';
 import 'package:doctor_app/screen/dashboard/dashboard_screen.dart';
+import 'package:doctor_app/screen/dashboard/health_feed/health_feed_screen.dart';
 import 'package:doctor_app/screen/dashboard/notification/notificatio_screen.dart';
+import 'package:doctor_app/screen/dashboard/paitent_screen/patients_screen.dart';
+import 'package:doctor_app/screen/dashboard/profile/profile_screen.dart';
 import 'package:doctor_app/screen/dashboard/setting/setting_screen.dart';
 import 'package:doctor_app/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../../screen/dashboard/report_and_issue/report_and_issue_screen.dart';
 
 
 class RouteGenerator {
@@ -60,6 +65,29 @@ class RouteGenerator {
             const RouteSettings(name: RouteName.settingScreen));
 
 
+      case RouteName.reportAndIssueScreen:
+        return MaterialPageRoute(
+            builder: (_) => const ReportAndIssueScreen(),
+            settings:
+            const RouteSettings(name: RouteName.reportAndIssueScreen));
+
+      case RouteName.healthFeedScreen:
+        return MaterialPageRoute(
+            builder: (_) => const HealthFeedScreen(),
+            settings:
+            const RouteSettings(name: RouteName.healthFeedScreen));
+
+      case RouteName.profileScreen:
+        return MaterialPageRoute(
+            builder: (_) => const ProfileScreen(),
+            settings:
+            const RouteSettings(name: RouteName.profileScreen));
+
+      case RouteName.patientsScreen:
+        return MaterialPageRoute(
+            builder: (_) => const PatientsScreen(),
+            settings:
+            const RouteSettings(name: RouteName.patientsScreen));
 
       default:
         return MaterialPageRoute(

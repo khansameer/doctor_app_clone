@@ -94,10 +94,6 @@ class SettingScreen extends StatelessWidget {
         ),
         subtitle: subTitle,
 
-/*        subtitle: isShowSubTitle?CommonTextWidget(
-          text: "Last synced - 4 minutes ago",
-          textColor: Colors.black.withOpacity(0.80),
-        ):const SizedBox.shrink(),*/
       ),
     );
   }
