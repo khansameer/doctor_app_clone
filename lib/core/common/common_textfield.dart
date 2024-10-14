@@ -147,13 +147,13 @@ class CommonTextField extends StatelessWidget {
                 gapPadding: ten,
                 borderSide: BorderSide(
                   width: 1,
-                  color: borderColor ?? colorFillBg,
+                  color: borderColor ?? colorGreen,
                 ),
                 borderRadius:
                     BorderRadius.all(Radius.circular(radius ?? eight))),
             enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: colorFillBg,
+                borderSide:  BorderSide(
+                  color: colorGreen.withOpacity(0.20),
                   width: 1,
                 ),
                 borderRadius:
@@ -162,7 +162,7 @@ class CommonTextField extends StatelessWidget {
                 gapPadding: ten,
                 borderSide: BorderSide(
                   width: 1,
-                  color: borderColor ?? colorFillBg,
+                  color: borderColor ?? colorGreen,
                 ),
                 borderRadius:
                     BorderRadius.all(Radius.circular(radius ?? eight)))),

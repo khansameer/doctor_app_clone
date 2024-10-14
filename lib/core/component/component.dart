@@ -76,7 +76,7 @@ commonTextFiledView(
 commonDivider() {
   return Divider(
     thickness: 0.3,
-    color: Colors.grey,
+    color:colorGreen,
   );
 }
 
