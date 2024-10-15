@@ -9,35 +9,32 @@ class PatientsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size=MediaQuery.sizeOf(context);
+    var size = MediaQuery.sizeOf(context);
     final Map<String, List<String>> groupedItems = {
       '2': [
         '2 pts pen',
-
       ],
       '3': [
         '333 Ashish Sharma',
-
       ],
       '5': [
         '5635',
-
       ],
     };
 
     return AppScaffold(
         right: 0,
         left: 0,
-       color: Colors.white,
-       // color: const Color.fromRGBO(252, 252, 254, 1),
+        color: Colors.white,
+        // color: const Color.fromRGBO(252, 252, 254, 1),
         appBar: commonAppBar(
-          title:"Patients".toUpperCase() ,
+          title: "Patients".toUpperCase(),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 alignment: Alignment.centerLeft,
                 color: const Color.fromRGBO(252, 252, 254, 1),
                 child: Row(
@@ -77,27 +74,39 @@ class PatientsScreen extends StatelessWidget {
                         color: colorGreen.withOpacity(0.10),
                         padding: const EdgeInsets.all(12.0),
                         child: CommonTextWidget(
-                         text:  group,
+                          text: group,
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
-        
                         ),
                       ),
                       ...items.map((item) {
                         return ListTile(
-
-                          trailing: Icon(Icons.more_horiz,color: Colors.grey,),
+                          trailing: Icon(
+                            Icons.more_horiz,
+                            color: Colors.grey,
+                          ),
                           leading: Container(
                               height: 50,
                               width: 50,
                               decoration: commonBoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.grey.withOpacity(0.20),
-                                border: Border.all(color: Colors.grey,width: 1)
-                              ),
-                              child: Icon(Icons.person,color: colorGray,)),
-                          title: CommonTextWidget(text: item,fontWeight: FontWeight.w600,fontSize: 14,),
-                          subtitle: CommonTextWidget(text: item,fontWeight: FontWeight.w400,fontSize: 12,),
+                                  shape: BoxShape.circle,
+                                  color: Colors.grey.withOpacity(0.20),
+                                  border:
+                                      Border.all(color: Colors.grey, width: 1)),
+                              child: Icon(
+                                Icons.person,
+                                color: colorGray,
+                              )),
+                          title: CommonTextWidget(
+                            text: item,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
+                          subtitle: CommonTextWidget(
+                            text: item,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 12,
+                          ),
                         );
                       }),
                     ],
