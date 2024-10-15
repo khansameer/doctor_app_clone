@@ -23,54 +23,6 @@ class DashboardScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-
-        backgroundColor: Colors.white,
-        appBar: commonAppBar(
-            leadingWidth: 200,
-            bottom: TabBar(
-              unselectedLabelColor: Colors.white.withOpacity(0.80),
-              indicatorColor: Colors.white,
-              dividerColor: Colors.white,
-              labelColor: Colors.white,
-              tabs: const [
-                Tab(
-                  // icon: Icon(Icons.chat_bubble),
-                  text: "App",
-                ),
-                Tab(
-                  text: "Summary",
-                ),
-              ],
-            ),
-            leading: SizedBox(
-              width: 200,
-              height: 56,
-              child: Center(
-                  child: CommonTextWidget(
-                fontWeight: FontWeight.w700,
-                text: "Logo here",
-                textColor: Colors.white,
-              )),
-            ),
-            color: colorGreen,
-            actions: [
-              commonIcon(onTap: () {
-                pushScreen(
-                    context: context, routeName: RouteName.settingScreen);
-              }),
-              commonIcon(
-                  icon: Icons.question_mark_outlined,
-                  onTap: () {
-                    pushScreen(
-                        context: context,
-                        routeName: RouteName.reportAndIssueScreen);
-                  }),
-              commonInkWell(
-                onTap: () {
-                  pushScreen(
-                      context: context,
-                      routeName: RouteName.notificationScreen);
-                },
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor:Colors.white,
         elevation: 2,
@@ -88,6 +40,8 @@ class DashboardScreen extends StatelessWidget {
           BottomNavigationBarItem(icon: Icon(Icons.mark_unread_chat_alt), label: 'Chat'),
         ],
       ),
+        backgroundColor: Colors.white,
+
       appBar:_appBarView(context),
       body: screens[provider.selectedIndex],
     );
@@ -139,20 +93,6 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     )
                   ],
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              )
-            ]),
-        body: const TabBarView(
-          children: [
-            AppListView(),
-            SummaryViewScreen(),
-          ],
-        ),
-      ),
-    );
                 ))
           ],
         ),
@@ -162,5 +102,6 @@ class DashboardScreen extends StatelessWidget {
       )
     ]);
   }
+
 
 }
