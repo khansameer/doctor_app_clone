@@ -12,27 +12,29 @@ class AppListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      return ListView(
         children: [
-          commonGridView(list: provider.appList),
-          const Divider(),
-          CommonTextWidget(
-            text: "Ray",
-            left: 20,
-            fontWeight: FontWeight.w500,
-            fontSize: 18,
-            marginBottom: 10,
-            top: 10,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              commonGridView(list: provider.appList),
+              const Divider(),
+              CommonTextWidget(
+                text: "Ray",
+                left: 20,
+                fontWeight: FontWeight.w500,
+                fontSize: 18,
+                marginBottom: 10,
+                top: 10,
+              ),
+              commonGridView(list: provider.rayList)
+            ],
           ),
-          commonGridView(list: provider.rayList)
         ],
       );
     });
-
   }
 
   commonGridView({required List<DummyModel> list}) {
@@ -58,7 +60,7 @@ class AppListView extends StatelessWidget {
             if (list[index].date == "Patient") {
               pushScreen(context: context, routeName: RouteName.patientsScreen);
             }
-            if(list[index].date=="Calender"){
+            if (list[index].date == "Calender") {
               pushScreen(context: context, routeName: RouteName.calenderScreen);
             }
 
@@ -66,11 +68,11 @@ class AppListView extends StatelessWidget {
           },
           child: Container(
             margin: const EdgeInsets.only(top: ten, left: ten, right: ten),
-              decoration: commonBoxDecoration(
-
+            decoration: commonBoxDecoration(
               color: Colors.white,
-              border: Border.all(color: Colors.grey.withOpacity(0.50),width: 1),
-           
+              border:
+                  Border.all(color: Colors.grey.withOpacity(0.50), width: 1),
+
               borderRadius: BorderRadius.circular(12), //border corner radius
             ),
             child: Column(

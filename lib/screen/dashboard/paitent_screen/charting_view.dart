@@ -6,41 +6,90 @@ class ChartingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 5,
-      itemBuilder: (ctx, index) => Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border(
-            bottom: BorderSide(
-              color: Colors.grey.withOpacity(0.40),
-              width: 0.5,
+    final Map<String, List<Map<String, String>>> groupedItems = {
+      'Wednesday, 08 March 2024': [
+        {
+          'id': 'dr1',
+          'name': 'Dr Niraj Shopada',
+          'status': 'Appointment',
+          'time': '07:00 PM - 07:15 PM'
+        },
+        {
+          'id': 'dr2',
+          'name': 'Dr Prashant Patel',
+          'status': 'Appointment',
+          'time': '07:00 PM - 07:15 PM'
+        },
+      ],
+      'Thursday, 09 March 2024': [
+        {
+          'id': 'dr1',
+          'name': 'Dr Niraj Shopada',
+          'status': 'Appointment',
+          'time': '07:00 PM - 07:15 PM'
+        },
+        {
+          'id': 'dr2',
+          'name': 'Dr Prashant Patel',
+          'status': 'Appointment',
+          'time': '07:00 PM - 07:15 PM'
+        },
+      ],
+    };
+
+    return ListView(
+      children: groupedItems.entries.map((entry) {
+        return Container(
+          margin: const EdgeInsets.symmetric(vertical: 0.0),
+          child: Theme(
+            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+            child: ExpansionTile(
+              initiallyExpanded: true,
+              trailing: const SizedBox.shrink(),
+              title: CommonTextWidget(
+                text: entry.key,
+                fontSize: 15,
+                fontWeight: FontWeight.w400,
+                textColor: Colors.black.withOpacity(0.8),
+              ),
+              children: entry.value.map((item) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.grey.withOpacity(0.40),
+                        width: 0.5,
+                      ),
+                    ),
+                  ),
+                  child: ListTile(
+                      title: CommonTextWidget(
+                        text: item['status'] ?? '',
+                        textColor: Colors.grey.shade600,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        marginBottom: 8,
+                      ),
+                      subtitle: Row(
+                        children: [
+                          const Icon(
+                            Icons.circle_rounded,
+                            color: Colors.green,
+                            size: 12,
+                          ),
+                          CommonTextWidget(
+                            text: '${item['name'] ?? ''} ${item['time'] ?? ''}',
+                            left: 8,
+                          )
+                        ],
+                      )),
+                );
+              }).toList(),
             ),
           ),
-        ),
-        child: ListTile(
-          title: CommonTextWidget(
-            text: 'Appointment',
-            fontWeight: FontWeight.w400,
-            fontSize: 13,
-            textColor: Colors.grey,
-            marginBottom: 8,
-          ),
-          subtitle: Row(
-            children: [
-              const Icon(
-                Icons.circle_rounded,
-                color: Colors.green,
-                size: 12,
-              ),
-              CommonTextWidget(
-                text: 'Dr Bhavesh Gohil, 07:00 PM - 07:15 PM',
-                left: 10,
-              )
-            ],
-          ),
-        ),
-      ),
+        );
+      }).toList(),
     );
   }
 }
