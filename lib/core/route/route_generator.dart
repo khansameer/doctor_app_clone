@@ -6,12 +6,14 @@ import 'package:doctor_app/screen/authentication/login/login_screen.dart';
 import 'package:doctor_app/screen/authentication/login/view/signup_view.dart';
 import 'package:doctor_app/screen/dashboard/calender/calender_screen.dart';
 import 'package:doctor_app/screen/dashboard/chat_screen/chat_screen.dart';
+import 'package:doctor_app/screen/dashboard/consult/consult_screen.dart';
 import 'package:doctor_app/screen/dashboard/dashboard_screen.dart';
 import 'package:doctor_app/screen/dashboard/health_feed/health_feed_screen.dart';
 import 'package:doctor_app/screen/dashboard/notification/notificatio_screen.dart';
 import 'package:doctor_app/screen/dashboard/paitent_screen/patient_information_screen.dart';
 import 'package:doctor_app/screen/dashboard/paitent_screen/patients_screen.dart';
 import 'package:doctor_app/screen/dashboard/profile/profile_screen.dart';
+import 'package:doctor_app/screen/dashboard/report/report_screen.dart';
 import 'package:doctor_app/screen/dashboard/setting/setting_screen.dart';
 import 'package:doctor_app/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -97,6 +99,16 @@ class RouteGenerator {
             builder: (_) => const ChatScreen(),
             settings:
             const RouteSettings(name: RouteName.chatScreen));
+      case RouteName.consultScreen:
+        return MaterialPageRoute(
+            builder: (_) => const ConsultScreen(),
+            settings:
+            const RouteSettings(name: RouteName.consultScreen));
+      case RouteName.reportScreen:
+        return MaterialPageRoute(
+            builder: (_) => const ReportScreen(),
+            settings:
+            const RouteSettings(name: RouteName.reportScreen));
       default:
         return MaterialPageRoute(
             builder: (_) =>

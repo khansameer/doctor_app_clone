@@ -61,6 +61,12 @@ class AppListView extends StatelessWidget {
             if(list[index].date=="Calender"){
               pushScreen(context: context, routeName: RouteName.calenderScreen);
             }
+            if(list[index].date=="Consult"){
+              pushScreen(context: context, routeName: RouteName.consultScreen);
+            }
+            if(list[index].date=="Report"){
+              pushScreen(context: context, routeName: RouteName.reportScreen);
+            }
 
             print('=============list${list[index].date}');
           },

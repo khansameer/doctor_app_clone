@@ -13,68 +13,83 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size=MediaQuery.sizeOf(context);
+    var size = MediaQuery.sizeOf(context);
     return AppScaffold(
-      
       left: 0,
       right: 0,
       appBar: commonAppBar(title: "PROFILE"),
-      child: Consumer<DashboardProvider>(
-        builder: (context,provider,child) {
-          return Container(
-            width: size.width,
-            height: size.height,
-            color: colorGreen.withOpacity(0.10),
-            child: ListView(
-              children: [
-
-                _topView(),
-                const SizedBox(height: 10,),
-                _profileView(),
-                const SizedBox(height: 10,),
-                _addClinic(provider: provider),
-                const SizedBox(height: 10,),
-                _helpView(),
-                const SizedBox(height: 20,),
-              ],
-            ),
-          );
-        }
-      ),
+      child: Consumer<DashboardProvider>(builder: (context, provider, child) {
+        return Container(
+          width: size.width,
+          height: size.height,
+          color: colorGreen.withOpacity(0.10),
+          child: ListView(
+            children: [
+              _topView(),
+              const SizedBox(
+                height: 10,
+              ),
+              _profileView(),
+              const SizedBox(
+                height: 10,
+              ),
+              _addClinic(provider: provider),
+              const SizedBox(
+                height: 10,
+              ),
+              _helpView(),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 
-  _topView(){
+  _topView() {
     return Container(
       color: Colors.white,
       child: Container(
         margin: const EdgeInsets.all(10),
-
         decoration: commonBoxDecoration(
             color: Colors.green.withOpacity(0.15),
-            borderRadius: BorderRadius.circular(8)
-        ),
+            borderRadius: BorderRadius.circular(8)),
         padding: const EdgeInsets.all(20),
-        child: Column(children: [
-
-          Row(
-            children: [
-              const Icon(Icons.check_circle_outline,color: Colors.green,),
-              CommonTextWidget(text: "Your profile is live on Practo!",textColor: Colors.green,fontWeight: FontWeight.w800,)
-            ],
-          ),
-          CommonTextWidget(
-            top: 10,
-            text: "Congratulations! Welcome to Practo family. Click below to check out your profile live on Practo.com",),
-          CommonButtonWidget(
-            top: 10,
-            text: "View live profile",colorButton: Colors.green,)
-        ],),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                const Icon(
+                  Icons.check_circle_outline,
+                  color: Colors.green,
+                ),
+                CommonTextWidget(
+                  text: "Your profile is live on Practo!",
+                  textColor: Colors.green,
+                  fontWeight: FontWeight.w800,
+                )
+              ],
+            ),
+            CommonTextWidget(
+              top: 10,
+              fontSize: 13,
+              text:
+                  "Congratulations! Welcome to Practo family. Click below to check out your profile live on Practo.com",
+            ),
+            CommonButtonWidget(
+              top: 10,
+              text: "View live profile",
+              colorButton: Colors.green,
+            )
+          ],
+        ),
       ),
     );
   }
 
-  _profileView(){
+  _profileView() {
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.all(20),
@@ -82,80 +97,131 @@ class ProfileScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween ,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            
-            Container(
-              decoration: commonBoxDecoration(
-                border: Border.all(color: Colors.black,width: 1),
-                shape: BoxShape.circle
+              Container(
+                decoration: commonBoxDecoration(
+                    border: Border.all(color: Colors.black, width: 1),
+                    shape: BoxShape.circle),
+                child: ClipOval(
+                  child:
+                      setAssetImage(image: icLoginLogo, width: 60, height: 60),
+                ),
               ),
-              child: ClipOval(
-                child: setAssetImage(image: icLoginLogo,width: 60,height: 60),
-              ),
-            ),
-            CommonTextWidget(text: "Edit Profile",textColor: Colors.amber,fontWeight: FontWeight.w700,)
-          ],),
-
-          CommonTextWidget(text: "Dr. Bhavesh Gohil",fontWeight: FontWeight.w600,top: 20,fontSize: 14,),
+              CommonTextWidget(
+                text: "Edit Profile",
+                textColor: Colors.amber,
+                fontWeight: FontWeight.w700,
+              )
+            ],
+          ),
+          CommonTextWidget(
+            text: "Dr. Bhavesh Gohil",
+            fontWeight: FontWeight.w600,
+            top: 20,
+            fontSize: 14,
+          ),
           CommonTextWidget(
             textColor: Colors.grey,
-            text: "MS-Ophthalmology, DNB - Ophthalmology, DOMS, MBBSOphthalmologist/ Eye Surgeon",top: 10,),
-          CommonTextWidget(text: "24 years experience",top: 10,fontWeight: FontWeight.w600,),
-          const SizedBox(height: 5,),
-          const Divider(thickness: 0.3,),
-          const SizedBox(height: 5,),
-          CommonTextWidget(text: "2000/12/3569",),
-          CommonTextWidget(text: "Maharashtra Medical Council - 2000",textColor: Colors.grey,top: 10,),
+            fontSize: 12,
+            text:
+                "MS-Ophthalmology, DNB - Ophthalmology, DOMS, MBBSOphthalmologist/ Eye Surgeon",
+            top: 10,
+          ),
+          CommonTextWidget(
+            text: "24 years experience",
+            top: 10,
+            fontWeight: FontWeight.w600,
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          const Divider(
+            thickness: 0.3,
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          CommonTextWidget(
+            text: "2000/12/3569",
+          ),
+          CommonTextWidget(
+            text: "Maharashtra Medical Council - 2000",
+            textColor: Colors.grey,
+            top: 10,
+            fontSize: 12,
+          ),
         ],
       ),
     );
   }
-  _addClinic({required DashboardProvider provider}){
+
+  _addClinic({required DashboardProvider provider}) {
     return Container(
       color: Colors.white,
-
       padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween ,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-              CommonTextWidget(text: "Clinics",fontWeight: FontWeight.w700,),
-              CommonTextWidget(text: "Add Clinic",textColor: Colors.amber,fontWeight: FontWeight.w700,)
-            ],),
-          SizedBox(height:10 ,),
-
+              CommonTextWidget(
+                text: "Clinics",
+                fontWeight: FontWeight.w700,
+              ),
+              CommonTextWidget(
+                text: "Add Clinic",
+                textColor: Colors.amber,
+                fontWeight: FontWeight.w700,
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           ListView.separated(
-              shrinkWrap: true,
-              itemCount: provider.clinicList.length,
-              itemBuilder: (context,index){
-            return  ListTile(
-              contentPadding: EdgeInsets.zero,
-              dense: true,
-
-              leading: SizedBox(height: 50,width: 50,child: commonImageNetworkWidget(path: provider.clinicList[index].icon,width: 50,height: 50),),
-              title: CommonTextWidget(text:  provider.clinicList[index].date,),
-              subtitle: CommonTextWidget(text:  provider.clinicList[index].content,),
-            );
-          }, separatorBuilder: (BuildContext context, int index) { return Divider(thickness: 0.3,); },)
-
-
+            shrinkWrap: true,
+            itemCount: provider.clinicList.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                contentPadding: EdgeInsets.zero,
+                dense: true,
+                leading: SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: commonImageNetworkWidget(
+                      path: provider.clinicList[index].icon,
+                      width: 50,
+                      height: 50),
+                ),
+                title: CommonTextWidget(
+                  text: provider.clinicList[index].date,
+                  fontSize: 13,
+                ),
+                subtitle: CommonTextWidget(
+                  text: provider.clinicList[index].content,
+                  fontSize: 10,
+                ),
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return const Divider(
+                thickness: 0.3,
+              );
+            },
+          )
         ],
       ),
     );
   }
 
-  _helpView(){
+  _helpView() {
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.all(20),
@@ -163,22 +229,23 @@ class ProfileScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
-          CommonTextWidget(text: "Need Help?",fontWeight: FontWeight.w700,),
-
-            CommonButtonWidget(
-              top: 20,
-              text: "Report an issue",
-              colorText: Colors.black,
-              iconShow: true,
-              icon: Icon(Icons.flag,color: Colors.black,),
-              colorButton: Colors.white,
-
-              colorBorder: Colors.black,
-              borderWidth: 1,
-            )
-
-
+          CommonTextWidget(
+            text: "Need Help?",
+            fontWeight: FontWeight.w700,
+          ),
+          CommonButtonWidget(
+            top: 20,
+            text: "Report an issue",
+            colorText: Colors.black,
+            iconShow: true,
+            icon: const Icon(
+              Icons.flag,
+              color: Colors.black,
+            ),
+            colorButton: Colors.white,
+            colorBorder: Colors.black,
+            borderWidth: 1,
+          )
         ],
       ),
     );

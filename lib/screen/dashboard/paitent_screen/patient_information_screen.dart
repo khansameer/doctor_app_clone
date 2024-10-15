@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 class PatientInformationScreen extends StatelessWidget {
   const PatientInformationScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.sizeOf(context);
@@ -17,21 +18,6 @@ class PatientInformationScreen extends StatelessWidget {
         left: 0,
         appBar:
             commonAppBar(title: 'Patient information'.toUpperCase(), actions: [
-          // TextButton.icon(
-          //     icon: const Icon(
-          //       Icons.edit_outlined,
-          //       color: Colors.white,
-          //     ),
-          //     onPressed: () {},
-          //     label: const Text(
-          //       'EDIT',
-          //       style: TextStyle(
-          //         color: Colors.white,
-          //         fontWeight: FontWeight.w600,
-          //         fontSize: 15,
-          //       ),
-          //     ),
-          //     )
           commonInkWell(
             onTap: () {},
             child: CommonTextWidget(

@@ -79,6 +79,11 @@ class DashboardProvider extends ChangeNotifier {
         date: "Patient Stories",
         icon: "https://cdn-icons-png.flaticon.com/512/7835/7835679.png",
         items: []),
+
+    DummyModel(
+        date: "Consult",
+        icon: "https://cdn-icons-png.flaticon.com/512/7835/7835679.png",
+        items: []),
     DummyModel(
         date: "Healthfeed",
         icon: "https://cdn-icons-png.flaticon.com/512/11121/11121716.png",
