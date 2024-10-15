@@ -11,6 +11,7 @@ class PatientsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
+
     final Map<String, List<String>> groupedItems = {
       '2': [
         '2 pts pen',

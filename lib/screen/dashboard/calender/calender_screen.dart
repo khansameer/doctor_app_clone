@@ -31,8 +31,8 @@ class CalenderScreen extends StatelessWidget {
           height: size.height,
           child: Column(
             children: [
-
-              Expanded(child: Column(
+              Expanded(
+                  child: Column(
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(0.0),
@@ -112,20 +112,29 @@ class CalenderScreen extends StatelessWidget {
                     thickness: 0.3,
                   ),
                   CalenderView(provider: provider),
-                 MeetingView(
+                  MeetingView(
                     provider: provider,
                   ),
                 ],
               )),
-
               Container(
                 color: colorGreen.withOpacity(0.03),
                 padding: const EdgeInsets.all(20.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    CommonTextWidget(text: "Block Or set Reminder".toUpperCase(),fontSize: 12,fontWeight: FontWeight.w700,textColor: Colors.amber,),
-                    CommonTextWidget(text: "Add Appointment".toUpperCase(),fontSize: 12,fontWeight: FontWeight.w700,textColor: Colors.amber,),
+                    CommonTextWidget(
+                      text: "Block Or set Reminder".toUpperCase(),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      textColor: Colors.amber,
+                    ),
+                    CommonTextWidget(
+                      text: "Add Appointment".toUpperCase(),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      textColor: Colors.amber,
+                    ),
                   ],
                 ),
               ),

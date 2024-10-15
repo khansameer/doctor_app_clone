@@ -4,19 +4,19 @@ import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-
 class CommonDropDownView extends StatelessWidget {
-  const CommonDropDownView(
-      {super.key,
-      required this.size,
-      this.hint,
-      this.decoration,
-      this.horizontal,
-      this.onChanged,
-      this.hintColor,
-      this.height,
-      required this.items,
-      this.selectedValue});
+  const CommonDropDownView({
+    super.key,
+    required this.size,
+    this.hint,
+    this.decoration,
+    this.horizontal,
+    this.onChanged,
+    this.hintColor,
+    this.height,
+    required this.items,
+    this.selectedValue,
+  });
   final Size size;
   final String? hint;
   final BoxDecoration? decoration;
