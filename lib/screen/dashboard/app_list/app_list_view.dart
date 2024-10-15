@@ -12,6 +12,7 @@ class AppListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -31,6 +32,7 @@ class AppListView extends StatelessWidget {
         ],
       );
     });
+
   }
 
   commonGridView({required List<DummyModel> list}) {
@@ -56,16 +58,20 @@ class AppListView extends StatelessWidget {
             if (list[index].date == "Patient") {
               pushScreen(context: context, routeName: RouteName.patientsScreen);
             }
+            if(list[index].date=="Calender"){
+              pushScreen(context: context, routeName: RouteName.calenderScreen);
+            }
 
             print('=============list${list[index].date}');
           },
           child: Container(
             margin: const EdgeInsets.only(top: ten, left: ten, right: ten),
-            decoration: commonBoxDecoration(
-              border:
-                  Border.all(color: Colors.grey.withOpacity(0.50), width: 1),
+              decoration: commonBoxDecoration(
+
               color: Colors.white,
-              borderRadius: BorderRadius.circular(5), //border corner radius
+              border: Border.all(color: Colors.grey.withOpacity(0.50),width: 1),
+           
+              borderRadius: BorderRadius.circular(12), //border corner radius
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

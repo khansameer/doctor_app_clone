@@ -23,6 +23,7 @@ setAssetImage(
 BoxDecoration commonBoxDecoration(
     {Color? color,
     BoxBorder? border,
+      List<BoxShadow>? boxShadow,
     BoxShape shape = BoxShape.rectangle,
     BorderRadiusGeometry? borderRadius,
     DecorationImage? image}) {
@@ -31,6 +32,7 @@ BoxDecoration commonBoxDecoration(
       image: image,
       border: border,
       shape: shape,
+      boxShadow: boxShadow,
       borderRadius: borderRadius);
 }
 
@@ -93,7 +95,15 @@ Widget commonInkWell({
     child: child,
   );
 }
-
+commonIcon({IconData? icon, double? size, VoidCallback? onTap}) {
+  return IconButton(
+      onPressed: onTap,
+      icon: Icon(
+        icon ?? Icons.settings_outlined,
+        color: Colors.white,
+        size: size,
+      ));
+}
 AppBar commonAppBar(
     {String? title,
     Color? color,
@@ -101,12 +111,14 @@ AppBar commonAppBar(
     Color? colorText,
     Widget? leading,
     double? leadingWidth,
+    double? toolbarHeight,
     PreferredSizeWidget? bottom}) {
   return AppBar(
     leadingWidth: leadingWidth,
     backgroundColor: color ?? colorGreen,
     centerTitle: true,
     bottom: bottom,
+    toolbarHeight: toolbarHeight,
     leading: leading,
     iconTheme: const IconThemeData(color: Colors.white),
     actions: actions,

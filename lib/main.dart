@@ -1,7 +1,9 @@
 import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/core/route/route_generator.dart';
 import 'package:doctor_app/provider/auth_provider.dart';
+import 'package:doctor_app/provider/chat_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
+import 'package:doctor_app/screen/dashboard/chat_screen/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -9,6 +11,7 @@ import 'package:provider/single_child_widget.dart';
 List<SingleChildWidget> providers = [
   ChangeNotifierProvider<AuthProviders>(create: (_) => AuthProviders()),
   ChangeNotifierProvider<DashboardProvider>(create: (_) => DashboardProvider()),
+  ChangeNotifierProvider<ChatProvider>(create: (_) => ChatProvider()),
 ];
 void main() {
   runApp(const MyApp());

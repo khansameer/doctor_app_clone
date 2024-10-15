@@ -28,6 +28,7 @@ final  PreferredSizeWidget? appBar;
     var size = MediaQuery.sizeOf(context);
     return Scaffold(backgroundColor: color??Colors.white,
       appBar: appBar,
+      
       body: Container(
         width: size.width,
         height: size.height,
