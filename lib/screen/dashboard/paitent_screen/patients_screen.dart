@@ -2,6 +2,7 @@ import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
+import 'package:doctor_app/core/route/route.dart';
 import 'package:flutter/material.dart';
 
 class PatientsScreen extends StatelessWidget {
@@ -18,6 +19,15 @@ class PatientsScreen extends StatelessWidget {
       ],
       '5': [
         '5635',
+      ],
+      '4': [
+        '4 pts pen',
+      ],
+      '7': [
+        '777 Ashish Sharma',
+      ],
+      '8': [
+        '888 Girish Chauhan',
       ],
     };
 
@@ -80,22 +90,29 @@ class PatientsScreen extends StatelessWidget {
                       ),
                       ...items.map((item) {
                         return ListTile(
-                          trailing: Icon(
+                          onTap: () {
+                            pushScreen(
+                              context: context,
+                              routeName: RouteName.patientInfoScreen,
+                            );
+                          },
+                          trailing: const Icon(
                             Icons.more_horiz,
                             color: Colors.grey,
                           ),
                           leading: Container(
-                              height: 50,
-                              width: 50,
-                              decoration: commonBoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.grey.withOpacity(0.20),
-                                  border:
-                                      Border.all(color: Colors.grey, width: 1)),
-                              child: Icon(
-                                Icons.person,
-                                color: colorGray,
-                              )),
+                            height: 50,
+                            width: 50,
+                            decoration: commonBoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.grey.withOpacity(0.20),
+                              border: Border.all(color: Colors.grey, width: 1),
+                            ),
+                            child: const Icon(
+                              Icons.person,
+                              color: colorGray,
+                            ),
+                          ),
                           title: CommonTextWidget(
                             text: item,
                             fontWeight: FontWeight.w600,
@@ -113,6 +130,34 @@ class PatientsScreen extends StatelessWidget {
                 }).toList(),
               ),
             ),
+            Container(
+              width: size.width,
+              margin: const EdgeInsets.only(bottom: 20),
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: Colors.orange.shade100,
+                    width: 0.75,
+                  ),
+                ),
+              ),
+              child: TextButton.icon(
+                icon: const Icon(
+                  Icons.add_outlined,
+                  color: Colors.orange,
+                  size: 24,
+                ),
+                onPressed: () {},
+                label: const Text(
+                  'ADD PATIENT',
+                  style: TextStyle(
+                    color: Colors.orange,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            )
           ],
         ));
   }

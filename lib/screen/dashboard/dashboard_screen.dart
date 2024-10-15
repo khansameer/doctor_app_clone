@@ -18,21 +18,19 @@ class DashboardScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: commonAppBar(
             leadingWidth: 200,
-            bottom:  TabBar(
+            bottom: TabBar(
               unselectedLabelColor: Colors.white.withOpacity(0.80),
               indicatorColor: Colors.white,
               dividerColor: Colors.white,
-               labelColor: Colors.white,
+              labelColor: Colors.white,
               tabs: const [
                 Tab(
-                 // icon: Icon(Icons.chat_bubble),
+                  // icon: Icon(Icons.chat_bubble),
                   text: "App",
                 ),
                 Tab(
-
                   text: "Summary",
                 ),
-
               ],
             ),
             leading: SizedBox(
@@ -48,16 +46,21 @@ class DashboardScreen extends StatelessWidget {
             color: colorGreen,
             actions: [
               commonIcon(onTap: () {
-                pushScreen(context: context, routeName: RouteName.settingScreen);
-              }),
-              commonIcon(icon: Icons.question_mark_outlined,onTap: (){
                 pushScreen(
-                    context: context, routeName: RouteName.reportAndIssueScreen);
+                    context: context, routeName: RouteName.settingScreen);
               }),
+              commonIcon(
+                  icon: Icons.question_mark_outlined,
+                  onTap: () {
+                    pushScreen(
+                        context: context,
+                        routeName: RouteName.reportAndIssueScreen);
+                  }),
               commonInkWell(
                 onTap: () {
                   pushScreen(
-                      context: context, routeName: RouteName.notificationScreen);
+                      context: context,
+                      routeName: RouteName.notificationScreen);
                 },
                 child: Stack(
                   clipBehavior: Clip.none,
@@ -95,15 +98,13 @@ class DashboardScreen extends StatelessWidget {
               )
             ]),
         body: const TabBarView(
-            children: [
-              AppListView(),
-              SummaryViewScreen()
-
-            ],
+          children: [
+            AppListView(),
+            SummaryViewScreen(),
+          ],
         ),
       ),
     );
-
   }
 
   commonIcon({IconData? icon, double? size, VoidCallback? onTap}) {

@@ -12,5 +12,5 @@ class RouteName {
   static const String healthFeedScreen = '/HealthFeedScreen';
   static const String profileScreen = '/ProfileScreen';
   static const String patientsScreen = '/PatientsScreen';
-
+  static const String patientInfoScreen = '/PatientInformationScreen';
 }

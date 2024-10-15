@@ -12,26 +12,29 @@ class AppListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     return Consumer<DashboardProvider>(
-       builder: (context,provider,child) {
-         return Column(
-           mainAxisAlignment: MainAxisAlignment.start,
-           crossAxisAlignment: CrossAxisAlignment.start,
-           children: [
-             commonGridView(list: provider.appList),
-
-
-             const Divider(),
-             CommonTextWidget(text: "Ray",left: 20,fontWeight: FontWeight.w500,fontSize: 18,marginBottom: 10,top: 10,),
-             commonGridView(list: provider.rayList)
-           ],
-         );
-       }
-     );
+    return Consumer<DashboardProvider>(builder: (context, provider, child) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          commonGridView(list: provider.appList),
+          const Divider(),
+          CommonTextWidget(
+            text: "Ray",
+            left: 20,
+            fontWeight: FontWeight.w500,
+            fontSize: 18,
+            marginBottom: 10,
+            top: 10,
+          ),
+          commonGridView(list: provider.rayList)
+        ],
+      );
+    });
   }
 
-  commonGridView({required List<DummyModel> list}){
-    return  GridView.builder(
+  commonGridView({required List<DummyModel> list}) {
+    return GridView.builder(
       shrinkWrap: true,
       primary: false,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -42,39 +45,37 @@ class AppListView extends StatelessWidget {
       itemCount: list.length,
       itemBuilder: (context, index) {
         return commonInkWell(
-          onTap: (){
-            if(list[index].date=="Healthfeed"){
-              pushScreen(context: context, routeName: RouteName.healthFeedScreen);
+          onTap: () {
+            if (list[index].date == "Healthfeed") {
+              pushScreen(
+                  context: context, routeName: RouteName.healthFeedScreen);
             }
-            if(list[index].date=="Profile"){
+            if (list[index].date == "Profile") {
               pushScreen(context: context, routeName: RouteName.profileScreen);
             }
-            if(list[index].date=="Patient"){
+            if (list[index].date == "Patient") {
               pushScreen(context: context, routeName: RouteName.patientsScreen);
             }
 
             print('=============list${list[index].date}');
           },
           child: Container(
-
             margin: const EdgeInsets.only(top: ten, left: ten, right: ten),
             decoration: commonBoxDecoration(
-              border: Border.all(color: Colors.grey.withOpacity(0.50),width: 1),
+              border:
+                  Border.all(color: Colors.grey.withOpacity(0.50), width: 1),
               color: Colors.white,
-              borderRadius:
-              BorderRadius.circular(5), //border corner radius
-
+              borderRadius: BorderRadius.circular(5), //border corner radius
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-
                 commonImageNetworkWidget(
                     boxFit: BoxFit.scaleDown,
-                    path: list[index].icon,width: 40,height: 40),
-
-
+                    path: list[index].icon,
+                    width: 40,
+                    height: 40),
                 CommonTextWidget(
                   top: five,
                   fontSize: twelve,
