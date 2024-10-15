@@ -125,16 +125,17 @@ AppBar commonAppBar(
     title: CommonTextWidget(
       text: title,
       fontSize: sixteen,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w700,
       textColor: colorText ?? Colors.white,
     ),
   );
 }
 
-pushScreen(
-    {required BuildContext context,
-    required String routeName,
-    Object? arguments}) {
+pushScreen({
+  required BuildContext context,
+  required String routeName,
+  Object? arguments,
+}) {
   Navigator.pushNamed(
       arguments: arguments,
       // Use the parent widget's context, not the local one
@@ -229,7 +230,7 @@ Widget commonImageNetworkWidget(
 
 //one week cache period
         )),
-        imageUrl: path??'',
+        imageUrl: path ?? '',
         width: width,
         height: height,
         placeholder: (context, url) => showLoaderList(),
