@@ -3,7 +3,6 @@ import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
-import 'package:doctor_app/screen/dashboard/chat_screen/chat_screen.dart';
 import 'package:doctor_app/screen/dashboard/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +23,7 @@ class DashboardScreen extends StatelessWidget {
 
     return Scaffold(
 
-        backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor:Colors.white,
         elevation: 2,

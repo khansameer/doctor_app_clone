@@ -14,5 +14,6 @@ class RouteName {
   static const String patientsScreen = '/PatientsScreen';
   static const String calenderScreen = '/CalenderScreen';
   static const String chatScreen = '/chatScreen';
+  static const String consultScreen = '/ConsultScreen';
 
 }

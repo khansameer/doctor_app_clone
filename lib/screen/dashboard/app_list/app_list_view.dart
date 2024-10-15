@@ -59,6 +59,9 @@ class AppListView extends StatelessWidget {
             if(list[index].date=="Calender"){
               pushScreen(context: context, routeName: RouteName.calenderScreen);
             }
+            if(list[index].date=="Consult"){
+              pushScreen(context: context, routeName: RouteName.consultScreen);
+            }
 
             print('=============list${list[index].date}');
           },
@@ -66,10 +69,10 @@ class AppListView extends StatelessWidget {
 
             margin: const EdgeInsets.only(top: ten, left: ten, right: ten),
             decoration: commonBoxDecoration(
-              boxShadow: [
+          /*    boxShadow: [
                 BoxShadow(
-                    color: Colors.grey.shade600, spreadRadius: 1, blurRadius: 3)],
-              border: Border.all(color: Colors.grey.withOpacity(0.50),width: 1),
+                    color: Colors.grey.shade600, spreadRadius: 1, blurRadius: 3)],*/
+             // border: Border.all(color: Colors.grey.withOpacity(0.50),width: 1),
               color: Colors.white,
               borderRadius: BorderRadius.circular(12), //border corner radius
 
@@ -87,8 +90,9 @@ class AppListView extends StatelessWidget {
 
                 CommonTextWidget(
                   top: five,
-                  fontSize: twelve,
-                  fontWeight: FontWeight.w500,
+
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
                   textAlign: TextAlign.center,
                   text: list[index].date,
                 ),

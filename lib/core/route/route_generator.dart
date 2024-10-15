@@ -6,6 +6,7 @@ import 'package:doctor_app/screen/authentication/login/login_screen.dart';
 import 'package:doctor_app/screen/authentication/login/view/signup_view.dart';
 import 'package:doctor_app/screen/dashboard/calender/calender_screen.dart';
 import 'package:doctor_app/screen/dashboard/chat_screen/chat_screen.dart';
+import 'package:doctor_app/screen/dashboard/consult/consult_screen.dart';
 import 'package:doctor_app/screen/dashboard/dashboard_screen.dart';
 import 'package:doctor_app/screen/dashboard/health_feed/health_feed_screen.dart';
 import 'package:doctor_app/screen/dashboard/notification/notificatio_screen.dart';
@@ -100,6 +101,11 @@ class RouteGenerator {
             builder: (_) => const ChatScreen(),
             settings:
             const RouteSettings(name: RouteName.chatScreen));
+      case RouteName.consultScreen:
+        return MaterialPageRoute(
+            builder: (_) => const ConsultScreen(),
+            settings:
+            const RouteSettings(name: RouteName.consultScreen));
 
       default:
         return MaterialPageRoute(
