@@ -2,6 +2,15 @@ import 'package:doctor_app/provider/model/dummy_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class DashboardProvider extends ChangeNotifier {
+
+  int _selectedIndex = 0;
+
+  int get selectedIndex => _selectedIndex;
+
+  void setIndex(int index) {
+    _selectedIndex = index;
+    notifyListeners();
+  }
   List<DummyModel> get itemNotification => _itemNotification;
   final List<DummyModel> _itemNotification = [
     DummyModel(
@@ -60,7 +69,7 @@ class DashboardProvider extends ChangeNotifier {
   final List<DummyModel> _appList = [
       DummyModel(
           date: "Profile",
-          icon: "https://www.parker.com/search/img/icons/Category/Parker-Support-Icons_Category-Compliance.png",
+          icon: "https://strigo.ca/svg/icones/megaphone.svg",
           items: []),
     DummyModel(
         date: "Reach",
@@ -121,6 +130,63 @@ class DashboardProvider extends ChangeNotifier {
 
   ];
   List<DummyModel> get clinicList => _clinicList;
+
+//====================Calender View
+
+  DateTime _selectedDay = DateTime.now();
+  DateTime _focusedDay = DateTime.now();
+  final Map<DateTime, List<String>> _events = {
+    DateTime.utc(2024, 10, 16): ['Doctor Appointment', 'Eye Checkup'],
+    DateTime.utc(2024, 10, 18): ['Team Meeting'],
+    DateTime.utc(2024, 10, 20): ['Team Meeting'],
+    DateTime.utc(2024, 10, 25): ['Team Meeting'],
+  };
+
+  DateTime get selectedDay => _selectedDay;
+  DateTime get focusedDay => _focusedDay;
+  Map<DateTime, List<String>> get events => _events;
+
+  // Get events for a specific day
+  List<String> getEventsForDay(DateTime day) {
+    return _events[day] ?? [];
+  }
+
+  // Set selected day and notify listeners
+  void setSelectedDay(DateTime selectedDay, DateTime focusedDay) {
+    _selectedDay = selectedDay;
+    _focusedDay = focusedDay;
+    notifyListeners();
+  }
+
+  // Add new event (for example, could be used with Add Appointment button)
+  void addEvent(DateTime day, String event) {
+    if (_events[day] != null) {
+      _events[day]!.add(event);
+    } else {
+      _events[day] = [event];
+    }
+    notifyListeners();
+  }
+
+  //form dropdown
+
+  String? _selectedValue;
+  String? get selectedValue => _selectedValue;
+  set selectionValue(String newPin) {
+    _selectedValue = newPin;
+    notifyListeners();
+  }
+
+  final List<String> items = [
+    'Item1',
+    'Item2',
+    'Item3',
+    'Item4',
+    'Item5',
+    'Item6',
+    'Item7',
+    'Item8',
+  ];
 
 
 }

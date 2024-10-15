@@ -34,7 +34,8 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 10,),
                 _addClinic(provider: provider),
                 const SizedBox(height: 10,),
-                _helpView()
+                _helpView(),
+                const SizedBox(height: 20,),
               ],
             ),
           );
@@ -166,7 +167,13 @@ class ProfileScreen extends StatelessWidget {
           CommonTextWidget(text: "Need Help?",fontWeight: FontWeight.w700,),
 
             CommonButtonWidget(
+              top: 20,
+              text: "Report an issue",
+              colorText: Colors.black,
+              iconShow: true,
+              icon: Icon(Icons.flag,color: Colors.black,),
               colorButton: Colors.white,
+
               colorBorder: Colors.black,
               borderWidth: 1,
             )

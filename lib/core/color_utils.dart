@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 const colorSplash = Color.fromRGBO(150, 115, 217, 1);
 const colorGreen = Color.fromRGBO(47, 52, 136, 1);
+const colorGreen1 = Color.fromRGBO(47, 52, 136, 0.8);
 const colorBlueLight = Color.fromRGBO(100, 141, 219, 1);
 const colorBlack = Color.fromRGBO(0, 0, 0, 1);
 const colorWhite = Color.fromRGBO(255, 255, 255, 1);
