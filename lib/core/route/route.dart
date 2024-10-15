@@ -13,7 +13,8 @@ class RouteName {
   static const String profileScreen = '/ProfileScreen';
   static const String patientsScreen = '/PatientsScreen';
   static const String patientInfoScreen = '/PatientInformationScreen';
-
   static const String calenderScreen = '/CalenderScreen';
   static const String chatScreen = '/chatScreen';
+  static const String consultScreen = '/ConsultScreen';
+  static const String reportScreen = '/ReportScreen';
 }

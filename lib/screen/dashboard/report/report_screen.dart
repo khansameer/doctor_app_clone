@@ -1,0 +1,390 @@
+import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/common/app_scaffold.dart';
+import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/component/component.dart';
+import 'package:flutter/material.dart';
+
+class ReportScreen extends StatelessWidget {
+  const ReportScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppScaffold(
+      left: 0,
+      right: 0,
+      appBar: commonAppBar(title: "Report".toUpperCase(), actions: []),
+      child: Container(
+        color: colorGray.withOpacity(0.20),
+        child: ListView(
+          children: [
+            commonList(child: _viewTop()),
+            commonList(child: _viewSMS()),
+            commonList(child: _viewStorage()),
+            SizedBox(height: 30,),
+            Container(
+              padding: const EdgeInsets.only(top: 15, bottom: 15,left: 5,right: 5),
+              decoration: commonBoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.grey.withOpacity(0.50), width: 0)),
+              margin: EdgeInsets.only(left: 0, right: 0, top:  10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CommonTextWidget(
+                    left: 5,
+                    text: "Showing data for 13 Sep - 13 Oct",
+                  ),
+
+                  CommonTextWidget(
+                    text: "Change",
+                    right: 10,
+                    textColor: Colors.amber,
+                    fontWeight: FontWeight.w600,
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  commonList({
+    String? title,
+    Widget? child,
+    double? top,
+  }) {
+    return Container(
+      padding: const EdgeInsets.only(top: 8, bottom: 8),
+      decoration: commonBoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: Colors.grey.withOpacity(0.50), width: 0)),
+      margin: EdgeInsets.only(left: 5, right: 5, top: top ?? 10),
+      child: child,
+    );
+  }
+
+  _viewTop() {
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CommonTextWidget(
+                text: "REVENUE (may include advance)",
+                fontSize: 14,
+              ),
+              Flexible(
+                  child: CommonTextWidget(
+                text: "vs last 30 days",
+                fontSize: 12,
+                textColor: Colors.grey,
+              ))
+            ],
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Row(
+            children: [
+              CommonTextWidget(
+                text: "19,54,550.00",
+                fontSize: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Icon(Icons.arrow_drop_up_sharp, color: Colors.green),
+                  CommonTextWidget(
+                    text: "7%",
+                    textColor: Colors.green,
+                  ),
+                ],
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          LinearProgressIndicator(
+            value: 9,
+            minHeight: 6,
+            borderRadius: BorderRadius.circular(8),
+            backgroundColor: Colors.grey,
+            valueColor: const AlwaysStoppedAnimation<Color>(colorGreen),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CommonTextWidget(
+                      text: "Paid ",
+                    ),
+                    CommonTextWidget(
+                      text: "19,50,350.00",
+                      fontWeight: FontWeight.w600,
+                      textColor: colorGreen,
+                      top: 10,
+                    )
+                  ],
+                ),
+              ),
+              Expanded(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CommonTextWidget(
+                    text: "Pending ",
+                    textColor: Colors.grey,
+                  ),
+                  CommonTextWidget(
+                    text: "4,200.00",
+                    fontWeight: FontWeight.w600,
+                    textColor: Colors.grey,
+                    top: 10,
+                  )
+                ],
+              ))
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  _viewSMS() {
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CommonTextWidget(
+                text: "SMS USAGE",
+                fontSize: 14,
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          LinearProgressIndicator(
+            value: 0.2,
+
+            minHeight: 6,
+            borderRadius: BorderRadius.circular(8),
+            backgroundColor: Colors.amber,
+            valueColor: const AlwaysStoppedAnimation<Color>(colorGreen),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CommonTextWidget(
+                      text: "Credit Used ",
+                      textColor: Colors.grey,
+                    ),
+                    CommonTextWidget(
+                      text: "56",
+                      fontWeight: FontWeight.w600,
+                      textColor: colorGreen,
+                      top: 10,
+                    )
+                  ],
+                ),
+              ),
+              Expanded(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CommonTextWidget(
+                    text: "Credit Left ",
+                    textColor: Colors.grey,
+                  ),
+                  CommonTextWidget(
+                    text: "214",
+                    fontWeight: FontWeight.w600,
+                    textColor: Colors.amber,
+                    top: 10,
+                  )
+                ],
+              ))
+            ],
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Row(
+            children: [
+              CommonTextWidget(
+                text: "Total SMS:",
+              ),
+              CommonTextWidget(
+                text: "270",
+                fontWeight: FontWeight.w600,
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Divider(
+            thickness: 0.3,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CommonTextWidget(
+                text: "View Details",
+                textColor: Colors.amber,
+                fontWeight: FontWeight.w700,
+              ),
+              Icon(
+                Icons.arrow_forward_ios_outlined,
+                color: Colors.black,
+                size: 20,
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  _viewStorage() {
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CommonTextWidget(
+                text: "STORAGE USAGE",
+                fontSize: 14,
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          LinearProgressIndicator(
+            value: 0.1,
+            minHeight: 6,
+            backgroundColor: Colors.amber,
+            borderRadius: BorderRadius.circular(8),
+
+            valueColor: const AlwaysStoppedAnimation<Color>(colorGreen),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CommonTextWidget(
+                      text: "Storage Used ",
+                      textColor: Colors.grey,
+                    ),
+                    CommonTextWidget(
+                      text: "63.85 MB",
+                      fontWeight: FontWeight.w600,
+                      textColor: colorGreen,
+                      top: 10,
+                    )
+                  ],
+                ),
+              ),
+              Expanded(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CommonTextWidget(
+                    text: "Storage Left",
+                    textColor: Colors.grey,
+                  ),
+                  CommonTextWidget(
+                    text: "960.14 Mb",
+                    fontWeight: FontWeight.w600,
+                    textColor: Colors.amber,
+                    top: 10,
+                  )
+                ],
+              ))
+            ],
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Row(
+            children: [
+              CommonTextWidget(
+                text: "Total Storage:",
+              ),
+              CommonTextWidget(
+                text: "1.0 GB",
+                fontWeight: FontWeight.w600,
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Divider(
+            thickness: 0.3,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CommonTextWidget(
+                text: "View Details",
+                textColor: Colors.amber,
+                fontWeight: FontWeight.w700,
+              ),
+              Icon(
+                Icons.arrow_forward_ios_outlined,
+                color: Colors.black,
+                size: 20,
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}

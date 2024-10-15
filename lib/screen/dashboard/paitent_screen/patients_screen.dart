@@ -1,5 +1,6 @@
 import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
+import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/route/route.dart';
@@ -52,13 +53,14 @@ class PatientsScreen extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'PRACTICE'.toUpperCase(),
+                        CommonTextWidget(
+                       text:   'PRACTICE'.toUpperCase(),
                           textAlign: TextAlign.left,
                         ),
-                        const Text(
-                          'Clear Vision Eye Clinic',
-                          style: TextStyle(color: Colors.grey, fontSize: 14),
+                         CommonTextWidget(
+
+                          text:'Clear Vision Eye Clinic',
+                       textColor: Colors.grey, fontSize: 14,
                         ),
                       ],
                     ),
@@ -132,7 +134,8 @@ class PatientsScreen extends StatelessWidget {
             ),
             Container(
               width: size.width,
-              margin: const EdgeInsets.only(bottom: 20),
+              height: 56,
+              margin: const EdgeInsets.only(bottom: 0),
               padding: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                 border: Border(
@@ -142,20 +145,18 @@ class PatientsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              child: TextButton.icon(
+              child: CommonButtonWidget(
+                text: "ADD PATIENT",
+                padding: EdgeInsets.zero,
+                iconShow: true,colorText: Colors.amber,
+                colorButton: Colors.white,
                 icon: const Icon(
                   Icons.add_outlined,
-                  color: Colors.orange,
+                  color: Colors.amber,
                   size: 24,
                 ),
                 onPressed: () {},
-                label: const Text(
-                  'ADD PATIENT',
-                  style: TextStyle(
-                    color: Colors.orange,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+
               ),
             )
           ],
