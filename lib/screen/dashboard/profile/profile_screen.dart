@@ -197,7 +197,7 @@ class ProfileScreen extends StatelessWidget {
                   textColor: Colors.amber,
                   fontWeight: FontWeight.w700,
                 ),
-             
+              )
             ],
           ),
           const SizedBox(

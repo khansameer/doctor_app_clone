@@ -110,6 +110,7 @@ class ReportScreen extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
+
           LinearProgressIndicator(
             value: 9,
             minHeight: 6,
