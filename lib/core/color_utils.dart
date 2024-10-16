@@ -16,5 +16,8 @@ const color1 = Color.fromRGBO(255, 200, 3, 1);
 const color2 = Color.fromRGBO(150, 115, 217, 1);
 const color3 = Color.fromRGBO(37, 188, 126, 1);
 const color4 = Color.fromRGBO(204, 204, 204, 1);
+const colorText = Color.fromRGBO(56,55,60,1);
+const colorAmber = Color.fromRGBO(254,193,68,1);
+
 
 //const colorMenu = Color.fromRGBO(123, 123, 123, 1);

@@ -246,3 +246,19 @@ Widget commonImageNetworkWidget(
     ),
   );
 }
+commonList({
+  String? title,
+  Widget? child,
+  double? top,
+}) {
+  return Container(
+
+    padding: const EdgeInsets.only(top: 8, bottom: 8),
+    decoration: commonBoxDecoration(
+        color: Colors.white,
+
+        border: Border.all(color: Colors.grey.withOpacity(0.50), width: 0)),
+    margin: EdgeInsets.only(left: 0, right: 0, top: top ?? 0),
+    child: child,
+  );
+}

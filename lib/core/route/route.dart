@@ -19,4 +19,9 @@ class RouteName {
   static const String reportScreen = '/ReportScreen';
   static const String editprofileScreen = '/EditProfileScreen';
   static const String addClinicScreen = '/AddClinicScreen';
+  static const String primeScreen = '/PrimeScreen';
+  static const String patientStoriesScreen = '/PatientStoriesScreen';
+  static const String reachScreen = '/ReachScreen';
+  static const String weeklyEarningScreen = '/WeeklyEarningScreen';
+
 }

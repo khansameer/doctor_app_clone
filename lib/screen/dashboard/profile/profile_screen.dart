@@ -103,14 +103,17 @@ class ProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
+                width: 60,
+                height: 60,
                 decoration: commonBoxDecoration(
-                    border: Border.all(color: Colors.black, width: 1),
+                    border: Border.all(color: colorGreen, width: 1),
                     shape: BoxShape.circle),
                 child: ClipOval(
                   child:
-                      setAssetImage(image: icLoginLogo, width: 60, height: 60),
+                      setAssetImage(image: icLoginLogo, width: 40, height: 40,fit: BoxFit.scaleDown),
                 ),
               ),
+
               commonInkWell(
                 child: CommonTextWidget(
                   text: "Edit Profile",
@@ -122,16 +125,7 @@ class ProfileScreen extends StatelessWidget {
                       context: context, routeName: RouteName.editprofileScreen);
                 },
               ),
-              // TextButton(
-              //   onPressed: () {},
-              //   child: const Text(
-              //     'Edit Profile',
-              //     style: TextStyle(
-              //       color: Colors.amber,
-              //       fontWeight: FontWeight.w700,
-              //     ),
-              //   ),
-              // )
+   
             ],
           ),
           CommonTextWidget(
@@ -165,7 +159,7 @@ class ProfileScreen extends StatelessWidget {
             text: "2000/12/3569",
           ),
           CommonTextWidget(
-            text: "Maharashtra Medical Council - 2000",
+            text: "790 W. Chestnut Avenue, Monrovia, CA 91016",
             textColor: Colors.grey,
             top: 10,
             fontSize: 12,
@@ -203,7 +197,7 @@ class ProfileScreen extends StatelessWidget {
                   textColor: Colors.amber,
                   fontWeight: FontWeight.w700,
                 ),
-              )
+             
             ],
           ),
           const SizedBox(

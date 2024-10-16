@@ -124,12 +124,12 @@ class DashboardProvider extends ChangeNotifier {
     DummyModel(
       icon: "https://img.freepik.com/free-vector/eye-logo-design-template_23-2150893414.jpg",
         date: "Dadar Eye & Gynaec Centre",
-        content: "Dadar East, Mumbai",
+        content: "790 W. Chestnut Avenue, Monrovia, CA 91016",
         items: []),
     DummyModel(
         icon: "https://images1-fabric.practo.com/547c04abc4c5bf75f8a96363d898701731923d0230983.jpg",
         date: "Clear Vision Eye Clinic",
-        content: "Wadala, Mumbai",
+        content: "790 W. Chestnut Avenue, Monrovia, CA 91016",
         items: []),
 
 
@@ -194,4 +194,29 @@ class DashboardProvider extends ChangeNotifier {
   ];
 
 
+
+
+  final List<Booking> _bookings = [
+    Booking(name: 'Nabajyoti Mandal', date: '11\nOCT', status: 'CONFIRMED', price: 375.0),
+    Booking(name: 'Vijaylaxmi Das', date: '09\nOCT', status: 'CONFIRMED', price: 0.0),
+    Booking(name: 'Pranjali Vasudeo', date: '09\nOCT', status: 'CONFIRMED', price: 375.0),
+    Booking(name: 'Siddharth Das', date: '08\nOCT', status: 'CANCELLED', price: 375.0, isCancelled: true),
+  ];
+
+  List<Booking> get bookings => _bookings;
+}
+class Booking {
+  final String name;
+  final String date;
+  final String status;
+  final double price;
+  final bool isCancelled;
+
+  Booking({
+    required this.name,
+    required this.date,
+    required this.status,
+    required this.price,
+    this.isCancelled = false,
+  });
 }
