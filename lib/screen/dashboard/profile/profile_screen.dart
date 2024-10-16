@@ -4,6 +4,7 @@ import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
+import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,11 +30,11 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              _profileView(),
+              _profileView(context),
               const SizedBox(
                 height: 10,
               ),
-              _addClinic(provider: provider),
+              _addClinic(provider: provider, context: context),
               const SizedBox(
                 height: 10,
               ),
@@ -89,7 +90,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  _profileView() {
+  _profileView(context) {
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.all(20),
@@ -112,11 +113,19 @@ class ProfileScreen extends StatelessWidget {
                       setAssetImage(image: icLoginLogo, width: 40, height: 40,fit: BoxFit.scaleDown),
                 ),
               ),
-              CommonTextWidget(
-                text: "Edit Profile",
-                textColor: colorAmber,
-                fontWeight: FontWeight.w700,
-              )
+
+              commonInkWell(
+                child: CommonTextWidget(
+                  text: "Edit Profile",
+                  textColor: Colors.amber,
+                  fontWeight: FontWeight.w700,
+                ),
+                onTap: () {
+                  pushScreen(
+                      context: context, routeName: RouteName.editprofileScreen);
+                },
+              ),
+   
             ],
           ),
           CommonTextWidget(
@@ -160,7 +169,8 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  _addClinic({required DashboardProvider provider}) {
+  _addClinic(
+      {required DashboardProvider provider, required BuildContext context}) {
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.all(20),
@@ -177,11 +187,17 @@ class ProfileScreen extends StatelessWidget {
                 text: "Clinics",
                 fontWeight: FontWeight.w700,
               ),
-              CommonTextWidget(
-                text: "Add Clinic",
-                textColor: colorAmber,
-                fontWeight: FontWeight.w700,
-              )
+              commonInkWell(
+                onTap: () {
+                  pushScreen(
+                      context: context, routeName: RouteName.addClinicScreen);
+                },
+                child: CommonTextWidget(
+                  text: "Add Clinic",
+                  textColor: Colors.amber,
+                  fontWeight: FontWeight.w700,
+                ),
+             
             ],
           ),
           const SizedBox(

@@ -22,7 +22,6 @@ class LoginView extends StatelessWidget {
     final formLoginKey = GlobalKey<FormState>();
     return Consumer<AuthProviders>(builder: (context, provider, child) {
       return SizedBox(
-
         width: size.width,
         height: size.height,
         child: Form(
@@ -37,7 +36,9 @@ class LoginView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: size.height*0.05,),
+                    SizedBox(
+                      height: size.height * 0.05,
+                    ),
                     Align(
                         alignment: Alignment.center,
                         child: CommonTextWidget(
@@ -55,25 +56,29 @@ class LoginView extends StatelessWidget {
                             color: Colors.black,
                             fontSize: 25,
                           ),
-
                           top: 15,
-
                         )),
-                    const SizedBox(height: 20,),
-                    setAssetImage(image: icLoginLogo,width: 200,height: 160,  fit:BoxFit.scaleDown),
-
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    setAssetImage(
+                        image: icLoginLogo,
+                        width: 200,
+                        height: 160,
+                        fit: BoxFit.scaleDown),
                     commonTextFiledView(
-                        title: yourEmail,
-                        validator: (value) {
-                          if (value.toString().trim().isEmpty) {
-                            return emptyEmail;
-                          }
-                          if (!Validation.validateEmail(value.toString())) {
-                            return emailValidationMsg;
-                          }
-                          return null;
-                        },
-                        topTextField: ten),
+                      title: yourEmail,
+                      validator: (value) {
+                        if (value.toString().trim().isEmpty) {
+                          return emptyEmail;
+                        }
+                        if (!Validation.validateEmail(value.toString())) {
+                          return emailValidationMsg;
+                        }
+                        return null;
+                      },
+                      topTextField: ten,
+                    ),
                     commonTextFiledView(
                         controller: provider.tetPassword,
                         obscureText: !provider.isPasswordVisible,
@@ -115,7 +120,6 @@ class LoginView extends StatelessWidget {
                     CommonButtonWidget(
                       top: twenty,
                       onPressed: () {
-
                         pushNamedAndRemoveUntil(
                             context: context,
                             routeName: RouteName.dashboardScreen);
@@ -159,49 +163,53 @@ class LoginView extends StatelessWidget {
                       text: TextSpan(
                         text: 'Don’t have an account? ',
                         style: DefaultTextStyle.of(context).style,
-                        children:  <TextSpan>[
+                        children: <TextSpan>[
                           TextSpan(
-                              recognizer: TapGestureRecognizer()..onTap  = () {
-                                pushScreen(
-                                    context: context,
-                                    routeName: RouteName.signUPScreen);
-                              },
-                              text: 'Sign Up', style: TextStyle(fontWeight: FontWeight.bold)),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  pushScreen(
+                                      context: context,
+                                      routeName: RouteName.signUPScreen);
+                                },
+                              text: 'Sign Up',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              )),
                         ],
                       ),
                     ),
                     CommonButtonWidget(
-                        top: size.height * zero003,
-                        borderWidth: one,
-                        onPressed: () {},
-                        colorButton: Colors.white,
-                        colorBorder: colorGray,
-                        text: loginWithApple,
-                        colorText: Colors.black,
-                        iconShow: true,
-                        textLeft: ten,
-                        icon: setAssetImage(
-                            image: icApple,
-                            fit: BoxFit.scaleDown,
-                            width: twentyFour,
-                            height: twentyFour),
-                      ),
+                      top: size.height * zero003,
+                      borderWidth: one,
+                      onPressed: () {},
+                      colorButton: Colors.white,
+                      colorBorder: colorGray,
+                      text: loginWithApple,
+                      colorText: Colors.black,
+                      iconShow: true,
+                      textLeft: ten,
+                      icon: setAssetImage(
+                          image: icApple,
+                          fit: BoxFit.scaleDown,
+                          width: twentyFour,
+                          height: twentyFour),
+                    ),
                     CommonButtonWidget(
-                        top: size.height * zero002,
-                        borderWidth: one,
-                        onPressed: () {},
-                        colorButton: Colors.white,
-                        colorBorder: colorGray,
-                        text: loginWithGoogle,
-                        colorText: Colors.black,
-                        iconShow: true,
-                        textLeft: ten,
-                        icon: setAssetImage(
-                            image: icGoogle,
-                            fit: BoxFit.scaleDown,
-                            width: twentyFour,
-                            height: twentyFour),
-                      ),
+                      top: size.height * zero002,
+                      borderWidth: one,
+                      onPressed: () {},
+                      colorButton: Colors.white,
+                      colorBorder: colorGray,
+                      text: loginWithGoogle,
+                      colorText: Colors.black,
+                      iconShow: true,
+                      textLeft: ten,
+                      icon: setAssetImage(
+                          image: icGoogle,
+                          fit: BoxFit.scaleDown,
+                          width: twentyFour,
+                          height: twentyFour),
+                    ),
                   ],
                 ),
               ],
