@@ -50,7 +50,7 @@ class SummaryViewScreen extends StatelessWidget {
                       fontWeight: FontWeight.w800,
                       text: "View All".toUpperCase(),
                       fontSize: 12,
-                      textColor: Colors.amber,
+                      textColor: colorAmber,
                     )),
                     const SizedBox(
                       width: 10,
@@ -58,7 +58,7 @@ class SummaryViewScreen extends StatelessWidget {
                     commonInkWell(
                         child: CommonTextWidget(
                       fontWeight: FontWeight.w800,
-                      textColor: Colors.amber,
+                      textColor: colorAmber,
                       text: "Add Appointment".toUpperCase(),
                       fontSize: 12,
                     ))
@@ -135,7 +135,7 @@ class SummaryViewScreen extends StatelessWidget {
                               child: CommonTextWidget(
                             top: 10,
                             fontWeight: FontWeight.w800,
-                            textColor: Colors.amber,
+                            textColor: colorAmber,
                             text: "GET PRACTO REACH".toUpperCase(),
                             fontSize: 12,
                           ))

@@ -1,4 +1,5 @@
 import 'package:doctor_app/core/app_constants.dart';
+import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/route/route.dart';
@@ -69,18 +70,30 @@ class AppListView extends StatelessWidget {
             if(list[index].date=="Report"){
               pushScreen(context: context, routeName: RouteName.reportScreen);
             }
+            if(list[index].date=="Prime"){
+              pushScreen(context: context, routeName: RouteName.primeScreen);
+            }
+            if(list[index].date=="Patient Stories"){
+              pushScreen(context: context, routeName: RouteName.patientStoriesScreen);
+            }
+            if(list[index].date=="Reach"){
+              pushScreen(context: context, routeName: RouteName.reachScreen);
+            }
+            if(list[index].date=="Earning"){
+              pushScreen(context: context, routeName: RouteName.weeklyEarningScreen);
+            }
 
             print('=============list${list[index].date}');
           },
           child: Container(
             margin: const EdgeInsets.only(top: ten, left: ten, right: ten),
-            decoration: commonBoxDecoration(
+         /*   decoration: commonBoxDecoration(
               color: Colors.white,
               border:
                   Border.all(color: Colors.grey.withOpacity(0.50), width: 1),
 
               borderRadius: BorderRadius.circular(12), //border corner radius
-            ),
+            ),*/
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -91,9 +104,10 @@ class AppListView extends StatelessWidget {
                     width: 40,
                     height: 40),
                 CommonTextWidget(
-                  top: five,
+                  top: twenty,
                   fontSize: twelve,
-                  fontWeight: FontWeight.w500,
+                  textColor: colorText,
+                  fontWeight: FontWeight.w700,
                   textAlign: TextAlign.center,
                   text: list[index].date,
                 ),

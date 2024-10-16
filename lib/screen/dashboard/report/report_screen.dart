@@ -2,6 +2,7 @@ import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
+import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:flutter/material.dart';
 
 class ReportScreen extends StatelessWidget {
@@ -20,13 +21,13 @@ class ReportScreen extends StatelessWidget {
             commonList(child: _viewTop()),
             commonList(child: _viewSMS()),
             commonList(child: _viewStorage()),
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
             Container(
               padding: const EdgeInsets.only(top: 15, bottom: 15,left: 5,right: 5),
               decoration: commonBoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: Colors.grey.withOpacity(0.50), width: 0)),
-              margin: EdgeInsets.only(left: 0, right: 0, top:  10),
+              margin: const EdgeInsets.only(left: 0, right: 0, top:  10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -38,7 +39,7 @@ class ReportScreen extends StatelessWidget {
                   CommonTextWidget(
                     text: "Change",
                     right: 10,
-                    textColor: Colors.amber,
+                    textColor: colorAmber,
                     fontWeight: FontWeight.w600,
                   )
                 ],
@@ -91,7 +92,7 @@ class ReportScreen extends StatelessWidget {
           Row(
             children: [
               CommonTextWidget(
-                text: "19,54,550.00",
+                text: "$rupee 19,54,550.00",
                 fontSize: 20,
               ),
               Row(
@@ -132,7 +133,7 @@ class ReportScreen extends StatelessWidget {
                       text: "Paid ",
                     ),
                     CommonTextWidget(
-                      text: "19,50,350.00",
+                      text: "$rupee 19,50,350.00",
                       fontWeight: FontWeight.w600,
                       textColor: colorGreen,
                       top: 10,
@@ -150,7 +151,7 @@ class ReportScreen extends StatelessWidget {
                     textColor: Colors.grey,
                   ),
                   CommonTextWidget(
-                    text: "4,200.00",
+                    text: "$rupee 4,200.00",
                     fontWeight: FontWeight.w600,
                     textColor: Colors.grey,
                     top: 10,
@@ -186,7 +187,7 @@ class ReportScreen extends StatelessWidget {
 
             minHeight: 6,
             borderRadius: BorderRadius.circular(8),
-            backgroundColor: Colors.amber,
+            backgroundColor: colorAmber,
             valueColor: const AlwaysStoppedAnimation<Color>(colorGreen),
           ),
           const SizedBox(
@@ -226,7 +227,7 @@ class ReportScreen extends StatelessWidget {
                   CommonTextWidget(
                     text: "214",
                     fontWeight: FontWeight.w600,
-                    textColor: Colors.amber,
+                    textColor: colorAmber,
                     top: 10,
                   )
                 ],
@@ -250,7 +251,7 @@ class ReportScreen extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Divider(
+          const Divider(
             thickness: 0.3,
           ),
           const SizedBox(
@@ -261,10 +262,10 @@ class ReportScreen extends StatelessWidget {
             children: [
               CommonTextWidget(
                 text: "View Details",
-                textColor: Colors.amber,
+                textColor: colorAmber,
                 fontWeight: FontWeight.w700,
               ),
-              Icon(
+              const Icon(
                 Icons.arrow_forward_ios_outlined,
                 color: Colors.black,
                 size: 20,
@@ -296,7 +297,7 @@ class ReportScreen extends StatelessWidget {
           LinearProgressIndicator(
             value: 0.1,
             minHeight: 6,
-            backgroundColor: Colors.amber,
+            backgroundColor: colorAmber,
             borderRadius: BorderRadius.circular(8),
 
             valueColor: const AlwaysStoppedAnimation<Color>(colorGreen),
@@ -338,7 +339,7 @@ class ReportScreen extends StatelessWidget {
                   CommonTextWidget(
                     text: "960.14 Mb",
                     fontWeight: FontWeight.w600,
-                    textColor: Colors.amber,
+                    textColor: colorAmber,
                     top: 10,
                   )
                 ],
@@ -362,7 +363,7 @@ class ReportScreen extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Divider(
+          const Divider(
             thickness: 0.3,
           ),
           const SizedBox(
@@ -373,10 +374,10 @@ class ReportScreen extends StatelessWidget {
             children: [
               CommonTextWidget(
                 text: "View Details",
-                textColor: Colors.amber,
+                textColor: colorAmber,
                 fontWeight: FontWeight.w700,
               ),
-              Icon(
+              const Icon(
                 Icons.arrow_forward_ios_outlined,
                 color: Colors.black,
                 size: 20,

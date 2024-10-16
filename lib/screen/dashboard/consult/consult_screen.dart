@@ -83,7 +83,7 @@ class ConsultScreen extends StatelessWidget {
                         child:   commonInkWell(
                             child: CommonTextWidget(text: "VIEW",
                             fontSize: 12,
-                            textColor: Colors.amber,
+                            textColor: colorAmber,
                             fontWeight: FontWeight.w700,)
                         ),
                       )
@@ -116,7 +116,7 @@ class ConsultScreen extends StatelessWidget {
                               child:   commonInkWell(
                                   child: CommonTextWidget(text: "GO TO SETTINGS",
                                     fontSize: 12,
-                                    textColor: Colors.amber,
+                                    textColor: colorAmber,
                                     fontWeight: FontWeight.w700,)
                               ),
                             ),
@@ -127,7 +127,7 @@ class ConsultScreen extends StatelessWidget {
                               child:   commonInkWell(
                                   child: CommonTextWidget(text: "GO TO SETTINGS",
                                     fontSize: 12,
-                                    textColor: Colors.amber,
+                                    textColor: colorAmber,
                                     fontWeight: FontWeight.w700,)
                               ),
                             ),
@@ -164,7 +164,7 @@ class ConsultScreen extends StatelessWidget {
                               child:   commonInkWell(
                                   child: CommonTextWidget(text: "GO TO SETTINGS",
                                     fontSize: 12,
-                                    textColor: Colors.amber,
+                                    textColor: colorAmber,
                                     fontWeight: FontWeight.w700,)
                               ),
                             ),
@@ -175,7 +175,7 @@ class ConsultScreen extends StatelessWidget {
                               child:   commonInkWell(
                                   child: CommonTextWidget(text: "GO IT",
                                     fontSize: 12,
-                                    textColor: Colors.amber,
+                                    textColor: colorAmber,
                                     fontWeight: FontWeight.w700,)
                               ),
                             ),
@@ -202,7 +202,7 @@ class ConsultScreen extends StatelessWidget {
                               textColor: Colors.black,
                             ),
                             const SizedBox(width: 10,),
-                           const Icon(Icons.favorite,color: Colors.amber,)
+                           const Icon(Icons.favorite,color: colorAmber,)
                           ],
                         )
                       ],
@@ -304,7 +304,7 @@ class ConsultScreen extends StatelessWidget {
                         commonInkWell(
                           child: Padding(
                             padding: const EdgeInsets.only(top: 8.0,bottom: 8),
-                            child: CommonTextWidget(text: "View All Answer",textColor: Colors.amber,fontWeight: FontWeight.w700,),
+                            child: CommonTextWidget(text: "View All Answer",textColor: colorAmber,fontWeight: FontWeight.w700,),
                           )
                         )
                       ],
@@ -318,20 +318,5 @@ class ConsultScreen extends StatelessWidget {
     });
   }
 
-  commonList({
-    String? title,
-    Widget? child,
-    double? top,
-  }) {
-    return Container(
 
-      padding: const EdgeInsets.only(top: 8, bottom: 8),
-      decoration: commonBoxDecoration(
-          color: Colors.white,
-
-          border: Border.all(color: Colors.grey.withOpacity(0.50), width: 0)),
-      margin: EdgeInsets.only(left: 0, right: 0, top: top ?? 0),
-      child: child,
-    );
-  }
 }

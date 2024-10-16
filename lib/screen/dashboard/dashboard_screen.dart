@@ -3,7 +3,6 @@ import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
-import 'package:doctor_app/screen/dashboard/chat_screen/chat_screen.dart';
 import 'package:doctor_app/screen/dashboard/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +25,7 @@ class DashboardScreen extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor:Colors.white,
         elevation: 2,
-        selectedItemColor: Colors.amber,
+        selectedItemColor:colorAmber,
         selectedLabelStyle: commonTextStyle(fontSize: 11),
         unselectedLabelStyle: commonTextStyle(fontSize: 11),
         unselectedItemColor: Colors.grey,
@@ -55,12 +54,25 @@ class DashboardScreen extends StatelessWidget {
       commonIcon(onTap: () {
         pushScreen(context: context, routeName: RouteName.settingScreen);
       }),
-      commonIcon(
-          icon: Icons.question_mark_outlined,
-          onTap: () {
-            pushScreen(
-                context: context, routeName: RouteName.reportAndIssueScreen);
-          }),
+
+      commonInkWell(
+        onTap: (){
+          pushScreen(
+              context: context, routeName: RouteName.reportAndIssueScreen);
+        },
+        child: Container(
+          width: 24,
+          height: 24,
+          alignment:Alignment.center ,
+          decoration: commonBoxDecoration(shape: BoxShape.circle,
+          border: Border.all(color: Colors.white,width: 1)),
+          child: Container(
+
+            alignment:Alignment.center ,
+            child: const Icon(Icons.question_mark,size: 15,),
+          ),),
+      ),
+      const SizedBox(width: 10,),
       commonInkWell(
         onTap: () {
           pushScreen(

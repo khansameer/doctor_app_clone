@@ -32,7 +32,7 @@ class CalenderView extends StatelessWidget {
             margin: const EdgeInsets.all(4.0),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                color: Colors.amber,
+                color: colorAmber,
                 borderRadius: BorderRadius.circular(10.0)),
             child: CommonTextWidget(
               text: date.day.toString(),
@@ -66,7 +66,7 @@ class CalenderView extends StatelessWidget {
         leftChevronVisible: false,
         formatButtonVisible: false,
         titleTextStyle: commonTextStyle(
-            color: Colors.amber,
+            color:colorAmber,
             fontSize: 16,
             fontWeight: FontWeight.w700),
         formatButtonShowsNext: false,

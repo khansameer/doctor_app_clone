@@ -102,23 +102,25 @@ class ProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
+                width: 60,
+                height: 60,
                 decoration: commonBoxDecoration(
-                    border: Border.all(color: Colors.black, width: 1),
+                    border: Border.all(color: colorGreen, width: 1),
                     shape: BoxShape.circle),
                 child: ClipOval(
                   child:
-                      setAssetImage(image: icLoginLogo, width: 60, height: 60),
+                      setAssetImage(image: icLoginLogo, width: 40, height: 40,fit: BoxFit.scaleDown),
                 ),
               ),
               CommonTextWidget(
                 text: "Edit Profile",
-                textColor: Colors.amber,
+                textColor: colorAmber,
                 fontWeight: FontWeight.w700,
               )
             ],
           ),
           CommonTextWidget(
-            text: "Dr. Bhavesh Gohil",
+            text: "Dr. Richard Besser",
             fontWeight: FontWeight.w600,
             top: 20,
             fontSize: 14,
@@ -148,7 +150,7 @@ class ProfileScreen extends StatelessWidget {
             text: "2000/12/3569",
           ),
           CommonTextWidget(
-            text: "Maharashtra Medical Council - 2000",
+            text: "790 W. Chestnut Avenue, Monrovia, CA 91016",
             textColor: Colors.grey,
             top: 10,
             fontSize: 12,
@@ -177,7 +179,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               CommonTextWidget(
                 text: "Add Clinic",
-                textColor: Colors.amber,
+                textColor: colorAmber,
                 fontWeight: FontWeight.w700,
               )
             ],

@@ -110,7 +110,7 @@ class CommonTextWidget extends StatelessWidget {
                 height: _lineHeight ?? zero,
                 letterSpacing: _letterSpacing ?? zero05,
                 fontSize: _fontSize,
-                color: _textColor ?? Colors.black,
+                color: _textColor ?? colorText,
                 fontWeight: _fontWeight,
                 decoration: _textDecoration),
       ),

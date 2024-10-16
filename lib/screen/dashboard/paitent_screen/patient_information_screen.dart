@@ -55,7 +55,7 @@ class PatientInformationScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CommonTextWidget(
-                        text: '333 Ashish Sharma',
+                        text: 'Dr. Karen Remley',
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
                       ),
