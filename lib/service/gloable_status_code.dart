@@ -1,0 +1,1 @@
+ int globalStatusCode=404;

@@ -16,13 +16,7 @@ class LoginScreen extends StatelessWidget {
         width: size.width,
         height: size.height,
         color: Colors.white,
-        child:const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            LoginView(),
-          ],
-        ),
+        child:const LoginView(),
       ),
     );
   }

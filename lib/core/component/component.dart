@@ -2,6 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/image/image_path.dart';
+import 'package:doctor_app/core/string/string_utils.dart';
+import 'package:doctor_app/provider/auth_provider.dart';
+import 'package:doctor_app/shared_preferences/preference_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -35,6 +38,14 @@ BoxDecoration commonBoxDecoration(
       boxShadow: boxShadow,
       borderRadius: borderRadius);
 }
+Future getAuthToken() async {
+  String? token =
+  await PreferenceHelper.getString(key: PreferenceHelper.authToken);
+
+  print('=================token${token}');
+  return token;
+}
+
 
 commonTextStyle({FontWeight? fontWeight, double? fontSize, Color? color}) {
   return GoogleFonts.inter(
@@ -51,7 +62,10 @@ commonTextFiledView({
   String? hint,
   String? Function(String?)? validator,
   double? topTextField,
+  bool? isReadOnly,
   Widget? suffixIcon,
+  VoidCallback? onTap,
+  TextInputType? keyboardType,
   TextEditingController? controller,
   int? maxLines,
 }) {
@@ -67,7 +81,10 @@ commonTextFiledView({
       ),
       CommonTextField(
         hint: hint,
+        onTap: onTap,
+        isReadOnly: isReadOnly,
         colorFill: Colors.white,
+        inputTypes: keyboardType,
         suffixIcon: suffixIcon,
         validator: validator,
         obscureText: obscureText,
@@ -260,5 +277,52 @@ commonList({
         border: Border.all(color: Colors.grey.withOpacity(0.50), width: 0)),
     margin: EdgeInsets.only(left: 0, right: 0, top: top ?? 0),
     child: child,
+  );
+}
+genderView({required AuthProviders provider}) {
+  return Column(
+    children: [
+
+
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Male Radio Button
+          Align(
+            alignment: Alignment.centerLeft,
+            child: CommonTextWidget(
+              text: gender,
+              fontWeight: FontWeight.w500,
+              fontSize: sixteen,
+            ),
+          ),
+          Radio<Gender>(
+            activeColor: colorGreen,
+            value: Gender.male,
+            groupValue: provider.selectedGender,
+            onChanged: (Gender? value) {
+              if (value != null) {
+                provider.selectGender(value);
+              }
+            },
+          ),
+          CommonTextWidget(text: "Male"),
+          // Female Radio Button
+          Radio<Gender>(
+            activeColor: colorGreen,
+            value: Gender.female,
+            groupValue: provider.selectedGender,
+            onChanged: (Gender? value) {
+              if (value != null) {
+                provider.selectGender(value);
+              }
+            },
+          ),
+          CommonTextWidget(text: female),
+          //CommonTextWidget(text: female),
+        ],
+      ),
+    ],
   );
 }

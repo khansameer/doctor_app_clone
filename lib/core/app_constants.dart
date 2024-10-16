@@ -10,6 +10,7 @@ const double zero03 = 0.3;
 const double zero003 = 0.03;
 const double zero04 = 0.4;
 const double zero004 = 0.04;
+const double zero3 = 0.3;
 const double zero05 = 0.5;
 const double zero005 = 0.05;
 const double zero06 = 0.6;

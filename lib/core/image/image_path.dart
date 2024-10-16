@@ -8,3 +8,4 @@ const String icAttach = "$baseImagePath/ic_attach.png";
 const String icCamera = "$baseImagePath/ic_camera.png";
 const String icSmile = "$baseImagePath/ic_smile.png";
 const String icChatUserIcon = "$baseImagePath/ic_chat_user_icon.png";
+const String icBg = "$baseImagePath/ic_bg.jpg";
