@@ -12,6 +12,8 @@ import 'package:doctor_app/screen/dashboard/health_feed/health_feed_screen.dart'
 import 'package:doctor_app/screen/dashboard/notification/notificatio_screen.dart';
 import 'package:doctor_app/screen/dashboard/paitent_screen/patient_information_screen.dart';
 import 'package:doctor_app/screen/dashboard/paitent_screen/patients_screen.dart';
+import 'package:doctor_app/screen/dashboard/profile/add_clinic_screen.dart';
+import 'package:doctor_app/screen/dashboard/profile/edit_profile_screen.dart';
 import 'package:doctor_app/screen/dashboard/profile/profile_screen.dart';
 import 'package:doctor_app/screen/dashboard/report/report_screen.dart';
 import 'package:doctor_app/screen/dashboard/setting/setting_screen.dart';
@@ -92,23 +94,29 @@ class RouteGenerator {
       case RouteName.calenderScreen:
         return MaterialPageRoute(
             builder: (_) => const CalenderScreen(),
-            settings:
-            const RouteSettings(name: RouteName.calenderScreen));
+            settings: const RouteSettings(name: RouteName.calenderScreen));
       case RouteName.chatScreen:
         return MaterialPageRoute(
             builder: (_) => const ChatScreen(),
-            settings:
-            const RouteSettings(name: RouteName.chatScreen));
+            settings: const RouteSettings(name: RouteName.chatScreen));
       case RouteName.consultScreen:
         return MaterialPageRoute(
             builder: (_) => const ConsultScreen(),
-            settings:
-            const RouteSettings(name: RouteName.consultScreen));
+            settings: const RouteSettings(name: RouteName.consultScreen));
       case RouteName.reportScreen:
         return MaterialPageRoute(
             builder: (_) => const ReportScreen(),
-            settings:
-            const RouteSettings(name: RouteName.reportScreen));
+            settings: const RouteSettings(name: RouteName.reportScreen));
+      case RouteName.editprofileScreen:
+        return MaterialPageRoute(
+          builder: (ctx) => const EditProfileScreen(),
+          settings: const RouteSettings(name: RouteName.editprofileScreen),
+        );
+      case RouteName.addClinicScreen:
+        return MaterialPageRoute(
+          builder: (ctx) => const AddClinicScreen(),
+          settings: const RouteSettings(name: RouteName.addClinicScreen),
+        );
       default:
         return MaterialPageRoute(
             builder: (_) =>

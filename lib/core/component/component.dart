@@ -23,7 +23,7 @@ setAssetImage(
 BoxDecoration commonBoxDecoration(
     {Color? color,
     BoxBorder? border,
-      List<BoxShadow>? boxShadow,
+    List<BoxShadow>? boxShadow,
     BoxShape shape = BoxShape.rectangle,
     BorderRadiusGeometry? borderRadius,
     DecorationImage? image}) {
@@ -44,15 +44,17 @@ commonTextStyle({FontWeight? fontWeight, double? fontSize, Color? color}) {
   );
 }
 
-commonTextFiledView(
-    {String? title,
-    bool? obscureText,
-    double? topText,
-    String? hint,
-    String? Function(String?)? validator,
-    double? topTextField,
-    Widget? suffixIcon,
-    TextEditingController? controller}) {
+commonTextFiledView({
+  String? title,
+  bool? obscureText,
+  double? topText,
+  String? hint,
+  String? Function(String?)? validator,
+  double? topTextField,
+  Widget? suffixIcon,
+  TextEditingController? controller,
+  int? maxLines,
+}) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,6 +74,7 @@ commonTextFiledView(
         controller: controller,
         radius: twelve,
         top: topTextField,
+        maxLines: maxLines,
       )
     ],
   );
@@ -95,6 +98,7 @@ Widget commonInkWell({
     child: child,
   );
 }
+
 commonIcon({IconData? icon, double? size, VoidCallback? onTap}) {
   return IconButton(
       onPressed: onTap,
@@ -104,6 +108,7 @@ commonIcon({IconData? icon, double? size, VoidCallback? onTap}) {
         size: size,
       ));
 }
+
 AppBar commonAppBar(
     {String? title,
     Color? color,
