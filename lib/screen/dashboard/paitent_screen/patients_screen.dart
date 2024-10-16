@@ -17,7 +17,7 @@ class PatientsScreen extends StatelessWidget {
         '2 pts pen',
       ],
       '3': [
-        '333 Ashish Sharma',
+        '333  John Cullen',
       ],
       '5': [
         '5635',
@@ -26,10 +26,10 @@ class PatientsScreen extends StatelessWidget {
         '4 pts pen',
       ],
       '7': [
-        '777 Ashish Sharma',
+        '777 Steven A. Hauser',
       ],
       '8': [
-        '888 Girish Chauhan',
+        '888 Nancy Davidson',
       ],
     };
 
@@ -149,11 +149,11 @@ class PatientsScreen extends StatelessWidget {
               child: CommonButtonWidget(
                 text: "ADD PATIENT",
                 padding: EdgeInsets.zero,
-                iconShow: true,colorText: Colors.amber,
+                iconShow: true,colorText: colorAmber,
                 colorButton: Colors.white,
                 icon: const Icon(
                   Icons.add_outlined,
-                  color: Colors.amber,
+                  color: colorAmber,
                   size: 24,
                 ),
                 onPressed: () {},

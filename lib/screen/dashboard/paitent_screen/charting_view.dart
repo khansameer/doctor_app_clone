@@ -10,13 +10,13 @@ class ChartingView extends StatelessWidget {
       'Wednesday, 08 March 2024': [
         {
           'id': 'dr1',
-          'name': 'Dr Niraj Shopada',
+          'name': 'Dr Steven A. Hauser',
           'status': 'Appointment',
           'time': '07:00 PM - 07:15 PM'
         },
         {
           'id': 'dr2',
-          'name': 'Dr Prashant Patel',
+          'name': 'Dr. Keith Black',
           'status': 'Appointment',
           'time': '07:00 PM - 07:15 PM'
         },
@@ -24,13 +24,13 @@ class ChartingView extends StatelessWidget {
       'Thursday, 09 March 2024': [
         {
           'id': 'dr1',
-          'name': 'Dr Niraj Shopada',
+          'name': 'Dr. Karen Remley',
           'status': 'Appointment',
           'time': '07:00 PM - 07:15 PM'
         },
         {
           'id': 'dr2',
-          'name': 'Dr Prashant Patel',
+          'name': 'Dr. Judith Beck',
           'status': 'Appointment',
           'time': '07:00 PM - 07:15 PM'
         },
@@ -64,6 +64,7 @@ class ChartingView extends StatelessWidget {
                     ),
                   ),
                   child: ListTile(
+                    dense: true,
                       title: CommonTextWidget(
                         text: item['status'] ?? '',
                         textColor: Colors.grey.shade600,
@@ -79,6 +80,7 @@ class ChartingView extends StatelessWidget {
                             size: 12,
                           ),
                           CommonTextWidget(
+
                             text: '${item['name'] ?? ''} ${item['time'] ?? ''}',
                             left: 8,
                           )

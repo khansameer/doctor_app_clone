@@ -12,12 +12,16 @@ import 'package:doctor_app/screen/dashboard/health_feed/health_feed_screen.dart'
 import 'package:doctor_app/screen/dashboard/notification/notificatio_screen.dart';
 import 'package:doctor_app/screen/dashboard/paitent_screen/patient_information_screen.dart';
 import 'package:doctor_app/screen/dashboard/paitent_screen/patients_screen.dart';
+import 'package:doctor_app/screen/dashboard/patient_stories/patient_stories_screen.dart';
+import 'package:doctor_app/screen/dashboard/prime/prime_screen.dart';
 import 'package:doctor_app/screen/dashboard/profile/profile_screen.dart';
 import 'package:doctor_app/screen/dashboard/report/report_screen.dart';
 import 'package:doctor_app/screen/dashboard/setting/setting_screen.dart';
+import 'package:doctor_app/screen/dashboard/weekly_earning/weekly_earning_screen.dart';
 import 'package:doctor_app/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../screen/dashboard/reach/reach_screen.dart';
 import '../../screen/dashboard/report_and_issue/report_and_issue_screen.dart';
 
 class RouteGenerator {
@@ -109,6 +113,30 @@ class RouteGenerator {
             builder: (_) => const ReportScreen(),
             settings:
             const RouteSettings(name: RouteName.reportScreen));
+
+      case RouteName.primeScreen:
+        return MaterialPageRoute(
+            builder: (_) => const PrimeScreen(),
+            settings:
+            const RouteSettings(name: RouteName.primeScreen));
+
+      case RouteName.patientStoriesScreen:
+        return MaterialPageRoute(
+            builder: (_) => const PatientStoriesScreen(),
+            settings:
+            const RouteSettings(name: RouteName.patientStoriesScreen));
+
+      case RouteName.reachScreen:
+        return MaterialPageRoute(
+            builder: (_) => const ReachScreen(),
+            settings:
+            const RouteSettings(name: RouteName.reachScreen));
+
+      case RouteName.weeklyEarningScreen:
+        return MaterialPageRoute(
+            builder: (_) => const WeeklyEarningScreen(),
+            settings:
+            const RouteSettings(name: RouteName.weeklyEarningScreen));
       default:
         return MaterialPageRoute(
             builder: (_) =>

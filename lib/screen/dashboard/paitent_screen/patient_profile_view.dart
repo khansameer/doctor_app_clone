@@ -7,7 +7,7 @@ class PatientProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 5,
+      itemCount: 1,
       itemBuilder: (ctx, index) => Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -27,7 +27,7 @@ class PatientProfileView extends StatelessWidget {
             fontSize: 14,
           ),
           subtitle: CommonTextWidget(
-            text: '+917678077561',
+            text: '+1-555-852-5574',
             fontWeight: FontWeight.w400,
             fontSize: 13,
           ),

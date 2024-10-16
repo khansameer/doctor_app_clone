@@ -93,3 +93,4 @@ const String passOrMedication = "Past or Current Medications";
 const String emptyEmail = "Please enter email address.";
 const String emailValidationMsg = "Please enter valid email address.";
 const String emptyPassword = "Please enter password.";
+const String rupee = "\u{20B9}";

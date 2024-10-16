@@ -9,15 +9,20 @@ class HealthFeedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size=MediaQuery.sizeOf(context);
     return AppScaffold(
         left: 0,
-        
+
         right: 0,
         appBar: commonAppBar(title: "Health Feed".toUpperCase()),
         child: Container(
+          width: size.width,
+          height: size.height,
           color: Colors.white,
           child: ListView(
             children: [
+
+
               Container(
                 color: Colors.white,
                 padding: const EdgeInsets.all(20.0),
@@ -79,7 +84,7 @@ class HealthFeedScreen extends StatelessWidget {
               commonView(title: "Article Likes"),
               const Divider(thickness: 0.3,),
               commonView(title: "Profile Views (via Health Feed)"),
-          
+
             ],
           ),
         ));
