@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/image/image_path.dart';
+import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:doctor_app/provider/auth_provider.dart';
 import 'package:doctor_app/shared_preferences/preference_helper.dart';
@@ -13,6 +14,31 @@ import 'package:google_fonts/google_fonts.dart';
 import '../app_constants.dart';
 import '../common/common_textfield.dart';
 
+
+commonResponsiveLayout({required Size size,required Widget child,required bool isMobile,double? boxWidth,double ?boxHeight}){
+  return Container(
+    width: size.width,
+    height: size.height,
+    decoration: const BoxDecoration(
+        image: DecorationImage(fit: BoxFit.cover, image: AssetImage(icBg))),
+    child: Center(
+      child: Container(
+        decoration: commonBoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(isMobile?0:
+            10)
+        ),
+        padding: isMobile
+            ? EdgeInsets.zero
+            : const EdgeInsets.only(
+            left: 25, right: 25, bottom: 25, top: 0),
+        width: isMobile ? size.width : boxWidth??size.width * 0.3,
+        height: isMobile ? size.height : boxHeight??size.height * 0.38,
+        child: child,
+      ),
+    ),
+  );
+}
 setAssetImage(
     {required String image, double? width, double? height, BoxFit? fit}) {
   return Image.asset(
@@ -98,7 +124,7 @@ commonTextFiledView({
 }
 
 commonDivider() {
-  return Divider(
+  return const Divider(
     thickness: 0.3,
     color: colorGreen,
   );
@@ -131,6 +157,7 @@ AppBar commonAppBar(
     Color? color,
     List<Widget>? actions,
     Color? colorText,
+    Color? iconColor,
     Widget? leading,
     double? leadingWidth,
     double? toolbarHeight,
@@ -142,7 +169,7 @@ AppBar commonAppBar(
     bottom: bottom,
     toolbarHeight: toolbarHeight,
     leading: leading,
-    iconTheme: const IconThemeData(color: Colors.white),
+    iconTheme:  IconThemeData(color: iconColor??Colors.white),
     actions: actions,
     title: CommonTextWidget(
       text: title,
@@ -325,4 +352,72 @@ genderView({required AuthProviders provider}) {
       ),
     ],
   );
+}
+
+appBarView(BuildContext context) {
+  return commonAppBar(
+      leading: const Icon(Icons.dashboard_rounded,color: Colors.white,),
+      color: colorGreen, actions: [
+    commonIcon(onTap: () {
+      pushScreen(context: context, routeName: RouteName.settingScreen);
+    }),
+
+    commonInkWell(
+      onTap: (){
+        pushScreen(
+            context: context, routeName: RouteName.reportAndIssueScreen);
+      },
+      child: Container(
+        width: 24,
+        height: 24,
+        alignment:Alignment.center ,
+        decoration: commonBoxDecoration(shape: BoxShape.circle,
+            border: Border.all(color: Colors.white,width: 1)),
+        child: Container(
+
+          alignment:Alignment.center ,
+          child: const Icon(Icons.question_mark,size: 15,),
+        ),),
+    ),
+    const SizedBox(width: 10,),
+    commonInkWell(
+      onTap: () {
+        pushScreen(
+            context: context, routeName: RouteName.notificationScreen);
+      },
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          const Icon(
+            Icons.notifications_none,
+            color: Colors.white,
+            size: 24,
+          ),
+          Positioned(
+              top: -8.0,
+              right: -3.0,
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    width: 20,
+                    height: 20,
+                    decoration: commonBoxDecoration(
+                        shape: BoxShape.circle, color: Colors.red),
+                    child: Center(
+                      child: CommonTextWidget(
+                        text: "20",
+                        fontSize: 9,
+                        textColor: Colors.white,
+                      ),
+                    ),
+                  )
+                ],
+              ))
+        ],
+      ),
+    ),
+    const SizedBox(
+      width: 10,
+    )
+  ]);
 }

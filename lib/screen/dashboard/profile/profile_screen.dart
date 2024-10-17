@@ -4,6 +4,7 @@ import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
+import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:flutter/material.dart';
@@ -15,33 +16,127 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
+    var isMobile = Responsive.isMobile(context);
     return AppScaffold(
       left: 0,
       right: 0,
-      appBar: commonAppBar(title: "PROFILE"),
+      color: Colors.white,
+     /* appBar: isMobile
+          ? commonAppBar(title: "PROFILE")
+          : PreferredSize(preferredSize: Size.zero, child: Container()),*/
+      appBar: commonAppBar(title: "PROFILE",color: colorBG,colorText:colorText,leading: Container() ),
       child: Consumer<DashboardProvider>(builder: (context, provider, child) {
         return Container(
           width: size.width,
           height: size.height,
-          color: colorGreen.withOpacity(0.10),
+          color: Colors.white,
+          //  color: colorGreen.withOpacity(0.10),
           child: ListView(
             children: [
-              _topView(),
-              const SizedBox(
-                height: 10,
-              ),
-              _profileView(context),
-              const SizedBox(
-                height: 10,
-              ),
-              _addClinic(provider: provider, context: context),
-              const SizedBox(
-                height: 10,
-              ),
-              _helpView(),
-              const SizedBox(
-                height: 20,
-              ),
+              isMobile
+                  ? Column(
+                      children: [
+                        _topView(isMobile: isMobile, size: size),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        _profileView(size: size, isMobile: isMobile),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        _addClinic(
+                            provider: provider,
+                            context: context,
+                            isMobile: isMobile,
+                            size: size),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        _topView(
+                            size: size,
+                            isMobile: isMobile,
+                            title: "Need Help?",
+                            btn: CommonButtonWidget(
+                              top: 20,
+                              text: "Report an issue",
+                              colorText: Colors.black,
+                              iconShow: true,
+                              padding:
+                              isMobile ? null : const EdgeInsets.all(18),
+                              width: size.width * 0.1,
+                              icon: const Icon(
+                                Icons.flag,
+                                color: Colors.black,
+                              ),
+                              colorButton: Colors.white,
+                              colorBorder: Colors.black,
+                              borderWidth: 1,
+                            )),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _topView(isMobile: isMobile, size: size),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                child: _profileView(
+                                    size: size, isMobile: isMobile),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _addClinic(
+                                    provider: provider,
+                                    context: context,
+                                    isMobile: isMobile,
+                                    size: size),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                child: _topView(
+                                    size: size,
+                                    isMobile: isMobile,
+                                    title: "Need Help?",
+                                    btn: CommonButtonWidget(
+                                      top: 20,
+                                      text: "Report an issue",
+                                      colorText: Colors.black,
+                                      iconShow: true,
+                                      padding:
+                                          isMobile ? null : const EdgeInsets.all(18),
+                                      width: size.width * 0.1,
+                                      icon: const Icon(
+                                        Icons.flag,
+                                        color: Colors.black,
+                                      ),
+                                      colorButton: Colors.white,
+                                      colorBorder: Colors.black,
+                                      borderWidth: 1,
+                                    )),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
             ],
           ),
         );
@@ -49,50 +144,89 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  _topView() {
+  _topView(
+      {required bool isMobile,
+      required Size size,
+      String? title,
+      Widget? btn}) {
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+          color: isMobile ? Colors.white : Colors.white,
+          borderRadius: BorderRadius.circular(8)),
+      height: isMobile ? null : size.height * 0.28,
       child: Container(
-        margin: const EdgeInsets.all(10),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        margin: const EdgeInsets.all(0),
         decoration: commonBoxDecoration(
-            color: Colors.green.withOpacity(0.15),
+            color: Colors.white,
+            border: Border.all(color: Colors.grey.withOpacity(0.50), width: 1),
             borderRadius: BorderRadius.circular(8)),
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(0),
         child: Column(
           children: [
-            Row(
-              children: [
-                const Icon(
-                  Icons.check_circle_outline,
-                  color: Colors.green,
-                ),
-                CommonTextWidget(
-                  text: "Your profile is live on Practo!",
-                  textColor: Colors.green,
-                  fontWeight: FontWeight.w800,
-                )
-              ],
+            Container(
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(8)),
+              padding: const EdgeInsets.all(15.0),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.check_circle_outline,
+                    color: colorText,
+                  ),
+                  CommonTextWidget(
+                    text: title ?? "Your profile is live on Practo!",
+                    textColor: colorText,
+                    fontWeight: FontWeight.w800,
+                  )
+                ],
+              ),
             ),
-            CommonTextWidget(
-              top: 10,
-              fontSize: 13,
-              text:
-                  "Congratulations! Welcome to Practo family. Click below to check out your profile live on Practo.com",
-            ),
-            CommonButtonWidget(
-              top: 10,
-              text: "View live profile",
-              colorButton: Colors.green,
-            )
+            Container(
+                width: size.width,
+                height: isMobile ? null : size.height * 0.20,
+                color: Colors.grey.withOpacity(0.10),
+                child: Padding(
+                  padding: const EdgeInsets.all(0.0),
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CommonTextWidget(
+                          top: 10,
+                          textAlign: TextAlign.center,
+                          fontSize: isMobile ? 13 : 15,
+                          text:
+                              "Congratulations! Welcome to Practo family. Click below to check out your profile live on Practo.com",
+                        ),
+                        btn ??
+                            CommonButtonWidget(
+                              top: isMobile ? 10 : 30,
+                              padding: isMobile ? null : const EdgeInsets.all(18),
+                              width: size.width * 0.1,
+                              text: "View live profile",
+                              colorButton: Colors.green,
+                            )
+                      ],
+                    ),
+                  ),
+                )),
           ],
         ),
       ),
     );
   }
 
-  _profileView(context) {
+  _profileView({required bool isMobile, required Size size}) {
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey.withOpacity(0.50), width: 1),
+          color: isMobile ? Colors.white : colorBG,
+          borderRadius: BorderRadius.circular(8)),
+      height: isMobile ? null : size.height * 0.28,
       padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -103,29 +237,31 @@ class ProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 60,
-                height: 60,
+                width: 70,
+                height: 70,
                 decoration: commonBoxDecoration(
                     border: Border.all(color: colorGreen, width: 1),
                     shape: BoxShape.circle),
                 child: ClipOval(
-                  child:
-                      setAssetImage(image: icLoginLogo, width: 40, height: 40,fit: BoxFit.scaleDown),
+                  child: setAssetImage(
+                      image: icMen,
+                      width: 40,
+                      height: 40,
+                      fit: BoxFit.cover),
                 ),
               ),
-
               commonInkWell(
                 child: CommonTextWidget(
                   text: "Edit Profile",
-                  textColor: Colors.amber,
+                  textDecoration: TextDecoration.underline,
+                  textColor: colorText,
                   fontWeight: FontWeight.w700,
                 ),
                 onTap: () {
-                  pushScreen(
-                      context: context, routeName: RouteName.editprofileScreen);
+                  /* pushScreen(
+                      context: context, routeName: RouteName.editprofileScreen);*/
                 },
               ),
-   
             ],
           ),
           CommonTextWidget(
@@ -170,78 +306,108 @@ class ProfileScreen extends StatelessWidget {
   }
 
   _addClinic(
-      {required DashboardProvider provider, required BuildContext context}) {
+      {required DashboardProvider provider,
+      required BuildContext context,
+      required bool isMobile,
+      required Size size}) {
     return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.all(20),
+      height: isMobile ? null : size.height * 0.28,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey.withOpacity(0.50), width: 1),
+          color: isMobile ? Colors.white : colorBG,
+          borderRadius: BorderRadius.circular(8)),
+      padding: const EdgeInsets.all(0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CommonTextWidget(
-                text: "Clinics",
-                fontWeight: FontWeight.w700,
-              ),
-              commonInkWell(
-                onTap: () {
-                  pushScreen(
-                      context: context, routeName: RouteName.addClinicScreen);
-                },
-                child: CommonTextWidget(
-                  text: "Add Clinic",
-                  textColor: Colors.amber,
+          Container(
+            clipBehavior: Clip.none,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+               borderRadius: BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))
+            ),
+            padding: const EdgeInsets.all(15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CommonTextWidget(
+                  text: "Clinics",
                   fontWeight: FontWeight.w700,
                 ),
-              )
-            ],
+                commonInkWell(
+                  onTap: () {
+                    pushScreen(
+                        context: context, routeName: RouteName.addClinicScreen);
+                  },
+                  child: CommonTextWidget(
+                    text: "Add Clinic",
+                    textColor: colorText,
+                    textDecoration: TextDecoration.underline,
+                    fontWeight: FontWeight.w700,
+                  ),
+                )
+              ],
+            ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          ListView.separated(
-            shrinkWrap: true,
-            itemCount: provider.clinicList.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                contentPadding: EdgeInsets.zero,
-                dense: true,
-                leading: SizedBox(
-                  height: 50,
-                  width: 50,
-                  child: commonImageNetworkWidget(
-                      path: provider.clinicList[index].icon,
-                      width: 50,
-                      height: 50),
+          Expanded(
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                ListView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  itemCount: provider.clinicList.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      decoration: commonBoxDecoration(
+                        color: Colors.white,
+                      ),
+                      margin: const EdgeInsets.only(top: 5, bottom: 5),
+                      child: ListTile(
+                        titleAlignment: ListTileTitleAlignment.center,
+                        contentPadding: const EdgeInsets.only(left: 10, right: 10),
+                        dense: true,
+                        leading: CircleAvatar(
+                          child: Container(
+                              height: 80,
+                              width: 80,
+                              decoration: commonBoxDecoration(
+                                  borderRadius: BorderRadius.circular(40),
+                                  color: Colors.red),
+                              child: commonImageNetworkWidget(
+                                  path: provider.clinicList[index].icon,
+                                  width: 80,
+                                  height: 80)),
+                        ),
+                        title: CommonTextWidget(
+                          text: provider.clinicList[index].date,
+                          fontSize: 13,
+                        ),
+                        subtitle: CommonTextWidget(
+                          text: provider.clinicList[index].content,
+                          fontSize: 10,
+                        ),
+                      ),
+                    );
+                  },
                 ),
-                title: CommonTextWidget(
-                  text: provider.clinicList[index].date,
-                  fontSize: 13,
-                ),
-                subtitle: CommonTextWidget(
-                  text: provider.clinicList[index].content,
-                  fontSize: 10,
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return const Divider(
-                thickness: 0.3,
-              );
-            },
+              ],
+            ),
           )
         ],
       ),
     );
   }
 
-  _helpView() {
+  _helpView({required bool isMobile, required Size size}) {
     return Container(
-      color: Colors.white,
+      color: isMobile ? Colors.white : colorBG,
+      height: isMobile ? null : size.height * 0.3,
       padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

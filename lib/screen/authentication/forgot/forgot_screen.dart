@@ -1,8 +1,10 @@
 import 'package:doctor_app/core/app_constants.dart';
+import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
+import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:flutter/material.dart';
@@ -17,54 +19,73 @@ class ForgotScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
+    var isMobile = Responsive.isMobile(context);
     return AppScaffold(
 
-      appBar: commonAppBar(title: forgotPasswordText),
-      child: ListView(
-        children: [
-          SizedBox(height: size.height*0.05,),
+      appBar: commonAppBar(
 
-          Align(
+          color: Colors.white,
+          iconColor: Colors.black
+      ),
+      left:isMobile?null: 0,
+    right: isMobile?null: 0,
+
+      child: commonResponsiveLayout(
+        size: size,
+
+        isMobile: isMobile,
+        child: ListView(
+          children: [
+
+            SizedBox(
+              height: isMobile?size.height * 0.0:0,
+            ),
+            setAssetImage(
+                image: icLoginLogo,
+                width: 200,
+                height: 140,
+                fit: BoxFit.scaleDown),
+            Align(
+                heightFactor: 0.1,
+                alignment: Alignment.center,
+                child: CommonTextWidget(
+                  text: "Forgot Password",
+                  textStyle: GoogleFonts.inter(
+                    fontWeight: FontWeight.w700,
+                    color: colorGreen,
+                    fontSize: 25,
+                  ),
+
+                )),
+
+
+            Align(
               alignment: Alignment.center,
               child: CommonTextWidget(
-                text: "Forgot Password",
-                textStyle: GoogleFonts.agbalumo(
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black,
-                  fontSize: 25,
-                ),
-
-                top: 15,
-
-              )),
-          const SizedBox(height: 20,),
-          setAssetImage(image: icLoginLogo,width: 200,height: 180,  fit:BoxFit.scaleDown),
-
-
-          Align(
-            alignment: Alignment.center,
-            child: CommonTextWidget(
-              top: size.height * zero002,
-              textColor: Colors.black,
-              text: forgotPasswordTextDesc,
+                top: size.height * zero002,
+                textColor: Colors.black,
+                text: forgotPasswordTextDesc,
+              ),
             ),
-          ),
-          commonTextFiledView(
-              title: yourEmail,
-              hint: enterYourEmail,
-              topText: size.height * 0.04,
-              topTextField: ten),
-          CommonButtonWidget(
-            onPressed: () {
-              pushScreen(
-                  context: context,
-                  routeName: RouteName.forgotPasswordOptView);
+            commonTextFiledView(
+                title: yourEmail,
+                hint: enterYourEmail,
+                topText: size.height * 0.04,
+                topTextField: ten),
+            CommonButtonWidget(
+              padding: isMobile?null:EdgeInsets.all(20),
+              onPressed: () {
 
-            },
-            top: size.height * zero004,
-            text: resetPassword,
-          ),
-        ],
+                pushScreen(
+                    context: context,
+                    routeName: RouteName.forgotPasswordOptView);
+
+              },
+              top: size.height * zero004,
+              text: resetPassword,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -14,7 +14,8 @@ class WeeklyEarningScreen extends StatelessWidget {
     return AppScaffold(
       left: 0,
       right: 0,
-      appBar: commonAppBar(title: "Weekly Earnings".toUpperCase()),
+      appBar: commonAppBar(title: "Weekly Earnings",color: colorBG,colorText:colorText,leading: Container() ),
+
       child: Container(
         width: size.width,
         color: colorGray.withOpacity(0.20),

@@ -14,7 +14,8 @@ class HealthFeedScreen extends StatelessWidget {
         left: 0,
 
         right: 0,
-        appBar: commonAppBar(title: "Health Feed".toUpperCase()),
+        appBar: commonAppBar(title: "Health Feed",color: colorBG,colorText:colorText,leading: Container() ),
+       // appBar: commonAppBar(title: "Health Feed".toUpperCase()),
         child: Container(
           width: size.width,
           height: size.height,

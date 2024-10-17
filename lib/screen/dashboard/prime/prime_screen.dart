@@ -15,11 +15,14 @@ class PrimeScreen extends StatelessWidget {
     return AppScaffold(
       left: 0,
       right: 0,
-      appBar: commonAppBar(title: "Prime".toUpperCase(), actions: [
+
+      appBar: commonAppBar(
+          color: colorBG,colorText:colorText,leading: Container(),
+          title: "Prime".toUpperCase(), actions: [
         commonInkWell(
             child: CommonTextWidget(
           text: "Add Budget".toUpperCase(),
-          textColor: Colors.white,
+          textColor: colorText,
           fontWeight: FontWeight.w600,
           right: 10,
         ))

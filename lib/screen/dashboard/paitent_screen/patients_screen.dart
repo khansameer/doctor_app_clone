@@ -38,9 +38,8 @@ class PatientsScreen extends StatelessWidget {
         left: 0,
         color: Colors.white,
         // color: const Color.fromRGBO(252, 252, 254, 1),
-        appBar: commonAppBar(
-          title: "Patients".toUpperCase(),
-        ),
+
+        appBar: commonAppBar(title: "Patients",color: colorBG,colorText:colorText,leading: Container() ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

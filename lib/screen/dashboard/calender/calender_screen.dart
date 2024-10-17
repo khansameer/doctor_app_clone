@@ -17,14 +17,17 @@ class CalenderScreen extends StatelessWidget {
     return AppScaffold(
       left: 0,
       right: 0,
-      appBar: commonAppBar(title: "Calender".toUpperCase(), actions: [
+
+      appBar: commonAppBar(title: "Calender",color: colorBG,colorText:colorText,leading: Container() ,actions: [
         IconButton(
             onPressed: () {},
             icon: const Icon(
               Icons.search,
-              color: Colors.white,
+              color: colorText,
             ))
       ]),
+
+
       child: Consumer<DashboardProvider>(builder: (context, provider, child) {
         return SizedBox(
           width: size.width,

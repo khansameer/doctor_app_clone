@@ -13,7 +13,8 @@ class ReportScreen extends StatelessWidget {
     return AppScaffold(
       left: 0,
       right: 0,
-      appBar: commonAppBar(title: "Report".toUpperCase(), actions: []),
+      appBar: commonAppBar(title: "Report",color: colorBG,colorText:colorText,leading: Container() ),
+     // appBar: commonAppBar(title: "Report".toUpperCase(), actions: []),
       child: Container(
         color: colorGray.withOpacity(0.20),
         child: ListView(
