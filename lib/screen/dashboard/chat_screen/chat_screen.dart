@@ -20,7 +20,7 @@ class ChatScreen extends StatelessWidget {
     return AppScaffold(
    left: 0,
       right: 0,
-    appBar: commonAppBar(
+    appBar: isMobile?PreferredSize(preferredSize: Size.zero, child: Container()):commonAppBar(
       title: "Chat",
       colorText: colorText,
       color: colorBG,
@@ -31,7 +31,8 @@ class ChatScreen extends StatelessWidget {
       ]
     ),
 
-      child: Padding(
+      child: Container(
+        color:colorBG ,
         padding:  EdgeInsets.all(isMobile?0:20.0),
         child: const Column(
           children: [

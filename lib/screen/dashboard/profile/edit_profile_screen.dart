@@ -23,7 +23,9 @@ class EditProfileScreen extends StatelessWidget {
       appBar: commonAppBar(
           color: colorBG,
           colorText: Colors.black,
+
           title: 'EDIT PROFILE',
+
           leading: commonBackRedirectButton(page: "Profile")),
       child:Container(
           child:  isMobile
@@ -47,311 +49,316 @@ class EditProfileScreen extends StatelessWidget {
 
   _mobileView({required Size size}) {
     return Consumer<ProfileProvider>(builder: (context, provider, child) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      return ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: Row(
-              children: [
-                Expanded(
-                    child: Column(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(0.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CommonTextWidget(
+                          text: "Profile photo",
+                          fontSize: 12,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 90,
+                              height: 90,
+                              child: setAssetImage(image: icDummyUsers),
+                            ),
+
+                            Flexible(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CommonTextWidget(
+                                    text: "Pick a photo from your\ncomputer",
+                                    left: 10,
+                                    fontSize: 12,
+                                  ),
+                                  commonInkWell(
+                                      child: CommonTextWidget(
+                                          text: "Add Photo",
+                                          top: 8,
+                                          left: 10,
+                                          fontWeight: FontWeight.w800,
+                                          textColor: colorText))
+                                ],
+                              ),
+                            ),
+
+                          ],
+                        )
+                      ],
+                    )),
+
+                    //  const Expanded(child: Column())
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Divider(),
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(0.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                            child: commonTextFiled(
+                          title: "Name",
+                          width: size.width,
+                          size: size,
+                        )),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                            child: commonTextFiled(
+                          title: "Phone Number",
+                          width: size.width,
+                          size: size,
+                        )),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: commonTextFiled(
+                          title: "Email Address",
+                          size: size,
+                          width: size.width,
+                        )),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                            child: commonDropDown(
+                          size: size,
+                          items: provider.itemGenderList,
+                          onChanged: (String? value) {
+                            provider.setGenderValue = value ?? '';
+                          },
+                          selectedValue: provider.selectedGender,
+                        ))
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: commonTextFiled(
+                          title: "Date of birth",
+                          width: size.width,
+                          size: size,
+                        )),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                            child: commonDropDown(
+                                items: provider.bloodGroupList,
+                                onChanged: (String? value) {
+                                  provider.setBloodValue = value ?? '';
+                                },
+                                selectedValue: provider.selectBloodGroup,
+                                size: size,
+                                title: "Blood Group")),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: commonDropDown(
+                                items: provider.timeZoneList,
+                                onChanged: (String? value) {
+                                  provider.setTimeZoneValue = value ?? '';
+                                },
+                                selectedValue: provider.selectTimeZone,
+                                size: size,
+                                title: "Time Zone")),
+                        Expanded(child: Container())
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Divider(
+                thickness: 0.3,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(0.0),
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CommonTextWidget(
-                      text: "Profile photo",
-                      fontSize: 12,
+                      text: "Address",
+                      fontWeight: FontWeight.w700,
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     Row(
                       children: [
-                        SizedBox(
-                          width: 90,
-                          height: 90,
-                          child: setAssetImage(image: icDummyUsers),
+                        Expanded(
+                            child: commonTextFiled(
+                          width: size.width,
+                          title: "House No./ Street Name/ Area*",
+                          size: size,
+                        )),
+                        const SizedBox(
+                          width: 20,
                         ),
-
-                        Flexible(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CommonTextWidget(
-                                text: "Pick a photo from your\ncomputer",
-                                left: 10,
-                                fontSize: 12,
-                              ),
-                              commonInkWell(
-                                  child: CommonTextWidget(
-                                      text: "Add Photo",
-                                      top: 8,
-                                      left: 10,
-                                      fontWeight: FontWeight.w800,
-                                      textColor: colorText))
-                            ],
-                          ),
+                        Expanded(
+                            child: commonTextFiled(
+                          width: size.width,
+                          title: "Colony / Street / Locality*",
+                          size: size,
+                        )),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Expanded(
+                              child: commonTextFiled(
+                            title: "City",
+                            width: size.width,
+                            size: size,
+                          )),
                         ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                            child: commonTextFiled(
+                              title: "State",
+                              width: size.width,
+                              size: size,
+                            )),
 
                       ],
-                    )
-                  ],
-                )),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
 
-                //  const Expanded(child: Column())
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          const Divider(),
-          const SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                        child: commonTextFiled(
-                      title: "Name",
-                      width: size.width,
-                      size: size,
-                    )),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                        child: commonTextFiled(
-                      title: "Phone Number",
-                      width: size.width,
-                      size: size,
-                    )),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                        child: commonTextFiled(
-                      title: "Email Address",
-                      size: size,
-                      width: size.width,
-                    )),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                        child: commonDropDown(
-                      size: size,
-                      items: provider.itemGenderList,
-                      onChanged: (String? value) {
-                        provider.setGenderValue = value ?? '';
-                      },
-                      selectedValue: provider.selectedGender,
-                    ))
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                        child: commonTextFiled(
-                      title: "Date of birth",
-                      width: size.width,
-                      size: size,
-                    )),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                        child: commonDropDown(
-                            items: provider.bloodGroupList,
-                            onChanged: (String? value) {
-                              provider.setBloodValue = value ?? '';
-                            },
-                            selectedValue: provider.selectBloodGroup,
-                            size: size,
-                            title: "Blood Group")),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                        child: commonDropDown(
-                            items: provider.timeZoneList,
-                            onChanged: (String? value) {
-                              provider.setTimeZoneValue = value ?? '';
-                            },
-                            selectedValue: provider.selectTimeZone,
-                            size: size,
-                            title: "Time Zone")),
-                    Expanded(child: Container())
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Divider(
-            thickness: 0.3,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CommonTextWidget(
-                  text: "Address",
-                  fontWeight: FontWeight.w700,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                        child: commonTextFiled(
-                      width: size.width,
-                      title: "House No./ Street Name/ Area*",
-                      size: size,
-                    )),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                        child: commonTextFiled(
-                      width: size.width,
-                      title: "Colony / Street / Locality*",
-                      size: size,
-                    )),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Expanded(
-                          child: commonTextFiled(
-                        title: "City",
-                        width: size.width,
-                        size: size,
-                      )),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                        child: commonTextFiled(
-                          title: "State",
+
+                        Expanded(
+                            child: commonDropDown(
+                                items: provider.countryList,
+                                onChanged: (String? value) {
+                                  provider.setCountryValue = value ?? '';
+                                },
+                                selectedValue: provider.selectCountry,
+                                size: size,
+                                title: "Country")),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                            child: commonTextFiled(
+                          title: "Pin code",
                           width: size.width,
                           size: size,
                         )),
-
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-
-
-                    Expanded(
-                        child: commonDropDown(
-                            items: provider.countryList,
-                            onChanged: (String? value) {
-                              provider.setCountryValue = value ?? '';
-                            },
-                            selectedValue: provider.selectCountry,
-                            size: size,
-                            title: "Country")),
-                    const SizedBox(
-                      width: 20,
+                      ],
                     ),
-                    Expanded(
-                        child: commonTextFiled(
-                      title: "Pin code",
-                      width: size.width,
-                      size: size,
-                    )),
                   ],
                 ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Divider(
-            thickness: 0.3,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                CommonTextWidget(
-                  text: "Other information",
-                  fontWeight: FontWeight.w700,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Divider(
+                thickness: 0.3,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(0.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                        child: commonTextFiled(
-                          width: size.width,
-                      title: "Extra phone numbers",
-                      size: size,
-                    )),
                     const SizedBox(
-                      width: 20,
+                      height: 20,
                     ),
-                    Expanded(
-                        child: commonDropDown(
-                            items: provider.languageList,
-                            onChanged: (String? value) {
-                              provider.setLanguageValue = value ?? '';
-                            },
-                            selectedValue: provider.selectLanguage,
-                            size: size,
-                            title: "Language")),
+                    CommonTextWidget(
+                      text: "Other information",
+                      fontWeight: FontWeight.w700,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: commonTextFiled(
+                              width: size.width,
+                          title: "Extra phone numbers",
+                          size: size,
+                        )),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                            child: commonDropDown(
+                                items: provider.languageList,
+                                onChanged: (String? value) {
+                                  provider.setLanguageValue = value ?? '';
+                                },
+                                selectedValue: provider.selectLanguage,
+                                size: size,
+                                title: "Language")),
 
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
+              ),
+
+              SizedBox(height: 20,),
+
+              CommonButtonWidget(text: "Save Change",
+              bottom: 45,
+              height: 45,)
+            ],
           ),
-
-          SizedBox(height: 20,),
-
-          CommonButtonWidget(text: "Save Change",
-          height: 50,)
         ],
       );
     });

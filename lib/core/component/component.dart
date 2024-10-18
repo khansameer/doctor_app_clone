@@ -198,7 +198,7 @@ AppBar commonAppBar(
     actions: actions,
     title: CommonTextWidget(
       text: title,
-      fontSize: sixteen,
+      fontSize: 14,
       fontWeight: FontWeight.w700,
       textColor: colorText ?? Colors.white,
     ),

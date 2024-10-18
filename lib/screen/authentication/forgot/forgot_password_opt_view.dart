@@ -6,6 +6,7 @@ import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
+import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -148,9 +149,9 @@ class ForgotPasswordOptView extends StatelessWidget {
               text: verifyCode,
               padding: isMobile?null:const EdgeInsets.all(20),
               onPressed: () {
-                /* pushScreen(
+                 pushNamedAndRemoveUntil(
                     context: context,
-                    routeName: RouteName.forgotPasswordResetView);*/
+                    routeName: RouteName.dashboardScreen);
               },
             ),
             SizedBox(
