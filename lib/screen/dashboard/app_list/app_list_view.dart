@@ -3,7 +3,6 @@ import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
-import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/provider/model/dummy_model.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,7 @@ class AppListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
       var isMobile = Responsive.isMobile(context);
-      var isTablet = Responsive.isTablet(context);
+
       return Container(
         color: isMobile?colorBG:Colors.white,
         padding: const EdgeInsets.all(2),

@@ -6,8 +6,6 @@ import 'package:doctor_app/provider/chat_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../core/route/route.dart';
 class PatientListScreen extends StatelessWidget {
   const PatientListScreen({super.key});
 

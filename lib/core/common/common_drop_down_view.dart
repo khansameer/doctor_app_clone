@@ -1,6 +1,5 @@
 import 'package:doctor_app/core/app_constants.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
-import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 

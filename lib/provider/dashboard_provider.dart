@@ -1,14 +1,12 @@
-import 'package:doctor_app/core/common/common_text_widget.dart';
+
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/main.dart';
 import 'package:doctor_app/provider/model/dummy_model.dart';
-import 'package:doctor_app/screen/authentication/login/view/login_view.dart';
 import 'package:doctor_app/screen/dashboard/calender/calender_screen.dart';
 import 'package:doctor_app/screen/dashboard/chat_screen/chat_screen.dart';
 import 'package:doctor_app/screen/dashboard/chat_screen/patient_list_screen.dart';
 import 'package:doctor_app/screen/dashboard/consult/consult_screen.dart';
 import 'package:doctor_app/screen/dashboard/dashboard_model.dart';
-import 'package:doctor_app/screen/dashboard/dashboard_screen.dart';
 import 'package:doctor_app/screen/dashboard/health_feed/health_feed_screen.dart';
 import 'package:doctor_app/screen/dashboard/home/home_screen.dart';
 import 'package:doctor_app/screen/dashboard/paitent_screen/patients_screen.dart';
@@ -23,10 +21,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DashboardProvider extends ChangeNotifier {
-  //int _selectedIndex = 0;
-
- // int get selectedIndex => _selectedIndex;
-
   void setIndex(int index) {
     _selectedIndex = index;
     notifyListeners();
@@ -49,7 +43,6 @@ class DashboardProvider extends ChangeNotifier {
     onSelectedPage: (page) {
       final dashboardProvider = Provider.of<DashboardProvider>(navigatorKey.currentState!.context, listen: false);
       dashboardProvider.getPageSelected=page;
-      print('==================sameer');
 
     },
 
