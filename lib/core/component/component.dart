@@ -4,40 +4,57 @@ import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/core/string/string_utils.dart';
+import 'package:doctor_app/main.dart';
 import 'package:doctor_app/provider/auth_provider.dart';
+import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/shared_preferences/preference_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../app_constants.dart';
 import '../common/common_textfield.dart';
 
 
-commonResponsiveLayout({required Size size,required Widget child,required bool isMobile,double? boxWidth,double ?boxHeight}){
+commonResponsiveLayout({required Size size,required Widget child,required bool isMobile,double? boxWidth,double ?boxHeight,required bool isTablet}){
   return Container(
     width: size.width,
     height: size.height,
     decoration: const BoxDecoration(
         image: DecorationImage(fit: BoxFit.cover, image: AssetImage(icBg))),
-    child: Center(
-      child: Container(
-        decoration: commonBoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(isMobile?0:
-            10)
+    child: Container(
+      color: colorBG.withOpacity(0.60),
+      child: Center(
+        child: Container(
+          decoration: commonBoxDecoration(
+                color: Colors.white,
+              borderRadius: BorderRadius.circular(isMobile?0:
+              10)
+          ),
+          padding: isMobile
+              ? EdgeInsets.zero
+              : const EdgeInsets.only(
+              left: 25, right: 25, bottom: 25, top: 0),
+          width: isMobile ? size.width : isTablet?size.width * 0.6:size.width * 0.3,
+          height: isMobile ? size.height : boxHeight??size.height * 0.38,
+          child: child,
         ),
-        padding: isMobile
-            ? EdgeInsets.zero
-            : const EdgeInsets.only(
-            left: 25, right: 25, bottom: 25, top: 0),
-        width: isMobile ? size.width : boxWidth??size.width * 0.3,
-        height: isMobile ? size.height : boxHeight??size.height * 0.38,
-        child: child,
       ),
     ),
   );
+}
+
+commonBackRedirectButton({String? page}){
+  return IconButton(
+      onPressed: () {
+        final dashboardProvider = Provider.of<DashboardProvider>(
+            navigatorKey.currentState!.context,
+            listen: false);
+        dashboardProvider.getPageSelected = page??"Home";
+      },
+      icon: const Icon(Icons.arrow_back_ios,color: colorText,));
 }
 setAssetImage(
     {required String image, double? width, double? height, BoxFit? fit}) {
@@ -89,8 +106,12 @@ commonTextFiledView({
   String? Function(String?)? validator,
   double? topTextField,
   bool? isReadOnly,
+  double ?width,
+  double ?radius,
+  double ?height,
   Widget? suffixIcon,
   VoidCallback? onTap,
+  double ?textFontSize,
   TextInputType? keyboardType,
   TextEditingController? controller,
   int? maxLines,
@@ -102,20 +123,24 @@ commonTextFiledView({
       CommonTextWidget(
         text: title,
         top: topText,
-        fontWeight: FontWeight.w500,
+        fontSize: textFontSize,
+        fontWeight: FontWeight.w400,
         textColor: Colors.black,
       ),
       CommonTextField(
         hint: hint,
         onTap: onTap,
+      height: height,
         isReadOnly: isReadOnly,
+
         colorFill: Colors.white,
         inputTypes: keyboardType,
         suffixIcon: suffixIcon,
         validator: validator,
+        width: width,
         obscureText: obscureText,
         controller: controller,
-        radius: twelve,
+        radius: radius??twelve,
         top: topTextField,
         maxLines: maxLines,
       )
@@ -297,7 +322,7 @@ commonList({
 }) {
   return Container(
 
-    padding: const EdgeInsets.only(top: 8, bottom: 8),
+  //  padding: const EdgeInsets.only(top: 8, bottom: 8),
     decoration: commonBoxDecoration(
         color: Colors.white,
 
@@ -354,8 +379,9 @@ genderView({required AuthProviders provider}) {
   );
 }
 
-appBarView(BuildContext context) {
+appBarView({required BuildContext context, String? title}) {
   return commonAppBar(
+    title: title,
       leading: const Icon(Icons.dashboard_rounded,color: Colors.white,),
       color: colorGreen, actions: [
     commonIcon(onTap: () {

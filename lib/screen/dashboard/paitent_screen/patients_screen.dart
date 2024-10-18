@@ -6,12 +6,14 @@ import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/route/route.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/responsive.dart';
+
 class PatientsScreen extends StatelessWidget {
   const PatientsScreen({super.key});
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
-
+    var isMobile = Responsive.isMobile(context);
     final Map<String, List<String>> groupedItems = {
       '2': [
         '2 pts pen',
@@ -39,7 +41,7 @@ class PatientsScreen extends StatelessWidget {
         color: Colors.white,
         // color: const Color.fromRGBO(252, 252, 254, 1),
 
-        appBar: commonAppBar(title: "Patients",color: colorBG,colorText:colorText,leading: Container() ),
+        appBar: isMobile?PreferredSize(preferredSize: Size.zero, child: Container()):commonAppBar(title: "Patients",color: colorBG,colorText:colorText,  leading:commonBackRedirectButton(), ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

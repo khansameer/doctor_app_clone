@@ -15,26 +15,32 @@ class AppListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
-      return ListView(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              commonGridView(list: provider.appList, context: context),
-              const Divider(),
-              CommonTextWidget(
-                text: "Ray",
-                left: 20,
-                fontWeight: FontWeight.w500,
-                fontSize: 18,
-                marginBottom: 10,
-                top: 10,
-              ),
-              commonGridView(list: provider.rayList, context: context)
-            ],
-          ),
-        ],
+      var isMobile = Responsive.isMobile(context);
+      var isTablet = Responsive.isTablet(context);
+      return Container(
+        color: isMobile?colorBG:Colors.white,
+        padding: const EdgeInsets.all(2),
+        child: ListView(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                commonGridView(list: provider.appList, context: context),
+                const Divider(),
+                CommonTextWidget(
+                  text: "Ray",
+                  left: 20,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                  marginBottom: 10,
+                  top: 10,
+                ),
+                commonGridView(list: provider.rayList, context: context)
+              ],
+            ),
+          ],
+        ),
       );
     });
   }
@@ -42,16 +48,17 @@ class AppListView extends StatelessWidget {
   commonGridView(
       {required List<DummyModel> list, required BuildContext context}) {
     var isMobile = Responsive.isMobile(context);
+    var isTablet = Responsive.isTablet(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GridView.builder(
         shrinkWrap: true,
         primary: false,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: isMobile ? 3 : 4,
-          mainAxisSpacing: isMobile ? 5 : 10,
-          crossAxisSpacing: isMobile ? 5 : 10,
-          childAspectRatio: isMobile ? 0.99 : 2,
+          crossAxisCount: isMobile ? 3 : isTablet?3:4,
+          mainAxisSpacing: isMobile ? 8 : 10,
+          crossAxisSpacing: isMobile ? 8 : 10,
+          childAspectRatio: isMobile ? 0.99 : isTablet?1:2,
         ),
         itemCount: list.length,
         itemBuilder: (context, index) {
@@ -105,7 +112,7 @@ class AppListView extends StatelessWidget {
               decoration: commonBoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: Colors.grey, width: 0.5),
-                  borderRadius: BorderRadius.circular(0),
+                  borderRadius: BorderRadius.circular(2),
                   boxShadow: isMobile
                       ? null
                       : [

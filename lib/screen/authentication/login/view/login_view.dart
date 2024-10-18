@@ -20,11 +20,12 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
-
+     var isTablet=Responsive.isTablet(context);
     final formLoginKey = GlobalKey<FormState>();
     return commonResponsiveLayout(
     boxHeight: size.height * 0.45,
-     size: size,
+     size: size,isTablet:isTablet,
+
     isMobile: isMobile,
       child: Consumer<AuthProviders>(builder: (context, provider, child) {
         return Stack(
@@ -131,7 +132,7 @@ class LoginView extends StatelessWidget {
                           ),
                           CommonButtonWidget(
                             top: twenty,
-                            padding: isMobile?null:EdgeInsets.all(20),
+                            padding: isMobile?null:const EdgeInsets.all(20),
                             onPressed: () {
                               final isValid =
                                   formLoginKey.currentState?.validate() ??

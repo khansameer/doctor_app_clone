@@ -10,6 +10,8 @@ import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../main.dart';
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -17,66 +19,37 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
+    var isTablet = Responsive.isTablet(context);
     return AppScaffold(
       left: 0,
       right: 0,
       color: Colors.white,
-     /* appBar: isMobile
+      /* appBar: isMobile
           ? commonAppBar(title: "PROFILE")
           : PreferredSize(preferredSize: Size.zero, child: Container()),*/
-      appBar: commonAppBar(title: "PROFILE",color: colorBG,colorText:colorText,leading: Container() ),
+      appBar: isMobile
+          ? PreferredSize(preferredSize: Size.zero, child: Container())
+          : commonAppBar(
+              title: "PROFILE",
+              color: colorBG,
+              leading: commonBackRedirectButton(),
+              colorText: colorText,
+             ),
       child: Consumer<DashboardProvider>(builder: (context, provider, child) {
         return Container(
           width: size.width,
           height: size.height,
-          color: Colors.white,
+          color: isMobile ? colorBG : Colors.white,
           //  color: colorGreen.withOpacity(0.10),
           child: ListView(
             children: [
               isMobile
-                  ? Column(
-                      children: [
-                        _topView(isMobile: isMobile, size: size),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        _profileView(size: size, isMobile: isMobile),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        _addClinic(
-                            provider: provider,
-                            context: context,
-                            isMobile: isMobile,
-                            size: size),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        _topView(
-                            size: size,
-                            isMobile: isMobile,
-                            title: "Need Help?",
-                            btn: CommonButtonWidget(
-                              top: 20,
-                              text: "Report an issue",
-                              colorText: Colors.black,
-                              iconShow: true,
-                              padding:
-                              isMobile ? null : const EdgeInsets.all(18),
-                              width: size.width * 0.1,
-                              icon: const Icon(
-                                Icons.flag,
-                                color: Colors.black,
-                              ),
-                              colorButton: Colors.white,
-                              colorBorder: Colors.black,
-                              borderWidth: 1,
-                            )),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                      ],
-                    )
+                  ? _isMobileView(
+                isTablet: isTablet,
+                      provider: provider,
+                      isMobile: isMobile,
+                      size: size,
+                      context: context)
                   : Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
@@ -84,7 +57,10 @@ class ProfileScreen extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
-                                child: _topView(isMobile: isMobile, size: size),
+                                child: _topView(
+                                    isMobile: isMobile,
+                                    size: size,
+                                    isTablet: isTablet),
                               ),
                               const SizedBox(
                                 width: 10,
@@ -112,6 +88,7 @@ class ProfileScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 child: _topView(
+                                    isTablet: isTablet,
                                     size: size,
                                     isMobile: isMobile,
                                     title: "Need Help?",
@@ -120,10 +97,14 @@ class ProfileScreen extends StatelessWidget {
                                       text: "Report an issue",
                                       colorText: Colors.black,
                                       iconShow: true,
-                                      padding:
-                                          isMobile ? null : const EdgeInsets.all(18),
-                                      width: size.width * 0.1,
+                                      padding: isMobile
+                                          ? null
+                                          : const EdgeInsets.all(18),
+                                      width: isMobile
+                                          ? size.width * 0.8
+                                          : isTablet?size.width * 0.3:size.width * 0.1,
                                       icon: const Icon(
+
                                         Icons.flag,
                                         color: Colors.black,
                                       ),
@@ -144,8 +125,74 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
+  _isMobileView(
+      {required DashboardProvider provider,
+      required bool isMobile,
+      required bool isTablet,
+      required Size size,
+      required BuildContext context}) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              _topView(
+                isTablet: isTablet,
+                isMobile: isMobile,
+                size: size,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              _profileView(size: size, isMobile: isMobile),
+              const SizedBox(
+                height: 10,
+              ),
+              _addClinic(
+                  provider: provider,
+                  context: context,
+                  isMobile: isMobile,
+                  size: size),
+              const SizedBox(
+                height: 10,
+              ),
+              _topView(
+                  size: size,
+                  isTablet: isTablet,
+                  isMobile: isMobile,
+                  title: "Need Help?",
+                  btn: CommonButtonWidget(
+                    top: 20,
+                    text: "Report an issue",
+                    colorText: Colors.black,
+                    iconShow: true,
+                    bottom: 10,
+                    height: isMobile ? 35 : null,
+                    padding:
+                        isMobile ? EdgeInsets.zero : const EdgeInsets.all(18),
+                    width: isMobile ? size.width * 0.8 : size.width * 0.1,
+                    icon: const Icon(
+                      Icons.flag,
+                      color: Colors.black,
+                    ),
+                    colorButton: Colors.white,
+                    colorBorder: Colors.black,
+                    borderWidth: 1,
+                  )),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
   _topView(
       {required bool isMobile,
+      required bool isTablet,
       required Size size,
       String? title,
       Widget? btn}) {
@@ -176,9 +223,11 @@ class ProfileScreen extends StatelessWidget {
                     color: colorText,
                   ),
                   CommonTextWidget(
+                    left: 5,
                     text: title ?? "Your profile is live on Practo!",
                     textColor: colorText,
-                    fontWeight: FontWeight.w800,
+                    fontSize: isMobile ? 12 : 14,
+                    fontWeight: FontWeight.w700,
                   )
                 ],
               ),
@@ -198,15 +247,21 @@ class ProfileScreen extends StatelessWidget {
                         CommonTextWidget(
                           top: 10,
                           textAlign: TextAlign.center,
-                          fontSize: isMobile ? 13 : 15,
+                          fontSize: isMobile ? 12 : 15,
                           text:
                               "Congratulations! Welcome to Practo family. Click below to check out your profile live on Practo.com",
                         ),
                         btn ??
                             CommonButtonWidget(
                               top: isMobile ? 10 : 30,
-                              padding: isMobile ? null : const EdgeInsets.all(18),
-                              width: size.width * 0.1,
+                              height: isMobile ? 35 : null,
+                              bottom: isMobile ? 10 : null,
+                              padding: isMobile
+                                  ? EdgeInsets.zero
+                                  : const EdgeInsets.all(18),
+                              width: isMobile
+                                  ? size.width * 0.8
+                                  : isTablet?size.width * 0.3:size.width * 0.1,
                               text: "View live profile",
                               colorButton: Colors.green,
                             )
@@ -244,10 +299,7 @@ class ProfileScreen extends StatelessWidget {
                     shape: BoxShape.circle),
                 child: ClipOval(
                   child: setAssetImage(
-                      image: icMen,
-                      width: 40,
-                      height: 40,
-                      fit: BoxFit.cover),
+                      image: icMen, width: 40, height: 40, fit: BoxFit.cover),
                 ),
               ),
               commonInkWell(
@@ -258,6 +310,12 @@ class ProfileScreen extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
                 onTap: () {
+                  final dashboardProvider = Provider.of<DashboardProvider>(
+                      navigatorKey.currentState!.context,
+                      listen: false);
+                  dashboardProvider.getPageSelected = "edit_profile";
+                  // context.read<DashboardProvider().getPageSelected("");
+                  //context.read<DashboardProvider>().updatePage(EditProfileScreen());
                   /* pushScreen(
                       context: context, routeName: RouteName.editprofileScreen);*/
                 },
@@ -319,16 +377,16 @@ class ProfileScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(8)),
       padding: const EdgeInsets.all(0),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             clipBehavior: Clip.none,
             decoration: const BoxDecoration(
-              color: Colors.white,
-               borderRadius: BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))
-            ),
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8), topRight: Radius.circular(8))),
             padding: const EdgeInsets.all(15.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -353,85 +411,55 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                ListView.builder(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  itemCount: provider.clinicList.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      decoration: commonBoxDecoration(
-                        color: Colors.white,
+          ListView(
+            shrinkWrap: true,
+            children: [
+              ListView.builder(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                primary: false,
+                itemCount: provider.clinicList.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    decoration: commonBoxDecoration(
+                      color: Colors.white,
+                    ),
+                    margin: const EdgeInsets.only(top: 5, bottom: 5),
+                    child: ListTile(
+                      titleAlignment: ListTileTitleAlignment.center,
+                      contentPadding:
+                          const EdgeInsets.only(left: 10, right: 10),
+                      dense: true,
+                      leading: CircleAvatar(
+                        child: Container(
+                            height: 80,
+                            width: 80,
+                            decoration: commonBoxDecoration(
+                                borderRadius: BorderRadius.circular(40),
+                                color: Colors.red),
+                            child: commonImageNetworkWidget(
+                                path: provider.clinicList[index].icon,
+                                width: 80,
+                                height: 80)),
                       ),
-                      margin: const EdgeInsets.only(top: 5, bottom: 5),
-                      child: ListTile(
-                        titleAlignment: ListTileTitleAlignment.center,
-                        contentPadding: const EdgeInsets.only(left: 10, right: 10),
-                        dense: true,
-                        leading: CircleAvatar(
-                          child: Container(
-                              height: 80,
-                              width: 80,
-                              decoration: commonBoxDecoration(
-                                  borderRadius: BorderRadius.circular(40),
-                                  color: Colors.red),
-                              child: commonImageNetworkWidget(
-                                  path: provider.clinicList[index].icon,
-                                  width: 80,
-                                  height: 80)),
-                        ),
-                        title: CommonTextWidget(
-                          text: provider.clinicList[index].date,
-                          fontSize: 13,
-                        ),
-                        subtitle: CommonTextWidget(
-                          text: provider.clinicList[index].content,
-                          fontSize: 10,
-                        ),
+                      title: CommonTextWidget(
+                        text: provider.clinicList[index].date,
+                        fontSize: 13,
                       ),
-                    );
-                  },
-                ),
-              ],
-            ),
+                      subtitle: CommonTextWidget(
+                        text: provider.clinicList[index].content,
+                        fontSize: 10,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
           )
         ],
       ),
     );
   }
 
-  _helpView({required bool isMobile, required Size size}) {
-    return Container(
-      color: isMobile ? Colors.white : colorBG,
-      height: isMobile ? null : size.height * 0.3,
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CommonTextWidget(
-            text: "Need Help?",
-            fontWeight: FontWeight.w700,
-          ),
-          CommonButtonWidget(
-            top: 20,
-            text: "Report an issue",
-            colorText: Colors.black,
-            iconShow: true,
-            icon: const Icon(
-              Icons.flag,
-              color: Colors.black,
-            ),
-            colorButton: Colors.white,
-            colorBorder: Colors.black,
-            borderWidth: 1,
-          )
-        ],
-      ),
-    );
-  }
 }

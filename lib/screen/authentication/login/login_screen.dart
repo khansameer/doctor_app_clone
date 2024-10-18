@@ -19,7 +19,7 @@ class LoginScreen extends StatelessWidget {
         alignment: Alignment.center,
         width: size.width,
         height: size.height,
-        color: Colors.white,
+
         child: LoginView(isMobile: isMobile,),
       ),
     );

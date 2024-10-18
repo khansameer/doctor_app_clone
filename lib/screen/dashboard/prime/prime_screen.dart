@@ -2,6 +2,7 @@ import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
+import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:flutter/material.dart';
@@ -12,84 +13,180 @@ class PrimeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var isMobile = Responsive.isMobile(context);
+    var size = MediaQuery.sizeOf(context);
     return AppScaffold(
       left: 0,
       right: 0,
-
-      appBar: commonAppBar(
-          color: colorBG,colorText:colorText,leading: Container(),
-          title: "Prime".toUpperCase(), actions: [
-        commonInkWell(
-            child: CommonTextWidget(
-          text: "Add Budget".toUpperCase(),
-          textColor: colorText,
-          fontWeight: FontWeight.w600,
-          right: 10,
-        ))
-      ]),
+      appBar: isMobile?PreferredSize(preferredSize: Size.zero, child: Container()):commonAppBar(
+          color: colorBG,
+          colorText: colorText,
+          leading:commonBackRedirectButton(),
+          title: "Prime".toUpperCase(),
+          actions: [
+            commonInkWell(
+                child: CommonTextWidget(
+              text: "Add Budget".toUpperCase(),
+              textColor: colorText,
+              fontWeight: FontWeight.w600,
+              right: 10,
+            ))
+          ]),
       child: Container(
-        color: colorGray.withOpacity(0.20),
-        child: ListView(
-          children: [
-            _topView(),
-            const SizedBox(
-              height: 10,
-            ),
-            _topView(
-                title: "Performance Duration", desc: "12 Sep 2024-12 Oct 2024"),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                children: [
-                  Expanded(child: _middleView(color: Colors.green)),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                      child: _middleView(
-                          title: "Budget\nSpent", value: "$rupee 4050")),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: _middleView(
-                          title: "Unique Connections\nCharged", value: "11")),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                      child: _middleView(
-                          title: "Repeat Connections Not\nCharged",
-                          value: "6")),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: _middleView(
-                          title: "Refunded\nConnections", value: "3")),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(child: Container()),
-                ],
-              ),
-            ),
-            const BookingListScreen(),
-          ],
+        color: isMobile?colorBG:Colors.white,
+        child: Padding(
+          padding:  EdgeInsets.all(isMobile?10:20.0),
+          child: ListView(
+            children: [
+              isMobile
+                  ? _mobileView(  size: size,
+                isMobile: isMobile,)
+                  : Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: SizedBox(
+                                height: size.height*0.12,
+                                child: _topView( fontSize: 18,),
+                              ),
+                            ),
+                            const SizedBox(width: 20,),
+                            Expanded(
+                              child: SizedBox(
+                                height: size.height*0.12,
+                                child: _topView(
+                                  fontSize: 18,
+                                    title: "Performance Duration",
+                                    desc: "12 Sep 2024-12 Oct 2024"),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 20,),
+                        Row(
+                          children: [
+                            Expanded(child: _middleView(color: Colors.green,size: size,isMobile: isMobile)),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                                child: _middleView(
+                                    size: size,isMobile: isMobile,
+                                    title: "Budget\nSpent", value: "$rupee 4050")),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                                child: _middleView(
+                                    size: size,isMobile: isMobile,
+                                    title: "Unique Connections\nCharged", value: "11")),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                                child: _middleView(
+                                    size: size,isMobile: isMobile,
+                                    title: "Repeat Connections Not\nCharged", value: "6")),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                                child:
+                                _middleView(
+                                    size: size,isMobile: isMobile,
+                                    title: "Refunded\nConnections", value: "3")),
+                          ],
+                        )
+                      ],
+                    )
+            ],
+          ),
         ),
       ),
     );
   }
 
-  _topView({String? title, String? desc}) {
+  _mobileView({required bool isMobile,required Size size}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _topView(),
+        const SizedBox(
+          height: 10,
+        ),
+        _topView(
+            title: "Performance Duration", desc: "12 Sep 2024-12 Oct 2024"),const SizedBox(
+          height: 10,
+        ),
+
+        Container(
+          padding: const EdgeInsets.all(0),
+          child: Row(
+            children: [
+              Expanded(child: _middleView(color: Colors.green,size: size,isMobile: isMobile)),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: _middleView(
+                    size: size,
+                      isMobile: isMobile,
+                      title: "Budget\nSpent", value: "$rupee 4050")),
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Container(
+          padding: const EdgeInsets.all(0),
+          child: Row(
+            children: [
+              Expanded(
+                  child: _middleView(
+                      size: size,
+                      isMobile: isMobile,
+                      title: "Unique Connections\nCharged", value: "11")),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: _middleView(
+                      size: size,
+                      isMobile: isMobile,
+                      title: "Repeat Connections Not\nCharged", value: "6")),
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Container(
+          padding: const EdgeInsets.all(0),
+          child: Row(
+            children: [
+              Expanded(
+                  child:
+                      _middleView(title: "Refunded\nConnections", value: "3",  size: size,
+                        isMobile: isMobile,)),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(child: Container()),
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        const BookingListScreen(),
+      ],
+    );
+  }
+
+  _topView({String? title, String? desc,double ?fontSize}) {
     return commonList(
         child: ListTile(
       dense: true,
@@ -99,6 +196,7 @@ class PrimeScreen extends StatelessWidget {
       ),
       title: CommonTextWidget(
         text: title ?? "Campaign Name",
+        fontSize: fontSize,
         textColor: Colors.black.withOpacity(0.80),
         marginBottom: 5,
       ),
@@ -120,26 +218,29 @@ class PrimeScreen extends StatelessWidget {
     ));
   }
 
-  _middleView({String? title, String? value, Color? color}) {
+  _middleView({String? title, String? value, Color? color,required bool isMobile,required Size size}) {
     return commonList(
-        child: Padding(
+        child: Container(
+          height: isMobile?null:size.height*0.15,
       padding: const EdgeInsets.only(top: 10.0, bottom: 10),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Align(
               alignment: Alignment.topLeft,
               child: CommonTextWidget(
                 text: title ?? "Available\nBudget",
-                fontSize: 12,
+                fontSize: isMobile?12:14,
                 left: 10,
                 textColor: Colors.black.withOpacity(0.80),
               )),
           Align(
-              alignment: Alignment.topRight,
+              alignment: Alignment.bottomRight,
               child: CommonTextWidget(
                 text: ' ${value ?? '$rupee 17,350'}',
                 fontWeight: FontWeight.w600,
-                fontSize: 15,
+                fontSize: isMobile?15:18,
                 right: 10,
                 textColor: color ?? Colors.black,
               ))
@@ -162,15 +263,19 @@ class BookingListScreen extends StatelessWidget {
         child: Column(
           children: [
             Align(
-              heightFactor: 0.7,
+                heightFactor: 0.7,
                 alignment: Alignment.topRight,
-                child: IconButton(onPressed: (){}, icon: const Icon(Icons.filter_alt_sharp,color: colorAmber,))),
+                child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.filter_alt_sharp,
+                      color: colorAmber,
+                    ))),
             const Divider(
               thickness: 0.3,
             ),
             ListView.separated(
               shrinkWrap: true,
-
               itemCount: bookings.length,
               itemBuilder: (context, index) {
                 final booking = bookings[index];
@@ -213,7 +318,9 @@ class BookingListScreen extends StatelessWidget {
                               child: CommonTextWidget(
                                 text: '$rupee ${booking.price}',
                                 fontSize: 12,
-                                textDecoration:booking.status == "CANCELLED"?TextDecoration.lineThrough:null,
+                                textDecoration: booking.status == "CANCELLED"
+                                    ? TextDecoration.lineThrough
+                                    : null,
                                 fontWeight: FontWeight.w500,
                                 textAlign: TextAlign.center,
                                 textColor: Colors.black.withOpacity(0.70),

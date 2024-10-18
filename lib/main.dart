@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
+import 'provider/profile_provider.dart';
 import 'shared_preferences/preference_helper.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -15,6 +16,7 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider<AuthProviders>(create: (_) => AuthProviders()),
   ChangeNotifierProvider<DashboardProvider>(create: (_) => DashboardProvider()),
   ChangeNotifierProvider<ChatProvider>(create: (_) => ChatProvider()),
+  ChangeNotifierProvider<ProfileProvider>(create: (_) => ProfileProvider()),
 ];
 
 void main() {

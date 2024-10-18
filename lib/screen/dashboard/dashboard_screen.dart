@@ -22,7 +22,7 @@ class DashboardScreen extends StatelessWidget {
        HomeScreen(onSelectedPage: (value ) {
 
          provider.getPageSelected=value;
-
+provider.setAppBarTitle(value);
         },),
       Container(),
       const PatientListScreen(),
@@ -40,6 +40,18 @@ class DashboardScreen extends StatelessWidget {
               currentIndex: provider.selectedIndex,
               onTap: (index) {
                 provider.setIndex(index);
+                provider.updatePage = screens[index];
+                if(index==0)
+                  {
+                    provider.setAppBarTitle("Home");
+                  }
+              if(index==1){
+                provider.setAppBarTitle("Q&A");
+              }
+                if(index==2){
+                  provider.setAppBarTitle("Chat");
+                }
+
               },
               items: const [
                 BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
@@ -51,7 +63,7 @@ class DashboardScreen extends StatelessWidget {
           : const SizedBox.shrink(),
       backgroundColor: Colors.white,
       appBar: isMobile
-          ? appBarView(context)
+          ? appBarView(context: context,title: isMobile?provider.appBarTitle:null)
           : const PreferredSize(
               preferredSize: Size.zero, child: SizedBox.shrink()),
       body: Row(
@@ -75,7 +87,7 @@ class DashboardScreen extends StatelessWidget {
                   selectedIndex: provider.selectedIndex,
                   onDestinationSelected: (int index) {
                     provider.setSelectedIndex(index);
-                    provider.updatePage = screens[index]; // Use the correct screen here
+                  //  provider.updatePage = screens[index]; // Use the correct screen here
 
                     provider.setSelectedIndex(index);
                     provider.updatePage = screens[index]; // Use the correct screen here

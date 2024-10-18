@@ -4,13 +4,17 @@ import 'package:doctor_app/main.dart';
 import 'package:doctor_app/provider/model/dummy_model.dart';
 import 'package:doctor_app/screen/authentication/login/view/login_view.dart';
 import 'package:doctor_app/screen/dashboard/calender/calender_screen.dart';
+import 'package:doctor_app/screen/dashboard/chat_screen/chat_screen.dart';
+import 'package:doctor_app/screen/dashboard/chat_screen/patient_list_screen.dart';
 import 'package:doctor_app/screen/dashboard/consult/consult_screen.dart';
 import 'package:doctor_app/screen/dashboard/dashboard_model.dart';
+import 'package:doctor_app/screen/dashboard/dashboard_screen.dart';
 import 'package:doctor_app/screen/dashboard/health_feed/health_feed_screen.dart';
 import 'package:doctor_app/screen/dashboard/home/home_screen.dart';
 import 'package:doctor_app/screen/dashboard/paitent_screen/patients_screen.dart';
 import 'package:doctor_app/screen/dashboard/patient_stories/patient_stories_screen.dart';
 import 'package:doctor_app/screen/dashboard/prime/prime_screen.dart';
+import 'package:doctor_app/screen/dashboard/profile/edit_profile_screen.dart';
 import 'package:doctor_app/screen/dashboard/profile/profile_screen.dart';
 import 'package:doctor_app/screen/dashboard/reach/reach_screen.dart';
 import 'package:doctor_app/screen/dashboard/report/report_screen.dart';
@@ -47,8 +51,6 @@ class DashboardProvider extends ChangeNotifier {
       dashboardProvider.getPageSelected=page;
       print('==================sameer');
 
-     // dashboardProvider.updatePage=ProfileScreen();
-
     },
 
   );
@@ -58,14 +60,23 @@ class DashboardProvider extends ChangeNotifier {
   String? get page => _page;
 
   set getPageSelected(String  value) {
+    print('==================sameer$value');
     _page = value;
     final provider = Provider.of<DashboardProvider>(navigatorKey.currentState!.context, listen: false);
     if(_page=="Profile"){
       provider.updatePage=const ProfileScreen();
     }
+    if(_page=="Home"){
+      provider.updatePage= HomeScreen(onSelectedPage: (value){
+        final dashboardProvider = Provider.of<DashboardProvider>(navigatorKey.currentState!.context, listen: false);
+        dashboardProvider.getPageSelected=value;
+
+      });
+    }
     if(_page=="Reach"){
       provider.updatePage=const ReachScreen();
     }
+
     if(_page=="Patient Stories"){
       provider.updatePage=const PatientStoriesScreen();
     }
@@ -90,10 +101,21 @@ class DashboardProvider extends ChangeNotifier {
     if(_page=="Patient"){
       provider.updatePage=const PatientsScreen();
     }
+    if(_page=="edit_profile"){
+      provider.updatePage=const EditProfileScreen();
+    }
+    if(_page=="chat_user_list"){
+      provider.updatePage=const PatientListScreen();
+    }
+    if(_page=="chat_screen"){
+      provider.updatePage=const ChatScreen();
+    }
     notifyListeners(); // Notify the listeners to rebuild the UI
   }
 
+  String ? _appBarTitle="Home";
   int get selectedIndex => _selectedIndex;
+  String? get appBarTitle => _appBarTitle;
   Widget get currentPage => _currentPage;
 
   set updatePage(Widget page) {
@@ -101,8 +123,14 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners(); // Notify the listeners to rebuild the UI
   }
 
+
   void setSelectedIndex(int index) {
     _selectedIndex = index;
+    notifyListeners();
+  }
+
+  void setAppBarTitle(String value) {
+    _appBarTitle = value;
     notifyListeners();
   }
 

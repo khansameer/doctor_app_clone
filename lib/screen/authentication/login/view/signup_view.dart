@@ -37,7 +37,7 @@ class _SignupViewState extends State<SignupView> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
-
+    var isTablet=Responsive.isTablet(context);
     var isMobile =Responsive.isMobile(context);
     Future<void> selectDate(BuildContext context) async {
       final provider = context.read<AuthProviders>();
@@ -59,14 +59,15 @@ class _SignupViewState extends State<SignupView> {
     return AppScaffold(
       left:isMobile?null: 0,
       right: isMobile?null: 0,
-      appBar: commonAppBar(
+      appBar: isMobile?commonAppBar(
 
         color: Colors.white,
         iconColor: Colors.black
-      ),
+      ):PreferredSize(preferredSize: Size.zero, child: Container()),
       child: commonResponsiveLayout(
 
         isMobile: isMobile,
+        isTablet: isTablet,
         boxHeight: size.height*0.85,
         size: size,
         child: Consumer<AuthProviders>(builder: (context, provider, child) {

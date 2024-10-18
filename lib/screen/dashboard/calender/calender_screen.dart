@@ -3,6 +3,7 @@ import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_drop_down_view.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
+import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/screen/dashboard/calender/calender_view.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +15,12 @@ class CalenderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
+    var isMobile = Responsive.isMobile(context);
     return AppScaffold(
       left: 0,
       right: 0,
 
-      appBar: commonAppBar(title: "Calender",color: colorBG,colorText:colorText,leading: Container() ,actions: [
+      appBar:  isMobile?PreferredSize(preferredSize: Size.zero, child: Container()):commonAppBar(title: "Calender",color: colorBG,colorText:colorText,  leading:commonBackRedirectButton() ,actions: [
         IconButton(
             onPressed: () {},
             icon: const Icon(
@@ -57,16 +59,16 @@ class CalenderScreen extends StatelessWidget {
                                     fontWeight: FontWeight.w600,
                                     fontSize: 12,
                                   ),
-                                  CommonDropDownView(
-                                    size: size,
-                                    decoration: const BoxDecoration(),
-                                    items: provider.items,
-                                    onChanged: (String? value) {
-                                      provider.selectionValue = value ?? '';
-                                    },
-                                    selectedValue: provider.selectedValue,
-                                    hint: "Medicine",
-                                  ),
+                                 Expanded(child:  CommonDropDownView(
+                                   size: size,
+                                   decoration: const BoxDecoration(),
+                                   items: provider.items,
+                                   onChanged: (String? value) {
+                                     provider.selectionValue = value ?? '';
+                                   },
+                                   selectedValue: provider.selectedValue,
+                                   hint: "Medicine",
+                                 ),)
                                 ],
                               ),
                             ),
@@ -93,15 +95,17 @@ class CalenderScreen extends StatelessWidget {
                                     fontWeight: FontWeight.w600,
                                     fontSize: 12,
                                   ),
-                                  CommonDropDownView(
-                                    size: size,
-                                    decoration: const BoxDecoration(),
-                                    items: provider.items,
-                                    onChanged: (String? value) {
-                                      provider.selectionValue = value ?? '';
-                                    },
-                                    selectedValue: provider.selectedValue,
-                                    hint: "Medicine",
+                                  Expanded(
+                                    child: CommonDropDownView(
+                                      size: size,
+                                      decoration: const BoxDecoration(),
+                                      items: provider.items,
+                                      onChanged: (String? value) {
+                                        provider.selectionValue = value ?? '';
+                                      },
+                                      selectedValue: provider.selectedValue,
+                                      hint: "Medicine",
+                                    ),
                                   ),
                                 ],
                               ),

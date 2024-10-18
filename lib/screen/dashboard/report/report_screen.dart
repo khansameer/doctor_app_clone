@@ -2,6 +2,7 @@ import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
+import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -10,21 +11,42 @@ class ReportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var isMobile=Responsive.isMobile(context);
+    var size=MediaQuery.sizeOf(context);
     return AppScaffold(
       left: 0,
+
       right: 0,
-      appBar: commonAppBar(title: "Report",color: colorBG,colorText:colorText,leading: Container() ),
+      appBar: isMobile?PreferredSize(preferredSize: Size.zero, child: Container()):commonAppBar(title: "Report",color: colorBG,colorText:colorText,  leading:commonBackRedirectButton(),),
      // appBar: commonAppBar(title: "Report".toUpperCase(), actions: []),
       child: Container(
-        color: colorGray.withOpacity(0.20),
+        color: isMobile?colorBG:Colors.white,
         child: ListView(
           children: [
-            commonList(child: _viewTop()),
-            commonList(child: _viewSMS()),
-            commonList(child: _viewStorage()),
+
+            isMobile?Column(
+              children: [
+                commonList(child: _viewTop()),
+                commonList(child: _viewSMS()),
+                commonList(child: _viewStorage()),
+              ],
+            ):Row(
+              children: [
+
+                Expanded(child: SizedBox(
+                  height: size.height*0.2,
+                  child:  commonList(child: _viewTop()),
+                )),
+                Expanded(child: SizedBox(
+                  height: size.height*0.2,
+                  child:   commonList(child: _viewSMS()),
+                ))
+              ],
+            ),
+
             const SizedBox(height: 30,),
             Container(
-              padding: const EdgeInsets.only(top: 15, bottom: 15,left: 5,right: 5),
+              padding: const EdgeInsets.only(top: 15, bottom: 15,left: 10,right: 10),
               decoration: commonBoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: Colors.grey.withOpacity(0.50), width: 0)),
@@ -58,6 +80,7 @@ class ReportScreen extends StatelessWidget {
     double? top,
   }) {
     return Container(
+
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       decoration: commonBoxDecoration(
           color: Colors.white,
@@ -69,7 +92,7 @@ class ReportScreen extends StatelessWidget {
 
   _viewTop() {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
           Row(

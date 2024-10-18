@@ -80,7 +80,7 @@ class CommonDropDownView extends StatelessWidget {
                 //color: Colors.redAccent,
               ),
           padding: EdgeInsets.symmetric(horizontal: horizontal ?? 0),
-          // /height: height ?? 40,
+          height: height ?? 40,
           width: size.width * 0.7,
         ),
         menuItemStyleData: MenuItemStyleData(

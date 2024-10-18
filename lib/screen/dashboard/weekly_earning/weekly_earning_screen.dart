@@ -2,6 +2,7 @@ import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
+import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -11,21 +12,44 @@ class WeeklyEarningScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
+    var isMobile = Responsive.isMobile(context);
     return AppScaffold(
       left: 0,
       right: 0,
-      appBar: commonAppBar(title: "Weekly Earnings",color: colorBG,colorText:colorText,leading: Container() ),
+      appBar:  isMobile?PreferredSize(preferredSize: Size.zero, child: Container()):commonAppBar(title: "Weekly Earnings",color: colorBG,colorText:colorText,  leading:commonBackRedirectButton(), ),
 
       child: Container(
         width: size.width,
-        color: colorGray.withOpacity(0.20),
+        color: isMobile?colorBG:Colors.white,
         height: size.height,
-        child: ListView(
-          children: [
-            _topView(),
-            _bottomView(size: size,isShowLastIndex: true),
-            _bottomView(size: size,colorLine: colorAmber,isShowLastIndex: false,totalText: "Total Instant Earning"),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: ListView(
+            children: [
+
+              isMobile?Column(
+                children: [
+                  _topView(),
+                  _bottomView(size: size,isShowLastIndex: true),
+                  SizedBox(height: 10,),
+                  _bottomView(size: size,colorLine: colorAmber,isShowLastIndex: false,totalText: "Total Instant Earning"),
+                ],
+              ):Column(
+                children: [
+                  _topView(),
+
+                  Row(children: [
+                    Expanded(child: _bottomView(size: size,isShowLastIndex: true),),
+                    Expanded(child:  _bottomView(size: size,colorLine: colorAmber,isShowLastIndex: false,totalText: "Total Instant Earning"),)
+                  ],),
+
+
+
+                ],
+              ),
+
+            ],
+          ),
         ),
       ),
     );

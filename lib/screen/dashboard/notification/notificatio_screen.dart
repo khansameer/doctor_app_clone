@@ -33,7 +33,7 @@ class NotificationScreen extends StatelessWidget {
                 children: [
                   Container(
                     width: size.width,
-                      color: colorGreen.withOpacity(0.05),
+                      color: colorBG,
                       padding: const EdgeInsets.all(10),
                       child: CommonTextWidget(text:topData.date ,textColor: Colors.grey,fontSize: 13,)),
 

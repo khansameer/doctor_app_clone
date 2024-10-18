@@ -19,10 +19,11 @@ class SummaryViewScreen extends StatelessWidget {
           isMobile
               ? Column(
                   children: [
-                    commonView(isMobile: isMobile, size: size),
+                    commonView(isMobile: isMobile, size: size,isShowLogo: false),
                     commonView(
                         size: size,
                         isMobile: isMobile,
+                        image: icCongrats,
                         title: "Congrats",
                         desc:
                             "Congrats! You have successfully published your profile on Practo.com",
@@ -199,13 +200,15 @@ class SummaryViewScreen extends StatelessWidget {
                     children: [
                       hideButton
                           ? const SizedBox.shrink()
-                          : commonInkWell(
-                              child: CommonTextWidget(
-                              fontWeight: FontWeight.w800,
-                              text: "View All".toUpperCase(),
-                              fontSize: 12,
-                              textColor: colorAmber,
-                            )),
+                          : Flexible(
+                            child: commonInkWell(
+                                child: CommonTextWidget(
+                                fontWeight: FontWeight.w800,
+                                text: "View All".toUpperCase(),
+                                fontSize: 12,
+                                textColor: colorAmber,
+                              )),
+                          ),
                       hideButton
                           ? const SizedBox.shrink()
                           : const SizedBox(

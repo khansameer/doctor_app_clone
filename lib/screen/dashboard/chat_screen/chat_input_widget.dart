@@ -3,6 +3,7 @@ import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/common_textfield.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
+import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/chat_provider.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +14,14 @@ class ChatInputWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size=MediaQuery.sizeOf(context);
+    var isMobile=Responsive.isMobile(context);
+    var isTablet = Responsive.isTablet(context);
     return Consumer<ChatProvider>(
       builder: (context, chatProvider, child) {
         return Container(
+          width: isMobile?size.width:isTablet?size.width*0.7:size.width*0.3,
+
           margin: const EdgeInsets.all(twenty),
           child: Padding(
             padding: const EdgeInsets.all(zero),
@@ -68,7 +74,7 @@ class ChatInputWidget extends StatelessWidget {
                 ),
                 Container(
                   decoration: const BoxDecoration(
-                      color: colorSplash, shape: BoxShape.circle),
+                      color: colorGreen, shape: BoxShape.circle),
                   child: IconButton(
                     icon: const Icon(
                       Icons.send,

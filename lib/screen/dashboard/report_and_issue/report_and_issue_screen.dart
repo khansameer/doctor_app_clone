@@ -18,7 +18,7 @@ class ReportAndIssueScreen extends StatelessWidget {
         right: 0,
         appBar: commonAppBar(title: "Report and issue".toUpperCase()),
         child: Container(
-          color: colorGreen.withOpacity(0.10),
+          color:colorBG,
           child: ListView(
             children: [
               commonList(

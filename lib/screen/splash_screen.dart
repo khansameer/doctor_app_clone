@@ -40,7 +40,7 @@ class SplashScreenState extends State<SplashScreen> {
           child: Container(
             width: size.width,
             height: size.height,
-            color: colorGreen.withOpacity(0.40),
+            color: colorBG.withOpacity(0.60),
             child: Center(
               child: CommonTextWidget(
                 text: "",

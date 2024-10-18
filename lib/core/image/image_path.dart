@@ -23,4 +23,5 @@ const String icMenuEarning = "$baseImagePath/ic_menu_earning.png";
 const String icMenuCalender = "$baseImagePath/ic_menu_calender.png";
 const String icMenuPatient = "$baseImagePath/ic_menu_patient.png";
 const String icMen = "$baseImagePath/ic_men.jpg";
+const String icDummyUsers = "$baseImagePath/ic_dummy_users.png";
 

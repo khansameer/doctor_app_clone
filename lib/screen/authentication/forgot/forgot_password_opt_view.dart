@@ -21,18 +21,20 @@ class ForgotPasswordOptView extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
+    var isTablet=Responsive.isTablet(context);
     return AppScaffold(
 
-      appBar: commonAppBar(
+      appBar: isMobile?commonAppBar(
 
           color: Colors.white,
           iconColor: Colors.black
-      ),
+      ):PreferredSize(preferredSize: Size.zero, child: Container()),
       left:isMobile?null: 0,
       right: isMobile?null: 0,
 
       child: commonResponsiveLayout(
         size: size,
+        isTablet: isTablet,
         isMobile: isMobile,
         child: ListView(
           children: [

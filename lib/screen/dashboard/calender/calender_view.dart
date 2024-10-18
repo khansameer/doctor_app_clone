@@ -2,6 +2,7 @@ import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
+import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -12,7 +13,9 @@ class CalenderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var isMobile=Responsive.isMobile(context);
     return TableCalendar(
+
       calendarBuilders: CalendarBuilders(
         markerBuilder: (context, date, events) {
           if (events.isNotEmpty) {
@@ -58,12 +61,12 @@ class CalenderView extends StatelessWidget {
         weekNumberTextStyle: commonTextStyle(color: Colors.black),
         weekendTextStyle: commonTextStyle(color: Colors.black),
       ),
-      calendarFormat: CalendarFormat.week,
+      calendarFormat: isMobile?CalendarFormat.week:CalendarFormat.month,
       headerStyle: HeaderStyle(
 
         titleCentered: true,
-        rightChevronVisible: false,
-        leftChevronVisible: false,
+        rightChevronVisible:true,
+        leftChevronVisible: true,
         formatButtonVisible: false,
         titleTextStyle: commonTextStyle(
             color:colorAmber,
@@ -91,6 +94,7 @@ class  MeetingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size=MediaQuery.sizeOf(context);
+    var isMobile=Responsive.isMobile(context);
     List<String> events = provider
         .getEventsForDay(provider.selectedDay);
     return   Expanded(
@@ -102,12 +106,13 @@ class  MeetingView extends StatelessWidget {
           children: [
             setAssetImage(
                 fit: BoxFit.scaleDown,
-                image: icNoAppointment,width: size.width*0.5),
+                image: icNoAppointment,width: isMobile?size.width*0.4:size.width*0.2,height: isMobile?size.height*0.2:size.height*0.25),
             CommonTextWidget(text: "No Appointment",fontWeight: FontWeight.w800,)
           ],
         ),
       )
           : ListView.builder(
+
         itemCount: events.length,
         itemBuilder: (context, index) {
           return Container(

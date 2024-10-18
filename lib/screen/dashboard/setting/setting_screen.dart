@@ -18,7 +18,7 @@ class SettingScreen extends StatelessWidget {
         right: 0,
         appBar: commonAppBar(title: "Settings".toUpperCase()),
         child: Container(
-          color: colorGreen.withOpacity(0.10),
+          color: colorBG,
           child: ListView(
             children: [
               commonList(
