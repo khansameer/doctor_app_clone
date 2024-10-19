@@ -12,6 +12,7 @@ class SummaryViewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
+    var isDesktop = Responsive.isDesktop(context);
     return Container(
       color: colorGreen.withOpacity(0.10),
       child: ListView(
@@ -19,8 +20,13 @@ class SummaryViewScreen extends StatelessWidget {
           isMobile
               ? Column(
                   children: [
-                    commonView(isMobile: isMobile, size: size,isShowLogo: false),
                     commonView(
+                        isMobile: isMobile,
+                        size: size,
+                        isShowLogo: false,
+                        isDesktop: isDesktop),
+                    commonView(
+                        isDesktop: isDesktop,
                         size: size,
                         isMobile: isMobile,
                         image: icCongrats,
@@ -29,6 +35,7 @@ class SummaryViewScreen extends StatelessWidget {
                             "Congrats! You have successfully published your profile on Practo.com",
                         isShowButton: false),
                     commonView(
+                        isDesktop: isDesktop,
                         hideButton: true,
                         image: icReach,
                         btnText: "GET PRACTO REACH",
@@ -39,6 +46,7 @@ class SummaryViewScreen extends StatelessWidget {
                         desc:
                             "Increase the visibility of your practice amongst millions of patients on Practo. "),
                     commonView(
+                        isDesktop: isDesktop,
                         hideButton: true,
                         isShowButton: false,
                         image: icConsult,
@@ -51,6 +59,7 @@ class SummaryViewScreen extends StatelessWidget {
                             "You have deactivated consult. No questions will be assigned to you till you activate it again"),
                     commonView(
                         size: size,
+                        isDesktop: isDesktop,
                         isMobile: isMobile,
                         title: "Health Feed",
                         desc: "No Article data yet.",
@@ -64,12 +73,14 @@ class SummaryViewScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: commonView(
+                              isDesktop: isDesktop,
                               size: size,
                               isMobile: isMobile,
                               isShowLogo: false),
                         ),
                         Expanded(
                           child: commonView(
+                              isDesktop: isDesktop,
                               image: icCongrats,
                               size: size,
                               isMobile: isMobile,
@@ -82,6 +93,7 @@ class SummaryViewScreen extends StatelessWidget {
                           child: commonView(
                               hideButton: true,
                               image: icReach,
+                              isDesktop: isDesktop,
                               btnText: "GET PRACTO REACH",
                               size: size,
                               isMobile: isMobile,
@@ -97,6 +109,7 @@ class SummaryViewScreen extends StatelessWidget {
                         Expanded(
                           child: commonView(
                               hideButton: true,
+                              isDesktop: isDesktop,
                               isShowButton: false,
                               image: icConsult,
                               btnText: "GET PRACTO REACH",
@@ -110,6 +123,7 @@ class SummaryViewScreen extends StatelessWidget {
                         Expanded(
                           child: commonView(
                               size: size,
+                              isDesktop: isDesktop,
                               isMobile: isMobile,
                               title: "Health Feed",
                               desc: "No Article data yet.",
@@ -138,6 +152,7 @@ class SummaryViewScreen extends StatelessWidget {
 
   commonView(
       {required bool isMobile,
+      required bool isDesktop,
       required Size size,
       String? title,
       String? desc,
@@ -148,7 +163,11 @@ class SummaryViewScreen extends StatelessWidget {
       String? image}) {
     return commonBox(
         child: Container(
-      height: isMobile ? null : size.height * 0.25,
+      height: isMobile
+          ? null
+          : isDesktop
+              ? size.height * 0.3
+              : size.height * 0.25,
       padding: EdgeInsets.all(isMobile ? 0 : 0.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -165,7 +184,11 @@ class SummaryViewScreen extends StatelessWidget {
           ),
           Container(
               width: size.width,
-              height: isMobile ? null : size.height * 0.16,
+              height: isMobile
+                  ? null
+                  : isDesktop
+                      ? size.height * 0.20
+                      : size.height * 0.16,
               color: Colors.grey.withOpacity(0.10),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -178,13 +201,17 @@ class SummaryViewScreen extends StatelessWidget {
                           ? setAssetImage(
                               fit: BoxFit.scaleDown,
                               image: image ?? icLoginLogo,
-                              width: 90,
-                              height: 90)
+                              width: isDesktop ? 60 : 90,
+                              height: isDesktop ? 60 : 90)
                           : const SizedBox.shrink(),
                       CommonTextWidget(
                         top: 15,
                         textAlign: TextAlign.center,
-                        fontSize: isMobile ? 12 : 14,
+                        fontSize: isMobile
+                            ? 12
+                            : isDesktop
+                                ? 12
+                                : 14,
                         text: desc ?? "No upcoming appointment or events today",
                       ),
                     ],
@@ -193,7 +220,11 @@ class SummaryViewScreen extends StatelessWidget {
               )),
           Container(
             width: size.width,
-            padding: EdgeInsets.all(isMobile ? 12.0 : 20),
+            padding: EdgeInsets.all(isMobile
+                ? 12.0
+                : isDesktop
+                    ? 5
+                    : 20),
             child: isShowButton
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -201,14 +232,14 @@ class SummaryViewScreen extends StatelessWidget {
                       hideButton
                           ? const SizedBox.shrink()
                           : Flexible(
-                            child: commonInkWell(
-                                child: CommonTextWidget(
+                              child: commonInkWell(
+                                  child: CommonTextWidget(
                                 fontWeight: FontWeight.w800,
                                 text: "View All".toUpperCase(),
                                 fontSize: 12,
                                 textColor: colorAmber,
                               )),
-                          ),
+                            ),
                       hideButton
                           ? const SizedBox.shrink()
                           : const SizedBox(

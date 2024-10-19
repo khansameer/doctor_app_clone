@@ -15,18 +15,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class LoginView extends StatelessWidget {
-  const LoginView( {required this.isMobile,super.key});
+  const LoginView({required this.isMobile, super.key});
   final bool isMobile;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
-     var isTablet=Responsive.isTablet(context);
+    var isTablet = Responsive.isTablet(context);
+    var isDesktop = Responsive.isDesktop(context);
     final formLoginKey = GlobalKey<FormState>();
     return commonResponsiveLayout(
-    boxHeight: size.height * 0.45,
-     size: size,isTablet:isTablet,
-
-    isMobile: isMobile,
+      isDesktop: isDesktop,
+      boxHeight: isDesktop ? size.height * 0.7 : size.height * 0.45,
+      size: size,
+      isTablet: isTablet,
+      isMobile: isMobile,
       child: Consumer<AuthProviders>(builder: (context, provider, child) {
         return Stack(
           children: [
@@ -50,17 +52,15 @@ class LoginView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SizedBox(
-                            height: isMobile?size.height * 0.05:0,
+                            height: isMobile ? size.height * 0.05 : 0,
                           ),
-
-
                           setAssetImage(
                               image: icLoginLogo,
                               width: 200,
                               height: 140,
                               fit: BoxFit.scaleDown),
                           Align(
-                            heightFactor: 0.1,
+                              heightFactor: 0.1,
                               alignment: Alignment.center,
                               child: CommonTextWidget(
                                 text: "Login",
@@ -69,9 +69,7 @@ class LoginView extends StatelessWidget {
                                   color: colorGreen,
                                   fontSize: 25,
                                 ),
-
                               )),
-
                           commonTextFiledView(
                             topText: 15,
                             title: yourEmail,
@@ -81,8 +79,7 @@ class LoginView extends StatelessWidget {
                               if (value.toString().trim().isEmpty) {
                                 return emptyEmail;
                               }
-                              if (!Validation.validateEmail(
-                                  value.toString())) {
+                              if (!Validation.validateEmail(value.toString())) {
                                 return emailValidationMsg;
                               }
                               return null;
@@ -102,8 +99,7 @@ class LoginView extends StatelessWidget {
                               },
                               title: password,
                               suffixIcon: IconButton(
-                                onPressed:
-                                    provider.togglePasswordVisibility,
+                                onPressed: provider.togglePasswordVisibility,
                                 icon: Icon(
                                   color: Colors.grey,
                                   provider.isPasswordVisible
@@ -119,8 +115,7 @@ class LoginView extends StatelessWidget {
                               onTap: () {
                                 pushScreen(
                                     context: context,
-                                    routeName:
-                                        RouteName.forgotPasswordScreen);
+                                    routeName: RouteName.forgotPasswordScreen);
                               },
                               child: CommonTextWidget(
                                 top: ten,
@@ -132,7 +127,7 @@ class LoginView extends StatelessWidget {
                           ),
                           CommonButtonWidget(
                             top: twenty,
-                            padding: isMobile?null:const EdgeInsets.all(20),
+                            padding: isMobile ? null : const EdgeInsets.all(20),
                             onPressed: () {
                               final isValid =
                                   formLoginKey.currentState?.validate() ??
@@ -153,8 +148,7 @@ class LoginView extends StatelessWidget {
                                   if (provider.loginModel?.token != null) {
                                     pushNamedAndRemoveUntil(
                                         context: context,
-                                        routeName:
-                                            RouteName.dashboardScreen);
+                                        routeName: RouteName.dashboardScreen);
 
                                     formLoginKey.currentState?.save();
                                     provider.resetFields();
@@ -165,15 +159,15 @@ class LoginView extends StatelessWidget {
                             text: continueBtn,
                           ),
                           Container(
-                          margin: EdgeInsets.only(
-                                top:  isMobile?size.height * zero003:20,
-                                left: isMobile?size.width * zero01:10 ,
-                                right:isMobile? size.width * zero01:10),
+                            margin: EdgeInsets.only(
+                                top: isMobile ? size.height * zero003 : 20,
+                                left: isMobile ? size.width * zero01 : 10,
+                                right: isMobile ? size.width * zero01 : 10),
                             child: Center(
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Expanded(
@@ -196,7 +190,9 @@ class LoginView extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: isMobile?10:20,),
+                          SizedBox(
+                            height: isMobile ? 10 : 20,
+                          ),
                           RichText(
                             text: TextSpan(
                               text: 'Don’t have an account? ',
@@ -207,8 +203,7 @@ class LoginView extends StatelessWidget {
                                       ..onTap = () {
                                         pushScreen(
                                             context: context,
-                                            routeName:
-                                                RouteName.signUPScreen);
+                                            routeName: RouteName.signUPScreen);
                                       },
                                     text: 'Sign Up',
                                     style: const TextStyle(

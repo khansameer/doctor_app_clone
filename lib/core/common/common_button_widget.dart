@@ -2,7 +2,6 @@ import 'package:doctor_app/core/app_constants.dart';
 import 'package:doctor_app/core/color_utils.dart';
 import 'package:flutter/material.dart';
 
-
 import 'common_text_widget.dart';
 
 //ignore: must_be_immutable
@@ -18,7 +17,7 @@ class CommonButtonWidget extends StatelessWidget {
   double? textLeft;
 
   EdgeInsetsGeometry? padding;
-  VoidCallback ?onPressed;
+  VoidCallback? onPressed;
   Color? colorButton;
   Color? colorText;
   Color? colorBorder;
@@ -35,7 +34,7 @@ class CommonButtonWidget extends StatelessWidget {
       this.fontSize,
       this.radius,
       this.top,
-       this.onPressed,
+      this.onPressed,
       this.colorButton,
       this.left,
       this.right,
@@ -93,6 +92,7 @@ class CommonButtonWidget extends StatelessWidget {
               CommonTextWidget(
                   text: text,
                   left: textLeft,
+
                   //  fontFamily: fontFamily ?? fontLohitBengali,
                   textColor: colorText ?? Colors.white,
                   fontWeight: fontWeight ?? FontWeight.w600,

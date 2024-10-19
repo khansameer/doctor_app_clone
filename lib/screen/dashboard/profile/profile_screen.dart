@@ -20,6 +20,7 @@ class ProfileScreen extends StatelessWidget {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
     var isTablet = Responsive.isTablet(context);
+    var isDesktop = Responsive.isDesktop(context);
     return AppScaffold(
       left: 0,
       right: 0,
@@ -34,18 +35,23 @@ class ProfileScreen extends StatelessWidget {
               color: colorBG,
               leading: commonBackRedirectButton(),
               colorText: colorText,
-             ),
+            ),
       child: Consumer<DashboardProvider>(builder: (context, provider, child) {
         return Container(
           width: size.width,
           height: size.height,
-          color: isMobile ? colorBG : Colors.white,
+          color: isMobile
+              ? colorBG
+              : isDesktop
+                  ? Colors.white
+                  : Colors.white,
           //  color: colorGreen.withOpacity(0.10),
           child: ListView(
             children: [
               isMobile
                   ? _isMobileView(
-                isTablet: isTablet,
+                      isDesktop: isDesktop,
+                      isTablet: isTablet,
                       provider: provider,
                       isMobile: isMobile,
                       size: size,
@@ -58,6 +64,7 @@ class ProfileScreen extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: _topView(
+                                    isDesktop: isDesktop,
                                     isMobile: isMobile,
                                     size: size,
                                     isTablet: isTablet),
@@ -67,7 +74,9 @@ class ProfileScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 child: _profileView(
-                                    size: size, isMobile: isMobile),
+                                    isDesktop: isDesktop,
+                                    size: size,
+                                    isMobile: isMobile),
                               )
                             ],
                           ),
@@ -80,6 +89,7 @@ class ProfileScreen extends StatelessWidget {
                                 child: _addClinic(
                                     provider: provider,
                                     context: context,
+                                    isDesktop: isDesktop,
                                     isMobile: isMobile,
                                     size: size),
                               ),
@@ -89,6 +99,7 @@ class ProfileScreen extends StatelessWidget {
                               Expanded(
                                 child: _topView(
                                     isTablet: isTablet,
+                                    isDesktop: isDesktop,
                                     size: size,
                                     isMobile: isMobile,
                                     title: "Need Help?",
@@ -102,9 +113,10 @@ class ProfileScreen extends StatelessWidget {
                                           : const EdgeInsets.all(18),
                                       width: isMobile
                                           ? size.width * 0.8
-                                          : isTablet?size.width * 0.3:size.width * 0.1,
+                                          : isTablet
+                                              ? size.width * 0.3
+                                              : size.width * 0.19,
                                       icon: const Icon(
-
                                         Icons.flag,
                                         color: Colors.black,
                                       ),
@@ -129,6 +141,7 @@ class ProfileScreen extends StatelessWidget {
       {required DashboardProvider provider,
       required bool isMobile,
       required bool isTablet,
+      required bool isDesktop,
       required Size size,
       required BuildContext context}) {
     return Column(
@@ -139,17 +152,20 @@ class ProfileScreen extends StatelessWidget {
             children: [
               _topView(
                 isTablet: isTablet,
+                isDesktop: isDesktop,
                 isMobile: isMobile,
                 size: size,
               ),
               const SizedBox(
                 height: 10,
               ),
-              _profileView(size: size, isMobile: isMobile),
+              _profileView(
+                  isDesktop: isDesktop, size: size, isMobile: isMobile),
               const SizedBox(
                 height: 10,
               ),
               _addClinic(
+                  isDesktop: isDesktop,
                   provider: provider,
                   context: context,
                   isMobile: isMobile,
@@ -159,6 +175,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               _topView(
                   size: size,
+                  isDesktop: isDesktop,
                   isTablet: isTablet,
                   isMobile: isMobile,
                   title: "Need Help?",
@@ -192,6 +209,7 @@ class ProfileScreen extends StatelessWidget {
 
   _topView(
       {required bool isMobile,
+      required bool isDesktop,
       required bool isTablet,
       required Size size,
       String? title,
@@ -200,7 +218,11 @@ class ProfileScreen extends StatelessWidget {
       decoration: BoxDecoration(
           color: isMobile ? Colors.white : Colors.white,
           borderRadius: BorderRadius.circular(8)),
-      height: isMobile ? null : size.height * 0.28,
+      height: isMobile
+          ? null
+          : isDesktop
+              ? size.height * 0.39
+              : size.height * 0.3,
       child: Container(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         margin: const EdgeInsets.all(0),
@@ -234,7 +256,11 @@ class ProfileScreen extends StatelessWidget {
             ),
             Container(
                 width: size.width,
-                height: isMobile ? null : size.height * 0.20,
+                height: isMobile
+                    ? null
+                    : isDesktop
+                        ? size.height * 0.25
+                        : size.height * 0.20,
                 color: Colors.grey.withOpacity(0.10),
                 child: Padding(
                   padding: const EdgeInsets.all(0.0),
@@ -261,7 +287,9 @@ class ProfileScreen extends StatelessWidget {
                                   : const EdgeInsets.all(18),
                               width: isMobile
                                   ? size.width * 0.8
-                                  : isTablet?size.width * 0.3:size.width * 0.1,
+                                  : isTablet
+                                      ? size.width * 0.3
+                                      : size.width * 0.2,
                               text: "View live profile",
                               colorButton: Colors.green,
                             )
@@ -275,13 +303,18 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  _profileView({required bool isMobile, required Size size}) {
+  _profileView(
+      {required bool isMobile, required bool isDesktop, required Size size}) {
     return Container(
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey.withOpacity(0.50), width: 1),
           color: isMobile ? Colors.white : colorBG,
           borderRadius: BorderRadius.circular(8)),
-      height: isMobile ? null : size.height * 0.28,
+      height: isMobile
+          ? size.height * 0.35
+          : isDesktop
+              ? size.height * 0.39
+              : size.height * 0.3,
       padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -352,11 +385,13 @@ class ProfileScreen extends StatelessWidget {
           CommonTextWidget(
             text: "2000/12/3569",
           ),
-          CommonTextWidget(
-            text: "790 W. Chestnut Avenue, Monrovia, CA 91016",
-            textColor: Colors.grey,
-            top: 10,
-            fontSize: 12,
+          Flexible(
+            child: CommonTextWidget(
+              text: "790 W. Chestnut Avenue, Monrovia, CA 91016",
+              textColor: Colors.grey,
+              top: 10,
+              fontSize: 12,
+            ),
           ),
         ],
       ),
@@ -367,9 +402,14 @@ class ProfileScreen extends StatelessWidget {
       {required DashboardProvider provider,
       required BuildContext context,
       required bool isMobile,
+      required bool isDesktop,
       required Size size}) {
     return Container(
-      height: isMobile ? null : size.height * 0.28,
+      height: isMobile
+          ? null
+          : isDesktop
+              ? size.height * 0.39
+              : size.height * 0.3,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey.withOpacity(0.50), width: 1),
@@ -377,7 +417,7 @@ class ProfileScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(8)),
       padding: const EdgeInsets.all(0),
       child: Column(
-        mainAxisSize: MainAxisSize.max,
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -411,55 +451,43 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
           ),
-          ListView(
-            shrinkWrap: true,
-            children: [
-              ListView.builder(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                primary: false,
-                itemCount: provider.clinicList.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    decoration: commonBoxDecoration(
-                      color: Colors.white,
+          /*  ListView.builder(
+              primary: false,
+              itemCount: provider.clinicList.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: const EdgeInsets.only(top: 5, bottom: 5),
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  decoration: commonBoxDecoration(
+                    color: Colors.white,
+                  ),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      child: Container(
+                          height: 80,
+                          width: 80,
+                          decoration: commonBoxDecoration(
+                              borderRadius: BorderRadius.circular(40),
+                              color: Colors.red),
+                          child: commonImageNetworkWidget(
+                              path: provider.clinicList[index].icon,
+                              width: 80,
+                              height: 80)),
                     ),
-                    margin: const EdgeInsets.only(top: 5, bottom: 5),
-                    child: ListTile(
-                      titleAlignment: ListTileTitleAlignment.center,
-                      contentPadding:
-                          const EdgeInsets.only(left: 10, right: 10),
-                      dense: true,
-                      leading: CircleAvatar(
-                        child: Container(
-                            height: 80,
-                            width: 80,
-                            decoration: commonBoxDecoration(
-                                borderRadius: BorderRadius.circular(40),
-                                color: Colors.red),
-                            child: commonImageNetworkWidget(
-                                path: provider.clinicList[index].icon,
-                                width: 80,
-                                height: 80)),
-                      ),
-                      title: CommonTextWidget(
-                        text: provider.clinicList[index].date,
-                        fontSize: 13,
-                      ),
-                      subtitle: CommonTextWidget(
-                        text: provider.clinicList[index].content,
-                        fontSize: 10,
-                      ),
+                    title: CommonTextWidget(
+                      text: provider.clinicList[index].date,
+                      fontSize: 13,
                     ),
-                  );
-                },
-              ),
-            ],
-          )
+                    subtitle: CommonTextWidget(
+                      text: provider.clinicList[index].content,
+                      fontSize: 10,
+                    ),
+                  ),
+                );
+              })*/
         ],
       ),
     );
   }
-
 }

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AppListView extends StatelessWidget {
-  const AppListView({super.key,required this.onSelectedPage});
+  const AppListView({super.key, required this.onSelectedPage});
   final Function(String) onSelectedPage;
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class AppListView extends StatelessWidget {
       var isMobile = Responsive.isMobile(context);
 
       return Container(
-        color: isMobile?colorBG:Colors.white,
+        color: isMobile ? colorBG : Colors.white,
         padding: const EdgeInsets.all(2),
         child: ListView(
           children: [
@@ -48,22 +48,32 @@ class AppListView extends StatelessWidget {
       {required List<DummyModel> list, required BuildContext context}) {
     var isMobile = Responsive.isMobile(context);
     var isTablet = Responsive.isTablet(context);
+    var isDesktop = Responsive.isDesktop(context);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GridView.builder(
         shrinkWrap: true,
         primary: false,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: isMobile ? 3 : isTablet?3:4,
+          crossAxisCount: isMobile
+              ? 3
+              : isTablet
+                  ? 3
+                  : 3,
           mainAxisSpacing: isMobile ? 8 : 10,
           crossAxisSpacing: isMobile ? 8 : 10,
-          childAspectRatio: isMobile ? 0.99 : isTablet?1:2,
+          childAspectRatio: isMobile
+              ? 0.99
+              : isTablet
+                  ? 1
+                  : 2,
         ),
         itemCount: list.length,
         itemBuilder: (context, index) {
           return commonInkWell(
             onTap: () {
-         /*     if (list[index].date == "Healthfeed") {
+              /*     if (list[index].date == "Healthfeed") {
                 pushScreen(
                     context: context, routeName: RouteName.healthFeedScreen);
               }

@@ -11,46 +11,61 @@ class ReportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var isMobile=Responsive.isMobile(context);
-    var size=MediaQuery.sizeOf(context);
+    var isMobile = Responsive.isMobile(context);
+    var isDesktop = Responsive.isDesktop(context);
+    var size = MediaQuery.sizeOf(context);
     return AppScaffold(
       left: 0,
 
       right: 0,
-      appBar: isMobile?PreferredSize(preferredSize: Size.zero, child: Container()):commonAppBar(title: "Report",color: colorBG,colorText:colorText,  leading:commonBackRedirectButton(),),
-     // appBar: commonAppBar(title: "Report".toUpperCase(), actions: []),
+      appBar: isMobile
+          ? PreferredSize(preferredSize: Size.zero, child: Container())
+          : commonAppBar(
+              title: "Report",
+              color: colorBG,
+              colorText: colorText,
+              leading: commonBackRedirectButton(),
+            ),
+      // appBar: commonAppBar(title: "Report".toUpperCase(), actions: []),
       child: Container(
-        color: isMobile?colorBG:Colors.white,
+        color: isMobile ? colorBG : Colors.white,
         child: ListView(
           children: [
-
-            isMobile?Column(
-              children: [
-                commonList(child: _viewTop()),
-                commonList(child: _viewSMS()),
-                commonList(child: _viewStorage()),
-              ],
-            ):Row(
-              children: [
-
-                Expanded(child: SizedBox(
-                  height: size.height*0.2,
-                  child:  commonList(child: _viewTop()),
-                )),
-                Expanded(child: SizedBox(
-                  height: size.height*0.2,
-                  child:   commonList(child: _viewSMS()),
-                ))
-              ],
+            isMobile
+                ? Column(
+                    children: [
+                      commonList(child: _viewTop()),
+                      commonList(child: _viewSMS()),
+                      commonList(child: _viewStorage()),
+                    ],
+                  )
+                : Row(
+                    children: [
+                      Expanded(
+                          child: SizedBox(
+                        height:
+                            isDesktop ? size.height * 0.33 : size.height * 0.2,
+                        child: commonList(child: _viewTop()),
+                      )),
+                      Expanded(
+                          child: SizedBox(
+                        height:
+                            isDesktop ? size.height * 0.33 : size.height * 0.2,
+                        child: commonList(child: _viewSMS()),
+                      ))
+                    ],
+                  ),
+            const SizedBox(
+              height: 30,
             ),
-
-            const SizedBox(height: 30,),
             Container(
-              padding: const EdgeInsets.only(top: 15, bottom: 15,left: 10,right: 10),
+              padding: const EdgeInsets.only(
+                  top: 15, bottom: 15, left: 10, right: 10),
               decoration: commonBoxDecoration(
                   color: Colors.white,
-                  border: Border.all(color: Colors.grey.withOpacity(0.50), width: 0)),
-              margin: const EdgeInsets.only(left: 0, right: 0, top:  10),
+                  border: Border.all(
+                      color: Colors.grey.withOpacity(0.50), width: 0)),
+              margin: const EdgeInsets.only(left: 0, right: 0, top: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -58,7 +73,6 @@ class ReportScreen extends StatelessWidget {
                     left: 5,
                     text: "Showing data for 13 Sep - 13 Oct",
                   ),
-
                   CommonTextWidget(
                     text: "Change",
                     right: 10,
@@ -80,7 +94,6 @@ class ReportScreen extends StatelessWidget {
     double? top,
   }) {
     return Container(
-
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       decoration: commonBoxDecoration(
           color: Colors.white,
@@ -134,7 +147,6 @@ class ReportScreen extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-
           LinearProgressIndicator(
             value: 9,
             minHeight: 6,
@@ -209,7 +221,6 @@ class ReportScreen extends StatelessWidget {
           ),
           LinearProgressIndicator(
             value: 0.2,
-
             minHeight: 6,
             borderRadius: BorderRadius.circular(8),
             backgroundColor: colorAmber,
@@ -324,7 +335,6 @@ class ReportScreen extends StatelessWidget {
             minHeight: 6,
             backgroundColor: colorAmber,
             borderRadius: BorderRadius.circular(8),
-
             valueColor: const AlwaysStoppedAnimation<Color>(colorGreen),
           ),
           const SizedBox(

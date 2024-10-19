@@ -17,7 +17,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
 
-
 class SignupView extends StatefulWidget {
   const SignupView({super.key});
 
@@ -34,11 +33,13 @@ class _SignupViewState extends State<SignupView> {
       context.read<AuthProviders>().getSpecializationsList();
     });
   }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
-    var isTablet=Responsive.isTablet(context);
-    var isMobile =Responsive.isMobile(context);
+    var isTablet = Responsive.isTablet(context);
+    var isMobile = Responsive.isMobile(context);
+    var isDesktop = Responsive.isDesktop(context);
     Future<void> selectDate(BuildContext context) async {
       final provider = context.read<AuthProviders>();
       final initialSelectedDate = provider.selectedDate;
@@ -57,18 +58,17 @@ class _SignupViewState extends State<SignupView> {
 
     final formSignKey = GlobalKey<FormState>();
     return AppScaffold(
-      left:isMobile?null: 0,
-      right: isMobile?null: 0,
-      appBar: isMobile?commonAppBar(
-
-        color: Colors.white,
-        iconColor: Colors.black
-      ):PreferredSize(preferredSize: Size.zero, child: Container()),
+      left: isMobile ? null : 0,
+      right: isMobile ? null : 0,
+      appBar: isMobile
+          ? commonAppBar(color: Colors.white, iconColor: Colors.black)
+          : PreferredSize(preferredSize: Size.zero, child: Container()),
       child: commonResponsiveLayout(
-
+        isDesktop: isDesktop,
         isMobile: isMobile,
         isTablet: isTablet,
-        boxHeight: size.height*0.85,
+        boxHeight: isDesktop ? size.height * 0.9 : size.height * 0.85,
+        //    boxHeight: size.height * 0.85,
         size: size,
         child: Consumer<AuthProviders>(builder: (context, provider, child) {
           return Form(
@@ -81,9 +81,8 @@ class _SignupViewState extends State<SignupView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-
                     SizedBox(
-                      height: isMobile?size.height * 0.00:0,
+                      height: isMobile ? size.height * 0.00 : 0,
                     ),
                     setAssetImage(
                         image: icLoginLogo,
@@ -100,7 +99,6 @@ class _SignupViewState extends State<SignupView> {
                             color: colorGreen,
                             fontSize: 25,
                           ),
-
                         )),
 
                     /* Align(
@@ -131,7 +129,6 @@ class _SignupViewState extends State<SignupView> {
                         width: 200,
                         height: 140,
                         fit: BoxFit.scaleDown),*/
-
 
                     commonTextFiledView(
                         controller: provider.tetFName,
@@ -219,7 +216,6 @@ class _SignupViewState extends State<SignupView> {
                     const SizedBox(
                       height: ten,
                     ),
-
                     MultiSelectDialogField<SpecializationsModel>(
                       dialogHeight: size.height * zero3, // 30% of screen height
                       backgroundColor: Colors.white,
@@ -231,14 +227,13 @@ class _SignupViewState extends State<SignupView> {
                         border: Border.all(color: Colors.grey, width: 1),
                       ),
                       items: provider.specializationsList
-                          .map((e) => MultiSelectItem(e, e.name??''))
+                          .map((e) => MultiSelectItem(e, e.name ?? ''))
                           .toList(),
                       listType: MultiSelectListType.LIST,
                       onConfirm: (selected) {
                         provider.setSelectedItems(
                           selected.map((e) => e.sId as String).toList(),
                         );
-
                       },
                     ),
                     const SizedBox(
@@ -296,21 +291,18 @@ class _SignupViewState extends State<SignupView> {
                     CommonButtonWidget(
                       top: twenty,
                       bottom: 0,
-                      padding: isMobile?null:EdgeInsets.all(20),
+                      padding: isMobile ? null : EdgeInsets.all(20),
                       onPressed: () {
-
-
                         final isValid =
                             formSignKey.currentState?.validate() ?? false;
                         if (isValid) {
-
                           if (provider.selectedItems.isEmpty) {
                             showCommonDialog(
                                 context: context,
                                 title: "Error",
                                 content: "Please select specialty",
                                 isMessage: true);
-                          } else  if (provider.tetDob.text.isEmpty) {
+                          } else if (provider.tetDob.text.isEmpty) {
                             showCommonDialog(
                                 context: context,
                                 title: "Error",
@@ -344,7 +336,6 @@ class _SignupViewState extends State<SignupView> {
                         } else {
                           formSignKey.currentState?.save();
                         }
-
                       },
                       text: signup,
                     ),
