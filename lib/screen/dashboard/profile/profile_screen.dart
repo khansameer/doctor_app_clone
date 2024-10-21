@@ -145,6 +145,7 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
+
               _profileView(size: size, isMobile: isMobile),
               const SizedBox(
                 height: 10,
@@ -310,10 +311,10 @@ class ProfileScreen extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
                 onTap: () {
-                  final dashboardProvider = Provider.of<DashboardProvider>(
+                /*  final dashboardProvider = Provider.of<DashboardProvider>(
                       navigatorKey.currentState!.context,
                       listen: false);
-                  dashboardProvider.getPageSelected = "edit_profile";
+                  dashboardProvider.getPageSelected = "edit_profile";*/
                   // context.read<DashboardProvider().getPageSelected("");
                   //context.read<DashboardProvider>().updatePage(EditProfileScreen());
                   /* pushScreen(

@@ -6,6 +6,8 @@ import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../procedure_charges_screen.dart';
+
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
 
@@ -22,12 +24,23 @@ class SettingScreen extends StatelessWidget {
           child: ListView(
             children: [
               commonList(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ProcedureChargesScreen()));
+                },
+                  trailing: const Icon(Icons.refresh, color: Colors.grey, size: 24),
+                  subTitle: CommonTextWidget(
+                    text: "Procedure Charges",
+                    fontSize: 11,
+                    textColor: Colors.black.withOpacity(0.80),
+                  )),
+              commonList(
                   trailing: const Icon(Icons.refresh, color: Colors.grey, size: 24),
                   subTitle: CommonTextWidget(
                     text: "Last synced - 4 minutes ago",
                     fontSize: 11,
                     textColor: Colors.black.withOpacity(0.80),
                   )),
+
               commonList(
                   title: "Support",
                   trailing:
@@ -72,6 +85,7 @@ class SettingScreen extends StatelessWidget {
     Widget? subTitle,
     Widget? trailing,
     double? top,
+    VoidCallback? onTap
   }) {
     return Container(
       padding: const EdgeInsets.only(top: 8, bottom: 8),
@@ -80,6 +94,7 @@ class SettingScreen extends StatelessWidget {
           border: Border.all(color: Colors.grey.withOpacity(0.50), width: 0)),
       margin: EdgeInsets.only(left: 0, right: 0, top: top ?? 0),
       child: ListTile(
+        onTap: onTap,
         dense: true,
         titleAlignment: ListTileTitleAlignment.center,
         trailing: trailing ??

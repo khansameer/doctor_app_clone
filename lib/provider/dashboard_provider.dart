@@ -1,4 +1,6 @@
 
+import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/main.dart';
 import 'package:doctor_app/provider/model/dummy_model.dart';
@@ -17,10 +19,18 @@ import 'package:doctor_app/screen/dashboard/profile/profile_screen.dart';
 import 'package:doctor_app/screen/dashboard/reach/reach_screen.dart';
 import 'package:doctor_app/screen/dashboard/report/report_screen.dart';
 import 'package:doctor_app/screen/dashboard/weekly_earning/weekly_earning_screen.dart';
+import 'package:doctor_app/screen/new_dashboard/calender_new_screen.dart';
+import 'package:doctor_app/screen/new_dashboard/client_note_screen.dart';
+import 'package:doctor_app/screen/new_dashboard/patient_new_screen.dart';
+import 'package:doctor_app/screen/new_dashboard/patient_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DashboardProvider extends ChangeNotifier {
+
+  String? _name;
+
+  String? get name => _name;
   void setIndex(int index) {
     _selectedIndex = index;
     notifyListeners();
@@ -38,8 +48,12 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  getUserName() async {
+    _name = await getName();
+    notifyListeners();
+  }
   int _selectedIndex = 0;
-  Widget _currentPage=HomeScreen(
+ /* Widget _currentPage=HomeScreen(
     onSelectedPage: (page) {
       final dashboardProvider = Provider.of<DashboardProvider>(navigatorKey.currentState!.context, listen: false);
       dashboardProvider.getPageSelected=page;
@@ -47,11 +61,28 @@ class DashboardProvider extends ChangeNotifier {
     },
 
   );
-
+*/
+  Widget _currentPage = const CalenderNewScreen(); // Default page
 
   String ?_page;
   String? get page => _page;
 
+  Widget _currentPageProfile = const PatientProfilePage(); // Default page
+
+  Widget get currentPageProfile => _currentPageProfile;
+  set updateProfilePage(String value) {
+    if (value == "Profile") {
+      _currentPageProfile = const PatientProfilePage();
+    } else if (value == "client_note") {
+      _currentPageProfile = const ClientNoteScreen();
+    } else {
+      _currentPageProfile = Center(
+        child: commonText(text: "no"),
+      ); // Default page or other pages
+    }
+    notifyListeners(); // Notify listeners to rebuild
+  }
+/*
   set getPageSelected(String  value) {
     print('==================sameer$value');
     _page = value;
@@ -104,18 +135,27 @@ class DashboardProvider extends ChangeNotifier {
       provider.updatePage=const ChatScreen();
     }
     notifyListeners(); // Notify the listeners to rebuild the UI
-  }
+  }*/
 
   String ? _appBarTitle="Home";
   int get selectedIndex => _selectedIndex;
   String? get appBarTitle => _appBarTitle;
   Widget get currentPage => _currentPage;
 
-  set updatePage(Widget page) {
-    _currentPage = page;
-    notifyListeners(); // Notify the listeners to rebuild the UI
+  set updatePage(String value) {
+    if (value == "Patients") {
+      _currentPage = const PatientNewScreen();
+    } else if (value == "profile") {
+      _currentPage =  Container();
+    } else if (value == "Calender") {
+      _currentPage = const CalenderNewScreen();
+    } else {
+      _currentPage = Center(
+        child: CommonTextWidget(text: "no"),
+      ); // Default page or other pages
+    }
+    notifyListeners(); // Notify listeners to rebuild
   }
-
 
   void setSelectedIndex(int index) {
     _selectedIndex = index;

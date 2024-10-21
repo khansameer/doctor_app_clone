@@ -20,10 +20,10 @@ class PatientListScreen extends StatelessWidget {
         return ListTile(
           dense: true,
           trailing: IconButton(onPressed: (){
-            final dashboardProvider = Provider.of<DashboardProvider>(
+           /* final dashboardProvider = Provider.of<DashboardProvider>(
                 navigatorKey.currentState!.context,
                 listen: false);
-            dashboardProvider.getPageSelected = "chat_screen";
+            dashboardProvider.getPageSelected = "chat_screen";*/
           }, icon: const Icon(Icons.chat,color: Colors.grey,)),
           leading: Container(
             width: 40,

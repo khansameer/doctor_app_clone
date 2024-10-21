@@ -20,7 +20,7 @@ class ForgotPasswordResetView extends StatelessWidget {
       child: ListView(
         children: [
           CommonTextWidget(
-            top: size.height * zero002,
+            top: size.height * 0.02,
             textColor: Colors.black,
             fontSize: sixteen,
             fontWeight: FontWeight.w700,
@@ -28,7 +28,7 @@ class ForgotPasswordResetView extends StatelessWidget {
           ),
           CommonTextWidget(
             lineHeight: 1.5,
-            top: size.height * zero002,
+            top: size.height * 0.02,
             textColor: Colors.black,
             text: passwordTitleDesc,
           ),
@@ -44,7 +44,7 @@ class ForgotPasswordResetView extends StatelessWidget {
                       : Icons.visibility_off,
                 ),
               ),*/
-              topText: size.height * zero005,
+              topText: size.height * 0.05,
               hint: enterNewPassword,
               topTextField: ten),
           commonTextFiledView(
@@ -74,7 +74,7 @@ class ForgotPasswordResetView extends StatelessWidget {
                         context: context, routeName: RouteName.loginScreen);*/
                   });
             },
-            top: size.height * zero004,
+            top: size.height * 0.04,
             text: updatePassword,
           ),
         ],

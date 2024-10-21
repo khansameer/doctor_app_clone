@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/route/route.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../app_constants.dart';
@@ -45,16 +47,72 @@ commonResponsiveLayout({required Size size,required Widget child,required bool i
     ),
   );
 }
-
+commonWithIconButton(
+    {required VoidCallback onPressed, String? btnText, IconData? icon}) {
+  return TextButton(
+    style: TextButton.styleFrom(
+      foregroundColor: Colors.transparent,
+      disabledForegroundColor: Colors.transparent.withOpacity(zero38),
+    ),
+    onPressed: onPressed,
+    child: Container(
+      padding: const EdgeInsets.all(7),
+      decoration: commonBoxDecoration(
+          borderRadius: BorderRadius.circular(8), color: AppColors.colorFillBg),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          commonText(
+              text: btnText ?? "New account",
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
+              fontSize: 13,
+              right: 10),
+          Icon(icon ?? Icons.add)
+        ],
+      ),
+    ),
+  );
+}
+commonButton(
+    {required VoidCallback onPressed,
+      String? btnText,
+      Color? colorText,
+      bool isShowBorder = false}) {
+  return TextButton(
+    style: TextButton.styleFrom(
+      shape: isShowBorder
+          ? RoundedRectangleBorder(
+        side: const BorderSide(color: Colors.grey, width: 1),
+        borderRadius: BorderRadius.circular(10),
+      )
+          : const CircleBorder(),
+      foregroundColor: Colors.transparent,
+      disabledForegroundColor: Colors.transparent.withOpacity(zero38),
+    ),
+    onPressed: onPressed,
+    child: commonText(
+      text: btnText ?? "newAccount",
+      color: colorText ?? AppColors.primary,
+      fontWeight: FontWeight.w500,
+      fontSize: 14,
+    ),
+  );
+}
 commonBackRedirectButton({String? page}){
   return IconButton(
       onPressed: () {
-        final dashboardProvider = Provider.of<DashboardProvider>(
+       /* final dashboardProvider = Provider.of<DashboardProvider>(
             navigatorKey.currentState!.context,
             listen: false);
-        dashboardProvider.getPageSelected = page??"Home";
+        dashboardProvider.getPageSelected = page??"Home";*/
       },
       icon: const Icon(Icons.arrow_back_ios,color: colorText,));
+}
+
+String formatDate({required DateTime date,String ?formatDate}) {
+  return DateFormat(formatDate).format(date);
 }
 setAssetImage(
     {required String image, double? width, double? height, BoxFit? fit}) {
@@ -89,12 +147,34 @@ Future getAuthToken() async {
   return token;
 }
 
+Future getName() async {
+  String? name = await PreferenceHelper.getString(key: PreferenceHelper.name);
 
+  return name;
+}
+
+Future getUserID() async {
+  String? userID =
+  await PreferenceHelper.getString(key: PreferenceHelper.userID);
+
+  print('=================userID${userID}');
+  return userID;
+}
 commonTextStyle({FontWeight? fontWeight, double? fontSize, Color? color}) {
   return GoogleFonts.inter(
     color: color,
     fontWeight: fontWeight ?? FontWeight.w500,
     fontSize: fontSize ?? 14,
+  );
+}
+
+loadAssetImage(
+    {required String path, double? width, double? height, Color? color}) {
+  return Image.asset(
+    path,
+    width: width,
+    color: color,
+    height: height,
   );
 }
 
@@ -446,4 +526,96 @@ appBarView({required BuildContext context, String? title}) {
       width: 10,
     )
   ]);
+}
+commonText({
+  String? text,
+  FontWeight? fontWeight,
+  double? fontSize,
+  double? top,
+  double? bottom,
+  Color? color,
+  double? left,
+  TextAlign? textAlign,
+  double? right,
+}) {
+  return Container(
+      margin: EdgeInsets.only(
+          top: top ?? zero,
+          left: left ?? zero,
+          right: right ?? zero,
+          bottom: bottom ?? zero),
+      child: Text(text ?? '',
+          textAlign: textAlign,
+          style: TextStyle(
+              color: color,
+              fontWeight: fontWeight ?? FontWeight.w500,
+              fontSize: fontSize ?? fourteen)));
+}
+commonMenu(
+    {String? headerText,
+      Widget? leading,
+      Widget? trailing,
+      int? index,
+      List<Widget>? children,
+      Color? headerLeadingIconColor,
+      Color? headerTextColor,
+      Color? backgroundColor,
+      bool? showIcon = false,
+      void Function(bool)? onExpansionChanged}) {
+  return ExpansionTile(
+    dense: true,
+    collapsedShape: const RoundedRectangleBorder(
+      side: BorderSide.none,
+    ),
+    shape: const RoundedRectangleBorder(
+      side: BorderSide.none,
+    ),
+    backgroundColor: backgroundColor,
+    trailing: trailing,
+    onExpansionChanged: onExpansionChanged,
+    showTrailingIcon: showIcon ?? false,
+    collapsedIconColor: Colors.white.withOpacity(0.50),
+    iconColor: Colors.white.withOpacity(0.50),
+    leading: leading ??
+        Icon(
+          Icons.menu,
+          color: headerLeadingIconColor ?? Colors.white,
+        ),
+    title: CommonTextWidget(
+        text: headerText ?? "Calender",
+        fontSize: 13,
+        textColor: headerTextColor ?? Colors.white.withOpacity(0.50)),
+    children: children ??
+        [
+          // Child expandable menu 1
+          ExpansionTile(
+            showTrailingIcon: false,
+            leading: Icon(
+              Icons.inventory,
+              color: Colors.white.withOpacity(0.50),
+            ),
+            title: CommonTextWidget(
+                text: 'Inventory', textColor: Colors.white.withOpacity(0.50)),
+          ),
+          // Child expandable menu 2
+          ExpansionTile(
+            showTrailingIcon: false,
+            leading: Icon(
+              Icons.expand_sharp,
+              color: Colors.white.withOpacity(0.50),
+            ),
+            title: CommonTextWidget(
+                text: 'Expenses', textColor: Colors.white.withOpacity(0.50)),
+          ),
+          ExpansionTile(
+            showTrailingIcon: false,
+            leading: Icon(
+              Icons.task,
+              color: Colors.white.withOpacity(0.50),
+            ),
+            title: CommonTextWidget(
+                text: 'Activities', textColor: Colors.white.withOpacity(0.50)),
+          ),
+        ],
+  );
 }

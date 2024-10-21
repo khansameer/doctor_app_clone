@@ -244,6 +244,32 @@ _tetConfirmPassword.clear();
 
     }
   }
+
+  //
+
+  Future addProcedureCharges(  Map<String, dynamic> body,) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      final response =
+      await _service.callPostMethodApiWithToken(url: ApiConfig.addProcedurCharges,body: body);
+      print('======${response.toString()}');
+      /* List<dynamic> body = jsonDecode(response);
+      _specializationsList = body
+          .map((dynamic item) => SpecializationsModel.fromJson(item))
+          .toList();*/
+
+      _isLoading = false;
+      notifyListeners();
+      return response;
+    } catch (e) {
+      _isLoading = false;
+      notifyListeners();
+
+    }
+  }
+
+  //
   void toggleSelection(SpecializationsModel specialization) {
     if (_selectedSpecializations.contains(specialization)) {
       _selectedSpecializations.remove(specialization);

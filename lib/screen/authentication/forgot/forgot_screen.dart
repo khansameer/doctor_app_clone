@@ -64,7 +64,7 @@ class ForgotScreen extends StatelessWidget {
             Align(
               alignment: Alignment.center,
               child: CommonTextWidget(
-                top: size.height * zero002,
+                top: size.height * 0.02,
                 textColor: Colors.black,
                 text: forgotPasswordTextDesc,
               ),
@@ -75,7 +75,7 @@ class ForgotScreen extends StatelessWidget {
                 topText: size.height * 0.04,
                 topTextField: ten),
             CommonButtonWidget(
-              padding: isMobile?null:EdgeInsets.all(20),
+              padding: isMobile?null:EdgeInsets.all(twenty),
               onPressed: () {
 
                 pushScreen(
@@ -83,7 +83,7 @@ class ForgotScreen extends StatelessWidget {
                     routeName: RouteName.forgotPasswordOptView);
 
               },
-              top: size.height * zero004,
+              top: size.height * 0.04,
               text: resetPassword,
             ),
           ],

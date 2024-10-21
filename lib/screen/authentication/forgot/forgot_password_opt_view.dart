@@ -145,7 +145,7 @@ class ForgotPasswordOptView extends StatelessWidget {
             CommonButtonWidget(
               left: isMobile?null:50,
               right: isMobile?null:50,
-              top: isMobile?size.height * zero004:20,
+              top: isMobile?size.height * 0.04:20,
               text: verifyCode,
               padding: isMobile?null:const EdgeInsets.all(20),
               onPressed: () {
@@ -155,7 +155,7 @@ class ForgotPasswordOptView extends StatelessWidget {
               },
             ),
             SizedBox(
-              height: isMobile?size.height * zero008:30,
+              height: isMobile?size.height * 0.08:30,
             ),
             Center(
               child: RichText(
