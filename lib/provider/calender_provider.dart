@@ -6,29 +6,45 @@ import 'package:doctor_app/service/api_config.dart';
 import 'package:doctor_app/service/api_services.dart';
 import 'package:flutter/cupertino.dart';
 
-class CalenderProvider extends ChangeNotifier{
+class CalenderProvider extends ChangeNotifier {
   final _service = ApiService();
   bool _isFetching = false;
   bool get isFetching => _isFetching;
 
-
-
   AppointmentsModel? _appointmentsModel;
   AppointmentsModel? get appointmentsModel => _appointmentsModel;
   Future getAppointments() async {
-
-    String userId=await getUserID();
+    String userId = await getUserID();
     print('=======uswer$userId');
     _isFetching = true;
     notifyListeners();
     try {
-
-
       final response = await _service.callGetMethod(
           url: '${ApiConfig.getDoctorAppointments}/$userId');
       _appointmentsModel = AppointmentsModel.fromJson(json.decode(response));
 
+      _isFetching = false;
+      notifyListeners();
+    } catch (e) {
+      _isFetching = false;
+      notifyListeners();
+    }
+  }
 
+  Future getPatientDetails() async {
+    String userId = await getUserID();
+    print('=======uswer$userId');
+    _isFetching = true;
+    notifyListeners();
+    try {
+      final response = await _service.callGetMethod(
+          url: '${ApiConfig.getPatientDetails}/$userId/patients');
+      /* final response =
+          await _service.callGetMethod(url: ApiConfig.getPatientDetails);*/
+
+      print('=======uswer${ApiConfig.getPatientDetails}');
+      print('=======uswer${response.toString()}');
+      _appointmentsModel = AppointmentsModel.fromJson(json.decode(response));
 
       _isFetching = false;
       notifyListeners();
@@ -43,26 +59,25 @@ class CalenderProvider extends ChangeNotifier{
     DateTime now = DateTime.now().toUtc();
     DateTime today = DateTime(now.year, now.month, now.day);
     return _appointmentsModel?.appointments.where((appointment) {
-
-      DateTime dateTime = DateTime.parse(appointment.dateTime??DateTime.now().toString());
+      DateTime dateTime =
+          DateTime.parse(appointment.dateTime ?? DateTime.now().toString());
 
       // Extract year, month, and day
       int year = dateTime.year;
       int month = dateTime.month;
       int day = dateTime.day;
 
-      return year == today.year &&
-          month== today.month &&
-          day == today.day;
+      return year == today.year && month == today.month && day == today.day;
     }).toList();
   }
 
   List<Appointments>? getYesterdayAppointments() {
     DateTime now = DateTime.now().toUtc();
-    DateTime yesterday = DateTime(now.year, now.month, now.day).subtract(Duration(days: 1));
+    DateTime yesterday =
+        DateTime(now.year, now.month, now.day).subtract(Duration(days: 1));
     return _appointmentsModel?.appointments.where((appointment) {
-
-      DateTime dateTime = DateTime.parse(appointment.dateTime??DateTime.now().toString());
+      DateTime dateTime =
+          DateTime.parse(appointment.dateTime ?? DateTime.now().toString());
 
       // Extract year, month, and day
       int year = dateTime.year;
@@ -70,9 +85,8 @@ class CalenderProvider extends ChangeNotifier{
       int day = dateTime.day;
 
       return year == yesterday.year &&
-          month== yesterday.month &&
+          month == yesterday.month &&
           day == yesterday.day;
     }).toList();
   }
-
 }

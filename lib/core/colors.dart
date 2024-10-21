@@ -27,4 +27,5 @@ class AppColors {
   static const colorMenuProfile1 = Color.fromRGBO(229, 233, 234, 1);
   static const colorGreenLight = Color.fromRGBO(172, 180, 151, 1.0);
   static const colorGrayLight = Color.fromRGBO(163, 163, 163, 1.0);
+  static const colorWhite = Color.fromRGBO(255, 255, 255, 0.5);
 }

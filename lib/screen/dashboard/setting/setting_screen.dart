@@ -2,6 +2,7 @@ import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
+import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,38 +14,33 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var isMobile = Responsive.isMobile(context);
+
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
       return AppScaffold(
         color: Colors.white,
         left: 0,
         right: 0,
-        appBar: commonAppBar(title: "Settings".toUpperCase()),
+        appBar: isMobile
+            ? commonAppBar(title: "Settings".toUpperCase())
+            : const PreferredSize(
+                preferredSize: Size.zero, child: SizedBox.shrink()),
         child: Container(
           color: colorBG,
           child: ListView(
             children: [
               commonList(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ProcedureChargesScreen()));
-                },
-                  trailing: const Icon(Icons.refresh, color: Colors.grey, size: 24),
-                  subTitle: CommonTextWidget(
-                    text: "Procedure Charges",
-                    fontSize: 11,
-                    textColor: Colors.black.withOpacity(0.80),
-                  )),
-              commonList(
-                  trailing: const Icon(Icons.refresh, color: Colors.grey, size: 24),
+                  trailing:
+                      const Icon(Icons.refresh, color: Colors.grey, size: 24),
                   subTitle: CommonTextWidget(
                     text: "Last synced - 4 minutes ago",
                     fontSize: 11,
                     textColor: Colors.black.withOpacity(0.80),
                   )),
-
               commonList(
                   title: "Support",
-                  trailing:
-                      const Icon(Icons.email_outlined, color: Colors.grey, size: 24),
+                  trailing: const Icon(Icons.email_outlined,
+                      color: Colors.grey, size: 24),
                   subTitle: CommonTextWidget(
                     fontSize: 11,
                     text: "Last synced - 4 minutes ago",
@@ -54,7 +50,6 @@ class SettingScreen extends StatelessWidget {
                   top: 10,
                   title: "Caller ID",
                   trailing: Switch(
-
                     activeColor: Colors.white,
                     inactiveTrackColor: Colors.white,
                     inactiveThumbColor: Colors.grey,
@@ -80,13 +75,12 @@ class SettingScreen extends StatelessWidget {
     });
   }
 
-  commonList({
-    String? title,
-    Widget? subTitle,
-    Widget? trailing,
-    double? top,
-    VoidCallback? onTap
-  }) {
+  commonList(
+      {String? title,
+      Widget? subTitle,
+      Widget? trailing,
+      double? top,
+      VoidCallback? onTap}) {
     return Container(
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       decoration: commonBoxDecoration(
@@ -108,7 +102,6 @@ class SettingScreen extends StatelessWidget {
           fontWeight: FontWeight.w600,
         ),
         subtitle: subTitle,
-
       ),
     );
   }

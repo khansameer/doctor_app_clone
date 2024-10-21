@@ -1,4 +1,3 @@
-
 import 'package:doctor_app/core/app_constants.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/CustomAlertDialog.dart';
@@ -6,11 +5,11 @@ import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
+import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/screen/new_dashboard/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 
 class DashboardNewScreen extends StatefulWidget {
   const DashboardNewScreen({super.key});
@@ -24,22 +23,21 @@ class _DashboardScreenState extends State<DashboardNewScreen> {
   initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-     context.read<DashboardProvider>().getUserName();
+      context.read<DashboardProvider>().getUserName();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
-    var isMobile=Responsive.isMobile(context);
+    var isMobile = Responsive.isMobile(context);
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
       return Scaffold(
-        drawer: isMobile?Drawer(
-          child: NestedExpandableMenu(provider),
-        ):SizedBox.shrink(),
+        drawer: isMobile
+            ? Drawer(
+                child: NestedExpandableMenu(provider),
+              )
+            : const SizedBox.shrink(),
         appBar: AppBar(
-
-          
           centerTitle: true,
           actions: [
             Container(
@@ -55,14 +53,20 @@ class _DashboardScreenState extends State<DashboardNewScreen> {
               width: ten,
             ),
             PopupMenuButton<int>(
+              color: Colors.white,
               constraints: const BoxConstraints.tightFor(width: twoHundred),
               elevation: zero,
               tooltip: "profile",
               offset: const Offset(zero, thirty),
               onSelected: (value) {
+                print('====${value}');
                 if (value == 0) {
-                  provider.setSelectedMenu("profile");
+                  provider.updatePage = "setting";
+                  //provider.setSelectedMenu("profile");
                   //     provider.setSelectedIndex(index);
+                }
+                if (value == 1) {
+                  provider.setSelectedMenu("profile");
                 }
                 /*if (value == 3) {
                   showDialog(
@@ -101,12 +105,14 @@ class _DashboardScreenState extends State<DashboardNewScreen> {
                 }*/
               },
               itemBuilder: (context) => [
-             /*   buildPopupMenuItem(context: context, index: 0, text: profile),
-                buildPopupMenuItem(context: context, index: 3, text: logout),*/
+                //buildPopupMenuItem(context: context, index: 0, text: profile),
+                buildPopupMenuItem(context: context, index: 0, text: "Setting"),
+                buildPopupMenuItem(context: context, index: 1, text: "Logout"),
               ],
               child: Row(
                 children: [
-                  CommonTextWidget(text: provider.name ??"", textColor: Colors.white),
+                  CommonTextWidget(
+                      text: provider.name ?? "", textColor: Colors.white),
                   const Icon(
                     Icons.keyboard_arrow_down_sharp,
                     color: Colors.white,
@@ -118,21 +124,22 @@ class _DashboardScreenState extends State<DashboardNewScreen> {
               width: ten,
             ),
           ],
-          leadingWidth:isMobile?null: oneHundred,
-          iconTheme: const IconThemeData(
-            color: Colors.white
-          ),
-          leading: isMobile?null:const ImageIcon(
-              color: Colors.white,
-              AssetImage(
-                icLogoApps,
-              )),
+          leadingWidth: isMobile ? null : oneHundred,
+          iconTheme: const IconThemeData(color: Colors.white),
+          leading: isMobile
+              ? null
+              : const ImageIcon(
+                  color: Colors.white,
+                  AssetImage(
+                    icLogoApps,
+                  )),
           backgroundColor: AppColors.colorDrawer,
         ),
         body: Row(
           children: [
-
-            isMobile?SizedBox.shrink():Expanded(flex: 2, child: NestedExpandableMenu(provider)),
+            isMobile
+                ? SizedBox.shrink()
+                : Expanded(flex: 2, child: NestedExpandableMenu(provider)),
             //NestedExpandableMenu(),
 
             Expanded(

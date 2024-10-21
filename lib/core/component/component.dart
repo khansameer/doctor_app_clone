@@ -10,6 +10,7 @@ import 'package:doctor_app/provider/auth_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/shared_preferences/preference_helper.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,8 +20,13 @@ import 'package:provider/provider.dart';
 import '../app_constants.dart';
 import '../common/common_textfield.dart';
 
-
-commonResponsiveLayout({required Size size,required Widget child,required bool isMobile,double? boxWidth,double ?boxHeight,required bool isTablet}){
+commonResponsiveLayout(
+    {required Size size,
+    required Widget child,
+    required bool isMobile,
+    double? boxWidth,
+    double? boxHeight,
+    required bool isTablet}) {
   return Container(
     width: size.width,
     height: size.height,
@@ -31,22 +37,24 @@ commonResponsiveLayout({required Size size,required Widget child,required bool i
       child: Center(
         child: Container(
           decoration: commonBoxDecoration(
-                color: Colors.white,
-              borderRadius: BorderRadius.circular(isMobile?0:
-              10)
-          ),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(isMobile ? 0 : 10)),
           padding: isMobile
               ? EdgeInsets.zero
-              : const EdgeInsets.only(
-              left: 25, right: 25, bottom: 25, top: 0),
-          width: isMobile ? size.width : isTablet?size.width * 0.6:size.width * 0.3,
-          height: isMobile ? size.height : boxHeight??size.height * 0.38,
+              : const EdgeInsets.only(left: 25, right: 25, bottom: 25, top: 0),
+          width: isMobile
+              ? size.width
+              : isTablet
+                  ? size.width * 0.6
+                  : size.width * 0.3,
+          height: isMobile ? size.height : boxHeight ?? size.height * 0.38,
           child: child,
         ),
       ),
     ),
   );
 }
+
 commonWithIconButton(
     {required VoidCallback onPressed, String? btnText, IconData? icon}) {
   return TextButton(
@@ -75,18 +83,19 @@ commonWithIconButton(
     ),
   );
 }
+
 commonButton(
     {required VoidCallback onPressed,
-      String? btnText,
-      Color? colorText,
-      bool isShowBorder = false}) {
+    String? btnText,
+    Color? colorText,
+    bool isShowBorder = false}) {
   return TextButton(
     style: TextButton.styleFrom(
       shape: isShowBorder
           ? RoundedRectangleBorder(
-        side: const BorderSide(color: Colors.grey, width: 1),
-        borderRadius: BorderRadius.circular(10),
-      )
+              side: const BorderSide(color: Colors.grey, width: 1),
+              borderRadius: BorderRadius.circular(10),
+            )
           : const CircleBorder(),
       foregroundColor: Colors.transparent,
       disabledForegroundColor: Colors.transparent.withOpacity(zero38),
@@ -100,20 +109,25 @@ commonButton(
     ),
   );
 }
-commonBackRedirectButton({String? page}){
+
+commonBackRedirectButton({String? page}) {
   return IconButton(
       onPressed: () {
-       /* final dashboardProvider = Provider.of<DashboardProvider>(
+        /* final dashboardProvider = Provider.of<DashboardProvider>(
             navigatorKey.currentState!.context,
             listen: false);
         dashboardProvider.getPageSelected = page??"Home";*/
       },
-      icon: const Icon(Icons.arrow_back_ios,color: colorText,));
+      icon: const Icon(
+        Icons.arrow_back_ios,
+        color: colorText,
+      ));
 }
 
-String formatDate({required DateTime date,String ?formatDate}) {
+String formatDate({required DateTime date, String? formatDate}) {
   return DateFormat(formatDate).format(date);
 }
+
 setAssetImage(
     {required String image, double? width, double? height, BoxFit? fit}) {
   return Image.asset(
@@ -139,9 +153,10 @@ BoxDecoration commonBoxDecoration(
       boxShadow: boxShadow,
       borderRadius: borderRadius);
 }
+
 Future getAuthToken() async {
   String? token =
-  await PreferenceHelper.getString(key: PreferenceHelper.authToken);
+      await PreferenceHelper.getString(key: PreferenceHelper.authToken);
 
   print('=================token${token}');
   return token;
@@ -155,11 +170,12 @@ Future getName() async {
 
 Future getUserID() async {
   String? userID =
-  await PreferenceHelper.getString(key: PreferenceHelper.userID);
+      await PreferenceHelper.getString(key: PreferenceHelper.userID);
 
   print('=================userID${userID}');
   return userID;
 }
+
 commonTextStyle({FontWeight? fontWeight, double? fontSize, Color? color}) {
   return GoogleFonts.inter(
     color: color,
@@ -186,12 +202,12 @@ commonTextFiledView({
   String? Function(String?)? validator,
   double? topTextField,
   bool? isReadOnly,
-  double ?width,
-  double ?radius,
-  double ?height,
+  double? width,
+  double? radius,
+  double? height,
   Widget? suffixIcon,
   VoidCallback? onTap,
-  double ?textFontSize,
+  double? textFontSize,
   TextInputType? keyboardType,
   TextEditingController? controller,
   int? maxLines,
@@ -210,9 +226,8 @@ commonTextFiledView({
       CommonTextField(
         hint: hint,
         onTap: onTap,
-      height: height,
+        height: height,
         isReadOnly: isReadOnly,
-
         colorFill: Colors.white,
         inputTypes: keyboardType,
         suffixIcon: suffixIcon,
@@ -220,7 +235,7 @@ commonTextFiledView({
         width: width,
         obscureText: obscureText,
         controller: controller,
-        radius: radius??twelve,
+        radius: radius ?? twelve,
         top: topTextField,
         maxLines: maxLines,
       )
@@ -274,7 +289,7 @@ AppBar commonAppBar(
     bottom: bottom,
     toolbarHeight: toolbarHeight,
     leading: leading,
-    iconTheme:  IconThemeData(color: iconColor??Colors.white),
+    iconTheme: IconThemeData(color: iconColor ?? Colors.white),
     actions: actions,
     title: CommonTextWidget(
       text: title,
@@ -395,27 +410,25 @@ Widget commonImageNetworkWidget(
     ),
   );
 }
+
 commonList({
   String? title,
   Widget? child,
   double? top,
 }) {
   return Container(
-
-  //  padding: const EdgeInsets.only(top: 8, bottom: 8),
+    //  padding: const EdgeInsets.only(top: 8, bottom: 8),
     decoration: commonBoxDecoration(
         color: Colors.white,
-
         border: Border.all(color: Colors.grey.withOpacity(0.50), width: 0)),
     margin: EdgeInsets.only(left: 0, right: 0, top: top ?? 0),
     child: child,
   );
 }
+
 genderView({required AuthProviders provider}) {
   return Column(
     children: [
-
-
       Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -461,72 +474,82 @@ genderView({required AuthProviders provider}) {
 
 appBarView({required BuildContext context, String? title}) {
   return commonAppBar(
-    title: title,
-      leading: const Icon(Icons.dashboard_rounded,color: Colors.white,),
-      color: colorGreen, actions: [
-    commonIcon(onTap: () {
-      pushScreen(context: context, routeName: RouteName.settingScreen);
-    }),
-
-    commonInkWell(
-      onTap: (){
-        pushScreen(
-            context: context, routeName: RouteName.reportAndIssueScreen);
-      },
-      child: Container(
-        width: 24,
-        height: 24,
-        alignment:Alignment.center ,
-        decoration: commonBoxDecoration(shape: BoxShape.circle,
-            border: Border.all(color: Colors.white,width: 1)),
-        child: Container(
-
-          alignment:Alignment.center ,
-          child: const Icon(Icons.question_mark,size: 15,),
-        ),),
-    ),
-    const SizedBox(width: 10,),
-    commonInkWell(
-      onTap: () {
-        pushScreen(
-            context: context, routeName: RouteName.notificationScreen);
-      },
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          const Icon(
-            Icons.notifications_none,
-            color: Colors.white,
-            size: 24,
-          ),
-          Positioned(
-              top: -8.0,
-              right: -3.0,
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    width: 20,
-                    height: 20,
-                    decoration: commonBoxDecoration(
-                        shape: BoxShape.circle, color: Colors.red),
-                    child: Center(
-                      child: CommonTextWidget(
-                        text: "20",
-                        fontSize: 9,
-                        textColor: Colors.white,
-                      ),
-                    ),
-                  )
-                ],
-              ))
-        ],
+      title: title,
+      leading: const Icon(
+        Icons.dashboard_rounded,
+        color: Colors.white,
       ),
-    ),
-    const SizedBox(
-      width: 10,
-    )
-  ]);
+      color: colorGreen,
+      actions: [
+        commonIcon(onTap: () {
+          pushScreen(context: context, routeName: RouteName.settingScreen);
+        }),
+        commonInkWell(
+          onTap: () {
+            pushScreen(
+                context: context, routeName: RouteName.reportAndIssueScreen);
+          },
+          child: Container(
+            width: 24,
+            height: 24,
+            alignment: Alignment.center,
+            decoration: commonBoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.white, width: 1)),
+            child: Container(
+              alignment: Alignment.center,
+              child: const Icon(
+                Icons.question_mark,
+                size: 15,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        commonInkWell(
+          onTap: () {
+            pushScreen(
+                context: context, routeName: RouteName.notificationScreen);
+          },
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              const Icon(
+                Icons.notifications_none,
+                color: Colors.white,
+                size: 24,
+              ),
+              Positioned(
+                  top: -8.0,
+                  right: -3.0,
+                  child: Stack(
+                    children: <Widget>[
+                      Container(
+                        width: 20,
+                        height: 20,
+                        decoration: commonBoxDecoration(
+                            shape: BoxShape.circle, color: Colors.red),
+                        child: Center(
+                          child: CommonTextWidget(
+                            text: "20",
+                            fontSize: 9,
+                            textColor: Colors.white,
+                          ),
+                        ),
+                      )
+                    ],
+                  ))
+            ],
+          ),
+        ),
+        const SizedBox(
+          width: 10,
+        )
+      ]);
 }
+
 commonText({
   String? text,
   FontWeight? fontWeight,
@@ -551,17 +574,18 @@ commonText({
               fontWeight: fontWeight ?? FontWeight.w500,
               fontSize: fontSize ?? fourteen)));
 }
+
 commonMenu(
     {String? headerText,
-      Widget? leading,
-      Widget? trailing,
-      int? index,
-      List<Widget>? children,
-      Color? headerLeadingIconColor,
-      Color? headerTextColor,
-      Color? backgroundColor,
-      bool? showIcon = false,
-      void Function(bool)? onExpansionChanged}) {
+    Widget? leading,
+    Widget? trailing,
+    int? index,
+    List<Widget>? children,
+    Color? headerLeadingIconColor,
+    Color? headerTextColor,
+    Color? backgroundColor,
+    bool? showIcon = false,
+    void Function(bool)? onExpansionChanged}) {
   return ExpansionTile(
     dense: true,
     collapsedShape: const RoundedRectangleBorder(
@@ -617,5 +641,69 @@ commonMenu(
                 text: 'Activities', textColor: Colors.white.withOpacity(0.50)),
           ),
         ],
+  );
+}
+
+PopupMenuItem<int> buildPopupMenuItem(
+    {required BuildContext context, required int index, required String text}) {
+  return PopupMenuItem<int>(
+    value: index,
+    child: MouseRegion(
+      onEnter: (_) {
+        context.read<DashboardProvider>().setHoveredIndex(index);
+      },
+      onExit: (_) {
+        context.read<DashboardProvider>().setHoveredIndex(null);
+      },
+      child: Consumer<DashboardProvider>(
+        builder: (context, hoverProvider, child) {
+          return Container(
+            padding: const EdgeInsets.all(eight),
+            child: commonText(
+              text: text,
+              fontSize: fourteen,
+              fontWeight: FontWeight.w600,
+              color: hoverProvider.hoveredIndex == index
+                  ? AppColors.primary
+                  : Colors.black,
+            ),
+          );
+        },
+      ),
+    ),
+  );
+}
+
+Widget buildPopupMenu() {
+  return PopupMenuButton<String>(
+    color: Colors.white,
+    onSelected: (String value) {
+      // Handle the selected option
+      if (value == 'edit') {
+        // Handle Active logic
+        if (kDebugMode) {
+          print('Active selected');
+        }
+      } else if (value == 'delete') {
+        // Handle Inactive logic
+        if (kDebugMode) {
+          print('Inactive selected');
+        }
+      }
+    },
+    itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+      const PopupMenuItem<String>(
+        value: 'edit',
+        child: Text('Edit'),
+      ),
+      const PopupMenuItem<String>(
+        value: 'delete',
+        child: Text('Delete'),
+      ),
+    ],
+    child: const Icon(
+      Icons.more_vert,
+      color: Colors.grey,
+    ), // Icon to trigger the pop-up menu
   );
 }

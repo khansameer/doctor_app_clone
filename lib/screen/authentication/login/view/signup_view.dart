@@ -64,7 +64,6 @@ class _SignupViewState extends State<SignupView> {
           ? commonAppBar(color: Colors.white, iconColor: Colors.black)
           : PreferredSize(preferredSize: Size.zero, child: Container()),
       child: commonResponsiveLayout(
-        isDesktop: isDesktop,
         isMobile: isMobile,
         isTablet: isTablet,
         boxHeight: isDesktop ? size.height * 0.9 : size.height * 0.85,

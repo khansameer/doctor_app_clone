@@ -1,32 +1,29 @@
-
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/main.dart';
 import 'package:doctor_app/provider/model/dummy_model.dart';
-import 'package:doctor_app/screen/dashboard/calender/calender_screen.dart';
-import 'package:doctor_app/screen/dashboard/chat_screen/chat_screen.dart';
-import 'package:doctor_app/screen/dashboard/chat_screen/patient_list_screen.dart';
-import 'package:doctor_app/screen/dashboard/consult/consult_screen.dart';
 import 'package:doctor_app/screen/dashboard/dashboard_model.dart';
-import 'package:doctor_app/screen/dashboard/health_feed/health_feed_screen.dart';
-import 'package:doctor_app/screen/dashboard/home/home_screen.dart';
-import 'package:doctor_app/screen/dashboard/paitent_screen/patients_screen.dart';
-import 'package:doctor_app/screen/dashboard/patient_stories/patient_stories_screen.dart';
-import 'package:doctor_app/screen/dashboard/prime/prime_screen.dart';
-import 'package:doctor_app/screen/dashboard/profile/edit_profile_screen.dart';
-import 'package:doctor_app/screen/dashboard/profile/profile_screen.dart';
 import 'package:doctor_app/screen/dashboard/reach/reach_screen.dart';
 import 'package:doctor_app/screen/dashboard/report/report_screen.dart';
-import 'package:doctor_app/screen/dashboard/weekly_earning/weekly_earning_screen.dart';
+import 'package:doctor_app/screen/dashboard/setting/setting_screen.dart';
 import 'package:doctor_app/screen/new_dashboard/calender_new_screen.dart';
 import 'package:doctor_app/screen/new_dashboard/client_note_screen.dart';
+import 'package:doctor_app/screen/new_dashboard/invoice/invoice_screen.dart';
 import 'package:doctor_app/screen/new_dashboard/patient_new_screen.dart';
 import 'package:doctor_app/screen/new_dashboard/patient_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DashboardProvider extends ChangeNotifier {
+  int? _hoveredIndex;
+
+  int? get hoveredIndex => _hoveredIndex;
+
+  void setHoveredIndex(int? index) {
+    _hoveredIndex = index;
+    notifyListeners();
+  }
 
   String? _name;
 
@@ -52,8 +49,9 @@ class DashboardProvider extends ChangeNotifier {
     _name = await getName();
     notifyListeners();
   }
+
   int _selectedIndex = 0;
- /* Widget _currentPage=HomeScreen(
+  /* Widget _currentPage=HomeScreen(
     onSelectedPage: (page) {
       final dashboardProvider = Provider.of<DashboardProvider>(navigatorKey.currentState!.context, listen: false);
       dashboardProvider.getPageSelected=page;
@@ -64,7 +62,7 @@ class DashboardProvider extends ChangeNotifier {
 */
   Widget _currentPage = const CalenderNewScreen(); // Default page
 
-  String ?_page;
+  String? _page;
   String? get page => _page;
 
   Widget _currentPageProfile = const PatientProfilePage(); // Default page
@@ -137,16 +135,24 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners(); // Notify the listeners to rebuild the UI
   }*/
 
-  String ? _appBarTitle="Home";
+  String? _appBarTitle = "Home";
   int get selectedIndex => _selectedIndex;
   String? get appBarTitle => _appBarTitle;
   Widget get currentPage => _currentPage;
-
+  PageController pageController = PageController();
   set updatePage(String value) {
     if (value == "Patients") {
       _currentPage = const PatientNewScreen();
     } else if (value == "profile") {
-      _currentPage =  Container();
+      _currentPage = Container();
+    } else if (value == "setting") {
+      _currentPage = InvoiceScreen();
+    } else if (value == "menu_setting") {
+      _currentPage = const SettingScreen();
+    } else if (value == "menu_report") {
+      _currentPage = const ReportScreen();
+    } else if (value == "menu_reach") {
+      _currentPage = const ReachScreen();
     } else if (value == "Calender") {
       _currentPage = const CalenderNewScreen();
     } else {
@@ -154,7 +160,13 @@ class DashboardProvider extends ChangeNotifier {
         child: CommonTextWidget(text: "no"),
       ); // Default page or other pages
     }
+
     notifyListeners(); // Notify listeners to rebuild
+  }
+
+  void updatePageValue(int index) {
+    pageController.jumpToPage(index);
+    notifyListeners(); // Notify listeners in case other widgets are depending on this
   }
 
   void setSelectedIndex(int index) {
@@ -166,7 +178,6 @@ class DashboardProvider extends ChangeNotifier {
     _appBarTitle = value;
     notifyListeners();
   }
-
 
   List<DummyModel> get itemNotification => _itemNotification;
   final List<DummyModel> _itemNotification = [
@@ -255,14 +266,12 @@ class DashboardProvider extends ChangeNotifier {
         date: "Dadar Eye & Gynaec Centre",
         content: "790 W. Chestnut Avenue, Monrovia, CA 91016",
         items: []),
-
     DummyModel(
         icon:
-        "https://img.freepik.com/free-vector/eye-logo-design-template_23-2150893414.jpg",
+            "https://img.freepik.com/free-vector/eye-logo-design-template_23-2150893414.jpg",
         date: "Dadar Eye & Gynaec Centre",
         content: "790 W. Chestnut Avenue, Monrovia, CA 91016",
         items: []),
-
     DummyModel(
         icon:
             "https://images1-fabric.practo.com/547c04abc4c5bf75f8a96363d898701731923d0230983.jpg",
@@ -271,7 +280,7 @@ class DashboardProvider extends ChangeNotifier {
         items: []),
     DummyModel(
         icon:
-        "https://img.freepik.com/free-vector/eye-logo-design-template_23-2150893414.jpg",
+            "https://img.freepik.com/free-vector/eye-logo-design-template_23-2150893414.jpg",
         date: "Dadar Eye & Gynaec Centre",
         content: "790 W. Chestnut Avenue, Monrovia, CA 91016",
         items: []),
