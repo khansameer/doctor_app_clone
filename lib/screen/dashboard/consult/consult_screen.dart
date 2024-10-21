@@ -14,31 +14,34 @@ class ConsultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var isMobile = Responsive.isMobile(context);
     var size = MediaQuery.sizeOf(context);
+    var isDesktop = Responsive.isDesktop(context);
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
       return AppScaffold(
         left: 0,
         right: 0,
-        appBar: isMobile?PreferredSize(preferredSize: Size.zero, child: Container()):commonAppBar(
-            color: colorBG,
-            colorText: colorText,
-            leading:commonBackRedirectButton(),
-            title: "Consult".toUpperCase(),
-            actions: [
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.settings_outlined,
-                    color: colorText,
-                  )),
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.more_horiz,
-                    color: colorText,
-                  ))
-            ]),
+        appBar: isMobile
+            ? PreferredSize(preferredSize: Size.zero, child: Container())
+            : commonAppBar(
+                color: colorBG,
+                colorText: colorText,
+                leading: commonBackRedirectButton(),
+                title: "Consult".toUpperCase(),
+                actions: [
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.settings_outlined,
+                          color: colorText,
+                        )),
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.more_horiz,
+                          color: colorText,
+                        ))
+                  ]),
         child: Container(
-          color: isMobile?colorBG:Colors.white,
+          color: isMobile ? colorBG : Colors.white,
           width: size.width,
           height: size.height,
           child: Padding(
@@ -99,7 +102,7 @@ class ConsultScreen extends StatelessWidget {
                             height: 20,
                           ),
                           commonView(
-                            isMobile: isMobile,
+                              isMobile: isMobile,
                               size: size,
                               title: "Guide for Online Consultation",
                               desc:
@@ -340,7 +343,7 @@ class ConsultScreen extends StatelessWidget {
                               Expanded(
                                 child: commonList(
                                     child: Container(
-                                      height: size.height*0.05,
+                                  height: size.height * 0.05,
                                   padding: const EdgeInsets.only(
                                       left: 15.0, right: 15),
                                   child: Row(
@@ -383,7 +386,7 @@ class ConsultScreen extends StatelessWidget {
                                   child: Expanded(
                                 child: commonList(
                                     child: Container(
-                                      height: size.height*0.05,
+                                  height: size.height * 0.05,
                                   padding: const EdgeInsets.only(
                                       left: 15.0,
                                       right: 15,
@@ -439,7 +442,7 @@ class ConsultScreen extends StatelessWidget {
                               Expanded(
                                   child: commonView(
                                 size: size,
-                                    isMobile: isMobile,
+                                isMobile: isMobile,
                               ))
                             ],
                           ),
@@ -467,7 +470,9 @@ class ConsultScreen extends StatelessWidget {
                               Expanded(
                                 child: commonList(
                                     child: Container(
-                                  height: size.height * 0.18,
+                                  height: isDesktop
+                                      ? size.height * 0.3
+                                      : size.height * 0.18,
                                   padding: const EdgeInsets.only(
                                       left: 15.0,
                                       right: 15,
@@ -521,7 +526,9 @@ class ConsultScreen extends StatelessWidget {
                               Expanded(
                                 child: commonList(
                                     child: Container(
-                                  height: size.height * 0.18,
+                                  height: isDesktop
+                                      ? size.height * 0.29
+                                      : size.height * 0.18,
                                   padding: const EdgeInsets.only(
                                       left: 15.0,
                                       right: 15,
@@ -529,6 +536,7 @@ class ConsultScreen extends StatelessWidget {
                                       bottom: 10),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
@@ -538,9 +546,11 @@ class ConsultScreen extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          CommonTextWidget(
-                                            fontWeight: FontWeight.w500,
-                                            text: "Answer Insight",
+                                          Flexible(
+                                            child: CommonTextWidget(
+                                              fontWeight: FontWeight.w500,
+                                              text: "Answer Insight",
+                                            ),
                                           ),
                                           const Icon(
                                             Icons.info_outline,
@@ -667,19 +677,19 @@ class ConsultScreen extends StatelessWidget {
       String? desc,
       bool isBthHide = false,
       String? btnText,
-        required bool isMobile,
+      required bool isMobile,
       required Size size}) {
     return commonList(
         child: Container(
-          width: size.width,
-        decoration: commonBoxDecoration(
-          border: Border.all(color: Colors.grey.withOpacity(0.50),width: isMobile?1:0)
-        ),
-          child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+      width: size.width,
+      decoration: commonBoxDecoration(
+          border: Border.all(
+              color: Colors.grey.withOpacity(0.50), width: isMobile ? 1 : 0)),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Container(
             width: size.width,
             color: Colors.white,
@@ -740,8 +750,8 @@ class ConsultScreen extends StatelessWidget {
               ],
             ),
           )
-                ],
-              ),
-        ));
+        ],
+      ),
+    ));
   }
 }

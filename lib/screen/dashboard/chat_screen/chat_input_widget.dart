@@ -14,14 +14,17 @@ class ChatInputWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size=MediaQuery.sizeOf(context);
-    var isMobile=Responsive.isMobile(context);
+    var size = MediaQuery.sizeOf(context);
+    var isMobile = Responsive.isMobile(context);
     var isTablet = Responsive.isTablet(context);
     return Consumer<ChatProvider>(
       builder: (context, chatProvider, child) {
         return Container(
-          width: isMobile?size.width:isTablet?size.width*0.7:size.width*0.3,
-
+          width: isMobile
+              ? size.width
+              : isTablet
+                  ? size.width * 0.7
+                  : size.width * 0.4,
           margin: const EdgeInsets.all(twenty),
           child: Padding(
             padding: const EdgeInsets.all(zero),

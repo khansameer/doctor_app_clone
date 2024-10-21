@@ -15,58 +15,80 @@ class PatientStoriesScreen extends StatelessWidget {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
     var isTablet = Responsive.isTablet(context);
+    var isDesktop = Responsive.isDesktop(context);
     return AppScaffold(
       left: 0,
       right: 0,
-      appBar: isMobile?PreferredSize(preferredSize: Size.zero, child: Container()):commonAppBar(title: "Patient Stories",color: colorBG,colorText:colorText,  leading:commonBackRedirectButton(),),
+      appBar: isMobile
+          ? PreferredSize(preferredSize: Size.zero, child: Container())
+          : commonAppBar(
+              title: "Patient Stories",
+              color: colorBG,
+              colorText: colorText,
+              leading: commonBackRedirectButton(),
+            ),
       child: Container(
         width: size.width,
-        color: isMobile?colorGreen:Colors.white,
+        color: isMobile ? colorGreen : Colors.white,
         height: size.height,
         child: Center(
           child: Container(
-          
             decoration: commonBoxDecoration(
-              color: colorBG,
-              borderRadius: BorderRadius.circular(isMobile?0:10)
-            ),
-            width:isMobile?size.width:isTablet?size.width*0.7:size.width*0.3,
-            height:isMobile?size.height:size.height*0.6,
-
+                color: colorBG,
+                borderRadius: BorderRadius.circular(isMobile ? 0 : 10)),
+            width: isMobile
+                ? size.width
+                : isTablet
+                    ? size.width * 0.7
+                    : size.width * 0.4,
+            height: isMobile
+                ? size.height
+                : isDesktop
+                    ? size.height * 0.8
+                    : size.height * 0.6,
             child: Padding(
-              padding: const EdgeInsets.only(left: 30.0,right: 30),
+              padding: const EdgeInsets.only(left: 30.0, right: 30),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  setAssetImage(image: icLoginLogo, width: isMobile?size.width * 0.4:size.width * 0.1),
-                  SizedBox(height: isMobile?size.height*0.09:size.height*0.15,),
+                  setAssetImage(
+                      image: icLoginLogo,
+                      width: isMobile ? size.width * 0.4 : size.width * 0.1),
+                  SizedBox(
+                    height: isMobile ? size.height * 0.09 : size.height * 0.15,
+                  ),
                   CommonTextWidget(
                     text: "Patient Stories",
-                    textColor:colorText,
-                    fontSize:  isMobile?20:23,
+                    textColor: colorText,
+                    fontSize: isMobile ? 20 : 23,
                   ),
-
                   CommonTextWidget(
                     top: 15,
                     text:
                         "Know what your patients say about you\nand responds to them instantly",
                     textColor: colorText,
-                    fontSize: isMobile?13:16,
+                    fontSize: isMobile ? 13 : 16,
                     textAlign: TextAlign.center,
                     lineHeight: 1.5,
                   ),
                   CommonButtonWidget(
                     colorButton: colorGreen,
-
                     colorText: Colors.white,
                     radius: 2,
-                    fontSize: isMobile?12:16,
-                    padding: isMobile?EdgeInsets.all(10):const EdgeInsets.all(22),
+                    fontSize: isMobile ? 12 : 16,
+                    padding: isMobile
+                        ? EdgeInsets.all(10)
+                        : const EdgeInsets.all(22),
                     fontWeight: FontWeight.w600,
                     top: 35,
-                    width: isMobile?size.width*0.6:isTablet?size.width*0.3:size.width*0.2,
-                    text: "View Patient Stories".toUpperCase(),)
+                    width: isMobile
+                        ? size.width * 0.6
+                        : isTablet
+                            ? size.width * 0.3
+                            : size.width * 0.2,
+                    text: "View Patient Stories".toUpperCase(),
+                  )
                 ],
               ),
             ),

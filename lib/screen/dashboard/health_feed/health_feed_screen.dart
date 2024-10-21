@@ -12,25 +12,29 @@ class HealthFeedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
+    var isDesktop = Responsive.isDesktop(context);
     return AppScaffold(
         left: 0,
         right: 0,
-        appBar: isMobile?PreferredSize(preferredSize: Size.zero, child: Container()):commonAppBar(
-            title: "Health Feed",
-            color: colorBG,
-            colorText: colorText,
-          leading:commonBackRedirectButton(),),
+        appBar: isMobile
+            ? PreferredSize(preferredSize: Size.zero, child: Container())
+            : commonAppBar(
+                title: "Health Feed",
+                color: colorBG,
+                colorText: colorText,
+                leading: commonBackRedirectButton(),
+              ),
         // appBar: commonAppBar(title: "Health Feed".toUpperCase()),
         child: Container(
           width: size.width,
           height: size.height,
-          color: isMobile?colorBG:Colors.white,
+          color: isMobile ? colorBG : Colors.white,
           child: ListView(
             children: [
               isMobile
                   ? Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -39,7 +43,7 @@ class HealthFeedScreen extends StatelessWidget {
                           _bottomView(size: size)
                         ],
                       ),
-                  )
+                    )
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +78,9 @@ class HealthFeedScreen extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: commonView(
-                                    height: size.height * 0.1,
+                                    height: isDesktop
+                                        ? size.height * 0.15
+                                        : size.height * 0.1,
                                     color: colorBG,
                                     fontSize: 30,
                                     decoration: commonBoxDecoration(
@@ -86,7 +92,9 @@ class HealthFeedScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 child: commonView(
-                                    height: size.height * 0.1,
+                                    height: isDesktop
+                                        ? size.height * 0.15
+                                        : size.height * 0.1,
                                     color: colorBG,
                                     fontSize: 30,
                                     decoration: commonBoxDecoration(
@@ -99,7 +107,9 @@ class HealthFeedScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 child: commonView(
-                                    height: size.height * 0.1,
+                                    height: isDesktop
+                                        ? size.height * 0.15
+                                        : size.height * 0.1,
                                     color: colorBG,
                                     fontSize: 30,
                                     decoration: commonBoxDecoration(
@@ -190,16 +200,20 @@ class HealthFeedScreen extends StatelessWidget {
               left: 5,
             )),
         commonView(width: size.width),
-      SizedBox(height: 10,),
-      /*  const Divider(
+        SizedBox(
+          height: 10,
+        ),
+        /*  const Divider(
           thickness: 0.3,
         ),*/
-        commonView(title: "Article Likes",width: size.width),
-        SizedBox(height: 10,),
+        commonView(title: "Article Likes", width: size.width),
+        SizedBox(
+          height: 10,
+        ),
         /*const Divider(
           thickness: 0.3,
         ),*/
-        commonView(title: "Profile Views (via Health Feed)",width: size.width),
+        commonView(title: "Profile Views (via Health Feed)", width: size.width),
       ],
     );
   }
