@@ -1,6 +1,6 @@
 const String appName = "Doctor App";
 const String name = "Name";
-const String login = "Log in";
+const String login = "Login";
 const String signup = "Sign up";
 const String yourEmail = "Your Email";
 const String enterYourEmail = "Enter your email";
@@ -101,4 +101,3 @@ const String specialization = 'Specialization';
 const String rupee = "\u{20B9}";
 const String emptyPhone = "Please enter phone number.";
 const String phoneError = "Please enter valid phone number.";
-

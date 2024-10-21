@@ -23,41 +23,40 @@ class EditProfileScreen extends StatelessWidget {
       appBar: commonAppBar(
           color: colorBG,
           colorText: Colors.black,
-
           title: 'EDIT PROFILE',
-
           leading: commonBackRedirectButton(page: "Profile")),
-      child:Container(
-          child:  isMobile
-              ? SizedBox(
-            width: size.width,
-            height: size.height ,
-            child: _mobileView(size: size),
-          )
-              : Center(
-            child: Container(
-              decoration: commonBoxDecoration(
-                  color: colorBG, borderRadius: BorderRadius.circular(8)),
-              width: isTablet?size.width * 0.9:size.width * 0.33,
-              height: size.height * 0.7,
-              child: _webView(size: size),
-            ),
-          ),
+      child: Container(
+        child: isMobile
+            ? SizedBox(
+                width: size.width,
+                height: size.height,
+                child: _mobileView(size: size),
+              )
+            : Center(
+                child: Container(
+                  decoration: commonBoxDecoration(
+                      color: colorBG, borderRadius: BorderRadius.circular(8)),
+                  width: isTablet ? size.width * 0.9 : size.width * 0.33,
+                  height: size.height * 0.7,
+                  /*child: _webView(size: size)*/
+                ),
+              ),
       ),
     );
   }
 
   _mobileView({required Size size}) {
     return Consumer<ProfileProvider>(builder: (context, provider, child) {
-      return ListView(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(0.0),
-                child: Row(
+      return Container(
+        width: size.width,
+        height: size.height,
+        child: ListView(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
                     Expanded(
                         child: Column(
@@ -78,7 +77,6 @@ class EditProfileScreen extends StatelessWidget {
                               height: 90,
                               child: setAssetImage(image: icDummyUsers),
                             ),
-
                             Flexible(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -99,7 +97,6 @@ class EditProfileScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-
                           ],
                         )
                       ],
@@ -108,117 +105,109 @@ class EditProfileScreen extends StatelessWidget {
                     //  const Expanded(child: Column())
                   ],
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Divider(),
-              const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(0.0),
-                child: Column(
+                const SizedBox(
+                  height: 10,
+                ),
+                const Divider(),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                            child: commonTextFiled(
-                          title: "Name",
-                          width: size.width,
-                          size: size,
-                        )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Expanded(
-                            child: commonTextFiled(
-                          title: "Phone Number",
-                          width: size.width,
-                          size: size,
-                        )),
-                      ],
-                    ),
+                    Expanded(
+                        child: commonTextFiled(
+                      title: "Name",
+                      width: size.width,
+                      size: size,
+                    )),
                     const SizedBox(
-                      height: 20,
+                      width: 20,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: commonTextFiled(
-                          title: "Email Address",
-                          size: size,
-                          width: size.width,
-                        )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Expanded(
-                            child: commonDropDown(
-                          size: size,
-                          items: provider.itemGenderList,
-                          onChanged: (String? value) {
-                            provider.setGenderValue = value ?? '';
-                          },
-                          selectedValue: provider.selectedGender,
-                        ))
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: commonTextFiled(
-                          title: "Date of birth",
-                          width: size.width,
-                          size: size,
-                        )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Expanded(
-                            child: commonDropDown(
-                                items: provider.bloodGroupList,
-                                onChanged: (String? value) {
-                                  provider.setBloodValue = value ?? '';
-                                },
-                                selectedValue: provider.selectBloodGroup,
-                                size: size,
-                                title: "Blood Group")),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: commonDropDown(
-                                items: provider.timeZoneList,
-                                onChanged: (String? value) {
-                                  provider.setTimeZoneValue = value ?? '';
-                                },
-                                selectedValue: provider.selectTimeZone,
-                                size: size,
-                                title: "Time Zone")),
-                        Expanded(child: Container())
-                      ],
-                    ),
+                    Expanded(
+                        child: commonTextFiled(
+                      title: "Phone Number",
+                      width: size.width,
+                      size: size,
+                    )),
                   ],
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Divider(
-                thickness: 0.3,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(0.0),
-                child: Column(
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        child: commonTextFiled(
+                      title: "Email Address",
+                      size: size,
+                      width: size.width,
+                    )),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                        child: commonDropDown(
+                      size: size,
+                      items: provider.itemGenderList,
+                      onChanged: (String? value) {
+                        provider.setGenderValue = value ?? '';
+                      },
+                      selectedValue: provider.selectedGender,
+                    ))
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        child: commonTextFiled(
+                      title: "Date of birth",
+                      width: size.width,
+                      size: size,
+                    )),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                        child: commonDropDown(
+                            items: provider.bloodGroupList,
+                            onChanged: (String? value) {
+                              provider.setBloodValue = value ?? '';
+                            },
+                            selectedValue: provider.selectBloodGroup,
+                            size: size,
+                            title: "Blood Group")),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        child: commonDropDown(
+                            items: provider.timeZoneList,
+                            onChanged: (String? value) {
+                              provider.setTimeZoneValue = value ?? '';
+                            },
+                            selectedValue: provider.selectTimeZone,
+                            size: size,
+                            title: "Time Zone")),
+                    Expanded(child: Container())
+                  ],
+                ),
+                /*
+                  ],
+                ),*/
+                const SizedBox(
+                  height: 20,
+                ),
+                const Divider(
+                  thickness: 0.3,
+                ),
+                Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -232,11 +221,12 @@ class EditProfileScreen extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                            child: commonTextFiled(
-                          width: size.width,
-                          title: "House No./ Street Name/ Area*",
-                          size: size,
-                        )),
+                          child: commonTextFiled(
+                            width: size.width,
+                            title: "House No./ Street Name*",
+                            size: size,
+                          ),
+                        ),
                         const SizedBox(
                           width: 20,
                         ),
@@ -254,23 +244,20 @@ class EditProfileScreen extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: Expanded(
-                              child: commonTextFiled(
-                            title: "City",
-                            width: size.width,
-                            size: size,
-                          )),
-                        ),
+                            child: commonTextFiled(
+                          title: "City",
+                          width: size.width,
+                          size: size,
+                        )),
                         const SizedBox(
                           width: 20,
                         ),
                         Expanded(
                             child: commonTextFiled(
-                              title: "State",
-                              width: size.width,
-                              size: size,
-                            )),
-
+                          title: "State",
+                          width: size.width,
+                          size: size,
+                        )),
                       ],
                     ),
                     const SizedBox(
@@ -278,8 +265,6 @@ class EditProfileScreen extends StatelessWidget {
                     ),
                     Row(
                       children: [
-
-
                         Expanded(
                             child: commonDropDown(
                                 items: provider.countryList,
@@ -299,72 +284,61 @@ class EditProfileScreen extends StatelessWidget {
                           size: size,
                         )),
                       ],
-                    ),
+                    )
                   ],
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Divider(
-                thickness: 0.3,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(0.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                const SizedBox(
+                  height: 20,
+                ),
+                const Divider(
+                  thickness: 0.3,
+                ),
+                CommonTextWidget(
+                  text: "Other information",
+                  fontWeight: FontWeight.w700,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
                   children: [
+                    Expanded(
+                        child: commonTextFiled(
+                      width: size.width,
+                      title: "Extra phone numbers",
+                      size: size,
+                    )),
                     const SizedBox(
-                      height: 20,
+                      width: 20,
                     ),
-                    CommonTextWidget(
-                      text: "Other information",
-                      fontWeight: FontWeight.w700,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: commonTextFiled(
-                              width: size.width,
-                          title: "Extra phone numbers",
-                          size: size,
-                        )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Expanded(
-                            child: commonDropDown(
-                                items: provider.languageList,
-                                onChanged: (String? value) {
-                                  provider.setLanguageValue = value ?? '';
-                                },
-                                selectedValue: provider.selectLanguage,
-                                size: size,
-                                title: "Language")),
-
-                      ],
-                    ),
+                    Expanded(
+                        child: commonDropDown(
+                            items: provider.languageList,
+                            onChanged: (String? value) {
+                              provider.setLanguageValue = value ?? '';
+                            },
+                            selectedValue: provider.selectLanguage,
+                            size: size,
+                            title: "Language")),
                   ],
                 ),
-              ),
-
-              SizedBox(height: 20,),
-
-              CommonButtonWidget(text: "Save Change",
-              bottom: 45,
-              height: 45,)
-            ],
-          ),
-        ],
+                SizedBox(
+                  height: 20,
+                ),
+                CommonButtonWidget(
+                  text: "Save Change",
+                  bottom: 45,
+                  height: 45,
+                )
+              ],
+            ),
+          ],
+        ),
       );
     });
   }
 
-  _webView({required Size size}) {
+/*  _webView({required Size size}) {
     return Consumer<ProfileProvider>(builder: (context, provider, child) {
       return ListView(
         children: [
@@ -481,9 +455,9 @@ class EditProfileScreen extends StatelessWidget {
                               const SizedBox(
                                 width: 20,
                               ),
-                              /* Expanded(
+                              */ /* Expanded(
                                   child:
-                                  commonTextFiled( title: "Gender",size: size,)),*/
+                                  commonTextFiled( title: "Gender",size: size,)),*/ /*
                               Expanded(
                                   child: commonDropDown(
                                 size: size,
@@ -665,7 +639,7 @@ class EditProfileScreen extends StatelessWidget {
         ],
       );
     });
-  }
+  }*/
 
   commonTextFiled({String? title, required Size size, double? width}) {
     return commonTextFiledView(
@@ -709,5 +683,4 @@ class EditProfileScreen extends StatelessWidget {
       ],
     );
   }
-
 }

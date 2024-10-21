@@ -87,7 +87,7 @@ class _SignupViewState extends State<SignupView> {
                     setAssetImage(
                         image: icLoginLogo,
                         width: 200,
-                        height: 140,
+                        height: 120,
                         fit: BoxFit.scaleDown),
                     Align(
                         heightFactor: 0.05,
@@ -100,36 +100,6 @@ class _SignupViewState extends State<SignupView> {
                             fontSize: 25,
                           ),
                         )),
-
-                    /* Align(
-                        alignment: Alignment.center,
-                        child: CommonTextWidget(
-                          text: "Sign Up",
-                          textStyle: GoogleFonts.agbalumo(
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black,
-                            fontSize: 25,
-                          ),
-                          top: 10,
-                        )),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    setAssetImage(
-                        fit: BoxFit.scaleDown,
-                        image: icLoginLogo,
-                        width: 150,
-                        height: 150),
-
-                    SizedBox(
-                      height: isMobile?size.height * 0.05:0,
-                    ),
-                    setAssetImage(
-                        image: icLoginLogo,
-                        width: 200,
-                        height: 140,
-                        fit: BoxFit.scaleDown),*/
-
                     commonTextFiledView(
                         controller: provider.tetFName,
                         title: "First Name",

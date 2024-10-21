@@ -36,13 +36,16 @@ class LoginView extends StatelessWidget {
               padding: isMobile
                   ? EdgeInsets.zero
                   : const EdgeInsets.only(
-                      left: 25, right: 25, bottom: 0, top: 0),
+                      left: twentyFive,
+                      right: twentyFive,
+                      bottom: zero,
+                      top: zero),
               width: size.width,
               height: size.height,
               child: Form(
                 key: formLoginKey,
                 child: Padding(
-                  padding: const EdgeInsets.all(0.0),
+                  padding: const EdgeInsets.all(zero),
                   child: ListView(
                     clipBehavior: Clip.antiAliasWithSaveLayer,
                     children: [
@@ -63,15 +66,15 @@ class LoginView extends StatelessWidget {
                               heightFactor: 0.1,
                               alignment: Alignment.center,
                               child: CommonTextWidget(
-                                text: "Login",
+                                text: login,
                                 textStyle: GoogleFonts.inter(
                                   fontWeight: FontWeight.w700,
                                   color: colorGreen,
-                                  fontSize: 25,
+                                  fontSize: twentyFive,
                                 ),
                               )),
                           commonTextFiledView(
-                            topText: 15,
+                            topText: fifteen,
                             title: yourEmail,
                             keyboardType: TextInputType.emailAddress,
                             controller: provider.tetEmail,

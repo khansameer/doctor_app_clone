@@ -10,17 +10,18 @@ import 'gloable_status_code.dart';
 Future callPostMethod(String url, Map<String, dynamic> params) async {
   return await http
       .post(
-    Uri.parse(url),
-    body: json.encode(params),
-    headers: {'Content-Type': 'application/json',
-      "Access-Control-Allow-Origin": "*",
-      
-      'accept': '*/*'},
-  )
+        Uri.parse(url),
+        body: json.encode(params),
+        headers: {
+          'Content-Type': 'application/json',
+          "Access-Control-Allow-Origin": "*",
+          'accept': '*/*'
+        },
+      )
       .timeout(const Duration(seconds: 3))
       .then((http.Response response) {
-    return getResponse(response);
-  });
+        return getResponse(response);
+      });
 }
 
 Future callPatchMethod(
@@ -29,7 +30,7 @@ Future callPatchMethod(
     'Content-Type': 'application/json',
     'accept': '*/*',
     "Authorization":
-    token != null && token.toString().isNotEmpty ? "Bearer $token" : "",
+        token != null && token.toString().isNotEmpty ? "Bearer $token" : "",
   };
 
   return await http
@@ -54,11 +55,11 @@ Future callPostMethodWithToken(String url, Map<String, dynamic> params) async {
     'Content-Type': 'application/json',
     'accept': '*/*',
     "Authorization":
-    token != null && token.toString().isNotEmpty ? "Bearer $token" : "",
+        token != null && token.toString().isNotEmpty ? "Bearer $token" : "",
   };
   return await http
       .post(Uri.parse(url),
-      body: utf8.encode(json.encode(params)), headers: commonHeadersToken)
+          body: utf8.encode(json.encode(params)), headers: commonHeadersToken)
       .then((http.Response response) {
     return getResponse(response);
   });
@@ -71,7 +72,7 @@ Future callPostMethodWithToken11(
     'Content-Type': 'application/json',
     'accept': '*/*',
     "Authorization":
-    token != null && token.toString().isNotEmpty ? "Bearer $token" : "",
+        token != null && token.toString().isNotEmpty ? "Bearer $token" : "",
   };
 
   final uri = Uri.https('181.215.78.241:5000', searchKey, params);
@@ -84,11 +85,11 @@ Future callDeleteMethod(String url, Map<String, dynamic> params) async {
     'Content-Type': 'application/json',
     'accept': '*/*',
     "Authorization":
-    token != null && token.toString().isNotEmpty ? "Bearer $token" : "",
+        token != null && token.toString().isNotEmpty ? "Bearer $token" : "",
   };
   return await http
       .delete(Uri.parse(url),
-      body: utf8.encode(json.encode(params)), headers: commonHeadersToken)
+          body: utf8.encode(json.encode(params)), headers: commonHeadersToken)
       .then((http.Response response) {
     return getResponse(response);
   });
@@ -101,7 +102,7 @@ Future callGETMethod({required String url, String? key}) async {
     'Content-Type': 'application/json',
     'accept': '*/*',
     "Authorization":
-    token != null && token.toString().isNotEmpty ? "Bearer $token" : "",
+        token != null && token.toString().isNotEmpty ? "Bearer $token" : "",
   };
 
   return await http
@@ -132,7 +133,9 @@ Future getResponse(Response response) async {
   globalStatusCode = response.statusCode;
   printWrapped("response--statusCode--${response.statusCode}");
   printWrapped("response--${response.body}");
-  if (globalStatusCode == 500 || globalStatusCode == 502) {
+  if (globalStatusCode == 500 ||
+      globalStatusCode == 502 ||
+      globalStatusCode == 503) {
     return "{\"status\":\"false\",\"message\":\"Internal server issue\"}";
   } else if (globalStatusCode == 401) {
     final parsedJson = jsonDecode(response.body.toString());
@@ -149,7 +152,7 @@ Future getResponse(Response response) async {
   } else if (globalStatusCode == 400) {
     final parsedJson = jsonDecode(response.body.toString());
     // final message = parsedJson['message'].toString();
-   /* statusValue == false;
+    /* statusValue == false;
     errorMessage == parsedJson['message'].toString();*/
     //  print('====dddd==${response.body.toString()}');
 
