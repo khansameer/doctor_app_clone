@@ -12,6 +12,7 @@ const String icBg = "$baseImagePath/ic_bg.jpg";
 const String icConsult = "$baseImagePath/i_consult.jpg";
 const String icCongrats = "$baseImagePath/ic_congress.png";
 const String icReach = "$baseImagePath/ic_reach.png";
+const icPatient = '$baseImagePath/ic_patient.png';
 const String icMenuProfile = "$baseImagePath/ic_menu_profile.png";
 const String icMenuReach = "$baseImagePath/ic_menu_reach.jpg";
 const String icPatientStories = "$baseImagePath/ic_patient_stories.jpg";
@@ -23,5 +24,7 @@ const String icMenuEarning = "$baseImagePath/ic_menu_earning.png";
 const String icMenuCalender = "$baseImagePath/ic_menu_calender.png";
 const String icMenuPatient = "$baseImagePath/ic_menu_patient.png";
 const String icMen = "$baseImagePath/ic_men.jpg";
+const icDoctorWidget = '$baseImagePath/doctor.png';
 const String icDummyUsers = "$baseImagePath/ic_dummy_users.png";
+const String icLogoApps = "$baseImagePath/ic_app_logoss.png";
 

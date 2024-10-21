@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/common/app_scaffold.dart';
 
+
 class ForgotScreen extends StatelessWidget {
   const ForgotScreen({super.key});
 
@@ -19,24 +20,27 @@ class ForgotScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
-    var isTablet = Responsive.isTablet(context);
-    var isDesktop = Responsive.isDesktop(context);
+    var isTablet=Responsive.isTablet(context);
     return AppScaffold(
-      appBar: isMobile
-          ? commonAppBar(color: Colors.white, iconColor: Colors.black)
-          : PreferredSize(preferredSize: Size.zero, child: Container()),
-      left: isMobile ? null : 0,
-      right: isMobile ? null : 0,
+
+      appBar: isMobile?commonAppBar(
+
+          color: Colors.white,
+          iconColor: Colors.black
+      ):PreferredSize(preferredSize: Size.zero, child: Container()),
+      left:isMobile?null: 0,
+    right: isMobile?null: 0,
+
       child: commonResponsiveLayout(
-        isDesktop: isDesktop,
-        boxHeight: isDesktop ? size.height * 0.53 : size.height * 0.45,
         isTablet: isTablet,
         size: size,
+
         isMobile: isMobile,
         child: ListView(
           children: [
+
             SizedBox(
-              height: isMobile ? size.height * 0.0 : 0,
+              height: isMobile?size.height * 0.0:0,
             ),
             setAssetImage(
                 image: icLoginLogo,
@@ -53,11 +57,14 @@ class ForgotScreen extends StatelessWidget {
                     color: colorGreen,
                     fontSize: 25,
                   ),
+
                 )),
+
+
             Align(
               alignment: Alignment.center,
               child: CommonTextWidget(
-                top: size.height * zero002,
+                top: size.height * 0.02,
                 textColor: Colors.black,
                 text: forgotPasswordTextDesc,
               ),
@@ -68,13 +75,15 @@ class ForgotScreen extends StatelessWidget {
                 topText: size.height * 0.04,
                 topTextField: ten),
             CommonButtonWidget(
-              padding: isMobile ? null : EdgeInsets.all(20),
+              padding: isMobile?null:EdgeInsets.all(twenty),
               onPressed: () {
+
                 pushScreen(
                     context: context,
                     routeName: RouteName.forgotPasswordOptView);
+
               },
-              top: size.height * zero004,
+              top: size.height * 0.04,
               text: resetPassword,
             ),
           ],

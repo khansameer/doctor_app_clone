@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/route/route.dart';
@@ -12,19 +13,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../app_constants.dart';
 import '../common/common_textfield.dart';
 
-commonResponsiveLayout(
-    {required Size size,
-    required Widget child,
-    required bool isMobile,
-    required bool isDesktop,
-    double? boxWidth,
-    double? boxHeight,
-    required bool isTablet}) {
+
+commonResponsiveLayout({required Size size,required Widget child,required bool isMobile,double? boxWidth,double ?boxHeight,required bool isTablet}){
   return Container(
     width: size.width,
     height: size.height,
@@ -35,38 +31,89 @@ commonResponsiveLayout(
       child: Center(
         child: Container(
           decoration: commonBoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(isMobile ? 0 : 10)),
+                color: Colors.white,
+              borderRadius: BorderRadius.circular(isMobile?0:
+              10)
+          ),
           padding: isMobile
               ? EdgeInsets.zero
-              : const EdgeInsets.only(left: 25, right: 25, bottom: 25, top: 0),
-          width: isMobile
-              ? size.width
-              : isTablet
-                  ? size.width * 0.6
-                  : size.width * 0.3,
-          height: isMobile ? size.height : boxHeight ?? size.height * 0.38,
+              : const EdgeInsets.only(
+              left: 25, right: 25, bottom: 25, top: 0),
+          width: isMobile ? size.width : isTablet?size.width * 0.6:size.width * 0.3,
+          height: isMobile ? size.height : boxHeight??size.height * 0.38,
           child: child,
         ),
       ),
     ),
   );
 }
-
-commonBackRedirectButton({String? page}) {
+commonWithIconButton(
+    {required VoidCallback onPressed, String? btnText, IconData? icon}) {
+  return TextButton(
+    style: TextButton.styleFrom(
+      foregroundColor: Colors.transparent,
+      disabledForegroundColor: Colors.transparent.withOpacity(zero38),
+    ),
+    onPressed: onPressed,
+    child: Container(
+      padding: const EdgeInsets.all(7),
+      decoration: commonBoxDecoration(
+          borderRadius: BorderRadius.circular(8), color: AppColors.colorFillBg),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          commonText(
+              text: btnText ?? "New account",
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
+              fontSize: 13,
+              right: 10),
+          Icon(icon ?? Icons.add)
+        ],
+      ),
+    ),
+  );
+}
+commonButton(
+    {required VoidCallback onPressed,
+      String? btnText,
+      Color? colorText,
+      bool isShowBorder = false}) {
+  return TextButton(
+    style: TextButton.styleFrom(
+      shape: isShowBorder
+          ? RoundedRectangleBorder(
+        side: const BorderSide(color: Colors.grey, width: 1),
+        borderRadius: BorderRadius.circular(10),
+      )
+          : const CircleBorder(),
+      foregroundColor: Colors.transparent,
+      disabledForegroundColor: Colors.transparent.withOpacity(zero38),
+    ),
+    onPressed: onPressed,
+    child: commonText(
+      text: btnText ?? "newAccount",
+      color: colorText ?? AppColors.primary,
+      fontWeight: FontWeight.w500,
+      fontSize: 14,
+    ),
+  );
+}
+commonBackRedirectButton({String? page}){
   return IconButton(
       onPressed: () {
-        final dashboardProvider = Provider.of<DashboardProvider>(
+       /* final dashboardProvider = Provider.of<DashboardProvider>(
             navigatorKey.currentState!.context,
             listen: false);
-        dashboardProvider.getPageSelected = page ?? "Home";
+        dashboardProvider.getPageSelected = page??"Home";*/
       },
-      icon: const Icon(
-        Icons.arrow_back_ios,
-        color: colorText,
-      ));
+      icon: const Icon(Icons.arrow_back_ios,color: colorText,));
 }
 
+String formatDate({required DateTime date,String ?formatDate}) {
+  return DateFormat(formatDate).format(date);
+}
 setAssetImage(
     {required String image, double? width, double? height, BoxFit? fit}) {
   return Image.asset(
@@ -92,20 +139,42 @@ BoxDecoration commonBoxDecoration(
       boxShadow: boxShadow,
       borderRadius: borderRadius);
 }
-
 Future getAuthToken() async {
   String? token =
-      await PreferenceHelper.getString(key: PreferenceHelper.authToken);
+  await PreferenceHelper.getString(key: PreferenceHelper.authToken);
 
   print('=================token${token}');
   return token;
 }
 
+Future getName() async {
+  String? name = await PreferenceHelper.getString(key: PreferenceHelper.name);
+
+  return name;
+}
+
+Future getUserID() async {
+  String? userID =
+  await PreferenceHelper.getString(key: PreferenceHelper.userID);
+
+  print('=================userID${userID}');
+  return userID;
+}
 commonTextStyle({FontWeight? fontWeight, double? fontSize, Color? color}) {
   return GoogleFonts.inter(
     color: color,
     fontWeight: fontWeight ?? FontWeight.w500,
     fontSize: fontSize ?? 14,
+  );
+}
+
+loadAssetImage(
+    {required String path, double? width, double? height, Color? color}) {
+  return Image.asset(
+    path,
+    width: width,
+    color: color,
+    height: height,
   );
 }
 
@@ -117,12 +186,12 @@ commonTextFiledView({
   String? Function(String?)? validator,
   double? topTextField,
   bool? isReadOnly,
-  double? width,
-  double? radius,
-  double? height,
+  double ?width,
+  double ?radius,
+  double ?height,
   Widget? suffixIcon,
   VoidCallback? onTap,
-  double? textFontSize,
+  double ?textFontSize,
   TextInputType? keyboardType,
   TextEditingController? controller,
   int? maxLines,
@@ -141,8 +210,9 @@ commonTextFiledView({
       CommonTextField(
         hint: hint,
         onTap: onTap,
-        height: height,
+      height: height,
         isReadOnly: isReadOnly,
+
         colorFill: Colors.white,
         inputTypes: keyboardType,
         suffixIcon: suffixIcon,
@@ -150,7 +220,7 @@ commonTextFiledView({
         width: width,
         obscureText: obscureText,
         controller: controller,
-        radius: radius ?? twelve,
+        radius: radius??twelve,
         top: topTextField,
         maxLines: maxLines,
       )
@@ -204,7 +274,7 @@ AppBar commonAppBar(
     bottom: bottom,
     toolbarHeight: toolbarHeight,
     leading: leading,
-    iconTheme: IconThemeData(color: iconColor ?? Colors.white),
+    iconTheme:  IconThemeData(color: iconColor??Colors.white),
     actions: actions,
     title: CommonTextWidget(
       text: title,
@@ -325,25 +395,27 @@ Widget commonImageNetworkWidget(
     ),
   );
 }
-
 commonList({
   String? title,
   Widget? child,
   double? top,
 }) {
   return Container(
-    //  padding: const EdgeInsets.only(top: 8, bottom: 8),
+
+  //  padding: const EdgeInsets.only(top: 8, bottom: 8),
     decoration: commonBoxDecoration(
         color: Colors.white,
+
         border: Border.all(color: Colors.grey.withOpacity(0.50), width: 0)),
     margin: EdgeInsets.only(left: 0, right: 0, top: top ?? 0),
     child: child,
   );
 }
-
 genderView({required AuthProviders provider}) {
   return Column(
     children: [
+
+
       Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -389,78 +461,161 @@ genderView({required AuthProviders provider}) {
 
 appBarView({required BuildContext context, String? title}) {
   return commonAppBar(
-      title: title,
-      leading: const Icon(
-        Icons.dashboard_rounded,
-        color: Colors.white,
+    title: title,
+      leading: const Icon(Icons.dashboard_rounded,color: Colors.white,),
+      color: colorGreen, actions: [
+    commonIcon(onTap: () {
+      pushScreen(context: context, routeName: RouteName.settingScreen);
+    }),
+
+    commonInkWell(
+      onTap: (){
+        pushScreen(
+            context: context, routeName: RouteName.reportAndIssueScreen);
+      },
+      child: Container(
+        width: 24,
+        height: 24,
+        alignment:Alignment.center ,
+        decoration: commonBoxDecoration(shape: BoxShape.circle,
+            border: Border.all(color: Colors.white,width: 1)),
+        child: Container(
+
+          alignment:Alignment.center ,
+          child: const Icon(Icons.question_mark,size: 15,),
+        ),),
+    ),
+    const SizedBox(width: 10,),
+    commonInkWell(
+      onTap: () {
+        pushScreen(
+            context: context, routeName: RouteName.notificationScreen);
+      },
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          const Icon(
+            Icons.notifications_none,
+            color: Colors.white,
+            size: 24,
+          ),
+          Positioned(
+              top: -8.0,
+              right: -3.0,
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    width: 20,
+                    height: 20,
+                    decoration: commonBoxDecoration(
+                        shape: BoxShape.circle, color: Colors.red),
+                    child: Center(
+                      child: CommonTextWidget(
+                        text: "20",
+                        fontSize: 9,
+                        textColor: Colors.white,
+                      ),
+                    ),
+                  )
+                ],
+              ))
+        ],
       ),
-      color: colorGreen,
-      actions: [
-        commonIcon(onTap: () {
-          pushScreen(context: context, routeName: RouteName.settingScreen);
-        }),
-        commonInkWell(
-          onTap: () {
-            pushScreen(
-                context: context, routeName: RouteName.reportAndIssueScreen);
-          },
-          child: Container(
-            width: 24,
-            height: 24,
-            alignment: Alignment.center,
-            decoration: commonBoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 1)),
-            child: Container(
-              alignment: Alignment.center,
-              child: const Icon(
-                Icons.question_mark,
-                size: 15,
-              ),
+    ),
+    const SizedBox(
+      width: 10,
+    )
+  ]);
+}
+commonText({
+  String? text,
+  FontWeight? fontWeight,
+  double? fontSize,
+  double? top,
+  double? bottom,
+  Color? color,
+  double? left,
+  TextAlign? textAlign,
+  double? right,
+}) {
+  return Container(
+      margin: EdgeInsets.only(
+          top: top ?? zero,
+          left: left ?? zero,
+          right: right ?? zero,
+          bottom: bottom ?? zero),
+      child: Text(text ?? '',
+          textAlign: textAlign,
+          style: TextStyle(
+              color: color,
+              fontWeight: fontWeight ?? FontWeight.w500,
+              fontSize: fontSize ?? fourteen)));
+}
+commonMenu(
+    {String? headerText,
+      Widget? leading,
+      Widget? trailing,
+      int? index,
+      List<Widget>? children,
+      Color? headerLeadingIconColor,
+      Color? headerTextColor,
+      Color? backgroundColor,
+      bool? showIcon = false,
+      void Function(bool)? onExpansionChanged}) {
+  return ExpansionTile(
+    dense: true,
+    collapsedShape: const RoundedRectangleBorder(
+      side: BorderSide.none,
+    ),
+    shape: const RoundedRectangleBorder(
+      side: BorderSide.none,
+    ),
+    backgroundColor: backgroundColor,
+    trailing: trailing,
+    onExpansionChanged: onExpansionChanged,
+    showTrailingIcon: showIcon ?? false,
+    collapsedIconColor: Colors.white.withOpacity(0.50),
+    iconColor: Colors.white.withOpacity(0.50),
+    leading: leading ??
+        Icon(
+          Icons.menu,
+          color: headerLeadingIconColor ?? Colors.white,
+        ),
+    title: CommonTextWidget(
+        text: headerText ?? "Calender",
+        fontSize: 13,
+        textColor: headerTextColor ?? Colors.white.withOpacity(0.50)),
+    children: children ??
+        [
+          // Child expandable menu 1
+          ExpansionTile(
+            showTrailingIcon: false,
+            leading: Icon(
+              Icons.inventory,
+              color: Colors.white.withOpacity(0.50),
             ),
+            title: CommonTextWidget(
+                text: 'Inventory', textColor: Colors.white.withOpacity(0.50)),
           ),
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        commonInkWell(
-          onTap: () {
-            pushScreen(
-                context: context, routeName: RouteName.notificationScreen);
-          },
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              const Icon(
-                Icons.notifications_none,
-                color: Colors.white,
-                size: 24,
-              ),
-              Positioned(
-                  top: -8.0,
-                  right: -3.0,
-                  child: Stack(
-                    children: <Widget>[
-                      Container(
-                        width: 20,
-                        height: 20,
-                        decoration: commonBoxDecoration(
-                            shape: BoxShape.circle, color: Colors.red),
-                        child: Center(
-                          child: CommonTextWidget(
-                            text: "20",
-                            fontSize: 9,
-                            textColor: Colors.white,
-                          ),
-                        ),
-                      )
-                    ],
-                  ))
-            ],
+          // Child expandable menu 2
+          ExpansionTile(
+            showTrailingIcon: false,
+            leading: Icon(
+              Icons.expand_sharp,
+              color: Colors.white.withOpacity(0.50),
+            ),
+            title: CommonTextWidget(
+                text: 'Expenses', textColor: Colors.white.withOpacity(0.50)),
           ),
-        ),
-        const SizedBox(
-          width: 10,
-        )
-      ]);
+          ExpansionTile(
+            showTrailingIcon: false,
+            leading: Icon(
+              Icons.task,
+              color: Colors.white.withOpacity(0.50),
+            ),
+            title: CommonTextWidget(
+                text: 'Activities', textColor: Colors.white.withOpacity(0.50)),
+          ),
+        ],
+  );
 }

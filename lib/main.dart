@@ -3,6 +3,7 @@ import 'package:doctor_app/core/route/route_generator.dart';
 import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:doctor_app/login_demo.dart';
 import 'package:doctor_app/provider/auth_provider.dart';
+import 'package:doctor_app/provider/calender_provider.dart';
 import 'package:doctor_app/provider/chat_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/screen/dashboard/dashboard_screen.dart';
@@ -20,6 +21,7 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider<DashboardProvider>(create: (_) => DashboardProvider()),
   ChangeNotifierProvider<ChatProvider>(create: (_) => ChatProvider()),
   ChangeNotifierProvider<ProfileProvider>(create: (_) => ProfileProvider()),
+  ChangeNotifierProvider<CalenderProvider>(create: (_) => CalenderProvider()),
 ];
 
 void main() {

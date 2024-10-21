@@ -1,3 +1,6 @@
+
+import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/main.dart';
 import 'package:doctor_app/provider/model/dummy_model.dart';
@@ -16,10 +19,18 @@ import 'package:doctor_app/screen/dashboard/profile/profile_screen.dart';
 import 'package:doctor_app/screen/dashboard/reach/reach_screen.dart';
 import 'package:doctor_app/screen/dashboard/report/report_screen.dart';
 import 'package:doctor_app/screen/dashboard/weekly_earning/weekly_earning_screen.dart';
+import 'package:doctor_app/screen/new_dashboard/calender_new_screen.dart';
+import 'package:doctor_app/screen/new_dashboard/client_note_screen.dart';
+import 'package:doctor_app/screen/new_dashboard/patient_new_screen.dart';
+import 'package:doctor_app/screen/new_dashboard/patient_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DashboardProvider extends ChangeNotifier {
+
+  String? _name;
+
+  String? get name => _name;
   void setIndex(int index) {
     _selectedIndex = index;
     notifyListeners();
@@ -37,84 +48,113 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  getUserName() async {
+    _name = await getName();
+    notifyListeners();
+  }
   int _selectedIndex = 0;
-  Widget _currentPage = HomeScreen(
+ /* Widget _currentPage=HomeScreen(
     onSelectedPage: (page) {
-      final dashboardProvider = Provider.of<DashboardProvider>(
-          navigatorKey.currentState!.context,
-          listen: false);
-      dashboardProvider.getPageSelected = page;
-    },
-  );
+      final dashboardProvider = Provider.of<DashboardProvider>(navigatorKey.currentState!.context, listen: false);
+      dashboardProvider.getPageSelected=page;
 
-  String? _page;
+    },
+
+  );
+*/
+  Widget _currentPage = const CalenderNewScreen(); // Default page
+
+  String ?_page;
   String? get page => _page;
 
-  set getPageSelected(String value) {
+  Widget _currentPageProfile = const PatientProfilePage(); // Default page
+
+  Widget get currentPageProfile => _currentPageProfile;
+  set updateProfilePage(String value) {
+    if (value == "Profile") {
+      _currentPageProfile = const PatientProfilePage();
+    } else if (value == "client_note") {
+      _currentPageProfile = const ClientNoteScreen();
+    } else {
+      _currentPageProfile = Center(
+        child: commonText(text: "no"),
+      ); // Default page or other pages
+    }
+    notifyListeners(); // Notify listeners to rebuild
+  }
+/*
+  set getPageSelected(String  value) {
     print('==================sameer$value');
     _page = value;
-    final provider = Provider.of<DashboardProvider>(
-        navigatorKey.currentState!.context,
-        listen: false);
-    if (_page == "Profile") {
-      provider.updatePage = const ProfileScreen();
+    final provider = Provider.of<DashboardProvider>(navigatorKey.currentState!.context, listen: false);
+    if(_page=="Profile"){
+      provider.updatePage=const ProfileScreen();
     }
-    if (_page == "Home") {
-      provider.updatePage = HomeScreen(onSelectedPage: (value) {
-        final dashboardProvider = Provider.of<DashboardProvider>(
-            navigatorKey.currentState!.context,
-            listen: false);
-        dashboardProvider.getPageSelected = value;
+    if(_page=="Home"){
+      provider.updatePage= HomeScreen(onSelectedPage: (value){
+        final dashboardProvider = Provider.of<DashboardProvider>(navigatorKey.currentState!.context, listen: false);
+        dashboardProvider.getPageSelected=value;
+
       });
     }
-    if (_page == "Reach") {
-      provider.updatePage = const ReachScreen();
+    if(_page=="Reach"){
+      provider.updatePage=const ReachScreen();
     }
 
-    if (_page == "Patient Stories") {
-      provider.updatePage = const PatientStoriesScreen();
+    if(_page=="Patient Stories"){
+      provider.updatePage=const PatientStoriesScreen();
     }
-    if (_page == "Consult") {
-      provider.updatePage = const ConsultScreen();
+    if(_page=="Consult"){
+      provider.updatePage=const ConsultScreen();
     }
-    if (_page == "Healthfeed") {
-      provider.updatePage = const HealthFeedScreen();
+    if(_page=="Healthfeed"){
+      provider.updatePage=const HealthFeedScreen();
     }
-    if (_page == "Prime") {
-      provider.updatePage = const PrimeScreen();
+    if(_page=="Prime"){
+      provider.updatePage=const PrimeScreen();
     }
-    if (_page == "Report") {
-      provider.updatePage = const ReportScreen();
+    if(_page=="Report"){
+      provider.updatePage=const ReportScreen();
     }
-    if (_page == "Earning") {
-      provider.updatePage = const WeeklyEarningScreen();
+    if(_page=="Earning"){
+      provider.updatePage=const WeeklyEarningScreen();
     }
-    if (_page == "Calender") {
-      provider.updatePage = const CalenderScreen();
+    if(_page=="Calender"){
+      provider.updatePage=const CalenderScreen();
     }
-    if (_page == "Patient") {
-      provider.updatePage = const PatientsScreen();
+    if(_page=="Patient"){
+      provider.updatePage=const PatientsScreen();
     }
-    if (_page == "edit_profile") {
-      provider.updatePage = const EditProfileScreen();
+    if(_page=="edit_profile"){
+      provider.updatePage=const EditProfileScreen();
     }
-    if (_page == "chat_user_list") {
-      provider.updatePage = const PatientListScreen();
+    if(_page=="chat_user_list"){
+      provider.updatePage=const PatientListScreen();
     }
-    if (_page == "chat_screen") {
-      provider.updatePage = const ChatScreen();
+    if(_page=="chat_screen"){
+      provider.updatePage=const ChatScreen();
     }
     notifyListeners(); // Notify the listeners to rebuild the UI
-  }
+  }*/
 
-  String? _appBarTitle = "Home";
+  String ? _appBarTitle="Home";
   int get selectedIndex => _selectedIndex;
   String? get appBarTitle => _appBarTitle;
   Widget get currentPage => _currentPage;
 
-  set updatePage(Widget page) {
-    _currentPage = page;
-    notifyListeners(); // Notify the listeners to rebuild the UI
+  set updatePage(String value) {
+    if (value == "Patients") {
+      _currentPage = const PatientNewScreen();
+    } else if (value == "profile") {
+      _currentPage =  Container();
+    } else if (value == "Calender") {
+      _currentPage = const CalenderNewScreen();
+    } else {
+      _currentPage = Center(
+        child: CommonTextWidget(text: "no"),
+      ); // Default page or other pages
+    }
+    notifyListeners(); // Notify listeners to rebuild
   }
 
   void setSelectedIndex(int index) {
@@ -126,6 +166,7 @@ class DashboardProvider extends ChangeNotifier {
     _appBarTitle = value;
     notifyListeners();
   }
+
 
   List<DummyModel> get itemNotification => _itemNotification;
   final List<DummyModel> _itemNotification = [
@@ -214,25 +255,26 @@ class DashboardProvider extends ChangeNotifier {
         date: "Dadar Eye & Gynaec Centre",
         content: "790 W. Chestnut Avenue, Monrovia, CA 91016",
         items: []),
-    DummyModel(
-        icon:
-            "https://img.freepik.com/free-vector/eye-logo-design-template_23-2150893414.jpg",
-        date: "Dadar Eye & Gynaec Centre",
-        content: "790 W. Chestnut Avenue, Monrovia, CA 91016",
-        items: []),
 
-    /*  DummyModel(
-        icon:
-            "https://images1-fabric.practo.com/547c04abc4c5bf75f8a96363d898701731923d0230983.jpg",
-        date: "Clear Vision Eye Clinic",
-        content: "790 W. Chestnut Avenue, Monrovia, CA 91016",
-        items: []),*/
-    /* DummyModel(
+    DummyModel(
         icon:
         "https://img.freepik.com/free-vector/eye-logo-design-template_23-2150893414.jpg",
         date: "Dadar Eye & Gynaec Centre",
         content: "790 W. Chestnut Avenue, Monrovia, CA 91016",
-        items: []),*/
+        items: []),
+
+    DummyModel(
+        icon:
+            "https://images1-fabric.practo.com/547c04abc4c5bf75f8a96363d898701731923d0230983.jpg",
+        date: "Clear Vision Eye Clinic",
+        content: "790 W. Chestnut Avenue, Monrovia, CA 91016",
+        items: []),
+    DummyModel(
+        icon:
+        "https://img.freepik.com/free-vector/eye-logo-design-template_23-2150893414.jpg",
+        date: "Dadar Eye & Gynaec Centre",
+        content: "790 W. Chestnut Avenue, Monrovia, CA 91016",
+        items: []),
   ];
 
   List<DummyModel> get clinicList => _clinicList;

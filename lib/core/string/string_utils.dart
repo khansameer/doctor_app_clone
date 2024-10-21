@@ -1,3 +1,5 @@
+
+const String dMMYYYY = "d MMM yyyy";
 const String appName = "Doctor App";
 const String name = "Name";
 const String login = "Login";

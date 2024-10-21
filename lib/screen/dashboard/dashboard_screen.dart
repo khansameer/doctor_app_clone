@@ -21,7 +21,7 @@ class DashboardScreen extends StatelessWidget {
     final List<Widget> screens = [
        HomeScreen(onSelectedPage: (value ) {
 
-         provider.getPageSelected=value;
+        // provider.getPageSelected=value;
 provider.setAppBarTitle(value);
         },),
       Container(),
@@ -40,7 +40,7 @@ provider.setAppBarTitle(value);
               currentIndex: provider.selectedIndex,
               onTap: (index) {
                 provider.setIndex(index);
-                provider.updatePage = screens[index];
+             //   provider.updatePage = screens[index];
                 if(index==0)
                   {
                     provider.setAppBarTitle("Home");
@@ -90,7 +90,7 @@ provider.setAppBarTitle(value);
                   //  provider.updatePage = screens[index]; // Use the correct screen here
 
                     provider.setSelectedIndex(index);
-                    provider.updatePage = screens[index]; // Use the correct screen here
+                    //provider.updatePage = screens[index]; // Use the correct screen here
                   },
                   labelType: NavigationRailLabelType.none,
                   destinations: provider.navigationItems.map((item) {

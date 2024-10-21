@@ -22,24 +22,25 @@ class ForgotPasswordOptView extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
-    var isTablet = Responsive.isTablet(context);
-    var isDesktop = Responsive.isDesktop(context);
+    var isTablet=Responsive.isTablet(context);
     return AppScaffold(
-      appBar: isMobile
-          ? commonAppBar(color: Colors.white, iconColor: Colors.black)
-          : PreferredSize(preferredSize: Size.zero, child: Container()),
-      left: isMobile ? null : 0,
-      right: isMobile ? null : 0,
+
+      appBar: isMobile?commonAppBar(
+
+          color: Colors.white,
+          iconColor: Colors.black
+      ):PreferredSize(preferredSize: Size.zero, child: Container()),
+      left:isMobile?null: 0,
+      right: isMobile?null: 0,
+
       child: commonResponsiveLayout(
-        isDesktop: isDesktop,
         size: size,
         isTablet: isTablet,
         isMobile: isMobile,
-        boxHeight: isDesktop ? size.height * 0.63 : size.height * 0.45,
         child: ListView(
           children: [
             SizedBox(
-              height: isMobile ? size.height * 0.0 : 0,
+              height: isMobile?size.height * 0.0:0,
             ),
             setAssetImage(
                 image: icLoginLogo,
@@ -47,7 +48,7 @@ class ForgotPasswordOptView extends StatelessWidget {
                 height: 140,
                 fit: BoxFit.scaleDown),
             Align(
-                heightFactor: 0.1,
+              heightFactor: 0.1,
                 alignment: Alignment.center,
                 child: CommonTextWidget(
                   text: checkYourEmail,
@@ -56,14 +57,14 @@ class ForgotPasswordOptView extends StatelessWidget {
                     color: colorGreen,
                     fontSize: 25,
                   ),
+
                 )),
 
-            /* SizedBox(
+
+           /* SizedBox(
               height: size.height * zero002,
             ),*/
-            const SizedBox(
-              height: 40,
-            ),
+            const SizedBox(height: 40,),
             Align(
               alignment: Alignment.center,
               child: RichText(
@@ -90,8 +91,8 @@ class ForgotPasswordOptView extends StatelessWidget {
               alignment: Alignment.center,
               child: Container(
                 margin: const EdgeInsets.only(top: 30),
-                // /   alignment: Alignment.center,
-                //   width: size.width,
+             // /   alignment: Alignment.center,
+             //   width: size.width,
                 child: PinCodeTextField(
                   length: 5,
                   obscureText: false,
@@ -142,18 +143,19 @@ class ForgotPasswordOptView extends StatelessWidget {
               ),
             ),
             CommonButtonWidget(
-              left: isMobile ? null : 50,
-              right: isMobile ? null : 50,
-              top: isMobile ? size.height * zero004 : 20,
+              left: isMobile?null:50,
+              right: isMobile?null:50,
+              top: isMobile?size.height * 0.04:20,
               text: verifyCode,
-              padding: isMobile ? null : const EdgeInsets.all(20),
+              padding: isMobile?null:const EdgeInsets.all(20),
               onPressed: () {
-                pushNamedAndRemoveUntil(
-                    context: context, routeName: RouteName.dashboardScreen);
+                 pushNamedAndRemoveUntil(
+                    context: context,
+                    routeName: RouteName.dashboardScreen);
               },
             ),
             SizedBox(
-              height: isMobile ? size.height * zero008 : 30,
+              height: isMobile?size.height * 0.08:30,
             ),
             Center(
               child: RichText(

@@ -12,14 +12,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+
 import '../core/component/component.dart';
 import '../core/route/route.dart';
+
 
 enum Gender { male, female }
 
 class AuthProviders extends ChangeNotifier {
   final _service = ApiService();
-  bool _isFetching = false;
+   bool _isFetching = false;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
   bool get isFetching => _isFetching;
@@ -37,6 +39,7 @@ class AuthProviders extends ChangeNotifier {
 
   String get pin => _pin;
 
+
   final _tetFName = TextEditingController();
   final _tetLName = TextEditingController();
   final _tetEmail = TextEditingController();
@@ -51,6 +54,7 @@ class AuthProviders extends ChangeNotifier {
   TextEditingController get tetPassword => _tetPassword;
   TextEditingController get tetDob => _tetDob;
   TextEditingController get tetConfirmPassword => _tetConfirmPassword;
+
 
   void togglePasswordVisibility() {
     _isPasswordVisible = !_isPasswordVisible;
@@ -94,7 +98,7 @@ class AuthProviders extends ChangeNotifier {
         Navigator.pushNamedAndRemoveUntil(
             context, RouteName.loginScreen, (route) => false);
       }
-      /* Navigator.pushNamedAndRemoveUntil(
+     /* Navigator.pushNamedAndRemoveUntil(
           context, RouteName.loginScreen, (route) => false);*/
     });
   }
@@ -114,6 +118,7 @@ class AuthProviders extends ChangeNotifier {
   }
   // for weight
 
+
   String? _selectedValueWight;
   String? get selectedValueWight => _selectedValueWight;
   set selectionValueWeightValue(String newPin) {
@@ -127,10 +132,10 @@ class AuthProviders extends ChangeNotifier {
     _tetEmail.clear();
     _tetPhoneNO.clear();
     _tetDob.clear();
-    _tetConfirmPassword.clear();
+_tetConfirmPassword.clear();
     _tetPassword.clear();
     // Clear other fields as needed
-    notifyListeners(); // Notify listeners after resetting fields
+    notifyListeners();  // Notify listeners after resetting fields
   }
 
   @override
@@ -152,8 +157,8 @@ class AuthProviders extends ChangeNotifier {
   LoginModel? get loginModel => _loginModel;
   Future<void> callLoginApi(
       {required BuildContext context,
-      required Map<String, dynamic> body,
-      required bool isLogin}) async {
+        required Map<String, dynamic> body,
+        required bool isLogin}) async {
     _isFetching = true;
     notifyListeners();
     try {
@@ -163,6 +168,7 @@ class AuthProviders extends ChangeNotifier {
 
       if (globalStatusCode == 200) {
         if (_loginModel?.token != null && _loginModel?.userId != null) {
+
           await PreferenceHelper.setString(
               key: PreferenceHelper.name,
               value: "${_loginModel?.firstName} ${_loginModel?.lastName}");
@@ -176,17 +182,17 @@ class AuthProviders extends ChangeNotifier {
               key: PreferenceHelper.isLOGIN, value: true);
         }
       } else {
-        print('=====error======${_loginModel}');
         showCommonDialog(
             context: context,
             title: "Error",
-            content: _loginModel != null
+            content: _loginModel?.message != null
                 ? '${_loginModel?.message.toString()}'
                 : "Something went wrong please try again after sometime.",
             isMessage: true);
+
       }
     } catch (e) {
-      print('===$e');
+
       // _registerModel = RegisterModel(message: 'server_error'.tr());
     }
     _isFetching = false;
@@ -195,14 +201,16 @@ class AuthProviders extends ChangeNotifier {
 
   //==============================================================Get specializations List==================================================
 
+
   List<SpecializationsModel> _specializationsList = [];
 
   List<SpecializationsModel> get specializationsList => _specializationsList;
 
-  List<SpecializationsModel> _selectedSpecializations = [];
 
-  List<SpecializationsModel> get selectedSpecializations =>
-      _selectedSpecializations;
+
+  List<SpecializationsModel> _selectedSpecializations  = [];
+
+  List<SpecializationsModel> get selectedSpecializations  => _selectedSpecializations ;
   List<String> _selectedItems = [];
 
   List<String> get selectedItems => _selectedItems;
@@ -221,7 +229,7 @@ class AuthProviders extends ChangeNotifier {
     notifyListeners();
     try {
       final response =
-          await _service.callGetMethod(url: ApiConfig.getSpecializations);
+      await _service.callGetMethod(url: ApiConfig.getSpecializations);
       List<dynamic> body = jsonDecode(response);
       _specializationsList = body
           .map((dynamic item) => SpecializationsModel.fromJson(item))
@@ -233,9 +241,35 @@ class AuthProviders extends ChangeNotifier {
     } catch (e) {
       _isLoading = false;
       notifyListeners();
+
     }
   }
 
+  //
+
+  Future addProcedureCharges(  Map<String, dynamic> body,) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      final response =
+      await _service.callPostMethodApiWithToken(url: ApiConfig.addProcedurCharges,body: body);
+      print('======${response.toString()}');
+      /* List<dynamic> body = jsonDecode(response);
+      _specializationsList = body
+          .map((dynamic item) => SpecializationsModel.fromJson(item))
+          .toList();*/
+
+      _isLoading = false;
+      notifyListeners();
+      return response;
+    } catch (e) {
+      _isLoading = false;
+      notifyListeners();
+
+    }
+  }
+
+  //
   void toggleSelection(SpecializationsModel specialization) {
     if (_selectedSpecializations.contains(specialization)) {
       _selectedSpecializations.remove(specialization);
@@ -272,13 +306,14 @@ class AuthProviders extends ChangeNotifier {
   }*/
   //===========================SignUP
 
+
   SignupModel? _signupModel;
 
   SignupModel? get signupModel => _signupModel;
 
   Future<void> signupAPI(
       {required Map<String, dynamic> body,
-      required BuildContext context}) async {
+        required BuildContext context}) async {
     _isAdding = true;
     notifyListeners();
     try {
@@ -287,9 +322,12 @@ class AuthProviders extends ChangeNotifier {
 
       _signupModel = SignupModel.fromJson(json.decode(response));
 
-      if (globalStatusCode == 200) {
-        if (_signupModel?.doctor?.sId != null) {}
-      } else {
+      if(globalStatusCode==200){
+        if (_signupModel?.doctor?.sId != null) {
+
+        }
+      }
+      else {
         showCommonDialog(
             context: context,
             title: "Error",
@@ -311,3 +349,6 @@ class AuthProviders extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+
+
