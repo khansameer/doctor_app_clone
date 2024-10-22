@@ -92,13 +92,17 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                           topTextField: 10,
                           radius: 8,
                           title: "Time"),
-                      CommonTextWidget(
-                        text: "Select Patient",
-                        top: 10,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      widget.patientID == null
+                          ? CommonTextWidget(
+                              text: "Select Patient",
+                              top: 10,
+                            )
+                          : SizedBox.shrink(),
+                      widget.patientID == null
+                          ? const SizedBox(
+                              height: 10,
+                            )
+                          : SizedBox.shrink(),
                       widget.patientID == null
                           ? CommonDropDownView(
                               horizontal: 10,
