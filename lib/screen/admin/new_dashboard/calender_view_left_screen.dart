@@ -1,6 +1,6 @@
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/provider/calender_provider.dart';
-import 'package:doctor_app/screen/new_dashboard/all_view_screen.dart';
+import 'package:doctor_app/screen/admin/new_dashboard/all_view_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

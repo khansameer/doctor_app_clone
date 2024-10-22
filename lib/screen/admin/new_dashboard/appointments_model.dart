@@ -1,11 +1,11 @@
 class AppointmentsModel {
-  List<Appointments> appointments=[];
+  List<Appointments>? appointments;
   int? currentPage;
   int? totalPages;
   int? totalAppointments;
 
   AppointmentsModel(
-      {required this.appointments,
+      {this.appointments,
         this.currentPage,
         this.totalPages,
         this.totalAppointments});
@@ -14,13 +14,9 @@ class AppointmentsModel {
     if (json['appointments'] != null) {
       appointments = <Appointments>[];
       json['appointments'].forEach((v) {
-        appointments.add(Appointments.fromJson(v));
+        appointments!.add(Appointments.fromJson(v));
       });
-      var list = json['appointments'] as List;
-      List<AppointmentsModel> appointmentsList =
-      list.map((i) => AppointmentsModel.fromJson(i)).toList();
     }
-
     currentPage = json['currentPage'];
     totalPages = json['totalPages'];
     totalAppointments = json['totalAppointments'];
@@ -28,8 +24,10 @@ class AppointmentsModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['appointments'] = appointments.map((v) => v.toJson()).toList();
-      data['currentPage'] = currentPage;
+    if (appointments != null) {
+      data['appointments'] = appointments!.map((v) => v.toJson()).toList();
+    }
+    data['currentPage'] = currentPage;
     data['totalPages'] = totalPages;
     data['totalAppointments'] = totalAppointments;
     return data;
@@ -38,51 +36,53 @@ class AppointmentsModel {
 
 class Appointments {
   String? sId;
-  Patient? patient;
+  String? patient;
+  String? doctor;
   String? dateTime;
   String? status;
   String? reason;
+  String? doctorName;
+  String? patientName;
+  String? patientEmail;
+  String? patientPhoneNumber;
 
   Appointments(
-      {this.sId, this.patient, this.dateTime, this.status, this.reason});
+      {this.sId,
+        this.patient,
+        this.doctor,
+        this.dateTime,
+        this.status,
+        this.reason,
+        this.doctorName,
+        this.patientName,
+        this.patientEmail,
+        this.patientPhoneNumber});
 
   Appointments.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    patient =
-    json['patient'] != null ? new Patient.fromJson(json['patient']) : null;
+    patient = json['patient'];
+    doctor = json['doctor'];
     dateTime = json['dateTime'];
     status = json['status'];
     reason = json['reason'];
+    doctorName = json['doctorName'];
+    patientName = json['patientName'];
+    patientEmail = json['patientEmail'];
+    patientPhoneNumber = json['patientPhoneNumber'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['_id'] = sId;
-    if (patient != null) {
-      data['patient'] = patient!.toJson();
-    }
+    data['patient'] = patient;
+    data['doctor'] = doctor;
     data['dateTime'] = dateTime;
     data['status'] = status;
     data['reason'] = reason;
-    return data;
-  }
-}
-
-class Patient {
-  String? sId;
-  String? email;
-
-  Patient({this.sId, this.email});
-
-  Patient.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    email = json['email'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['email'] = email;
+    data['doctorName'] = doctorName;
+    data['patientName'] = patientName;
+    data['patientEmail'] = patientEmail;
+    data['patientPhoneNumber'] = patientPhoneNumber;
     return data;
   }
 }

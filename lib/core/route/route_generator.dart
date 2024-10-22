@@ -1,4 +1,5 @@
 import 'package:doctor_app/core/route/route.dart';
+import 'package:doctor_app/screen/admin/new_dashboard/admin_dashboard.dart';
 import 'package:doctor_app/screen/authentication/forgot/forgot_password_opt_view.dart';
 import 'package:doctor_app/screen/authentication/forgot/forgot_password_reset_view.dart';
 import 'package:doctor_app/screen/authentication/forgot/forgot_screen.dart';
@@ -23,7 +24,6 @@ import 'package:doctor_app/screen/dashboard/profile/profile_screen.dart';
 import 'package:doctor_app/screen/dashboard/report/report_screen.dart';
 import 'package:doctor_app/screen/dashboard/setting/setting_screen.dart';
 import 'package:doctor_app/screen/dashboard/weekly_earning/weekly_earning_screen.dart';
-import 'package:doctor_app/screen/new_dashboard/dashboard_new_screen.dart';
 import 'package:doctor_app/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -64,8 +64,12 @@ class RouteGenerator {
                 const RouteSettings(name: RouteName.forgotPasswordResetView));
       case RouteName.dashboardScreen:
         return MaterialPageRoute(
-            builder: (_) => const DashboardNewScreen(),
+            builder: (_) => const DashboardScreen(),
             settings: const RouteSettings(name: RouteName.dashboardScreen));
+      case RouteName.adminDashboardScreen:
+        return MaterialPageRoute(
+            builder: (_) => const AdminDashboard(),
+            settings: const RouteSettings(name: RouteName.adminDashboardScreen));
       case RouteName.notificationScreen:
         return MaterialPageRoute(
             builder: (_) => const NotificationScreen(),

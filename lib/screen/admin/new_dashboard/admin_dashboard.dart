@@ -1,34 +1,41 @@
 import 'package:doctor_app/core/app_constants.dart';
 import 'package:doctor_app/core/colors.dart';
+import 'package:doctor_app/core/common/CustomAlertDialog.dart';
+import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/common/error_page.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
+import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/screen/admin/new_dashboard/calender_new_screen.dart';
 import 'package:doctor_app/screen/admin/new_dashboard/invoice/invoice_screen.dart';
-import 'package:doctor_app/screen/admin/new_dashboard/patient_profile_page.dart';
+import 'package:doctor_app/screen/admin/new_dashboard/patient_new_screen.dart';
+import 'package:doctor_app/screen/admin/setting/admin_setting_screen.dart';
+import 'package:doctor_app/shared_preferences/preference_helper.dart';
 
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SamplePage extends StatefulWidget {
+class AdminDashboard extends StatefulWidget {
+  const AdminDashboard({super.key});
+
   @override
-  State<SamplePage> createState() => _SamplePageState();
+  State<AdminDashboard> createState() => _AdminDashboardState();
 }
 
-class _SamplePageState extends State<SamplePage> {
+class _AdminDashboardState extends State<AdminDashboard> {
   PageController pageController = PageController();
   SideMenuController sideMenu = SideMenuController();
-
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<DashboardProvider>().getUserName();
     });
     sideMenu.addListener((index) {
-      pageController.jumpToPage(index);
+      context.read<DashboardProvider>().pageController.jumpToPage(index);
     });
     super.initState();
   }
@@ -36,6 +43,7 @@ class _SamplePageState extends State<SamplePage> {
   @override
   Widget build(BuildContext context) {
     var isMobile = Responsive.isMobile(context);
+
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
       return Scaffold(
         backgroundColor: Colors.white,
@@ -61,30 +69,14 @@ class _SamplePageState extends State<SamplePage> {
               tooltip: "profile",
               offset: const Offset(zero, thirty),
               onSelected: (value) {
-                print('====${value}');
-                if (value == 0) {
-                  provider.updatePageValue(8);
-                  // provider.updatePagesss = "setting";
-
-                  //     provider.setSelectedIndex(index);
-                }
-                if (value == 1) {
-                  // provider.setSelectedMenu("profile");
-                }
               },
               itemBuilder: (context) => [
-                //buildPopupMenuItem(context: context, index: 0, text: profile),
-                buildPopupMenuItem(context: context, index: 0, text: "Invoice"),
-                buildPopupMenuItem(context: context, index: 1, text: "Logout"),
               ],
               child: Row(
                 children: [
                   CommonTextWidget(
                       text: provider.name ?? "", textColor: Colors.white),
-                  const Icon(
-                    Icons.keyboard_arrow_down_sharp,
-                    color: Colors.white,
-                  )
+
                 ],
               ),
             ),
@@ -92,10 +84,11 @@ class _SamplePageState extends State<SamplePage> {
               width: ten,
             ),
           ],
-        //  leadingWidth: isMobile ? null : 200,
+          //  leadingWidth: isMobile ? null : 200,
 
           iconTheme: const IconThemeData(color: Colors.white),
-         /* leading: isMobile
+          leading: const SizedBox.shrink(),
+          /* leading: isMobile
               ? null
               : const ImageIcon(
                  size: 200,
@@ -109,14 +102,15 @@ class _SamplePageState extends State<SamplePage> {
             SideMenu(
               controller: sideMenu,
               title: const Column(
+                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Center(
                     child: ImageIcon(
-                      size: 100,
-                      color: Colors.white,
-                     AssetImage( icLogoApps,)
+                        size: 80,
+                        color: Colors.white,
+                        AssetImage( icLogoApps,)
                     ),
                   ),
                   Divider(
@@ -131,8 +125,6 @@ class _SamplePageState extends State<SamplePage> {
                 //openSideMenuWidth: 250,
                 itemBorderRadius: BorderRadius.circular(0),
                 itemOuterPadding: EdgeInsets.zero,
-                // showTooltip: false,
-
                 itemInnerSpacing: 5,
                 displayMode: SideMenuDisplayMode.auto,
                 showHamburger: false,
@@ -141,16 +133,15 @@ class _SamplePageState extends State<SamplePage> {
                 selectedIconColorExpandable: Colors.white.withOpacity(0.50),
                 unselectedIconColor: Colors.white.withOpacity(0.50),
                 unselectedTitleTextStyle:
-                    TextStyle(color: Colors.white.withOpacity(0.50)),
+                commonTextStyle(color: Colors.white.withOpacity(0.50),fontSize: 12),
                 selectedTitleTextStyleExpandable:
-                    const TextStyle(color: Colors.white),
+                 commonTextStyle(color: Colors.white,fontSize: 12),
                 hoverColor: Colors.white.withOpacity(0.10),
                 selectedHoverColor: Colors.white.withOpacity(0.10),
                 selectedColor: Colors.white.withOpacity(0.50),
-                selectedTitleTextStyle: const TextStyle(color: Colors.white),
+                selectedTitleTextStyle: commonTextStyle(color: Colors.white,fontSize: 12),
                 selectedIconColor: Colors.white,
-                //backgroundColor: AppColors.colorDrawer
-                decoration:  const BoxDecoration(
+                decoration:   const BoxDecoration(
                   color: AppColors.primary,
 
                   borderRadius: BorderRadius.all(Radius.circular(0)),
@@ -164,7 +155,7 @@ class _SamplePageState extends State<SamplePage> {
                   onTap: (index, _) {
                     provider.updatePageValue(1);
                     sideMenu.changePage(index);// Navigate to Calendar page
-                    //sideMenu.changePage(index);
+                   // sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.calendar_month_sharp),
                   tooltipContent: "This is a tooltip for Dashboard item",
@@ -172,7 +163,7 @@ class _SamplePageState extends State<SamplePage> {
                 SideMenuItem(
                   title: 'Patients',
                   onTap: (index, _) {
-                    provider.updatePageValue(1);
+                    provider.updatePageValue(2);
                     sideMenu.changePage(index);
                     //    sideMenu.changePage(index);
                   },
@@ -190,7 +181,7 @@ class _SamplePageState extends State<SamplePage> {
                 SideMenuItem(
                   title: 'Reports',
                   onTap: (index, _) {
-                    provider.updatePageValue(4);
+                   provider.updatePageValue(4);
                     sideMenu.changePage(index);
                     //sideMenu.changePage(index);
                   },
@@ -199,6 +190,7 @@ class _SamplePageState extends State<SamplePage> {
                 SideMenuItem(
                   title: 'Settings',
                   onTap: (index, _) {
+                    provider.updatePageValue(5);
                     sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.settings_outlined),
@@ -206,6 +198,7 @@ class _SamplePageState extends State<SamplePage> {
                 SideMenuItem(
                   title: 'Profile',
                   onTap: (index, _) {
+                    provider.updatePageValue(6);
                     sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.person),
@@ -213,13 +206,84 @@ class _SamplePageState extends State<SamplePage> {
                 SideMenuItem(
                   title: 'Feedback',
                   onTap: (index, _) {
+                    provider.updatePageValue(7);
                     sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.thumb_up_alt_outlined),
                 ),
-                const SideMenuItem(
+                 SideMenuItem(
+                   onTap: (index, _) {
+                     showDialog(
+                         barrierDismissible: false,
+                         context: context,
+                         builder: (BuildContext context) {
+                           var height = MediaQuery.of(context).size.height;
+                           var width = MediaQuery.of(context).size.width;
+                          return CustomAlertDialog(
+                             content: SizedBox(
+
+                               height: isMobile
+                                   ? height * zero29
+                                   : height * 0.15,
+                               width: isMobile
+                                   ? width * zero9
+                                   : width * 0.19,
+                               child: Column(
+
+                                 mainAxisAlignment: MainAxisAlignment.start,
+                                 crossAxisAlignment: CrossAxisAlignment.center,
+                                 children: [
+                                   CommonTextWidget(text: "Are you sure you want to sign out?",fontSize: 16,textAlign: TextAlign.center,fontWeight: FontWeight.w700,
+                                   top: 20,),
+                                   CommonTextWidget(text: "You are also logged out from local data apps open in this browser.",fontSize: 14,
+                                   textAlign: TextAlign.center,
+                                   top: 20,
+                                   ),
+                                   const SizedBox(height: 50,),
+                                   Row(
+                                     mainAxisAlignment: MainAxisAlignment.end,
+                                     crossAxisAlignment: CrossAxisAlignment.end,
+                                     children: [
+                                       CommonButtonWidget(
+                                         onPressed: () async {
+                                           await PreferenceHelper.clear();
+                                           pushNamedAndRemoveUntil(context: context, routeName: RouteName.loginScreen);
+                                         },
+                                          colorButton: Colors.red,
+                                         fontSize: 12,
+                                         padding: const EdgeInsets.only(left: 40,right: 40,top: 10,bottom: 10),
+                                         text: "Logout",
+                                       ),
+                                       const SizedBox(width: 10,),
+
+                                       CommonButtonWidget(
+                                         text: "Cancel",
+                                         colorBorder: Colors.black,
+                                         colorButton: Colors.white,
+                                         colorText: Colors.black,
+                                         onPressed: (){
+                                           Navigator.of(context).pop();
+                                         },
+                                         fontSize: 12,
+                                         padding: const EdgeInsets.only(left: 40,right: 40),
+                                       ),
+
+                                       const SizedBox(width: 20,)
+                                     ],
+                                   )
+
+                                 ],
+                               ),
+                             ),
+                           );
+                         });
+                     //provider.updatePageValue(8);
+                 //   sideMenu.changePage(index);
+
+                    //showCommonDialog(context: context, title: "title", content: "content");
+                   },
                   title: 'Logout',
-                  icon: Icon(Icons.exit_to_app),
+                  icon: const Icon(Icons.exit_to_app),
                 ),
               ],
             ),
@@ -230,65 +294,34 @@ class _SamplePageState extends State<SamplePage> {
               child: PageView(
                 controller: provider.pageController,
                 children: [
-                  const CalenderNewScreen(),
+                  const Padding(
+                    padding: EdgeInsets.all(0),
+                    child: CalenderNewScreen(),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(0),
+                    child: PatientNewScreen(),
+                  ),
+                 const Center(
+                   child: ErrorPage(),
+                 ),
+                  const Center(
+                    child: ErrorPage(),
+                  ),
                   const Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: PatientProfilePage(),
+                    child: AdminSettingScreen(),
                   ),
-                  Container(
-                    color: Colors.white,
-                    child: const Center(
-                      child: Text(
-                        'Expansion Item 1',
-                        style: TextStyle(fontSize: 35),
-                      ),
-                    ),
+                  const Center(
+                    child: ErrorPage(),
                   ),
-                  Container(
-                    color: Colors.white,
-                    child: const Center(
-                      child: Text(
-                        'Expansion Item 2',
-                        style: TextStyle(fontSize: 35),
-                      ),
-                    ),
+
+                  const Center(
+                    child: ErrorPage(),
                   ),
-                  Container(
-                    color: Colors.white,
-                    child: const Center(
-                      child: Text(
-                        'Files',
-                        style: TextStyle(fontSize: 35),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    color: Colors.white,
-                    child: const Center(
-                      child: Text(
-                        'Download',
-                        style: TextStyle(fontSize: 35),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    color: Colors.white,
-                    child: const Center(
-                      child: Text(
-                        'Download',
-                        style: TextStyle(fontSize: 35),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    color: Colors.white,
-                    child: const Center(
-                      child: Text(
-                        'Download',
-                        style: TextStyle(fontSize: 35),
-                      ),
-                    ),
-                  ),
+                 Container(
+
+                 ),
                   InvoiceScreen(),
 
                   // this is for SideMenuItem with builder (divider)

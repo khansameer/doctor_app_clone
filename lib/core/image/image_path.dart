@@ -27,4 +27,7 @@ const String icMen = "$baseImagePath/ic_men.jpg";
 const icDoctorWidget = '$baseImagePath/doctor.png';
 const String icDummyUsers = "$baseImagePath/ic_dummy_users.png";
 const String icLogoApps = "$baseImagePath/ic_app_logoss.png";
+const icError = '$baseImagePath/ic_error.png';
+const icPageError = '$baseImagePath/page_error.jpg';
+
 

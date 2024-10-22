@@ -2,7 +2,7 @@
 import 'package:doctor_app/core/component/component.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/colors.dart';
+import '../../../core/colors.dart';
 
 class ClientNoteScreen extends StatelessWidget {
   const ClientNoteScreen({super.key});
@@ -14,7 +14,7 @@ class ClientNoteScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: EdgeInsets.all(0),
+          padding: const EdgeInsets.all(0),
           color: Colors.grey.withOpacity(0.20),
           child: Column(
             children: [
@@ -28,10 +28,10 @@ class ClientNoteScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         commonText(text: "Client Note"),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
-                        Icon(Icons.calendar_month_sharp),
+                        const Icon(Icons.calendar_month_sharp),
                         commonText(text: "Share ON"),
                       ],
                     ),
@@ -40,11 +40,11 @@ class ClientNoteScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Divider(),
+              const Divider(),
               Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
-                  padding: EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(5),
                   child: commonText(text: "10 Oct,2024"),
                 ),
               )
@@ -52,12 +52,12 @@ class ClientNoteScreen extends StatelessWidget {
           ),
         ),
         Container(
-          padding: EdgeInsets.all(0),
+          padding: const EdgeInsets.all(0),
           color: Colors.white,
           child: Column(
             children: [
               Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -66,7 +66,7 @@ class ClientNoteScreen extends StatelessWidget {
                           commonText(
                               text: "Michael",
                               color: AppColors.colorMenuProfile),
-                          SizedBox(
+                          const SizedBox(
                             width: 100,
                           ),
                           commonText(
@@ -74,7 +74,7 @@ class ClientNoteScreen extends StatelessWidget {
                               color: AppColors.colorMenuProfile),
                         ],
                       ),
-                      Row(
+                      const Row(
                         children: [Icon(Icons.print)],
                       )
                     ],
@@ -82,12 +82,12 @@ class ClientNoteScreen extends StatelessWidget {
             ],
           ),
         ),
-        Divider(),
+        const Divider(),
         IntrinsicHeight(
           child: Row(
             children: [
               commonText(text: 'Complaint', left: 10),
-              VerticalDivider(
+              const VerticalDivider(
                 color: Colors.black,
                 thickness: 2,
               ),

@@ -2,9 +2,8 @@ import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
+import 'package:doctor_app/screen/procedure_charges_screen.dart';
 import 'package:flutter/material.dart';
-
-import '../../procedure_charges_screen.dart';
 
 class InvoiceScreen extends StatelessWidget {
   InvoiceScreen({super.key});
@@ -21,7 +20,7 @@ class InvoiceScreen extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Align(

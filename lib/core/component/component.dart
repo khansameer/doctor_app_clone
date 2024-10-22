@@ -1,3 +1,5 @@
+
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
@@ -88,6 +90,7 @@ commonButton(
     {required VoidCallback onPressed,
     String? btnText,
     Color? colorText,
+      double? fontSize,
     bool isShowBorder = false}) {
   return TextButton(
     style: TextButton.styleFrom(
@@ -105,7 +108,7 @@ commonButton(
       text: btnText ?? "newAccount",
       color: colorText ?? AppColors.primary,
       fontWeight: FontWeight.w500,
-      fontSize: 14,
+      fontSize: fontSize??14,
     ),
   );
 }
@@ -370,7 +373,7 @@ Widget showLoaderList() {
   return Center(
     child: Container(
         decoration: BoxDecoration(
-            color: colorGreen, borderRadius: BorderRadius.circular(10)),
+            color: AppColors.primary, borderRadius: BorderRadius.circular(10)),
         padding: const EdgeInsets.all(20),
         child: const CupertinoActivityIndicator(
           radius: 20,

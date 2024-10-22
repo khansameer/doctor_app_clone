@@ -4,26 +4,27 @@ import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/screen/dashboard/home/home_screen.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'chat_screen/patient_list_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key,this.child});
- final Widget? child;
+  const DashboardScreen({super.key, this.child});
+
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<DashboardProvider>(context);
     var isMobile = Responsive.isMobile(context);
     final List<Widget> screens = [
-       HomeScreen(onSelectedPage: (value ) {
-
-        // provider.getPageSelected=value;
-provider.setAppBarTitle(value);
-        },),
+      HomeScreen(
+        onSelectedPage: (value) {
+          // provider.getPageSelected=value;
+          provider.setAppBarTitle(value);
+        },
+      ),
       Container(),
       const PatientListScreen(),
     ];
@@ -40,18 +41,16 @@ provider.setAppBarTitle(value);
               currentIndex: provider.selectedIndex,
               onTap: (index) {
                 provider.setIndex(index);
-             //   provider.updatePage = screens[index];
-                if(index==0)
-                  {
-                    provider.setAppBarTitle("Home");
-                  }
-              if(index==1){
-                provider.setAppBarTitle("Q&A");
-              }
-                if(index==2){
+                //   provider.updatePage = screens[index];
+                if (index == 0) {
+                  provider.setAppBarTitle("Home");
+                }
+                if (index == 1) {
+                  provider.setAppBarTitle("Q&A");
+                }
+                if (index == 2) {
                   provider.setAppBarTitle("Chat");
                 }
-
               },
               items: const [
                 BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
@@ -63,7 +62,8 @@ provider.setAppBarTitle(value);
           : const SizedBox.shrink(),
       backgroundColor: Colors.white,
       appBar: isMobile
-          ? appBarView(context: context,title: isMobile?provider.appBarTitle:null)
+          ? appBarView(
+              context: context, title: isMobile ? provider.appBarTitle : null)
           : const PreferredSize(
               preferredSize: Size.zero, child: SizedBox.shrink()),
       body: Row(
@@ -87,7 +87,7 @@ provider.setAppBarTitle(value);
                   selectedIndex: provider.selectedIndex,
                   onDestinationSelected: (int index) {
                     provider.setSelectedIndex(index);
-                  //  provider.updatePage = screens[index]; // Use the correct screen here
+                    //  provider.updatePage = screens[index]; // Use the correct screen here
 
                     provider.setSelectedIndex(index);
                     //provider.updatePage = screens[index]; // Use the correct screen here
@@ -114,8 +114,9 @@ provider.setAppBarTitle(value);
                 ),
           Expanded(
             child: provider.currentPage != null
-                ? provider.currentPage  // If currentPage is not null, use it
-                : screens[provider.selectedIndex],  // Else fallback to the selected screen
+                ? provider.currentPage // If currentPage is not null, use it
+                : screens[provider
+                    .selectedIndex], // Else fallback to the selected screen
           )
           // Expanded(child: provider.currentPage??screens[provider.selectedIndex])
         ],

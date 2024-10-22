@@ -1,5 +1,6 @@
 import 'package:doctor_app/core/app_constants.dart';
 import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'common_text_widget.dart';
@@ -25,7 +26,9 @@ class CommonButtonWidget extends StatelessWidget {
   double? width;
   double? height;
   bool? iconShow;
+  bool? iconShowRight;
   Widget? icon;
+  Widget? iconRight;
   String? fontFamily;
   CommonButtonWidget(
       {super.key,
@@ -43,9 +46,11 @@ class CommonButtonWidget extends StatelessWidget {
       this.colorBorder,
       this.padding,
       this.iconShow,
+      this.iconShowRight,
       this.colorText,
       this.width,
       this.icon,
+      this.iconRight,
       this.textLeft,
       this.fontFamily,
       this.height});
@@ -63,7 +68,7 @@ class CommonButtonWidget extends StatelessWidget {
       child: TextButton(
         style: TextButton.styleFrom(
           //padding: EdgeInsets.zero,,
-          foregroundColor: colorButton ?? colorGreen,
+          foregroundColor: colorButton ?? AppColors.primary,
           padding: padding ?? const EdgeInsets.all(15),
           shape: RoundedRectangleBorder(
             side: BorderSide(
@@ -71,7 +76,7 @@ class CommonButtonWidget extends StatelessWidget {
                 color: colorBorder ?? Colors.transparent),
             borderRadius: BorderRadius.circular(radius ?? 12),
           ),
-          backgroundColor: colorButton ?? colorGreen, // Background Color
+          backgroundColor: colorButton ?? AppColors.primary, // Background Color
         ),
         onPressed: onPressed,
         child: Center(
@@ -97,6 +102,16 @@ class CommonButtonWidget extends StatelessWidget {
                   textColor: colorText ?? Colors.white,
                   fontWeight: fontWeight ?? FontWeight.w600,
                   fontSize: fontSize ?? fourteen),
+              iconShowRight ?? false
+                  ? iconRight ??
+                  Container(
+                      margin:
+                      const EdgeInsets.only(right: 0, left: 00),
+                      child: const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ))
+                  : const SizedBox.shrink(),
             ],
           ),
         ),

@@ -6,6 +6,7 @@ class RouteName {
   static const String forgotPasswordOptView = '/ForgotPasswordOptView';
   static const String forgotPasswordResetView = '/ForgotPasswordResetView';
   static const String dashboardScreen = '/dashboard';
+  static const String adminDashboardScreen = '/adminDashboardScreen';
   static const String notificationScreen = '/NotificationScreen';
   static const String settingScreen = '/settingScreen';
   static const String reportAndIssueScreen = '/ReportAndIssueScreen';

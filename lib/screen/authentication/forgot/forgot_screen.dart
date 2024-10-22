@@ -43,7 +43,7 @@ class ForgotScreen extends StatelessWidget {
               height: isMobile?size.height * 0.0:0,
             ),
             setAssetImage(
-                image: icLoginLogo,
+                image: icLogoApps,
                 width: 200,
                 height: 140,
                 fit: BoxFit.scaleDown),

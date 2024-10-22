@@ -9,6 +9,7 @@ import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:doctor_app/core/validation/validation.dart';
 import 'package:doctor_app/provider/auth_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -58,7 +59,7 @@ class LoginView extends StatelessWidget {
 
 
                           setAssetImage(
-                              image: icLoginLogo,
+                              image: icLogoApps,
                               width: 200,
                               height: 140,
                               fit: BoxFit.scaleDown),
@@ -154,10 +155,19 @@ class LoginView extends StatelessWidget {
                                         isLogin: true)
                                     .then((value) {
                                   if (provider.loginModel?.token != null) {
-                                    pushNamedAndRemoveUntil(
-                                        context: context,
-                                        routeName:
-                                            RouteName.dashboardScreen);
+
+                                    if (kIsWeb) {
+                                      pushNamedAndRemoveUntil(
+                                          context: context,
+                                          routeName:
+                                          RouteName.adminDashboardScreen);
+                                    } else {
+                                      pushNamedAndRemoveUntil(
+                                          context: context,
+                                          routeName:
+                                          RouteName.dashboardScreen);
+
+                                    }
 
                                     formLoginKey.currentState?.save();
                                     provider.resetFields();

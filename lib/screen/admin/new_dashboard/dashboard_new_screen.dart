@@ -5,11 +5,11 @@ import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
-import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
-import 'package:doctor_app/screen/new_dashboard/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'menu.dart';
 
 class DashboardNewScreen extends StatefulWidget {
   const DashboardNewScreen({super.key});

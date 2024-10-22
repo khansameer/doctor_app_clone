@@ -1,19 +1,21 @@
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/common/error_page.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
-import 'package:doctor_app/main.dart';
+import 'package:doctor_app/provider/calender_provider.dart';
 import 'package:doctor_app/provider/model/dummy_model.dart';
+import 'package:doctor_app/screen/admin/new_dashboard/calender_new_screen.dart';
+import 'package:doctor_app/screen/admin/new_dashboard/client_note_screen.dart';
+import 'package:doctor_app/screen/admin/new_dashboard/invoice/invoice_screen.dart';
+import 'package:doctor_app/screen/admin/new_dashboard/patient_profile_page.dart';
 import 'package:doctor_app/screen/dashboard/dashboard_model.dart';
 import 'package:doctor_app/screen/dashboard/reach/reach_screen.dart';
 import 'package:doctor_app/screen/dashboard/report/report_screen.dart';
 import 'package:doctor_app/screen/dashboard/setting/setting_screen.dart';
-import 'package:doctor_app/screen/new_dashboard/calender_new_screen.dart';
-import 'package:doctor_app/screen/new_dashboard/client_note_screen.dart';
-import 'package:doctor_app/screen/new_dashboard/invoice/invoice_screen.dart';
-import 'package:doctor_app/screen/new_dashboard/patient_new_screen.dart';
-import 'package:doctor_app/screen/new_dashboard/patient_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../screen/admin/new_dashboard/patient_new_screen.dart';
 
 class DashboardProvider extends ChangeNotifier {
   int? _hoveredIndex;
@@ -28,6 +30,7 @@ class DashboardProvider extends ChangeNotifier {
   String? _name;
 
   String? get name => _name;
+
   void setIndex(int index) {
     _selectedIndex = index;
     notifyListeners();
@@ -51,23 +54,17 @@ class DashboardProvider extends ChangeNotifier {
   }
 
   int _selectedIndex = 0;
-  /* Widget _currentPage=HomeScreen(
-    onSelectedPage: (page) {
-      final dashboardProvider = Provider.of<DashboardProvider>(navigatorKey.currentState!.context, listen: false);
-      dashboardProvider.getPageSelected=page;
 
-    },
-
-  );
-*/
   Widget _currentPage = const CalenderNewScreen(); // Default page
 
   String? _page;
+
   String? get page => _page;
 
   Widget _currentPageProfile = const PatientProfilePage(); // Default page
 
   Widget get currentPageProfile => _currentPageProfile;
+
   set updateProfilePage(String value) {
     if (value == "Profile") {
       _currentPageProfile = const PatientProfilePage();
@@ -80,6 +77,58 @@ class DashboardProvider extends ChangeNotifier {
     }
     notifyListeners(); // Notify listeners to rebuild
   }
+
+  Widget _currentPatientPage = const PatientProfilePage(title: "all",); // Default page
+  Widget get currentPatientPage => _currentPatientPage;
+
+  void setPatientDetailsPage(
+      {required String value, required BuildContext context}) {
+    if (value == "All Patients") {
+      _currentPatientPage = const PatientProfilePage(
+        title: "all",
+      );
+    } else if (value == "Recently Visited") {
+      _currentPatientPage = const PatientProfilePage(
+        title: "all",
+      );
+    } else if (value == "All Female Customer") {
+
+      _currentPatientPage =  const PatientProfilePage(title:"all_female");
+    }
+    else if (value == "All Male Customer") {
+
+      _currentPatientPage =  const PatientProfilePage(title:"all_male");
+    }
+    else if (value == "Female Customer under 30") {
+
+      _currentPatientPage =  const PatientProfilePage(title:"female_under30");
+    }
+    else if (value =="Female Customer Over 30") {
+
+      _currentPatientPage =  const PatientProfilePage(title:"female_over30");
+    }
+
+
+    else {
+      _currentPatientPage = const ErrorPage();
+    }
+    notifyListeners(); // Notify listeners to rebuild
+  }
+
+  Widget _currentAdminSettingPage = InvoiceScreen(); // Default page
+  Widget get currentAdminSettingPage => _currentAdminSettingPage;
+
+  set setAdminSettingPagePage(String value) {
+    if (value == "Invoice") {
+      _currentAdminSettingPage = InvoiceScreen();
+    } else if (value == "Clinic Address") {
+      _currentAdminSettingPage = const ErrorPage();
+    } else {
+      _currentAdminSettingPage = const ErrorPage();
+    }
+    notifyListeners(); // Notify listeners to rebuild
+  }
+
 /*
   set getPageSelected(String  value) {
     print('==================sameer$value');
@@ -136,10 +185,14 @@ class DashboardProvider extends ChangeNotifier {
   }*/
 
   String? _appBarTitle = "Home";
+
   int get selectedIndex => _selectedIndex;
+
   String? get appBarTitle => _appBarTitle;
+
   Widget get currentPage => _currentPage;
   PageController pageController = PageController();
+
   set updatePage(String value) {
     if (value == "Patients") {
       _currentPage = const PatientNewScreen();

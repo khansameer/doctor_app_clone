@@ -1,10 +1,11 @@
 
 import 'package:doctor_app/provider/calender_provider.dart';
-import 'package:doctor_app/screen/new_dashboard/appointments_model.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/component/component.dart';
+import '../../../core/component/component.dart';
+import 'appointments_model.dart';
 
 class AllViewScreen extends StatelessWidget {
   const AllViewScreen({super.key,required this.data,required this.appointments});

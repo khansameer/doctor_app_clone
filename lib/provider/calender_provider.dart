@@ -1,18 +1,26 @@
 import 'dart:convert';
 
 import 'package:doctor_app/core/component/component.dart';
-import 'package:doctor_app/screen/new_dashboard/appointments_model.dart';
+import 'package:doctor_app/screen/admin/model/patient_details_model.dart';
 import 'package:doctor_app/service/api_config.dart';
 import 'package:doctor_app/service/api_services.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
+
+import '../screen/admin/new_dashboard/appointments_model.dart';
 
 class CalenderProvider extends ChangeNotifier {
+  //for  remove line
+
   final _service = ApiService();
   bool _isFetching = false;
+
   bool get isFetching => _isFetching;
 
   AppointmentsModel? _appointmentsModel;
+
   AppointmentsModel? get appointmentsModel => _appointmentsModel;
+
   Future getAppointments() async {
     String userId = await getUserID();
     print('=======uswer$userId');
@@ -31,20 +39,21 @@ class CalenderProvider extends ChangeNotifier {
     }
   }
 
+  PatientDetailsModel? _patientDetailsModel;
+
+  PatientDetailsModel? get patientDetailsModel => _patientDetailsModel;
+
   Future getPatientDetails() async {
     String userId = await getUserID();
-    print('=======uswer$userId');
+
     _isFetching = true;
     notifyListeners();
     try {
       final response = await _service.callGetMethod(
           url: '${ApiConfig.getPatientDetails}/$userId/patients');
-      /* final response =
-          await _service.callGetMethod(url: ApiConfig.getPatientDetails);*/
 
-      print('=======uswer${ApiConfig.getPatientDetails}');
-      print('=======uswer${response.toString()}');
-      _appointmentsModel = AppointmentsModel.fromJson(json.decode(response));
+      _patientDetailsModel =
+          PatientDetailsModel.fromJson(json.decode(response));
 
       _isFetching = false;
       notifyListeners();
@@ -54,11 +63,47 @@ class CalenderProvider extends ChangeNotifier {
     }
   }
 
+  List<Patients>? filterBYGender({required String gender}) {
+    // Filter the patients inside the existing _patientDetailsModel
+    if (_patientDetailsModel != null) {
+      return _patientDetailsModel!.patients
+          .where((patient) =>
+              patient.gender?.toLowerCase() == gender.toLowerCase())
+          .toList();
+    }
+    notifyListeners();
+    return [];
+  }
+
+  List<Patients>? filterByAge({required int age, required bool isUnder}) {
+    if (_patientDetailsModel != null) {
+      DateTime now = DateTime.now();
+
+      return _patientDetailsModel!.patients.where((patient) {
+
+        DateTime dateTime = DateTime.parse(patient.dateOfBirth.toString());
+
+
+        String formattedDate = formatDate(formatDate: 'yyyy-MM-dd', date:  dateTime);
+        DateTime dob = DateTime.parse(formattedDate);
+        int patientAge = now.year - dob.year;
+
+        // Adjust for cases where the birthday hasn't occurred this year yet
+        if (now.month < dob.month || (now.month == dob.month && now.day < dob.day)) {
+          patientAge--;
+        }
+
+        // Return true if the patient meets the age condition
+        return isUnder ? patientAge < age : patientAge >= age;
+      }).toList();
+    }
+    return [];
+  }
   // Get today's and yesterday's date
   List<Appointments>? getTodayAppointments() {
     DateTime now = DateTime.now().toUtc();
     DateTime today = DateTime(now.year, now.month, now.day);
-    return _appointmentsModel?.appointments.where((appointment) {
+    return _appointmentsModel?.appointments?.where((appointment) {
       DateTime dateTime =
           DateTime.parse(appointment.dateTime ?? DateTime.now().toString());
 
@@ -75,7 +120,7 @@ class CalenderProvider extends ChangeNotifier {
     DateTime now = DateTime.now().toUtc();
     DateTime yesterday =
         DateTime(now.year, now.month, now.day).subtract(Duration(days: 1));
-    return _appointmentsModel?.appointments.where((appointment) {
+    return _appointmentsModel?.appointments?.where((appointment) {
       DateTime dateTime =
           DateTime.parse(appointment.dateTime ?? DateTime.now().toString());
 

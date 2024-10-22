@@ -1,12 +1,21 @@
 
+import 'package:doctor_app/core/app_constants.dart';
+import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/common/CustomAlertDialog.dart';
+import 'package:doctor_app/core/common/common_button_widget.dart';
+import 'package:doctor_app/core/common/common_drop_down_view.dart';
+import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:doctor_app/provider/calender_provider.dart';
-import 'package:doctor_app/screen/new_dashboard/calender_view_left_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+
+import 'calender/add_appointments_widget.dart';
+import 'calender_view_left_screen.dart';
 
 
 class CalenderNewScreen extends StatefulWidget {
@@ -43,12 +52,12 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
     var isMobile=Responsive.isMobile(context);
     return Consumer<CalenderProvider>(builder: (context, provider, child) {
       List<Appointment>? calendarAppointments =
-          provider.appointmentsModel?.appointments.map((appointment) {
+          provider.appointmentsModel?.appointments?.map((appointment) {
         DateTime dateTime =
             DateTime.parse(appointment.dateTime ?? DateTime.now().toString());
         return Appointment(
           startTime: dateTime,
-          endTime: dateTime.add(Duration(hours: 1)),
+          endTime: dateTime.add(const Duration(hours: 1)),
           // Assuming 1 hour duration
           subject: appointment.reason.toString(),
           color: Colors.blue, // Set a color for the appointment
@@ -117,44 +126,46 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
                                 child: Container(
                                   margin: const EdgeInsets.all(0),
                                   height: 35,
-                                  child: ToggleButtons(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderColor: Colors.black,
-                                    fillColor: Colors.grey,
-                                    borderWidth: 1,
-                                    selectedBorderColor: Colors.black,
-                                    selectedColor: Colors.white,
-                                    onPressed: (int index) {
-                                      setState(() {
-                                        for (int i = 0; i < isSelected.length; i++) {
-                                          isSelected[i] = i == index;
-                                        }
-                                      });
-                                    },
-                                    isSelected: isSelected,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 30.0, right: 30),
-                                        child: commonText(
-                                          text: 'Day',
+                                  child: Expanded(
+                                    child: ToggleButtons(
+                                      borderRadius: BorderRadius.circular(5),
+                                      borderColor: Colors.black,
+                                      fillColor: Colors.grey,
+                                      borderWidth: 1,
+                                      selectedBorderColor: Colors.black,
+                                      selectedColor: Colors.white,
+                                      onPressed: (int index) {
+                                        setState(() {
+                                          for (int i = 0; i < isSelected.length; i++) {
+                                            isSelected[i] = i == index;
+                                          }
+                                        });
+                                      },
+                                      isSelected: isSelected,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 30.0, right: 30),
+                                          child: commonText(
+                                            text: 'Day',
+                                          ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 30.0, right: 30),
-                                        child: commonText(
-                                          text: 'Week',
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 30.0, right: 30),
+                                          child: commonText(
+                                            text: 'Week',
+                                          ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 30.0, right: 30),
-                                        child: commonText(
-                                          text: 'Month',
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 30.0, right: 30),
+                                          child: commonText(
+                                            text: 'Month',
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -323,15 +334,18 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
                       children: [
                         SizedBox(
                           
-                            child: SfCalendar(
+                            child: /*SfCalendar(
                               headerHeight: 0,
+                              onTap: (CalendarTapDetails details){
+                                print('==details=====${details.date.toString()}');
+                                },
                               backgroundColor: Colors.white,
-                              headerStyle: CalendarHeaderStyle(
+                              headerStyle: const CalendarHeaderStyle(
                                   backgroundColor: Colors.white),
                               view: CalendarView.week,
                               dataSource: AppointmentDataSource(
                                   calendarAppointments ?? []),
-                            )),
+                            )*/commonSfCalendar(calendarAppointments)),
                         SizedBox(
                           height: size.height,
                           child: const Padding(
@@ -348,15 +362,15 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
                           flex: 7,
                           child: SizedBox(
                               height: size.height,
-                              child: SfCalendar(
+                              child: commonSfCalendar(calendarAppointments )/*SfCalendar(
                                 headerHeight: 0,
                                 backgroundColor: Colors.white,
-                                headerStyle: CalendarHeaderStyle(
+                                headerStyle: const CalendarHeaderStyle(
                                     backgroundColor: Colors.white),
                                 view: CalendarView.week,
                                 dataSource: AppointmentDataSource(
                                     calendarAppointments ?? []),
-                              )),
+                              )*/),
                         ),
                         Expanded(
                             flex: 3,
@@ -374,10 +388,33 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
               ),
             ],
           ),
-          provider.isFetching ? showLoaderList() : SizedBox.shrink()
+          provider.isFetching ? showLoaderList() : const SizedBox.shrink()
         ],
       );
     });
+  }
+  commonSfCalendar(List<Appointment>? calendarAppointments){
+   return SfCalendar(
+      headerHeight: 0,
+     onTap: (CalendarTapDetails details){
+
+       showDialog(
+           barrierDismissible: false,
+           context: context,
+           builder: (BuildContext context) {
+             return  CustomAlertDialog(
+               content: AddAppointmentsWidget(dateTime: details.date,),
+             );
+           });
+       print('==details=====${details.date.toString()}');
+     },
+      backgroundColor: Colors.white,
+      headerStyle: const CalendarHeaderStyle(
+          backgroundColor: Colors.white),
+      view: CalendarView.week,
+      dataSource: AppointmentDataSource(
+          calendarAppointments ?? []),
+    );
   }
 }
 

@@ -1,11 +1,11 @@
 import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/colors.dart';
 
 class NestedExpandableMenu extends StatefulWidget {
   const NestedExpandableMenu(this.provider, {super.key});

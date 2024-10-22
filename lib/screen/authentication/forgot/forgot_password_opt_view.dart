@@ -43,7 +43,7 @@ class ForgotPasswordOptView extends StatelessWidget {
               height: isMobile?size.height * 0.0:0,
             ),
             setAssetImage(
-                image: icLoginLogo,
+                image: icLogoApps,
                 width: 200,
                 height: 140,
                 fit: BoxFit.scaleDown),
@@ -149,9 +149,18 @@ class ForgotPasswordOptView extends StatelessWidget {
               text: verifyCode,
               padding: isMobile?null:const EdgeInsets.all(20),
               onPressed: () {
-                 pushNamedAndRemoveUntil(
-                    context: context,
-                    routeName: RouteName.dashboardScreen);
+                if (kIsWeb) {
+                  pushNamedAndRemoveUntil(
+                      context: context,
+                      routeName:
+                      RouteName.adminDashboardScreen);
+                } else {
+                  pushNamedAndRemoveUntil(
+                      context: context,
+                      routeName:
+                      RouteName.dashboardScreen);
+
+                }
               },
             ),
             SizedBox(

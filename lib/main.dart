@@ -6,6 +6,7 @@ import 'package:doctor_app/provider/auth_provider.dart';
 import 'package:doctor_app/provider/calender_provider.dart';
 import 'package:doctor_app/provider/chat_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
+import 'package:doctor_app/screen/admin/new_dashboard/admin_dashboard.dart';
 import 'package:doctor_app/screen/dashboard/dashboard_screen.dart';
 import 'package:doctor_app/screen/demo_screen.dart';
 import 'package:flutter/material.dart';
@@ -41,9 +42,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         navigatorKey: navigatorKey, // Set the navigatorKey
         title: appName,
-        //home: SamplePage(),
+       // home: AdminDashboard(),
+      //  home: AdminDashboard(),
         initialRoute: RouteName.splashScreen,
-        onGenerateRoute: RouteGenerator.generateRoute,
+       onGenerateRoute: RouteGenerator.generateRoute,
         debugShowCheckedModeBanner: false,
         builder: (context, child) {
           return MediaQuery(
