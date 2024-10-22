@@ -43,6 +43,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
   @override
   Widget build(BuildContext context) {
     var isMobile = Responsive.isMobile(context);
+    var isDesktop = Responsive.isDesktop(context);
 
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
       return Scaffold(
@@ -68,15 +69,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
               elevation: zero,
               tooltip: "profile",
               offset: const Offset(zero, thirty),
-              onSelected: (value) {
-              },
-              itemBuilder: (context) => [
-              ],
+              onSelected: (value) {},
+              itemBuilder: (context) => [],
               child: Row(
                 children: [
                   CommonTextWidget(
                       text: provider.name ?? "", textColor: Colors.white),
-
                 ],
               ),
             ),
@@ -110,8 +108,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     child: ImageIcon(
                         size: 80,
                         color: Colors.white,
-                        AssetImage( icLogoApps,)
-                    ),
+                        AssetImage(
+                          icLogoApps,
+                        )),
                   ),
                   Divider(
                     indent: 0.0,
@@ -132,30 +131,29 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 unselectedIconColorExpandable: Colors.white.withOpacity(0.50),
                 selectedIconColorExpandable: Colors.white.withOpacity(0.50),
                 unselectedIconColor: Colors.white.withOpacity(0.50),
-                unselectedTitleTextStyle:
-                commonTextStyle(color: Colors.white.withOpacity(0.50),fontSize: 12),
+                unselectedTitleTextStyle: commonTextStyle(
+                    color: Colors.white.withOpacity(0.50), fontSize: 12),
                 selectedTitleTextStyleExpandable:
-                 commonTextStyle(color: Colors.white,fontSize: 12),
+                    commonTextStyle(color: Colors.white, fontSize: 12),
                 hoverColor: Colors.white.withOpacity(0.10),
                 selectedHoverColor: Colors.white.withOpacity(0.10),
                 selectedColor: Colors.white.withOpacity(0.50),
-                selectedTitleTextStyle: commonTextStyle(color: Colors.white,fontSize: 12),
+                selectedTitleTextStyle:
+                    commonTextStyle(color: Colors.white, fontSize: 12),
                 selectedIconColor: Colors.white,
-                decoration:   const BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.primary,
-
                   borderRadius: BorderRadius.all(Radius.circular(0)),
                 ),
                 // backgroundColor: Colors.grey[200]
               ),
               items: [
-
                 SideMenuItem(
                   title: 'Calender',
                   onTap: (index, _) {
                     provider.updatePageValue(1);
-                    sideMenu.changePage(index);// Navigate to Calendar page
-                   // sideMenu.changePage(index);
+                    sideMenu.changePage(index); // Navigate to Calendar page
+                    // sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.calendar_month_sharp),
                   tooltipContent: "This is a tooltip for Dashboard item",
@@ -181,7 +179,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Reports',
                   onTap: (index, _) {
-                   provider.updatePageValue(4);
+                    provider.updatePageValue(4);
                     sideMenu.changePage(index);
                     //sideMenu.changePage(index);
                   },
@@ -211,77 +209,106 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   },
                   icon: const Icon(Icons.thumb_up_alt_outlined),
                 ),
-                 SideMenuItem(
-                   onTap: (index, _) {
-                     showDialog(
-                         barrierDismissible: false,
-                         context: context,
-                         builder: (BuildContext context) {
-                           var height = MediaQuery.of(context).size.height;
-                           var width = MediaQuery.of(context).size.width;
+                SideMenuItem(
+                  onTap: (index, _) {
+                    showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (BuildContext context) {
+                          var height = MediaQuery.of(context).size.height;
+                          var width = MediaQuery.of(context).size.width;
                           return CustomAlertDialog(
-                             content: SizedBox(
-
-                               height: isMobile
-                                   ? height * zero29
-                                   : height * 0.15,
-                               width: isMobile
-                                   ? width * zero9
-                                   : width * 0.19,
-                               child: Column(
-
-                                 mainAxisAlignment: MainAxisAlignment.start,
-                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                 children: [
-                                   CommonTextWidget(text: "Are you sure you want to sign out?",fontSize: 16,textAlign: TextAlign.center,fontWeight: FontWeight.w700,
-                                   top: 20,),
-                                   CommonTextWidget(text: "You are also logged out from local data apps open in this browser.",fontSize: 14,
-                                   textAlign: TextAlign.center,
-                                   top: 20,
-                                   ),
-                                   const SizedBox(height: 50,),
-                                   Row(
-                                     mainAxisAlignment: MainAxisAlignment.end,
-                                     crossAxisAlignment: CrossAxisAlignment.end,
-                                     children: [
-                                       CommonButtonWidget(
-                                         onPressed: () async {
-                                           await PreferenceHelper.clear();
-                                           pushNamedAndRemoveUntil(context: context, routeName: RouteName.loginScreen);
-                                         },
-                                          colorButton: Colors.red,
-                                         fontSize: 12,
-                                         padding: const EdgeInsets.only(left: 40,right: 40,top: 10,bottom: 10),
-                                         text: "Logout",
-                                       ),
-                                       const SizedBox(width: 10,),
-
-                                       CommonButtonWidget(
-                                         text: "Cancel",
-                                         colorBorder: Colors.black,
-                                         colorButton: Colors.white,
-                                         colorText: Colors.black,
-                                         onPressed: (){
-                                           Navigator.of(context).pop();
-                                         },
-                                         fontSize: 12,
-                                         padding: const EdgeInsets.only(left: 40,right: 40),
-                                       ),
-
-                                       const SizedBox(width: 20,)
-                                     ],
-                                   )
-
-                                 ],
-                               ),
-                             ),
-                           );
-                         });
-                     //provider.updatePageValue(8);
-                 //   sideMenu.changePage(index);
+                            content: SizedBox(
+                              height: isMobile
+                                  ? height * zero29
+                                  : isDesktop
+                                      ? height * 0.26
+                                      : height * 0.15,
+                              width: isMobile
+                                  ? width * zero9
+                                  : isDesktop
+                                      ? width * 0.2
+                                      : width * 0.19,
+                              child: ListView(
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      CommonTextWidget(
+                                        text:
+                                            "Are you sure you want to sign out?",
+                                        fontSize: 16,
+                                        textAlign: TextAlign.center,
+                                        fontWeight: FontWeight.w700,
+                                        top: 20,
+                                      ),
+                                      CommonTextWidget(
+                                        text:
+                                            "You are also logged out from local data apps open in this browser.",
+                                        fontSize: 14,
+                                        textAlign: TextAlign.center,
+                                        top: 20,
+                                      ),
+                                      const SizedBox(
+                                        height: 50,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          CommonButtonWidget(
+                                            onPressed: () async {
+                                              await PreferenceHelper.clear();
+                                              pushNamedAndRemoveUntil(
+                                                  context: context,
+                                                  routeName:
+                                                      RouteName.loginScreen);
+                                            },
+                                            colorButton: Colors.red,
+                                            fontSize: 12,
+                                            padding: const EdgeInsets.only(
+                                                left: 40,
+                                                right: 40,
+                                                top: 10,
+                                                bottom: 10),
+                                            text: "Logout",
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          CommonButtonWidget(
+                                            text: "Cancel",
+                                            colorBorder: Colors.black,
+                                            colorButton: Colors.white,
+                                            colorText: Colors.black,
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            fontSize: 12,
+                                            padding: const EdgeInsets.only(
+                                                left: 40, right: 40),
+                                          ),
+                                          const SizedBox(
+                                            width: 20,
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        });
+                    //provider.updatePageValue(8);
+                    //   sideMenu.changePage(index);
 
                     //showCommonDialog(context: context, title: "title", content: "content");
-                   },
+                  },
                   title: 'Logout',
                   icon: const Icon(Icons.exit_to_app),
                 ),
@@ -302,9 +329,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     padding: EdgeInsets.all(0),
                     child: PatientNewScreen(),
                   ),
-                 const Center(
-                   child: ErrorPage(),
-                 ),
+                  const Center(
+                    child: ErrorPage(),
+                  ),
                   const Center(
                     child: ErrorPage(),
                   ),
@@ -319,9 +346,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   const Center(
                     child: ErrorPage(),
                   ),
-                 Container(
-
-                 ),
+                  Container(),
                   InvoiceScreen(),
 
                   // this is for SideMenuItem with builder (divider)

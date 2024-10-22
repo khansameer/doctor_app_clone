@@ -14,24 +14,20 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class PatientProfilePage extends StatefulWidget {
-  const PatientProfilePage({super.key,this.title});
+  const PatientProfilePage({super.key, this.title});
 
- final String ?title;
+  final String? title;
   @override
   State<PatientProfilePage> createState() => _PatientProfilePageState();
 }
 
 class _PatientProfilePageState extends State<PatientProfilePage> {
-  List<Patients> patients=[];
+  List<Patients> patients = [];
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<CalenderProvider>().getPatientDetails();
-
-
-
-
     });
   }
 
@@ -39,62 +35,71 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
-    return Consumer<CalenderProvider>(
-      builder: (context,provider,child) {
+    return Consumer<CalenderProvider>(builder: (context, provider, child) {
+      if (widget.title == "all") {
+        patients =
+            context.read<CalenderProvider>().patientDetailsModel?.patients ??
+                [];
+        print(
+            '====filterByAge====${Provider.of<CalenderProvider>(context, listen: false).filterByAge(age: 30, isUnder: true)?.length}');
+      } else if (widget.title == "all_female") {
+        patients =
+            context.read<CalenderProvider>().filterBYGender(gender: 'female') ??
+                [];
+      } else if (widget.title == "all_male") {
+        patients =
+            context.read<CalenderProvider>().filterBYGender(gender: 'male') ??
+                [];
+      } else if (widget.title == "female_under30") {
+        patients = context
+                .read<CalenderProvider>()
+                .filterByAge(age: 30, isUnder: true) ??
+            [];
+      } else if (widget.title == "female_over30") {
+        patients = context
+                .read<CalenderProvider>()
+                .filterByAge(age: 30, isUnder: false) ??
+            [];
+      }
 
-      if(widget.title=="all"){
-
-        patients=context.read<CalenderProvider>().patientDetailsModel?.patients??[];
-        print('====filterByAge====${ Provider.of<CalenderProvider>(context, listen: false).filterByAge(age: 30, isUnder: true)?.length}');
-      }
-      else if(widget.title=="all_female"){
-        patients=context.read<CalenderProvider>().filterBYGender(gender: 'female')??[];
-      }
-      else if(widget.title=="all_male"){
-        patients=context.read<CalenderProvider>().filterBYGender(gender: 'male')??[];
-      }
-      else if(widget.title=="female_under30"){
-        patients=context.read<CalenderProvider>().filterByAge(age: 30, isUnder: true)??[];
-      }
-      else if(widget.title=="female_over30"){
-        patients=context.read<CalenderProvider>().filterByAge(age: 30, isUnder: false)??[];
-      }
-
-
-        return Stack(
-          children: [
-            ListView(
-              children: [
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    isMobile?Column(children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                              child: SizedBox(
-                                height: 40,
-                                child: CommonTextField(
-                                  colorFill: Colors.white,
-                                  hint: "Search Patient Name/ID/Phone number",
+      return Stack(
+        children: [
+          ListView(
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  isMobile
+                      ? Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const SizedBox(
+                                  width: 10,
                                 ),
-                              )),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                              child: CommonTextWidget(
-                                  text: "Advance Search",
-                                  textColor: AppColors.primary,
-                                  fontSize: 12))
-                        ],
-                      ),
-                      const SizedBox(height: 20,),
-                     /* Row(
+                                Expanded(
+                                    child: SizedBox(
+                                  height: 40,
+                                  child: CommonTextField(
+                                    colorFill: Colors.white,
+                                    hint: "Search Patient Name/ID/Phone number",
+                                  ),
+                                )),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                    child: CommonTextWidget(
+                                        text: "Advance Search",
+                                        textColor: AppColors.primary,
+                                        fontSize: 12))
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            /* Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           const SizedBox(
@@ -133,104 +138,105 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                           ),
                         ],
                       )*/
-                    ],): Row(
-                      children: [
-                        Expanded(
-                            flex: 1,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                SizedBox(
-                                  height: 40,
-                                  width: 350,
-                                  child: CommonTextField(
-                                    colorFill: Colors.white,
-                                    hint: "Search Patient Name/ID/Phone number",
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Expanded(
-                                    child: CommonTextWidget(
-                                        text: "Advance Search",
-                                        textColor: AppColors.primary,
-                                        fontSize: 12))
-                              ],
-                            )),
-
-                      ],
-                    ),
-                    const Divider(
-                      thickness: 0.3,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-
-                        Expanded(
-                          flex: 8,
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            color: Colors.white,
-                            child:     Theme(
-                              data: Theme.of(context).copyWith(
-                                cardColor: Colors.white,
-                                cardTheme: const CardTheme(
-                                  color: Colors.white,
-                                  elevation: 0,
-                                ),
-                                dataTableTheme: DataTableThemeData(
-                                  headingRowColor: WidgetStateProperty.resolveWith<Color>(
-                                          (Set<WidgetState> states) {
-                                        // Set color for heading row
-                                        return Colors.blueGrey[200]!; // example color
-                                      }),
-                                  dataRowColor: WidgetStateProperty.resolveWith<Color>(
-                                          (Set<WidgetState> states) {
-                                        // Set color for data rows
-                                        return Colors.grey[200]!; // example color
-                                      }),
-                                  // Add other customizations here
-                                ),
-                              ),
-                              child: Container(
+                          ],
+                        )
+                      : Row(
+                          children: [
+                            Expanded(
+                                flex: 1,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    SizedBox(
+                                      height: 40,
+                                      width: 350,
+                                      child: CommonTextField(
+                                        colorFill: Colors.white,
+                                        hint:
+                                            "Search Patient Name/ID/Phone number",
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Expanded(
+                                        child: CommonTextWidget(
+                                            text: "Advance Search",
+                                            textColor: AppColors.primary,
+                                            fontSize: 12))
+                                  ],
+                                )),
+                          ],
+                        ),
+                  const Divider(
+                    thickness: 0.3,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 8,
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          color: Colors.white,
+                          child: Theme(
+                            data: Theme.of(context).copyWith(
+                              cardColor: Colors.white,
+                              cardTheme: const CardTheme(
                                 color: Colors.white,
-                                width: size.width,
-                                child: PaginatedDataTable(
+                                elevation: 0,
+                              ),
+                              dataTableTheme: DataTableThemeData(
+                                headingRowColor:
+                                    WidgetStateProperty.resolveWith<Color>(
+                                        (Set<WidgetState> states) {
+                                  // Set color for heading row
+                                  return Colors.blueGrey[200]!; // example color
+                                }),
+                                dataRowColor:
+                                    WidgetStateProperty.resolveWith<Color>(
+                                        (Set<WidgetState> states) {
+                                  // Set color for data rows
+                                  return Colors.grey[200]!; // example color
+                                }),
+                                // Add other customizations here
+                              ),
+                            ),
+                            child: Container(
+                              color: Colors.white,
+                              width: size.width,
+                              child: PaginatedDataTable(
                                   showEmptyRows: false,
-
                                   columns: [
                                     DataColumn(
                                         label: CommonTextWidget(
-                                          text: 'Name',
-                                          fontWeight: FontWeight.w600,
-                                        )),
+                                      text: 'Name',
+                                      fontWeight: FontWeight.w600,
+                                    )),
                                     DataColumn(
                                         label: CommonTextWidget(
-                                          text: 'Email',
-
-                                          fontWeight: FontWeight.w600,
-                                        )),
+                                      text: 'Email',
+                                      fontWeight: FontWeight.w600,
+                                    )),
                                     DataColumn(
                                         label: CommonTextWidget(
-                                          text: 'Phone Number',
-                                          fontWeight: FontWeight.w600,
-                                        )),
+                                      text: 'Phone Number',
+                                      fontWeight: FontWeight.w600,
+                                    )),
                                     DataColumn(
                                         label: CommonTextWidget(
-                                          text: 'Gender',
-                                          fontWeight: FontWeight.w600,
-                                        )),
+                                      text: 'Gender',
+                                      fontWeight: FontWeight.w600,
+                                    )),
                                     DataColumn(
                                         label: CommonTextWidget(
-                                          text: 'Date Of Birth',
-                                          fontWeight: FontWeight.w600,
-                                        )),
+                                      text: 'Date Of Birth',
+                                      fontWeight: FontWeight.w600,
+                                    )),
                                     DataColumn(
                                       numeric: true,
                                       label: CommonTextWidget(
@@ -239,35 +245,32 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                                       ),
                                     ),
                                   ],
-
-                                  source: MyData(patients,context),
-                                  rowsPerPage: patients.length > 0 ? patients.length : 1//patients?.length??1,
-                                ),
-                              ),
+                                  source: MyData(patients, context),
+                                  rowsPerPage: patients.length > 0
+                                      ? patients.length
+                                      : 1 //patients?.length??1,
+                                  ),
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            provider.isFetching?showLoaderList():const SizedBox.shrink()
-          ],
-        );
-      }
-    );
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+          provider.isFetching ? showLoaderList() : const SizedBox.shrink()
+        ],
+      );
+    });
   }
-
-
 }
-class MyData extends DataTableSource {
 
-  MyData(this.patients,this.context);
+class MyData extends DataTableSource {
+  MyData(this.patients, this.context);
   List<Patients>? patients;
   BuildContext context;
-
 
   @override
   DataRow? getRow(int index) {
@@ -277,13 +280,20 @@ class MyData extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataCell(CommonTextWidget(fontSize: 12, text: '${user?.firstName.toString().toCapitalize()} ${user?.lastName.toString().toCapitalize()}')),
+        DataCell(CommonTextWidget(
+            fontSize: 12,
+            text:
+                '${user?.firstName.toString().toCapitalize()} ${user?.lastName.toString().toCapitalize()}')),
         DataCell(CommonTextWidget(fontSize: 12, text: user?.email.toString())),
-        DataCell(CommonTextWidget(fontSize: 12, text: user?.phoneNumber.toString())),
+        DataCell(
+            CommonTextWidget(fontSize: 12, text: user?.phoneNumber.toString())),
         DataCell(CommonTextWidget(fontSize: 12, text: user?.gender.toString())),
         //DataCell(CommonTextWidget(fontSize: 12, text: user?.dateOfBirth.toString())),
-        DataCell(CommonTextWidget(fontSize: 12, text: DateFormat('yyyy-MM-dd').format(DateTime.parse('${user?.dateOfBirth.toString()}')))),
-        DataCell(buildPopupMenu()),
+        DataCell(CommonTextWidget(
+            fontSize: 12,
+            text: DateFormat('yyyy-MM-dd')
+                .format(DateTime.parse('${user?.dateOfBirth.toString()}')))),
+        DataCell(buildPopupMenu(id: user?.sId.toString())),
       ],
     );
   }
@@ -292,23 +302,27 @@ class MyData extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => patients!=null?patients!.length:1;
+  int get rowCount => patients != null ? patients!.length : 1;
 
   @override
   int get selectedRowCount => 0;
 
-  Widget buildPopupMenu() {
+  Widget buildPopupMenu({String? id}) {
     return PopupMenuButton<String>(
       color: Colors.white,
       onSelected: (String value) {
         // Handle the create option
         if (value == 'create') {
+          print('==ididiidd===${id}');
           showDialog(
               barrierDismissible: false,
               context: context,
               builder: (BuildContext context) {
-                return  CustomAlertDialog(
-                  content: AddAppointmentsWidget(dateTime: DateTime.now(),),
+                return CustomAlertDialog(
+                  content: AddAppointmentsWidget(
+                    dateTime: DateTime.now(),
+                    patientID: id,
+                  ),
                 );
               });
         } else if (value == 'delete') {

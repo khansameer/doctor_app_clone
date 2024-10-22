@@ -36,14 +36,31 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
     });
     super.initState();
   }
+
   bool isFirstTime = true;
   bool isShowBG = true;
 
   List<Map<String, dynamic>> outerList = [
-    {'title': 'Patients', 'items': ['All Patients', 'Recently Visited', 'Recently Added']},
-    {'title': 'Groups', 'items': ['My Groups', 'Memberships',]},
-    {'title': 'Smart Group', 'items': ['All Female Customer', 'All Male Customer', 'Female Customer Over 30','Female Customer under 30']},
-
+    {
+      'title': 'Patients',
+      'items': ['All Patients', 'Recently Visited', 'Recently Added']
+    },
+    {
+      'title': 'Groups',
+      'items': [
+        'My Groups',
+        'Memberships',
+      ]
+    },
+    {
+      'title': 'Smart Group',
+      'items': [
+        'All Female Customer',
+        'All Male Customer',
+        'Female Customer Over 30',
+        'Female Customer under 30'
+      ]
+    },
   ];
 
   int selectedOuterIndex = 0;
@@ -91,7 +108,6 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                                 )
                               ],
                             ),
-
                           ],
                         ),
                       )
@@ -122,19 +138,19 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                        flex: 1,
+                        flex: 2,
                         child: Container(
                           height: size.height,
-
                           decoration: const BoxDecoration(
-                              color: colorBG,
-                          /*  border: Border.a(vertical: BorderSide(
+                            color: colorBG,
+                            /*  border: Border.a(vertical: BorderSide(
                               color: Colors.red,width:1
                             ))*/
                           ),
                           child: ListView.builder(
                             shrinkWrap: true,
-                            itemCount: outerList.length, // Number of outer list items
+                            itemCount:
+                                outerList.length, // Number of outer list items
                             itemBuilder: (context, outerIndex) {
                               return Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -144,44 +160,52 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: CommonTextWidget(
-
-                                      text:outerList[outerIndex]['title'],
-                                   fontSize: 16, fontWeight: FontWeight.bold,
+                                      text: outerList[outerIndex]['title'],
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
 
                                   // Inner ListView
                                   ListView.builder(
                                     shrinkWrap: true,
-                                    physics: const NeverScrollableScrollPhysics(),
-                                    itemCount: outerList[outerIndex]['items'].length,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount:
+                                        outerList[outerIndex]['items'].length,
                                     itemBuilder: (context1, innerIndex) {
-                                      bool isSelected = selectedOuterIndex == outerIndex && selectedInnerIndex == innerIndex;
+                                      bool isSelected =
+                                          selectedOuterIndex == outerIndex &&
+                                              selectedInnerIndex == innerIndex;
                                       return GestureDetector(
                                         onTap: () {
                                           setState(() {
-
                                             provider.setPatientDetailsPage(
-                                              context: context,
-                                              value: '${outerList[outerIndex]['items'][innerIndex]}'
-                                            );
-                                           // provider.setPatientDetailsPage() = '${outerList[outerIndex]['items'][innerIndex]}';
+                                                context: context,
+                                                value:
+                                                    '${outerList[outerIndex]['items'][innerIndex]}');
+                                            // provider.setPatientDetailsPage() = '${outerList[outerIndex]['items'][innerIndex]}';
                                             print('======${innerIndex}');
-                                            print('======${outerList[outerIndex]['items'][innerIndex]}');
+                                            print(
+                                                '======${outerList[outerIndex]['items'][innerIndex]}');
                                             selectedOuterIndex = outerIndex;
                                             selectedInnerIndex = innerIndex;
                                             //selectedInnerIndex[outerIndex] = innerIndex;
                                           });
                                         },
                                         child: Container(
-                                          color: isSelected ? AppColors.primary.withOpacity(0.50) : colorBG,
+                                          color: isSelected
+                                              ? AppColors.primary
+                                                  .withOpacity(0.50)
+                                              : colorBG,
                                           padding: const EdgeInsets.all(10.0),
                                           child: CommonTextWidget(
-                                              textColor: isSelected?Colors.white:null,
-                                              text:
-                                            outerList[outerIndex]['items'][innerIndex],
-                                            fontSize: 12
-                                          ),
+                                              textColor: isSelected
+                                                  ? Colors.white
+                                                  : null,
+                                              text: outerList[outerIndex]
+                                                  ['items'][innerIndex],
+                                              fontSize: 12),
                                         ),
                                       );
                                     },
@@ -191,7 +215,6 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                             },
                           ),
                         )),
-
                     Expanded(
                       flex: 8,
                       child: SizedBox(
@@ -199,7 +222,6 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                         child: provider.currentPatientPage,
                       ),
                     )
-
                   ],
                 )
               ],
@@ -209,7 +231,4 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
       );
     });
   }
-
-
 }
-
