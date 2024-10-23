@@ -1,3 +1,4 @@
+import 'package:doctor_app/core/common/CustomAlertDialog.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
@@ -29,6 +30,7 @@ class InvoiceScreen extends StatelessWidget {
               child: CommonButtonWidget(
                 fontSize: 12,
                 right: 10,
+                radius: 8,
                 borderWidth: 1,
                 onPressed: () {
                   showDialog(
@@ -36,13 +38,10 @@ class InvoiceScreen extends StatelessWidget {
                     builder: (context) {
                       var height = MediaQuery.of(context).size.height;
                       var width = MediaQuery.of(context).size.width;
-              
-                      return AlertDialog(
-                        backgroundColor: Colors.white,
-                        contentPadding: EdgeInsets.zero,
-                        actionsPadding: EdgeInsets.zero,
+
+                      return CustomAlertDialog(
                         content: SizedBox(
-                          //  height: isMobile ? height * 0.4 : height * 0.7,
+                            //  height: isMobile ? height * 0.4 : height * 0.7,
                             width: isMobile ? width * 0.9 : width * 0.3,
                             child: const ProcedureChargesScreen()),
                       );
@@ -53,7 +52,7 @@ class InvoiceScreen extends StatelessWidget {
                 colorBorder: Colors.black,
                 colorText: Colors.black,
                 padding: EdgeInsets.zero,
-                width: isMobile?size.width*0.3:size.width * 0.1,
+                width: isMobile ? size.width * 0.3 : size.width * 0.1,
                 text: "Add Procedure",
               ),
             ),
@@ -91,31 +90,31 @@ class InvoiceScreen extends StatelessWidget {
                   DataColumn(
                       label: CommonTextWidget(
                     text: 'Procedure',
-                        fontSize: 12,
+                    fontSize: 12,
                     fontWeight: FontWeight.w700,
                   )),
                   DataColumn(
                       label: CommonTextWidget(
                     text: 'Cost',
-                        fontSize: 12,
+                    fontSize: 12,
                     fontWeight: FontWeight.w700,
                   )),
                   DataColumn(
                       label: CommonTextWidget(
-                        fontSize: 12,
+                    fontSize: 12,
                     text: 'Discount',
                     fontWeight: FontWeight.w700,
                   )),
                   DataColumn(
                       label: CommonTextWidget(
                     text: 'Note',
-                        fontSize: 12,
+                    fontSize: 12,
                     fontWeight: FontWeight.w700,
                   )),
                   DataColumn(
                       label: CommonTextWidget(
                     text: 'Total',
-                        fontSize: 12,
+                    fontSize: 12,
                     fontWeight: FontWeight.w700,
                   )),
                   DataColumn(

@@ -227,7 +227,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                               width: isMobile
                                   ? width * zero9
                                   : isDesktop
-                                      ? width * 0.2
+                                      ? width * 0.3
                                       : width * 0.19,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -265,6 +265,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                               CrossAxisAlignment.end,
                                           children: [
                                             CommonButtonWidget(
+                                              height: 40,
+                                              radius: 8,
                                               onPressed: () async {
                                                 await PreferenceHelper.clear();
                                                 pushNamedAndRemoveUntil(
@@ -286,6 +288,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             ),
                                             CommonButtonWidget(
                                               text: "Cancel",
+                                              height: 40,
+                                              radius: 8,
                                               colorBorder: Colors.black,
                                               colorButton: Colors.white,
                                               colorText: Colors.black,
@@ -296,9 +300,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                               padding: const EdgeInsets.only(
                                                   left: 40, right: 40),
                                             ),
-                                            const SizedBox(
-                                              width: 20,
-                                            )
                                           ],
                                         )
                                       ],

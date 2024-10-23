@@ -19,24 +19,22 @@ class EditProfileScreen extends StatelessWidget {
 
     var isMobile = Responsive.isMobile(context);
     return Container(
-      child:  SizedBox(
-              width: size.width,
-
-              child: _mobileView(size: size,isMobile:isMobile ),
-            )
-         /* : Container(
+        child: SizedBox(
+      width: size.width,
+      child: _mobileView(size: size, isMobile: isMobile),
+    )
+        /* : Container(
         color: colorBG,
             child: Center(
                 child: _mobileView(size: size),
               ),
           ),*/
-    );
+        );
   }
 
-  _mobileView({required Size size,required bool isMobile}) {
+  _mobileView({required Size size, required bool isMobile}) {
     return Consumer<ProfileProvider>(builder: (context, provider, child) {
       return Container(
-
         color: Colors.white,
         padding: const EdgeInsets.all(25.0),
         child: ListView(
@@ -319,9 +317,10 @@ class EditProfileScreen extends StatelessWidget {
                   child: CommonButtonWidget(
                     text: "Save Change",
                     fontSize: 13,
-                    bottom: 45,
-                    width: isMobile?size.width*0.3:size.width*0.1,
-                    height: 45,
+                    radius: 8,
+                    //bottom: 45,
+                    width: isMobile ? size.width * 0.3 : size.width * 0.1,
+                    height: 40,
                   ),
                 )
               ],
@@ -331,7 +330,6 @@ class EditProfileScreen extends StatelessWidget {
       );
     });
   }
-
 
   commonTextFiled({String? title, required Size size, double? width}) {
     return commonTextFiledView(

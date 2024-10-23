@@ -26,15 +26,37 @@ class _ProcedureChargesScreenState extends State<ProcedureChargesScreen> {
       return Form(
         key: formProcedureKey,
         child: Padding(
-          padding: const EdgeInsets.all(25.0),
+          padding: const EdgeInsets.all(15.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              CommonTextWidget(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CommonTextWidget(
+                    text: "Add Procedure Charges",
+                    fontSize: 16,
+                    textAlign: TextAlign.center,
+                    fontWeight: FontWeight.w700,
+                    // top: 20,
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      icon: const Icon(
+                        Icons.close,
+                        size: 18,
+                        color: Colors.black,
+                      ))
+                ],
+              ),
+              /*  CommonTextWidget(
                 text: "Add Procedure Charges",
                 fontSize: 16,
                 fontWeight: FontWeight.w800,
-              ),
+              ),*/
               commonTextFiledView(
                   title: "Name",
                   validator: (value) {
@@ -76,7 +98,8 @@ class _ProcedureChargesScreenState extends State<ProcedureChargesScreen> {
                   topTextField: 5),
               CommonButtonWidget(
                 top: twenty,
-                padding: isMobile ? null : EdgeInsets.all(25),
+                height: 40,
+                // padding: isMobile ? null : EdgeInsets.all(25),
                 onPressed: () async {
                   final isValid =
                       formProcedureKey.currentState?.validate() ?? false;
