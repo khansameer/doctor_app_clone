@@ -69,271 +69,276 @@ class _SignupViewState extends State<SignupView> {
 
         size: size,
         child: Consumer<AuthProviders>(builder: (context, provider, child) {
-          return Form(
-            key: formSignKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Column(
+          return Container(
+
+            child: SingleChildScrollView(
+              child: Form(
+                key: formSignKey,
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      height: isMobile ? size.height * 0.00 : 0,
-                    ),
-                    setAssetImage(
-                        image: icLogoApps,
-                        width: 200,
-                        height: 120,
-                        fit: BoxFit.scaleDown),
-                    Align(
-                        heightFactor: 0.05,
-                        alignment: Alignment.center,
-                        child: CommonTextWidget(
-                          text: "Sign Up",
-                          textStyle: GoogleFonts.inter(
-                            fontWeight: FontWeight.w700,
-                            color: colorGreen,
-                            fontSize: 25,
-                          ),
-                        )),
-                    commonTextFiledView(
-                        controller: provider.tetFName,
-                        title: "First Name",
-                        validator: (value) {
-                          if (value.toString().trim().isEmpty) {
-                            return "Please enter First Name";
-                          }
-
-                          return null;
-                        },
-                        keyboardType: TextInputType.name,
-                        topText: fifteen,
-                        topTextField: ten),
-                    commonTextFiledView(
-                        controller: provider.tetLName,
-                        title: "Last Name",
-                        validator: (value) {
-                          if (value.toString().trim().isEmpty) {
-                            return "Please enter Last Name";
-                          }
-
-                          return null;
-                        },
-                        keyboardType: TextInputType.name,
-                        topText: fifteen,
-                        topTextField: ten),
-                    commonTextFiledView(
-                        title: yourEmail,
-                        keyboardType: TextInputType.emailAddress,
-                        hint: enterYourEmail,
-                        validator: (value) {
-                          if (value.toString().trim().isEmpty) {
-                            return emptyEmail;
-                          }
-                          if (!Validation.validateEmail(value.toString())) {
-                            return emailValidationMsg;
-                          }
-                          return null;
-                        },
-                        controller: provider.tetEmail,
-                        topText: fifteen,
-                        topTextField: ten),
-                    commonTextFiledView(
-                        title: "Phone Number",
-                        keyboardType: TextInputType.phone,
-                        controller: provider.tetPhoneNO,
-                        validator: (value) {
-                          if (value.toString().trim().isEmpty) {
-                            return emptyPhone;
-                          }
-                          if (!Validation.validateMobile(value.toString())) {
-                            return phoneError;
-                          }
-                          return null;
-                        },
-                        topText: fifteen,
-                        topTextField: ten),
-                    commonTextFiledView(
-                        title: "Date of Birth",
-                        isReadOnly: true,
-                        suffixIcon: IconButton(
-                            onPressed: () async {
+                    Column(
+              
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: isMobile ? size.height * 0.00 : 0,
+                        ),
+                        setAssetImage(
+                            image: icLogoApps,
+                            width: 200,
+                            height: 120,
+                            fit: BoxFit.scaleDown),
+                        Align(
+                            heightFactor: 0.05,
+                            alignment: Alignment.center,
+                            child: CommonTextWidget(
+                              text: "Sign Up",
+                              textStyle: GoogleFonts.inter(
+                                fontWeight: FontWeight.w700,
+                                color: colorGreen,
+                                fontSize: 25,
+                              ),
+                            )),
+                        commonTextFiledView(
+                            controller: provider.tetFName,
+                            title: "First Name",
+                            validator: (value) {
+                              if (value.toString().trim().isEmpty) {
+                                return "Please enter First Name";
+                              }
+              
+                              return null;
+                            },
+                            keyboardType: TextInputType.name,
+                            topText: fifteen,
+                            topTextField: ten),
+                        commonTextFiledView(
+                            controller: provider.tetLName,
+                            title: "Last Name",
+                            validator: (value) {
+                              if (value.toString().trim().isEmpty) {
+                                return "Please enter Last Name";
+                              }
+              
+                              return null;
+                            },
+                            keyboardType: TextInputType.name,
+                            topText: fifteen,
+                            topTextField: ten),
+                        commonTextFiledView(
+                            title: yourEmail,
+                            keyboardType: TextInputType.emailAddress,
+                            hint: enterYourEmail,
+                            validator: (value) {
+                              if (value.toString().trim().isEmpty) {
+                                return emptyEmail;
+                              }
+                              if (!Validation.validateEmail(value.toString())) {
+                                return emailValidationMsg;
+                              }
+                              return null;
+                            },
+                            controller: provider.tetEmail,
+                            topText: fifteen,
+                            topTextField: ten),
+                        commonTextFiledView(
+                            title: "Phone Number",
+                            keyboardType: TextInputType.phone,
+                            controller: provider.tetPhoneNO,
+                            validator: (value) {
+                              if (value.toString().trim().isEmpty) {
+                                return emptyPhone;
+                              }
+                              if (!Validation.validateMobile(value.toString())) {
+                                return phoneError;
+                              }
+                              return null;
+                            },
+                            topText: fifteen,
+                            topTextField: ten),
+                        commonTextFiledView(
+                            title: "Date of Birth",
+                            isReadOnly: true,
+                            suffixIcon: IconButton(
+                                onPressed: () async {
+                                  selectDate(context);
+                                },
+                                icon: const Icon(
+                                  Icons.date_range,
+                                  color: Colors.grey,
+                                )),
+                            controller: provider.tetDob,
+                            onTap: () {
                               selectDate(context);
                             },
-                            icon: const Icon(
-                              Icons.date_range,
-                              color: Colors.grey,
-                            )),
-                        controller: provider.tetDob,
-                        onTap: () {
-                          selectDate(context);
-                        },
-                        topText: fifteen,
-                        topTextField: ten),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: CommonTextWidget(
-                        top: ten,
-                        text: "Specialty",
-                        fontWeight: FontWeight.w500,
-                        fontSize: sixteen,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: ten,
-                    ),
-                    MultiSelectDialogField<SpecializationsModel>(
-                      dialogHeight: size.height * zero3, // 30% of screen height
-                      backgroundColor: Colors.white,
-                      checkColor: colorGreen,
-                      dialogWidth: twoHundred,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Colors.grey, width: 1),
-                      ),
-                      items: provider.specializationsList
-                          .map((e) => MultiSelectItem(e, e.name ?? ''))
-                          .toList(),
-                      listType: MultiSelectListType.LIST,
-                      onConfirm: (selected) {
-                        provider.setSelectedItems(
-                          selected.map((e) => e.sId as String).toList(),
-                        );
-                      },
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    genderView(provider: provider),
-                    commonTextFiledView(
-                        keyboardType: TextInputType.visiblePassword,
-                        controller: provider.tetPassword,
-                        obscureText: !provider.isPasswordVisible,
-                        title: password,
-                        validator: (value) {
-                          if (value.toString().trim().isEmpty) {
-                            return "Please enter Password";
-                          }
-
-                          return null;
-                        },
-                        suffixIcon: IconButton(
-                          onPressed: provider.togglePasswordVisibility,
-                          icon: Icon(
-                            color: Colors.grey,
-                            provider.isPasswordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
+                            topText: fifteen,
+                            topTextField: ten),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: CommonTextWidget(
+                            top: ten,
+                            text: "Specialty",
+                            fontWeight: FontWeight.w500,
+                            fontSize: sixteen,
                           ),
                         ),
-                        topText: ten,
-                        topTextField: ten),
-                    commonTextFiledView(
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: !provider.isConfirmPasswordVisible,
-                        title: confirmPassword,
-                        validator: (value) {
-                          if (value.toString().trim().isEmpty) {
-                            return "Please enter Confirm Password";
-                          }
-
-                          if (provider.tetPassword.text != value.toString()) {
-                            return "Password not match";
-                          }
-                          return null;
-                        },
-                        suffixIcon: IconButton(
-                          onPressed: provider.toggleConfirmPasswordVisibility,
-                          icon: Icon(
-                            color: Colors.grey,
-                            provider.isConfirmPasswordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                          ),
+                        const SizedBox(
+                          height: ten,
                         ),
-                        topText: fifteen,
-                        topTextField: ten),
-                    CommonButtonWidget(
-                      top: twenty,
-                      bottom: 0,
-                      padding: isMobile ? null : EdgeInsets.all(20),
-                      onPressed: () {
-                        final isValid =
-                            formSignKey.currentState?.validate() ?? false;
-                        if (isValid) {
-                          if (provider.selectedItems.isEmpty) {
-                            showCommonDialog(
-                                context: context,
-                                title: "Error",
-                                content: "Please select specialty",
-                                isMessage: true);
-                          } else if (provider.tetDob.text.isEmpty) {
-                            showCommonDialog(
-                                context: context,
-                                title: "Error",
-                                content: "Please pick  date of birth",
-                                isMessage: true);
-                          } else {
-                            Map<String, dynamic> body = {
-                              "firstName": provider.tetFName.text,
-                              "lastName": provider.tetLName.text,
-                              "email": provider.tetEmail.text,
-                              "password": provider.tetPassword.text,
-                              "dateOfBirth": provider.formattedDate,
-                              "phoneNumber": provider.tetPhoneNO.text,
-                              "role": "doctor",
-                              "gender": provider.selectedGender.name,
-                              "specializations": provider.selectedItems,
-                              // "clinicAddresses": addressesJson
-                            };
-
-                            provider
-                                .signupAPI(body: body, context: context)
-                                .then((value) {
-                              if (provider.signupModel?.doctor?.sId != null) {
-                                pushNamedAndRemoveUntil(
-                                    context: context,
-                                    routeName: RouteName.loginScreen);
-                                provider.resetFields();
+                        MultiSelectDialogField<SpecializationsModel>(
+                          dialogHeight: size.height * zero3, // 30% of screen height
+                          backgroundColor: Colors.white,
+                          checkColor: colorGreen,
+                          dialogWidth: twoHundred,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: Colors.grey, width: 1),
+                          ),
+                          items: provider.specializationsList
+                              .map((e) => MultiSelectItem(e, e.name ?? ''))
+                              .toList(),
+                          listType: MultiSelectListType.LIST,
+                          onConfirm: (selected) {
+                            provider.setSelectedItems(
+                              selected.map((e) => e.sId as String).toList(),
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        genderView(provider: provider),
+                        commonTextFiledView(
+                            keyboardType: TextInputType.visiblePassword,
+                            controller: provider.tetPassword,
+                            obscureText: !provider.isPasswordVisible,
+                            title: password,
+                            validator: (value) {
+                              if (value.toString().trim().isEmpty) {
+                                return "Please enter Password";
                               }
-                            });
-                          }
-                        } else {
-                          formSignKey.currentState?.save();
-                        }
-                      },
-                      text: signup,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        text: 'Already have an account? ',
-                        style: DefaultTextStyle.of(context).style,
-                        children: <TextSpan>[
-                          TextSpan(
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  pushNamedAndRemoveUntil(
-                                      context: context,
-                                      routeName: RouteName.loginScreen);
-                                },
-                              text: 'Sign In',
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
+              
+                              return null;
+                            },
+                            suffixIcon: IconButton(
+                              onPressed: provider.togglePasswordVisibility,
+                              icon: Icon(
+                                color: Colors.grey,
+                                provider.isPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                            ),
+                            topText: ten,
+                            topTextField: ten),
+                        commonTextFiledView(
+                            keyboardType: TextInputType.visiblePassword,
+                            obscureText: !provider.isConfirmPasswordVisible,
+                            title: confirmPassword,
+                            validator: (value) {
+                              if (value.toString().trim().isEmpty) {
+                                return "Please enter Confirm Password";
+                              }
+              
+                              if (provider.tetPassword.text != value.toString()) {
+                                return "Password not match";
+                              }
+                              return null;
+                            },
+                            suffixIcon: IconButton(
+                              onPressed: provider.toggleConfirmPasswordVisibility,
+                              icon: Icon(
+                                color: Colors.grey,
+                                provider.isConfirmPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                            ),
+                            topText: fifteen,
+                            topTextField: ten),
+                        CommonButtonWidget(
+                          top: twenty,
+                          bottom: 0,
+                          padding: isMobile ? null : EdgeInsets.all(20),
+                          onPressed: () {
+                            final isValid =
+                                formSignKey.currentState?.validate() ?? false;
+                            if (isValid) {
+                              if (provider.selectedItems.isEmpty) {
+                                showCommonDialog(
+                                    context: context,
+                                    title: "Error",
+                                    content: "Please select specialty",
+                                    isMessage: true);
+                              } else if (provider.tetDob.text.isEmpty) {
+                                showCommonDialog(
+                                    context: context,
+                                    title: "Error",
+                                    content: "Please pick  date of birth",
+                                    isMessage: true);
+                              } else {
+                                Map<String, dynamic> body = {
+                                  "firstName": provider.tetFName.text,
+                                  "lastName": provider.tetLName.text,
+                                  "email": provider.tetEmail.text,
+                                  "password": provider.tetPassword.text,
+                                  "dateOfBirth": provider.formattedDate,
+                                  "phoneNumber": provider.tetPhoneNO.text,
+                                  "role": "doctor",
+                                  "gender": provider.selectedGender.name,
+                                  "specializations": provider.selectedItems,
+                                  // "clinicAddresses": addressesJson
+                                };
+              
+                                provider
+                                    .signupAPI(body: body, context: context)
+                                    .then((value) {
+                                  if (provider.signupModel?.doctor?.sId != null) {
+                                    pushNamedAndRemoveUntil(
+                                        context: context,
+                                        routeName: RouteName.loginScreen);
+                                    provider.resetFields();
+                                  }
+                                });
+                              }
+                            } else {
+                              formSignKey.currentState?.save();
+                            }
+                          },
+                          text: signup,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            text: 'Already have an account? ',
+                            style: DefaultTextStyle.of(context).style,
+                            children: <TextSpan>[
+                              TextSpan(
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      pushNamedAndRemoveUntil(
+                                          context: context,
+                                          routeName: RouteName.loginScreen);
+                                    },
+                                  text: 'Sign In',
+                                  style:
+                                      const TextStyle(fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
           );
         }),
