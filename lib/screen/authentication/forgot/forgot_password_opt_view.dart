@@ -37,7 +37,8 @@ class ForgotPasswordOptView extends StatelessWidget {
         size: size,
         isTablet: isTablet,
         isMobile: isMobile,
-        child: ListView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
               height: isMobile?size.height * 0.0:0,

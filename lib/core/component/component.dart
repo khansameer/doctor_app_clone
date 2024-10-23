@@ -11,12 +11,14 @@ import 'package:doctor_app/main.dart';
 import 'package:doctor_app/provider/auth_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/shared_preferences/preference_helper.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+
 import 'package:provider/provider.dart';
 
 import '../app_constants.dart';
@@ -27,7 +29,6 @@ commonResponsiveLayout(
     required Widget child,
     required bool isMobile,
     double? boxWidth,
-    double? boxHeight,
     required bool isTablet}) {
   return Container(
     width: size.width,
@@ -48,8 +49,8 @@ commonResponsiveLayout(
               ? size.width
               : isTablet
                   ? size.width * 0.6
-                  : size.width * 0.3,
-          height: isMobile ? size.height : boxHeight ?? size.height * 0.38,
+                  : size.width * 0.2,
+         height: isMobile ? size.height :null,
           child: child,
         ),
       ),
@@ -171,6 +172,12 @@ Future getName() async {
   return name;
 }
 
+Future getDoctorEmail() async {
+  String? email = await PreferenceHelper.getString(key: PreferenceHelper.email);
+
+  return email;
+}
+
 Future getUserID() async {
   String? userID =
       await PreferenceHelper.getString(key: PreferenceHelper.userID);
@@ -211,6 +218,7 @@ commonTextFiledView({
   Widget? suffixIcon,
   VoidCallback? onTap,
   double? textFontSize,
+  double? fontSize,
   TextInputType? keyboardType,
   TextEditingController? controller,
   int? maxLines,
@@ -236,6 +244,7 @@ commonTextFiledView({
         suffixIcon: suffixIcon,
         validator: validator,
         width: width,
+        fontSize:fontSize ,
         obscureText: obscureText,
         controller: controller,
         radius: radius ?? twelve,
@@ -710,3 +719,39 @@ Widget buildPopupMenu() {
     ), // Icon to trigger the pop-up menu
   );
 }
+/*
+Future<List<PlatformFile>?> pickFiles() async {
+  List<PlatformFile>? _paths;
+
+  try {
+    if (kIsWeb) {
+      _paths = (await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowMultiple: false,
+        onFileLoading: (FilePickerStatus status) => print(status),
+        allowedExtensions: ['pdf'],
+      ))
+          ?.files;
+    } else {
+      var status = await Permission.manageExternalStorage.request();
+      var status1 = await Permission.storage.request();
+      if (status.isGranted || status1.isGranted) {
+        _paths = (await FilePicker.platform.pickFiles(
+          type: FileType.custom,
+          allowMultiple: false,
+          onFileLoading: (FilePickerStatus status) => print(status),
+          allowedExtensions: ['pdf'],
+        ))
+            ?.files;
+      } else if (status.isPermanentlyDenied) {
+        openAppSettings();
+      }
+    }
+  } on PlatformException catch (e) {
+    print('-PlatformException${e.toString()}');
+  } catch (e) {
+    print('-error${e.toString()}');
+  }
+
+  return _paths;
+}*/

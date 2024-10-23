@@ -64,6 +64,21 @@ Future callPostMethodWithToken(String url, Map<String, dynamic> params) async {
     return getResponse(response);
   });
 }
+Future callPutMethodWithToken(String url, Map<String, dynamic> params) async {
+  String? token = await getAuthToken();
+  Map<String, String> commonHeadersToken = {
+    'Content-Type': 'application/json',
+    'accept': '*/*',
+    "Authorization":
+    token != null && token.toString().isNotEmpty ? "Bearer $token" : "",
+  };
+  return await http
+      .put(Uri.parse(url),
+      body: utf8.encode(json.encode(params)), headers: commonHeadersToken)
+      .then((http.Response response) {
+    return getResponse(response);
+  });
+}
 
 Future callPostMethodWithToken11(
     String searchKey, Map<String, dynamic> params) async {

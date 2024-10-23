@@ -22,123 +22,116 @@ class _ProcedureChargesScreenState extends State<ProcedureChargesScreen> {
   @override
   Widget build(BuildContext context) {
     var isMobile = Responsive.isMobile(context);
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: commonAppBar(title: "procedure charges".toUpperCase()),
-      body: Consumer<AuthProviders>(builder: (context, provider, child) {
-        return ListView(
-          children: [
-            Form(
-              key: formProcedureKey,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    CommonTextWidget(
-                      text: "Add Procedure Charges",
-                      fontSize: 16,
-                      fontWeight: FontWeight.w800,
-                    ),
-                    commonTextFiledView(
-                        title: "Name",
-                        validator: (value) {
-                          if (value.toString().trim().isEmpty) {
-                            return "Please enter name";
-                          }
-
-                          return null;
-                        },
-                        controller: tetName,
-                        keyboardType: TextInputType.name,
-                        topTextField: 5),
-                    commonTextFiledView(
-                        topText: 10,
-                        validator: (value) {
-                          if (value.toString().trim().isEmpty) {
-                            return "Please enter cost";
-                          }
-
-                          return null;
-                        },
-                        controller: tetCost,
-                        keyboardType: TextInputType.number,
-                        title: "Cost",
-                        topTextField: 5),
-                    commonTextFiledView(
-                        topText: 20,
-                        keyboardType: TextInputType.multiline,
-                        maxLines: 4,
-                        validator: (value) {
-                          if (value.toString().trim().isEmpty) {
-                            return "Please enter description";
-                          }
-
-                          return null;
-                        },
-                        controller: tetDescription,
-                        title: "Description",
-                        topTextField: 5),
-                    CommonButtonWidget(
-                      top: twenty,
-                      padding: isMobile ? null : EdgeInsets.all(17),
-                      onPressed: () async {
-                        final isValid =
-                            formProcedureKey.currentState?.validate() ?? false;
-                        if (isValid) {
-                          String? userID = await getUserID();
-                          Map<String, dynamic> body = {
-                            "doctorId": userID,
-                            "name": tetName.text,
-                            "cost": tetCost.text,
-                            "description": tetDescription.text,
-                          };
-                          print('====${body.toString()}');
-                          provider
-                              .addProcedureCharges(
-                            body,
-                          )
-                              .then((value) {
-                            Navigator.of(context).pop();
-                          });
-                        }
-
-                        /*   final isValid =
-                              formLoginKey.currentState?.validate() ??
-                                  false;
-                          if (isValid) {
-                            Map<String, dynamic> body = {
-                              "email": provider.tetEmail.text,
-                              "password": provider.tetPassword.text,
-                              "role": "doctor",
-                            };
-
-                            provider
-                                .callLoginApi(
-                                context: context,
-                                body: body,
-                                isLogin: true)
-                                .then((value) {
-                              if (provider.loginModel?.token != null) {
-                                pushNamedAndRemoveUntil(
-                                    context: context,
-                                    routeName:
-                                    RouteName.dashboardScreen);
-
-                                formLoginKey.currentState?.save();
-                                provider.resetFields();
-                              }
-                            });
-                          }*/
-                      },
-                      text: "Add",
-                    ),
-                  ],
-                ),
+    return Consumer<AuthProviders>(builder: (context, provider, child) {
+      return Form(
+        key: formProcedureKey,
+        child: Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CommonTextWidget(
+                text: "Add Procedure Charges",
+                fontSize: 16,
+                fontWeight: FontWeight.w800,
               ),
-            ),
-          ],
-        );
-      }),
-    );
+              commonTextFiledView(
+                  title: "Name",
+                  validator: (value) {
+                    if (value.toString().trim().isEmpty) {
+                      return "Please enter name";
+                    }
+
+                    return null;
+                  },
+                  controller: tetName,
+                  keyboardType: TextInputType.name,
+                  topTextField: 5),
+              commonTextFiledView(
+                  topText: 10,
+                  validator: (value) {
+                    if (value.toString().trim().isEmpty) {
+                      return "Please enter cost";
+                    }
+
+                    return null;
+                  },
+                  controller: tetCost,
+                  keyboardType: TextInputType.number,
+                  title: "Cost",
+                  topTextField: 5),
+              commonTextFiledView(
+                  topText: 20,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 4,
+                  validator: (value) {
+                    if (value.toString().trim().isEmpty) {
+                      return "Please enter description";
+                    }
+
+                    return null;
+                  },
+                  controller: tetDescription,
+                  title: "Description",
+                  topTextField: 5),
+              CommonButtonWidget(
+                top: twenty,
+                padding: isMobile ? null : EdgeInsets.all(25),
+                onPressed: () async {
+                  final isValid =
+                      formProcedureKey.currentState?.validate() ?? false;
+                  if (isValid) {
+                    String? userID = await getUserID();
+                    Map<String, dynamic> body = {
+                      "doctorId": userID,
+                      "name": tetName.text,
+                      "cost": tetCost.text,
+                      "description": tetDescription.text,
+                    };
+                    print('====${body.toString()}');
+                    provider
+                        .addProcedureCharges(
+                      body,
+                    )
+                        .then((value) {
+                      Navigator.of(context).pop();
+                    });
+                  }
+
+                  /*   final isValid =
+                          formLoginKey.currentState?.validate() ??
+                              false;
+                      if (isValid) {
+                        Map<String, dynamic> body = {
+                          "email": provider.tetEmail.text,
+                          "password": provider.tetPassword.text,
+                          "role": "doctor",
+                        };
+
+                        provider
+                            .callLoginApi(
+                            context: context,
+                            body: body,
+                            isLogin: true)
+                            .then((value) {
+                          if (provider.loginModel?.token != null) {
+                            pushNamedAndRemoveUntil(
+                                context: context,
+                                routeName:
+                                RouteName.dashboardScreen);
+
+                            formLoginKey.currentState?.save();
+                            provider.resetFields();
+                          }
+                        });
+                      }*/
+                },
+                text: "Add",
+              ),
+            ],
+          ),
+        ),
+      );
+    });
   }
 }

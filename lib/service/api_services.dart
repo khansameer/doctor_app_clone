@@ -18,6 +18,15 @@ class ApiService {
     return response;
   }
 
+  Future<String> callPutMethodApiWithToken(
+      {required Map<String, dynamic> body, required String url}) async {
+    var response = await callPutMethodWithToken(url, body);
+    return response;
+  }
+
+
+
+
   Future<String> callPatchMethods(
       {required Map<String, dynamic> body,
         required String url,

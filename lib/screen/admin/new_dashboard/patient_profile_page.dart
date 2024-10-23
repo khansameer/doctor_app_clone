@@ -2,6 +2,7 @@ import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/CustomAlertDialog.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/common_textfield.dart';
+import 'package:doctor_app/core/common/date_time_utils.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/context_extension.dart';
 import 'package:doctor_app/core/responsive.dart';
@@ -13,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/common/file_picker_helper.dart';
+
 class PatientProfilePage extends StatefulWidget {
   const PatientProfilePage({super.key, this.title});
 
@@ -23,44 +26,74 @@ class PatientProfilePage extends StatefulWidget {
 
 class _PatientProfilePageState extends State<PatientProfilePage> {
   List<Patients> patients = [];
+  List<Patients> filteredPatients = [];
+  TextEditingController searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
+    final provider = Provider.of<CalenderProvider>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<CalenderProvider>().getPatientDetails();
+      provider.getPatientDetails().then((value){
+        if (widget.title == "all") {
+          patients =
+              provider.patientDetailsModel?.patients ??
+                  [];
+          filteredPatients = List.from(patients);
+        } else if (widget.title == "all_female") {
+          patients =
+              provider.filterBYGender(gender: 'female') ??
+                  [];
+          filteredPatients = List.from(patients);
+        } else if (widget.title == "all_male") {
+          patients =
+              provider.filterBYGender(gender: 'male') ??
+                  [];
+          filteredPatients = List.from(patients);
+        } else if (widget.title == "female_under30") {
+          patients =provider
+              .filterByAge(age: 30, isUnder: true) ??
+              [];
+          filteredPatients = List.from(patients);
+        } else if (widget.title == "female_over30") {
+          patients =provider
+              .filterByAge(age: 30, isUnder: false) ??
+              [];
+
+        }
+
+        filteredPatients = List.from(patients);
+      });
     });
+    setState(() {
+      searchController.addListener(_filterPatients);
+    });
+
+  }
+  @override
+  void dispose() {
+    searchController.removeListener(_filterPatients);
+    searchController.dispose();
+    super.dispose();
   }
 
+  void _filterPatients() {
+    String query = searchController.text.toLowerCase();
+
+    setState(() {
+      filteredPatients = patients.where((patient) {
+        return patient.firstName.toString().toLowerCase().contains(query) ||
+            patient.email.toString().toLowerCase().contains(query) ||
+            patient.phoneNumber.toString().toLowerCase().contains(query);
+      }).toList();
+    });
+
+
+  }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
     return Consumer<CalenderProvider>(builder: (context, provider, child) {
-      if (widget.title == "all") {
-        patients =
-            context.read<CalenderProvider>().patientDetailsModel?.patients ??
-                [];
-        print(
-            '====filterByAge====${Provider.of<CalenderProvider>(context, listen: false).filterByAge(age: 30, isUnder: true)?.length}');
-      } else if (widget.title == "all_female") {
-        patients =
-            context.read<CalenderProvider>().filterBYGender(gender: 'female') ??
-                [];
-      } else if (widget.title == "all_male") {
-        patients =
-            context.read<CalenderProvider>().filterBYGender(gender: 'male') ??
-                [];
-      } else if (widget.title == "female_under30") {
-        patients = context
-                .read<CalenderProvider>()
-                .filterByAge(age: 30, isUnder: true) ??
-            [];
-      } else if (widget.title == "female_over30") {
-        patients = context
-                .read<CalenderProvider>()
-                .filterByAge(age: 30, isUnder: false) ??
-            [];
-      }
 
       return Stack(
         children: [
@@ -69,7 +102,9 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
               Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  isMobile
+
+                  const SizedBox(height: 10,),
+                    isMobile
                       ? Column(
                           children: [
                             Row(
@@ -89,86 +124,40 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                Expanded(
-                                    child: CommonTextWidget(
-                                        text: "Advance Search",
-                                        textColor: AppColors.primary,
-                                        fontSize: 12))
+
                               ],
                             ),
                             const SizedBox(
                               height: 20,
                             ),
-                            /* Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(child:  commonButton(
-                            colorText: Colors.black,
-                            isShowBorder: true,
 
-                            fontSize: 10,
-                            btnText: "Print Label",
-                            onPressed: () {},
-                          ),),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(child: commonButton(
-                            colorText: Colors.black,
-                            isShowBorder: true,
-                            fontSize: 10,
-                            btnText: "Marge Patients",
-                            onPressed: () {},
-                          ),),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(child:   commonButton(
-                            colorText: Colors.black,
-                            isShowBorder: true,
-                            fontSize: 10,
-                            btnText: "Add new patients",
-                            onPressed: () {},
-                          ),),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                        ],
-                      )*/
                           ],
                         )
                       : Row(
                           children: [
-                            Expanded(
-                                flex: 1,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    SizedBox(
-                                      height: 40,
-                                      width: 350,
-                                      child: CommonTextField(
-                                        colorFill: Colors.white,
-                                        hint:
-                                            "Search Patient Name/ID/Phone number",
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Expanded(
-                                        child: CommonTextWidget(
-                                            text: "Advance Search",
-                                            textColor: AppColors.primary,
-                                            fontSize: 12))
-                                  ],
-                                )),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                SizedBox(
+                                  height: 40,
+                                  width: 350,
+                                  child: CommonTextField(
+                                    fontSize: 12,
+                                    controller: searchController,
+                                    colorFill: Colors.white,
+                                    hint:
+                                        "Search Patient Name/ID/Phone number",
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+
+                              ],
+                            ),
                           ],
                         ),
                   const Divider(
@@ -234,7 +223,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                                     )),
                                     DataColumn(
                                         label: CommonTextWidget(
-                                      text: 'Date Of Birth',
+                                      text: 'Age',
                                       fontWeight: FontWeight.w600,
                                     )),
                                     DataColumn(
@@ -245,9 +234,9 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                                       ),
                                     ),
                                   ],
-                                  source: MyData(patients, context),
-                                  rowsPerPage: patients.length > 0
-                                      ? patients.length
+                                  source: MyData(filteredPatients, context),
+                                  rowsPerPage: filteredPatients.isNotEmpty
+                                      ? filteredPatients.length
                                       : 1 //patients?.length??1,
                                   ),
                             ),
@@ -291,9 +280,9 @@ class MyData extends DataTableSource {
         //DataCell(CommonTextWidget(fontSize: 12, text: user?.dateOfBirth.toString())),
         DataCell(CommonTextWidget(
             fontSize: 12,
-            text: DateFormat('yyyy-MM-dd')
-                .format(DateTime.parse('${user?.dateOfBirth.toString()}')))),
-        DataCell(buildPopupMenu(id: user?.sId.toString())),
+            text:'${DateTimeUtils.calculateAge(date: user!.dateOfBirth.toString()) }' /*DateFormat('yyyy-MM-dd')
+                .format(DateTime.parse('${user?.dateOfBirth.toString()}'))*/)),
+        DataCell(buildPopupMenu(id: user.sId.toString())),
       ],
     );
   }
@@ -310,10 +299,10 @@ class MyData extends DataTableSource {
   Widget buildPopupMenu({String? id}) {
     return PopupMenuButton<String>(
       color: Colors.white,
-      onSelected: (String value) {
+      onSelected: (String value) async {
         // Handle the create option
         if (value == 'create') {
-          print('==ididiidd===${id}');
+
           showDialog(
               barrierDismissible: false,
               context: context,
@@ -325,7 +314,18 @@ class MyData extends DataTableSource {
                   ),
                 );
               });
-        } else if (value == 'delete') {
+        } else if (value == 'upload') {
+          String? filePath = await FilePickerHelper.pickFile();
+          if (filePath != null) {
+            // Handle the selected file path
+            print('Selected file: $filePath');
+            // You can also display it in a dialog or another widget
+
+          } else {
+            // Handle the case when no file is selected
+            print('No file selected or permission denied');
+          }
+
           // Handle Inactive logic
           if (kDebugMode) {
             print('Inactive selected');
@@ -336,6 +336,10 @@ class MyData extends DataTableSource {
         const PopupMenuItem<String>(
           value: 'create',
           child: Text('Create An Appointments'),
+        ),
+        const PopupMenuItem<String>(
+          value: 'upload',
+          child: Text('Upload File'),
         ),
         const PopupMenuItem<String>(
           value: 'delete',

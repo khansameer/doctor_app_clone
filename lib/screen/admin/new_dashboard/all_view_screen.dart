@@ -71,19 +71,18 @@ class AllViewScreen extends StatelessWidget {
                       // Extract time components
                       int hour = dateTime.hour;
                       int minute = dateTime.minute;
-                      int second = dateTime.second;
-                      int millisecond = dateTime.millisecond;
+
                       String amPm = hour >= 12 ? 'PM' : 'AM';
 
                       return ListTile(
                         titleAlignment: ListTileTitleAlignment.top,
                         leading: commonText(
                             //text: "10:24 AM",
-                            text: '${hour}:${minute}:${second}:$amPm',
+                            text: '$hour:$minute:$amPm',
                             fontSize: 12,
                             color: Colors.grey,
                             fontWeight: FontWeight.w400),
-                        title: commonText(text: "David", color: Colors.black),
+                        title: commonText(  text: '${data?.patientName.toString()}', color: Colors.black),
                         subtitle: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +93,7 @@ class AllViewScreen extends StatelessWidget {
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400),
                             commonText(
-                                text: "Dr.Richard",
+                                text: '${data?.doctorName.toString()}',
                                 fontSize: 12,
                                 color: Colors.grey,
                                 fontWeight: FontWeight.w400)
@@ -103,7 +102,7 @@ class AllViewScreen extends StatelessWidget {
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {
-                      return Divider(
+                      return const Divider(
                         thickness: 0.3,
                       );
                     },

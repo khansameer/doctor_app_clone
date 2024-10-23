@@ -3,6 +3,7 @@ import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:doctor_app/provider/calender_provider.dart';
+import 'package:doctor_app/screen/admin/new_dashboard/calender/get_edit_appointments_details_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -46,15 +47,26 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
     return Consumer<CalenderProvider>(builder: (context, provider, child) {
       List<Appointment>? calendarAppointments =
           provider.appointmentsModel?.appointments?.map((appointment) {
-        DateTime dateTime =
-            DateTime.parse(appointment.dateTime ?? DateTime.now().toString());
-        return Appointment(
-          startTime: dateTime,
-          endTime: dateTime.add(const Duration(hours: 1)),
-          // Assuming 1 hour duration
-          subject: appointment.reason.toString(),
-          color: Colors.blue, // Set a color for the appointment
-        );
+            if(appointment.patient!=null){
+
+              DateTime dateTime =
+              DateTime.parse(appointment.dateTime ?? DateTime.now().toString());
+
+              return Appointment(
+                startTime: dateTime,
+                id:appointment.sId ,
+                notes: appointment.reason,
+                endTime: dateTime.add(const Duration(hours: 1)),
+                // Assuming 1 hour duration
+                subject: appointment.patientName.toString(),
+                color: Colors.blue, // Set a color for the appointment
+              );
+            }
+            else
+              {
+                return Appointment(startTime: DateTime.now(), endTime: DateTime.now());
+              }
+
       }).toList();
       return Stack(
         children: [
@@ -399,7 +411,25 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
     return SfCalendar(
       headerHeight: 0,
       onTap: (CalendarTapDetails details) {
-        showDialog(
+
+
+        if (details.appointments != null && details.appointments!.isNotEmpty) {
+          Appointment tappedAppointment = details.appointments!.first;
+          String? appointmentId = tappedAppointment.id as String?;
+          print('Appointment ID: $appointmentId');
+          showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (BuildContext context) {
+                return CustomAlertDialog(
+                  content: GetEditAppointmentsDetailsWidget(
+
+                    appointmentsID: appointmentId,
+                  ),
+                );
+              });
+        }else{
+          showDialog(
             barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
@@ -408,8 +438,16 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
                   dateTime: details.date,
                 ),
               );
-            });
-        print('==details=====${details.date.toString()}');
+            },
+          );
+
+
+        }
+
+
+
+
+
       },
       backgroundColor: Colors.white,
       headerStyle: const CalendarHeaderStyle(backgroundColor: Colors.white),

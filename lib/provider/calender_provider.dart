@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/screen/admin/model/patient_details_model.dart';
+import 'package:doctor_app/screen/admin/new_dashboard/calender/model/get_appointments_details_model.dart';
 import 'package:doctor_app/service/api_config.dart';
 import 'package:doctor_app/service/api_services.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
@@ -50,6 +51,8 @@ class CalenderProvider extends ChangeNotifier {
     try {
       final response = await _service.callGetMethod(
           url: '${ApiConfig.getDoctorAppointments}/$userId');
+
+      print('==Appointments==${json.decode(response)}');
       _appointmentsModel = AppointmentsModel.fromJson(json.decode(response));
 
       _isFetching = false;
@@ -60,6 +63,29 @@ class CalenderProvider extends ChangeNotifier {
     }
   }
 
+
+  GetAppointmentsDetailsModel? _appointmentsDetailsModel;
+
+  GetAppointmentsDetailsModel? get appointmentsDetailsModel => _appointmentsDetailsModel;
+  Future getAppointmentsDetailsBYID(String appointmentsID) async {
+   // String userId = await getUserID();
+
+    _isFetching = true;
+    notifyListeners();
+    try {
+      final response = await _service.callGetMethod(
+          url: '${ApiConfig.createAppointment}/$appointmentsID');
+
+      print('==Appointments==${json.decode(response)}');
+      _appointmentsDetailsModel = GetAppointmentsDetailsModel.fromJson(json.decode(response));
+
+      _isFetching = false;
+      notifyListeners();
+    } catch (e) {
+      _isFetching = false;
+      notifyListeners();
+    }
+  }
   PatientDetailsModel? _patientDetailsModel;
 
   PatientDetailsModel? get patientDetailsModel => _patientDetailsModel;
@@ -99,7 +125,70 @@ class CalenderProvider extends ChangeNotifier {
       _createAppointmentModel =
           CreateAppointmentModel.fromJson(json.decode(response));
       if (globalStatusCode == 200 || globalStatusCode == 201) {
-        print('===========done');
+
+        getAppointments();
+      } else {
+        showCommonDialog(
+            context: context,
+            title: "Error",
+            content: "Something went wrong please try again after sometime.",
+            isMessage: true);
+      }
+
+      _isAdding = false;
+      notifyListeners();
+    } catch (e) {
+      _isAdding = false;
+      notifyListeners();
+    }
+  }
+
+  Future updateAppointmentData({
+    required BuildContext context,
+    required String appointmentsID,
+    required Map<String, dynamic> body,
+  }) async {
+    _isAdding = true;
+    notifyListeners();
+    try {
+      final response = await _service.callPutMethodApiWithToken(
+          url: '${ApiConfig.createAppointment}/$appointmentsID', body: body);
+      _createAppointmentModel =
+          CreateAppointmentModel.fromJson(json.decode(response));
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+
+        getAppointments();
+      } else {
+        showCommonDialog(
+            context: context,
+            title: "Error",
+            content: "Something went wrong please try again after sometime.",
+            isMessage: true);
+      }
+
+      _isAdding = false;
+      notifyListeners();
+    } catch (e) {
+      _isAdding = false;
+      notifyListeners();
+    }
+  }
+
+
+  Future uploadPatientFile({
+    required BuildContext context,
+    required String patientID,
+    required Map<String, dynamic> body,
+  }) async {
+    _isAdding = true;
+    notifyListeners();
+    try {
+      final response = await _service.callPutMethodApiWithToken(
+          url: '${ApiConfig.createAppointment}/$patientID/files', body: body);
+      _createAppointmentModel =
+          CreateAppointmentModel.fromJson(json.decode(response));
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+
         getAppointments();
       } else {
         showCommonDialog(
@@ -174,7 +263,7 @@ class CalenderProvider extends ChangeNotifier {
   List<Appointments>? getYesterdayAppointments() {
     DateTime now = DateTime.now().toUtc();
     DateTime yesterday =
-        DateTime(now.year, now.month, now.day).subtract(Duration(days: 1));
+        DateTime(now.year, now.month, now.day).subtract(const Duration(days: 1));
     return _appointmentsModel?.appointments?.where((appointment) {
       DateTime dateTime =
           DateTime.parse(appointment.dateTime ?? DateTime.now().toString());

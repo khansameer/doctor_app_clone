@@ -5,9 +5,11 @@ import 'package:doctor_app/core/common/common_drop_down_view.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
+import 'package:doctor_app/main.dart';
 import 'package:doctor_app/provider/calender_provider.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 class AddAppointmentsWidget extends StatefulWidget {
@@ -40,32 +42,60 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
   }
 
   @override
+  void dispose() {
+
+    super.dispose();
+    resetField();
+
+  }
+  CalenderProvider? _calendarProvider;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // Save a reference to the CalendarProvider here
+    _calendarProvider = context.read<CalenderProvider>();
+  }
+  resetField(){
+    // Clear the controllers
+    tetDate.clear();
+    tetTime.clear();
+    tetReason.clear();
+
+    // Set values to null
+   // widget.patientID =null ;  // Use assignment = instead of ==
+
+    // Safely reset the provider value if needed
+    //var  calendarProvider = context.read<CalenderProvider>();
+    _calendarProvider?.updateValue(null);  // Use assignment = instead of ==
+  }
+  @override
   Widget build(BuildContext context) {
     var isMobile = Responsive.isMobile(context);
     var isDesktop = Responsive.isDesktop(context);
     var size = MediaQuery.sizeOf(context);
-    var height = MediaQuery.of(context).size.height;
+
     var width = MediaQuery.of(context).size.width;
 
     return Consumer<CalenderProvider>(builder: (context, provider, child) {
-      return Stack(
-        children: [
-          SizedBox(
-            height: isMobile
-                ? height * zero29
-                : isDesktop
-                    ? size.height * 0.65
-                    : height * 0.4,
-            width: isMobile
-                ? width * zero9
-                : isDesktop
-                    ? width * 0.2
-                    : width * 0.19,
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: ListView(
-                children: [
-                  Column(
+      return SizedBox(
+
+        width: isMobile
+            ? width * zero9
+            : isDesktop
+                ? width * 0.2
+                : width * 0.19,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -97,12 +127,12 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                               text: "Select Patient",
                               top: 10,
                             )
-                          : SizedBox.shrink(),
+                          : const SizedBox.shrink(),
                       widget.patientID == null
                           ? const SizedBox(
                               height: 10,
                             )
-                          : SizedBox.shrink(),
+                          : const SizedBox.shrink(),
                       widget.patientID == null
                           ? CommonDropDownView(
                               horizontal: 10,
@@ -130,9 +160,9 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                                           return '${patient.firstName} ${patient.lastName}';
                                         }).toList()
                                       : [])
-                          : SizedBox.shrink(),
+                          : const SizedBox.shrink(),
                       commonTextFiledView(
-                        title: "Reason",
+                        title: "Description",
                         topText: 10,
                         maxLines: 3,
                         controller: tetReason,
@@ -160,7 +190,6 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                                   "reason": tetReason.text,
                                   "isVirtual": true,
                                 };
-                                print('========${body.toString()}');
                                 provider
                                     .createAppointment(
                                   body: body,
@@ -169,7 +198,11 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                                     .then((value) {
                                   if (globalStatusCode == 200 ||
                                       globalStatusCode == 201) {
+
+                                    resetField();
+                                    provider.selectedID==null;
                                     Navigator.of(context).pop();
+
                                   }
                                 });
                               },
@@ -188,7 +221,16 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                               colorButton: Colors.white,
                               colorText: Colors.black,
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                SchedulerBinding.instance.addPostFrameCallback((_) {
+                                  setState(() {
+                                    resetField();
+                                    provider.selectedID==null;
+                                    Navigator.of(context).pop();
+
+                                  });
+                                });
+
+
                               },
                               fontSize: 12,
                             ),
@@ -200,12 +242,12 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                       )
                     ],
                   ),
-                ],
-              ),
+                ),
+                provider.isAdding ? showLoaderList() : const SizedBox.shrink()
+              ],
             ),
-          ),
-          provider.isAdding ? showLoaderList() : SizedBox.shrink()
-        ],
+          ],
+        ),
       );
     });
   }

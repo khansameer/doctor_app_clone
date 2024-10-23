@@ -3,6 +3,7 @@ import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
+import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/calender_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
@@ -69,6 +70,7 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
+    var isMobile = Responsive.isMobile(context);
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
       return Container(
         color: Colors.white,
@@ -80,7 +82,7 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
             Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Container(
+                /*Container(
                   padding: const EdgeInsets.all(7),
                   color: Colors.grey.withOpacity(0.10),
                   child: Row(
@@ -113,8 +115,8 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                       )
                     ],
                   ),
-                ),
-                Padding(
+                ),*/
+             /*   Padding(
                   padding: const EdgeInsets.all(7.0),
                   child: Row(
                     children: [
@@ -129,16 +131,16 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                           fontWeight: FontWeight.w600),
                     ],
                   ),
-                ),
-                const Divider(
+                ),*/
+            /*    const Divider(
                   thickness: 0.3,
-                ),
+                ),*/
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                        flex: 2,
+                        flex: isMobile?3:1,
                         child: Container(
                           height: size.height,
                           decoration: const BoxDecoration(

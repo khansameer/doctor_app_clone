@@ -31,6 +31,11 @@ class DashboardProvider extends ChangeNotifier {
 
   String? get name => _name;
 
+
+
+  String? _email;
+
+  String? get email => _email;
   void setIndex(int index) {
     _selectedIndex = index;
     notifyListeners();
@@ -52,7 +57,10 @@ class DashboardProvider extends ChangeNotifier {
     _name = await getName();
     notifyListeners();
   }
-
+  getEmail() async {
+    _email = await getDoctorEmail();
+    notifyListeners();
+  }
   int _selectedIndex = 0;
 
   Widget _currentPage = const CalenderNewScreen(); // Default page

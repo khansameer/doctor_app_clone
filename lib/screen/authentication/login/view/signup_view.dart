@@ -66,14 +66,13 @@ class _SignupViewState extends State<SignupView> {
       child: commonResponsiveLayout(
         isMobile: isMobile,
         isTablet: isTablet,
-        boxHeight: isDesktop ? size.height * 0.9 : size.height * 0.85,
-        //    boxHeight: size.height * 0.85,
+
         size: size,
         child: Consumer<AuthProviders>(builder: (context, provider, child) {
           return Form(
             key: formSignKey,
-            child: ListView(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Column(
                   mainAxisSize: MainAxisSize.min,
@@ -84,7 +83,7 @@ class _SignupViewState extends State<SignupView> {
                       height: isMobile ? size.height * 0.00 : 0,
                     ),
                     setAssetImage(
-                        image: icLoginLogo,
+                        image: icLogoApps,
                         width: 200,
                         height: 120,
                         fit: BoxFit.scaleDown),
