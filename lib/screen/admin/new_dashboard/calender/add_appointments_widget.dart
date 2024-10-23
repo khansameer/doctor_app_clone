@@ -43,11 +43,10 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
 
   @override
   void dispose() {
-
     super.dispose();
     resetField();
-
   }
+
   CalenderProvider? _calendarProvider;
 
   @override
@@ -57,19 +56,21 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
     // Save a reference to the CalendarProvider here
     _calendarProvider = context.read<CalenderProvider>();
   }
-  resetField(){
+
+  resetField() {
     // Clear the controllers
     tetDate.clear();
     tetTime.clear();
     tetReason.clear();
 
     // Set values to null
-   // widget.patientID =null ;  // Use assignment = instead of ==
+    // widget.patientID =null ;  // Use assignment = instead of ==
 
     // Safely reset the provider value if needed
     //var  calendarProvider = context.read<CalenderProvider>();
-    _calendarProvider?.updateValue(null);  // Use assignment = instead of ==
+    _calendarProvider?.updateValue(null); // Use assignment = instead of ==
   }
+
   @override
   Widget build(BuildContext context) {
     var isMobile = Responsive.isMobile(context);
@@ -80,11 +81,10 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
 
     return Consumer<CalenderProvider>(builder: (context, provider, child) {
       return SizedBox(
-
         width: isMobile
             ? width * zero9
             : isDesktop
-                ? width * 0.2
+                ? width * 0.3
                 : width * 0.19,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -95,18 +95,30 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Column(
-
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Center(
-                        child: CommonTextWidget(
-                          text: "Add Appointment",
-                          fontSize: 16,
-                          textAlign: TextAlign.center,
-                          fontWeight: FontWeight.w700,
-                          top: 20,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CommonTextWidget(
+                            text: "Add Appointment",
+                            fontSize: 16,
+                            textAlign: TextAlign.center,
+                            fontWeight: FontWeight.w700,
+                            // top: 20,
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              icon: const Icon(
+                                Icons.close,
+                                size: 18,
+                                color: Colors.black,
+                              ))
+                        ],
                       ),
                       commonTextFiledView(
                           height: 45,
@@ -171,7 +183,7 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                         radius: 8,
                       ),
                       const SizedBox(
-                        height: 50,
+                        height: 30,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -179,6 +191,8 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                         children: [
                           Expanded(
                             child: CommonButtonWidget(
+                              radius: 8,
+                              height: 40,
                               onPressed: () async {
                                 String userId = await getUserID();
 
@@ -198,11 +212,9 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                                     .then((value) {
                                   if (globalStatusCode == 200 ||
                                       globalStatusCode == 201) {
-
                                     resetField();
-                                    provider.selectedID==null;
+                                    provider.selectedID == null;
                                     Navigator.of(context).pop();
-
                                   }
                                 });
                               },
@@ -217,27 +229,24 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                           Expanded(
                             child: CommonButtonWidget(
                               text: "Cancel",
+                              radius: 8,
+                              height: 40,
                               colorBorder: Colors.black,
                               colorButton: Colors.white,
                               colorText: Colors.black,
                               onPressed: () {
-                                SchedulerBinding.instance.addPostFrameCallback((_) {
+                                SchedulerBinding.instance
+                                    .addPostFrameCallback((_) {
                                   setState(() {
                                     resetField();
-                                    provider.selectedID==null;
+                                    provider.selectedID == null;
                                     Navigator.of(context).pop();
-
                                   });
                                 });
-
-
                               },
                               fontSize: 12,
                             ),
                           ),
-                          const SizedBox(
-                            width: 20,
-                          )
                         ],
                       )
                     ],

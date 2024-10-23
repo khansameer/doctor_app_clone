@@ -11,11 +11,12 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
-    return AppScaffold(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      /*color: Colors.red,
       left: isMobile ? null : zero,
-      right: isMobile ? null : zero,
-      child: Container(
-        alignment: Alignment.center,
+      right: isMobile ? null : zero,*/
+      body: Container(
         width: size.width,
         height: size.height,
         child: LoginView(

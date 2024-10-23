@@ -96,7 +96,7 @@ class _CalenderViewLeftScreenState extends State<CalenderViewLeftScreen>
               const SizedBox(
                 height: 20,
               ),
-              Container(
+              /*Container(
                 color: Colors.white,
                 height: size.height,
                 child: DefaultTabController(
@@ -148,7 +148,7 @@ class _CalenderViewLeftScreenState extends State<CalenderViewLeftScreen>
                         );
                       },
                     )),
-              )
+              )*/
             ],
           ),
         ],

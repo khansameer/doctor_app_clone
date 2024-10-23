@@ -26,57 +26,35 @@ class PatientProfilePage extends StatefulWidget {
 
 class _PatientProfilePageState extends State<PatientProfilePage> {
   List<Patients> patients = [];
-  List<Patients> filteredPatients = [];
+  //List<Patients> filteredPatients = [];
   TextEditingController searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
     final provider = Provider.of<CalenderProvider>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      provider.getPatientDetails().then((value){
-        if (widget.title == "all") {
-          patients =
-              provider.patientDetailsModel?.patients ??
-                  [];
-          filteredPatients = List.from(patients);
-        } else if (widget.title == "all_female") {
-          patients =
-              provider.filterBYGender(gender: 'female') ??
-                  [];
-          filteredPatients = List.from(patients);
-        } else if (widget.title == "all_male") {
-          patients =
-              provider.filterBYGender(gender: 'male') ??
-                  [];
-          filteredPatients = List.from(patients);
-        } else if (widget.title == "female_under30") {
-          patients =provider
-              .filterByAge(age: 30, isUnder: true) ??
-              [];
-          filteredPatients = List.from(patients);
-        } else if (widget.title == "female_over30") {
-          patients =provider
-              .filterByAge(age: 30, isUnder: false) ??
-              [];
+      provider.getPatientDetails().then((value) {
+        print('===sss==${widget.title}');
+        setState(() {});
 
-        }
-
-        filteredPatients = List.from(patients);
+        setState(() {
+          // filteredPatients = List.from(patients);
+        });
       });
     });
     setState(() {
-      searchController.addListener(_filterPatients);
+      //searchController.addListener(_filterPatients);
     });
-
   }
+
   @override
   void dispose() {
-    searchController.removeListener(_filterPatients);
+    //searchController.removeListener(_filterPatients);
     searchController.dispose();
     super.dispose();
   }
 
-  void _filterPatients() {
+  /* void _filterPatients() {
     String query = searchController.text.toLowerCase();
 
     setState(() {
@@ -86,15 +64,27 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
             patient.phoneNumber.toString().toLowerCase().contains(query);
       }).toList();
     });
+  }*/
 
-
-  }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
     return Consumer<CalenderProvider>(builder: (context, provider, child) {
-
+      if (widget.title == "all") {
+        patients = provider.patientDetailsModel?.patients ?? [];
+        //filteredPatients = List.from(patients);
+      } else if (widget.title == "all_female") {
+        patients = provider.filterBYGender(gender: 'female') ?? [];
+        //  filteredPatients = List.from(patients);
+      } else if (widget.title == "all_male") {
+        patients = provider.filterBYGender(gender: 'male') ?? [];
+        // filteredPatients = List.from(patients);
+      } else if (widget.title == "female_under30") {
+        patients = provider.filterByAge(age: 30, isUnder: true) ?? [];
+      } else if (widget.title == "female_over30") {
+        patients = provider.filterByAge(age: 30, isUnder: false) ?? [];
+      }
       return Stack(
         children: [
           ListView(
@@ -102,9 +92,10 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
               Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-
-                  const SizedBox(height: 10,),
-                    isMobile
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  isMobile
                       ? Column(
                           children: [
                             Row(
@@ -124,13 +115,11 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                                 const SizedBox(
                                   width: 10,
                                 ),
-
                               ],
                             ),
                             const SizedBox(
                               height: 20,
                             ),
-
                           ],
                         )
                       : Row(
@@ -148,14 +137,12 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                                     fontSize: 12,
                                     controller: searchController,
                                     colorFill: Colors.white,
-                                    hint:
-                                        "Search Patient Name/ID/Phone number",
+                                    hint: "Search Patient Name/ID/Phone number",
                                   ),
                                 ),
                                 const SizedBox(
                                   width: 10,
                                 ),
-
                               ],
                             ),
                           ],
@@ -234,9 +221,9 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                                       ),
                                     ),
                                   ],
-                                  source: MyData(filteredPatients, context),
-                                  rowsPerPage: filteredPatients.isNotEmpty
-                                      ? filteredPatients.length
+                                  source: MyData(patients, context),
+                                  rowsPerPage: patients.isNotEmpty
+                                      ? patients.length
                                       : 1 //patients?.length??1,
                                   ),
                             ),
@@ -280,8 +267,10 @@ class MyData extends DataTableSource {
         //DataCell(CommonTextWidget(fontSize: 12, text: user?.dateOfBirth.toString())),
         DataCell(CommonTextWidget(
             fontSize: 12,
-            text:'${DateTimeUtils.calculateAge(date: user!.dateOfBirth.toString()) }' /*DateFormat('yyyy-MM-dd')
-                .format(DateTime.parse('${user?.dateOfBirth.toString()}'))*/)),
+            text:
+                '${DateTimeUtils.calculateAge(date: user!.dateOfBirth.toString())}' /*DateFormat('yyyy-MM-dd')
+                .format(DateTime.parse('${user?.dateOfBirth.toString()}'))*/
+            )),
         DataCell(buildPopupMenu(id: user.sId.toString())),
       ],
     );
@@ -302,7 +291,6 @@ class MyData extends DataTableSource {
       onSelected: (String value) async {
         // Handle the create option
         if (value == 'create') {
-
           showDialog(
               barrierDismissible: false,
               context: context,
@@ -320,7 +308,6 @@ class MyData extends DataTableSource {
             // Handle the selected file path
             print('Selected file: $filePath');
             // You can also display it in a dialog or another widget
-
           } else {
             // Handle the case when no file is selected
             print('No file selected or permission denied');

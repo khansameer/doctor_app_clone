@@ -44,15 +44,17 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
   List<Map<String, dynamic>> outerList = [
     {
       'title': 'Patients',
-      'items': ['All Patients', 'Recently Visited', 'Recently Added']
+      'items': [
+        'All Patients',
+      ]
     },
-    {
+    /*{
       'title': 'Groups',
       'items': [
         'My Groups',
         'Memberships',
       ]
-    },
+    },*/
     {
       'title': 'Smart Group',
       'items': [
@@ -116,7 +118,7 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                     ],
                   ),
                 ),*/
-             /*   Padding(
+                /*   Padding(
                   padding: const EdgeInsets.all(7.0),
                   child: Row(
                     children: [
@@ -132,7 +134,7 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                     ],
                   ),
                 ),*/
-            /*    const Divider(
+                /*    const Divider(
                   thickness: 0.3,
                 ),*/
                 Row(
@@ -140,7 +142,7 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                        flex: isMobile?3:1,
+                        flex: isMobile ? 3 : 1,
                         child: Container(
                           height: size.height,
                           decoration: const BoxDecoration(
@@ -197,8 +199,7 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                                         },
                                         child: Container(
                                           color: isSelected
-                                              ? AppColors.primary
-                                                  .withOpacity(0.50)
+                                              ? AppColors.colorActive
                                               : colorBG,
                                           padding: const EdgeInsets.all(10.0),
                                           child: CommonTextWidget(

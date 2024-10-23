@@ -1,5 +1,3 @@
-
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
@@ -39,6 +37,7 @@ commonResponsiveLayout(
       color: colorBG.withOpacity(0.60),
       child: Center(
         child: Container(
+          margin: EdgeInsets.all(isMobile ? 0 : 10),
           decoration: commonBoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(isMobile ? 0 : 10)),
@@ -49,8 +48,8 @@ commonResponsiveLayout(
               ? size.width
               : isTablet
                   ? size.width * 0.6
-                  : size.width * 0.2,
-         height: isMobile ? size.height :null,
+                  : size.width * 0.3,
+          height: isMobile ? size.height : null,
           child: child,
         ),
       ),
@@ -91,7 +90,7 @@ commonButton(
     {required VoidCallback onPressed,
     String? btnText,
     Color? colorText,
-      double? fontSize,
+    double? fontSize,
     bool isShowBorder = false}) {
   return TextButton(
     style: TextButton.styleFrom(
@@ -109,7 +108,7 @@ commonButton(
       text: btnText ?? "newAccount",
       color: colorText ?? AppColors.primary,
       fontWeight: FontWeight.w500,
-      fontSize: fontSize??14,
+      fontSize: fontSize ?? 14,
     ),
   );
 }
@@ -244,7 +243,7 @@ commonTextFiledView({
         suffixIcon: suffixIcon,
         validator: validator,
         width: width,
-        fontSize:fontSize ,
+        fontSize: fontSize,
         obscureText: obscureText,
         controller: controller,
         radius: radius ?? twelve,

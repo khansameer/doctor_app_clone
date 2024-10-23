@@ -50,7 +50,14 @@ class _AdminDashboardState extends State<AdminDashboard> {
       return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(4.0),
+              child: Container(
+                color: AppColors.colorMenuBG,
+                height: 1.0,
+              )),
           centerTitle: true,
+          elevation: 0,
           toolbarHeight: 86,
           actions: [
             Container(
@@ -69,23 +76,22 @@ class _AdminDashboardState extends State<AdminDashboard> {
               color: Colors.white,
               constraints: const BoxConstraints.tightFor(width: twoHundred),
               elevation: zero,
-            //  tooltip: "profile",
+              //  tooltip: "profile",
               offset: const Offset(zero, thirty),
-              onSelected: (value) {
-
-              },
+              onSelected: (value) {},
               itemBuilder: (context) => [],
               child: commonInkWell(
-                onTap: (){
+                onTap: () {
                   provider.updatePageValue(11);
                 },
                 child: Row(
                   children: [
                     CommonTextWidget(
-                        text: provider.name ?? "", textColor: Colors.white),
+                        text: provider.name ?? "",
+                        textColor: AppColors.colorText),
                     const Icon(
                       Icons.keyboard_arrow_down_sharp,
-                      color: Colors.white,
+                      color: AppColors.colorText,
                     )
                   ],
                 ),
@@ -95,52 +101,54 @@ class _AdminDashboardState extends State<AdminDashboard> {
               width: ten,
             ),
           ],
-          leadingWidth: isMobile ? 100 : 200,
+          leadingWidth: isMobile ? 100 : 130,
 
           iconTheme: const IconThemeData(color: Colors.white),
           //leading: const SizedBox.shrink(),
           leading: const ImageIcon(
               size: 500,
+              color: AppColors.colorActive,
               AssetImage(
                 icLogoApps,
               )),
-          backgroundColor: AppColors.colorDrawer,
+          backgroundColor: Colors.white,
         ),
         body: Row(
           children: [
             SideMenu(
               controller: sideMenu,
-
               style: SideMenuStyle(
-                openSideMenuWidth: isMobile?0:250,
-                itemHeight: 60,
-                itemBorderRadius: BorderRadius.circular(0),
-                itemOuterPadding: EdgeInsets.zero,
-                itemInnerSpacing: 5,
+                openSideMenuWidth: isMobile ? 0 : 210,
+                itemHeight: 48,
+                itemBorderRadius: BorderRadius.circular(4),
+                itemOuterPadding:
+                    EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                itemInnerSpacing: 8,
+
                 displayMode: SideMenuDisplayMode.auto,
                 showHamburger: isMobile ? true : false,
                 arrowCollapse: Colors.white,
-                unselectedIconColorExpandable: Colors.white.withOpacity(0.50),
-                selectedIconColorExpandable: Colors.white.withOpacity(0.50),
-                unselectedIconColor: Colors.white.withOpacity(0.50),
+                unselectedIconColorExpandable: AppColors.colorText,
+                selectedIconColorExpandable: Colors.white,
+                unselectedIconColor: AppColors.colorText,
                 unselectedTitleTextStyle: commonTextStyle(
-                    color: Colors.white.withOpacity(0.50),
-                    fontSize: 13,
+                    color: AppColors.colorText,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600),
                 selectedTitleTextStyleExpandable: commonTextStyle(
-                    color: Colors.white,
-                    fontSize: 13,
+                    color: AppColors.colorText,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600),
-                hoverColor: Colors.white.withOpacity(0.10),
-                selectedHoverColor: Colors.white.withOpacity(0.10),
-                selectedColor: Colors.white.withOpacity(0.50),
+                hoverColor: AppColors.colorHover,
+                selectedHoverColor: AppColors.colorHover,
+                selectedColor: AppColors.colorActive,
                 selectedTitleTextStyle: commonTextStyle(
                     color: Colors.white,
-                    fontSize: 13,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600),
                 selectedIconColor: Colors.white,
                 decoration: BoxDecoration(
-                  color: AppColors.primary,
+                  color: Colors.white,
                   border: Border.all(
                       color: Colors.white.withOpacity(0.40), width: 1),
                   borderRadius: const BorderRadius.all(Radius.circular(0)),
@@ -312,41 +320,44 @@ class _AdminDashboardState extends State<AdminDashboard> {
               ],
             ),
             const VerticalDivider(
-              width: 0,
+              color: AppColors.colorStock,
+              width: 1,
             ),
             Expanded(
-              child: PageView(
-                controller: provider.pageController,
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.all(0),
-                    child: CalenderNewScreen(),
-                  ),
-                  SizedBox.shrink(),
-                  Padding(
-                    padding: EdgeInsets.all(0),
-                    child: PatientNewScreen(),
-                  ),
-                  SizedBox.shrink(),
-                  Center(
-                    child: ErrorPage(),
-                  ),
-                  SizedBox.shrink(),
-                  Center(
-                    child: ErrorPage(),
-                  ),
-                  SizedBox.shrink(),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: AdminSettingScreen(),
-                  ),
-                  SizedBox.shrink(),
-                  Center(
-                    child: ErrorPage(),
-                  ),
-
-                  EditProfileScreen(),
-                ],
+              child: Container(
+                color: AppColors.colorBackground,
+                child: PageView(
+                  controller: provider.pageController,
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                      child: CalenderNewScreen(),
+                    ),
+                    SizedBox.shrink(),
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                      child: PatientNewScreen(),
+                    ),
+                    SizedBox.shrink(),
+                    Center(
+                      child: ErrorPage(),
+                    ),
+                    SizedBox.shrink(),
+                    Center(
+                      child: ErrorPage(),
+                    ),
+                    SizedBox.shrink(),
+                    Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: AdminSettingScreen(),
+                    ),
+                    SizedBox.shrink(),
+                    Center(
+                      child: ErrorPage(),
+                    ),
+                    EditProfileScreen(),
+                  ],
+                ),
               ),
             ),
           ],
@@ -358,10 +369,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
   commonMenuDivider() {
     return SideMenuItem(
       builder: (context, displayMode) {
-        return  Divider(
+        return Divider(
           height: 0,
-          color: Colors.white.withOpacity(0.40),
-          endIndent: 0,
+          //  color: AppColors.colorMenuBG,
+          color: Colors.white,
+          endIndent: 8,
           indent: 0,
           thickness: 0.5,
         );

@@ -44,32 +44,27 @@ class _GetEditAppointmentsDetailsWidgetState
           .getAppointmentsDetailsBYID(widget.appointmentsID ?? "0")
           .then((value) {
         setState(() {
-
           setData();
         });
       });
 
-
-
       //   tetDate.text=formattedDate;
-
     });
   }
 
-
-  void setData() async{
+  void setData() async {
     final provider = Provider.of<CalenderProvider>(context, listen: false);
 
     setState(() {
       String formattedDate = provider.appointmentsDetailsModel?.dateTime != null
           ? DateTimeUtils.formatDate(
-          '${provider.appointmentsDetailsModel?.dateTime.toString()}',
-          format: DateTimeUtils.yyyyMMdd)
+              '${provider.appointmentsDetailsModel?.dateTime.toString()}',
+              format: DateTimeUtils.yyyyMMdd)
           : '';
       String formattedTime = provider.appointmentsDetailsModel?.dateTime != null
           ? DateTimeUtils.formatDate(
-          '${provider.appointmentsDetailsModel?.dateTime.toString()}',
-          format: DateTimeUtils.hhmmss)
+              '${provider.appointmentsDetailsModel?.dateTime.toString()}',
+              format: DateTimeUtils.hhmmss)
           : '';
       if (!isDatePicked) {
         tetDate.text = formattedDate; // Only set if date not picked manually
@@ -89,6 +84,7 @@ class _GetEditAppointmentsDetailsWidgetState
       }
     });
   }
+
   @override
   void dispose() {
     tetDate.dispose();
@@ -106,12 +102,11 @@ class _GetEditAppointmentsDetailsWidgetState
     var width = MediaQuery.of(context).size.width;
 
     return Consumer<CalenderProvider>(builder: (context, provider, child) {
-
       return SizedBox(
         width: isMobile
             ? width * zero9
             : isDesktop
-                ? width * 0.2
+                ? width * 0.3
                 : width * 0.19,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -125,7 +120,29 @@ class _GetEditAppointmentsDetailsWidgetState
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Center(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CommonTextWidget(
+                            text: "Edit Appointment",
+                            fontSize: 16,
+                            textAlign: TextAlign.center,
+                            fontWeight: FontWeight.w700,
+                            // top: 20,
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              icon: const Icon(
+                                Icons.close,
+                                size: 18,
+                                color: Colors.black,
+                              ))
+                        ],
+                      ),
+                      /*Center(
                         child: CommonTextWidget(
                           text: "Appointment Details",
                           fontSize: 16,
@@ -133,7 +150,7 @@ class _GetEditAppointmentsDetailsWidgetState
                           fontWeight: FontWeight.w700,
                           top: 20,
                         ),
-                      ),
+                      ),*/
                       commonTextFiledView(
                           height: 45,
                           fontSize: 12,
@@ -227,9 +244,12 @@ class _GetEditAppointmentsDetailsWidgetState
                         children: [
                           Expanded(
                             child: CommonButtonWidget(
+                              height: 40,
+                              radius: 8,
                               onPressed: () async {
                                 String userId = await getUserID();
-                                String dateString = "${tetDate.text}T${tetTime.text}:00.000Z";
+                                String dateString =
+                                    "${tetDate.text}T${tetTime.text}:00.000Z";
 
                                 DateTime dateTime = DateTime.parse(dateString);
 
@@ -237,7 +257,7 @@ class _GetEditAppointmentsDetailsWidgetState
                                 Map<String, dynamic> body = {
                                   "patientId": provider.selectedID,
                                   "doctorId": userId,
-                                  "dateTime":dateTime.toIso8601String(),
+                                  "dateTime": dateTime.toIso8601String(),
                                   "reason": tetReason.text,
                                   "isVirtual": true,
                                 };
@@ -260,7 +280,7 @@ class _GetEditAppointmentsDetailsWidgetState
                               },
                               colorButton: colorGreen,
                               fontSize: 12,
-                              text: "Add",
+                              text: "Save",
                             ),
                           ),
                           const SizedBox(
@@ -269,6 +289,8 @@ class _GetEditAppointmentsDetailsWidgetState
                           Expanded(
                             child: CommonButtonWidget(
                               text: "Cancel",
+                              height: 40,
+                              radius: 8,
                               colorBorder: Colors.black,
                               colorButton: Colors.white,
                               colorText: Colors.black,
@@ -284,9 +306,6 @@ class _GetEditAppointmentsDetailsWidgetState
                               fontSize: 12,
                             ),
                           ),
-                          const SizedBox(
-                            width: 20,
-                          )
                         ],
                       )
                     ],

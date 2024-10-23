@@ -68,7 +68,7 @@ class CommonButtonWidget extends StatelessWidget {
       child: TextButton(
         style: TextButton.styleFrom(
           //padding: EdgeInsets.zero,,
-          foregroundColor: colorButton ?? AppColors.primary,
+          foregroundColor: colorButton ?? AppColors.colorActive,
           padding: padding ?? const EdgeInsets.all(15),
           shape: RoundedRectangleBorder(
             side: BorderSide(
@@ -76,7 +76,8 @@ class CommonButtonWidget extends StatelessWidget {
                 color: colorBorder ?? Colors.transparent),
             borderRadius: BorderRadius.circular(radius ?? 12),
           ),
-          backgroundColor: colorButton ?? AppColors.primary, // Background Color
+          backgroundColor:
+              colorButton ?? AppColors.colorActive, // Background Color
         ),
         onPressed: onPressed,
         child: Center(
@@ -104,13 +105,12 @@ class CommonButtonWidget extends StatelessWidget {
                   fontSize: fontSize ?? fourteen),
               iconShowRight ?? false
                   ? iconRight ??
-                  Container(
-                      margin:
-                      const EdgeInsets.only(right: 0, left: 00),
-                      child: const Icon(
-                        Icons.add,
-                        color: Colors.white,
-                      ))
+                      Container(
+                          margin: const EdgeInsets.only(right: 0, left: 00),
+                          child: const Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ))
                   : const SizedBox.shrink(),
             ],
           ),

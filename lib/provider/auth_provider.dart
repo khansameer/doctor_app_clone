@@ -88,8 +88,13 @@ class AuthProviders extends ChangeNotifier {
     Timer(const Duration(seconds: 3), () async {
       if (await PreferenceHelper.getBool(key: PreferenceHelper.isLOGIN) ==
           true) {
-        Navigator.pushNamedAndRemoveUntil(
-            context, RouteName.dashboardScreen, (route) => false);
+        if (kIsWeb) {
+          pushNamedAndRemoveUntil(
+              context: context, routeName: RouteName.adminDashboardScreen);
+        } else {
+          pushNamedAndRemoveUntil(
+              context: context, routeName: RouteName.dashboardScreen);
+        }
       } else {
         Navigator.pushNamedAndRemoveUntil(
             context, RouteName.loginScreen, (route) => false);

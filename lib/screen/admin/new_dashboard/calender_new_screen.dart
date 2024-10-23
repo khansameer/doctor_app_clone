@@ -1,3 +1,4 @@
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/CustomAlertDialog.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
@@ -47,26 +48,23 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
     return Consumer<CalenderProvider>(builder: (context, provider, child) {
       List<Appointment>? calendarAppointments =
           provider.appointmentsModel?.appointments?.map((appointment) {
-            if(appointment.patient!=null){
-
-              DateTime dateTime =
+        if (appointment.patient != null) {
+          DateTime dateTime =
               DateTime.parse(appointment.dateTime ?? DateTime.now().toString());
 
-              return Appointment(
-                startTime: dateTime,
-                id:appointment.sId ,
-                notes: appointment.reason,
-                endTime: dateTime.add(const Duration(hours: 1)),
-                // Assuming 1 hour duration
-                subject: appointment.patientName.toString(),
-                color: Colors.blue, // Set a color for the appointment
-              );
-            }
-            else
-              {
-                return Appointment(startTime: DateTime.now(), endTime: DateTime.now());
-              }
-
+          return Appointment(
+            startTime: dateTime,
+            id: appointment.sId,
+            notes: appointment.reason,
+            endTime: dateTime.add(const Duration(hours: 1)),
+            // Assuming 1 hour duration
+            subject: appointment.patientName.toString(),
+            color: Colors.blue, // Set a color for the appointment
+          );
+        } else {
+          return Appointment(
+              startTime: DateTime.now(), endTime: DateTime.now());
+        }
       }).toList();
       return Stack(
         children: [
@@ -74,7 +72,9 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
             shrinkWrap: true,
             children: [
               Container(
-                color: Colors.white,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,7 +183,7 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
                                         ),
                                       ),
                                     ),
-                                    Container(
+                                    /*Container(
                                       height: 35,
                                       decoration: commonBoxDecoration(
                                           color: Colors.white,
@@ -196,7 +196,7 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
                                       child: const Center(
                                         child: Icon(Icons.print),
                                       ),
-                                    ),
+                                    ),*/
                                   ],
                                 ),
                               ),
@@ -262,7 +262,7 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
                                 decoration: commonBoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(
-                                        color: Colors.black, width: 1),
+                                        color: AppColors.colorActive, width: 1),
                                     borderRadius: BorderRadius.circular(5)),
                                 padding: const EdgeInsets.only(
                                     left: 20.0, right: 20),
@@ -277,10 +277,10 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
                                 height: 35,
                                 child: ToggleButtons(
                                   borderRadius: BorderRadius.circular(5),
-                                  borderColor: Colors.black,
-                                  fillColor: Colors.grey,
+                                  borderColor: AppColors.colorActive,
+                                  fillColor: AppColors.colorActive,
                                   borderWidth: 1,
-                                  selectedBorderColor: Colors.black,
+                                  selectedBorderColor: AppColors.colorActive,
                                   selectedColor: Colors.white,
                                   onPressed: (int index) {
                                     setState(() {
@@ -317,7 +317,7 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
                                   ],
                                 ),
                               ),
-                              Container(
+                              /* Container(
                                 height: 35,
                                 decoration: commonBoxDecoration(
                                     color: Colors.white,
@@ -329,34 +329,7 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
                                 child: const Center(
                                   child: Icon(Icons.print),
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                height: 35,
-                                decoration: commonBoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(
-                                        color: Colors.black, width: 1),
-                                    borderRadius: BorderRadius.circular(5)),
-                                padding: const EdgeInsets.only(
-                                    left: 10.0, right: 10),
-                                child: Center(
-                                  child: Row(
-                                    children: [
-                                      commonText(
-                                        fontSize: 12,
-                                        text: 'Settings',
-                                      ),
-                                      const Icon(Icons.arrow_drop_down)
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              )
+                              ),*/
                             ],
                           ),
                     isMobile
@@ -385,7 +358,7 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
                                     child:
                                         commonSfCalendar(calendarAppointments)),
                               ),
-                              Expanded(
+                              /* Expanded(
                                   flex: 3,
                                   child: SizedBox(
                                     height: size.height,
@@ -393,7 +366,7 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
                                       padding: EdgeInsets.all(0.0),
                                       child: CalenderViewLeftScreen(),
                                     ),
-                                  ))
+                                  ))*/
                             ],
                           ),
                   ],
@@ -411,8 +384,6 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
     return SfCalendar(
       headerHeight: 0,
       onTap: (CalendarTapDetails details) {
-
-
         if (details.appointments != null && details.appointments!.isNotEmpty) {
           Appointment tappedAppointment = details.appointments!.first;
           String? appointmentId = tappedAppointment.id as String?;
@@ -423,12 +394,11 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
               builder: (BuildContext context) {
                 return CustomAlertDialog(
                   content: GetEditAppointmentsDetailsWidget(
-
                     appointmentsID: appointmentId,
                   ),
                 );
               });
-        }else{
+        } else {
           showDialog(
             barrierDismissible: false,
             context: context,
@@ -440,14 +410,7 @@ class _CalenderNewScreenState extends State<CalenderNewScreen> {
               );
             },
           );
-
-
         }
-
-
-
-
-
       },
       backgroundColor: Colors.white,
       headerStyle: const CalendarHeaderStyle(backgroundColor: Colors.white),

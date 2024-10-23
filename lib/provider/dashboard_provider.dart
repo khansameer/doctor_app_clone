@@ -31,8 +31,6 @@ class DashboardProvider extends ChangeNotifier {
 
   String? get name => _name;
 
-
-
   String? _email;
 
   String? get email => _email;
@@ -57,10 +55,12 @@ class DashboardProvider extends ChangeNotifier {
     _name = await getName();
     notifyListeners();
   }
+
   getEmail() async {
     _email = await getDoctorEmail();
     notifyListeners();
   }
+
   int _selectedIndex = 0;
 
   Widget _currentPage = const CalenderNewScreen(); // Default page
@@ -86,11 +86,14 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners(); // Notify listeners to rebuild
   }
 
-  Widget _currentPatientPage = const PatientProfilePage(title: "all",); // Default page
+  Widget _currentPatientPage = const PatientProfilePage(
+    title: "all",
+  ); // Default page
   Widget get currentPatientPage => _currentPatientPage;
 
   void setPatientDetailsPage(
       {required String value, required BuildContext context}) {
+    print('=======${value}');
     if (value == "All Patients") {
       _currentPatientPage = const PatientProfilePage(
         title: "all",
@@ -100,24 +103,14 @@ class DashboardProvider extends ChangeNotifier {
         title: "all",
       );
     } else if (value == "All Female Customer") {
-
-      _currentPatientPage =  const PatientProfilePage(title:"all_female");
-    }
-    else if (value == "All Male Customer") {
-
-      _currentPatientPage =  const PatientProfilePage(title:"all_male");
-    }
-    else if (value == "Female Customer under 30") {
-
-      _currentPatientPage =  const PatientProfilePage(title:"female_under30");
-    }
-    else if (value =="Female Customer Over 30") {
-
-      _currentPatientPage =  const PatientProfilePage(title:"female_over30");
-    }
-
-
-    else {
+      _currentPatientPage = const PatientProfilePage(title: "all_female");
+    } else if (value == "All Male Customer") {
+      _currentPatientPage = const PatientProfilePage(title: "all_male");
+    } else if (value == "Female Customer under 30") {
+      _currentPatientPage = const PatientProfilePage(title: "female_under30");
+    } else if (value == "Female Customer Over 30") {
+      _currentPatientPage = const PatientProfilePage(title: "female_over30");
+    } else {
       _currentPatientPage = const ErrorPage();
     }
     notifyListeners(); // Notify listeners to rebuild

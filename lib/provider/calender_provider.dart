@@ -63,12 +63,12 @@ class CalenderProvider extends ChangeNotifier {
     }
   }
 
-
   GetAppointmentsDetailsModel? _appointmentsDetailsModel;
 
-  GetAppointmentsDetailsModel? get appointmentsDetailsModel => _appointmentsDetailsModel;
+  GetAppointmentsDetailsModel? get appointmentsDetailsModel =>
+      _appointmentsDetailsModel;
   Future getAppointmentsDetailsBYID(String appointmentsID) async {
-   // String userId = await getUserID();
+    // String userId = await getUserID();
 
     _isFetching = true;
     notifyListeners();
@@ -77,7 +77,8 @@ class CalenderProvider extends ChangeNotifier {
           url: '${ApiConfig.createAppointment}/$appointmentsID');
 
       print('==Appointments==${json.decode(response)}');
-      _appointmentsDetailsModel = GetAppointmentsDetailsModel.fromJson(json.decode(response));
+      _appointmentsDetailsModel =
+          GetAppointmentsDetailsModel.fromJson(json.decode(response));
 
       _isFetching = false;
       notifyListeners();
@@ -86,6 +87,7 @@ class CalenderProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
   PatientDetailsModel? _patientDetailsModel;
 
   PatientDetailsModel? get patientDetailsModel => _patientDetailsModel;
@@ -125,7 +127,6 @@ class CalenderProvider extends ChangeNotifier {
       _createAppointmentModel =
           CreateAppointmentModel.fromJson(json.decode(response));
       if (globalStatusCode == 200 || globalStatusCode == 201) {
-
         getAppointments();
       } else {
         showCommonDialog(
@@ -156,7 +157,6 @@ class CalenderProvider extends ChangeNotifier {
       _createAppointmentModel =
           CreateAppointmentModel.fromJson(json.decode(response));
       if (globalStatusCode == 200 || globalStatusCode == 201) {
-
         getAppointments();
       } else {
         showCommonDialog(
@@ -174,7 +174,6 @@ class CalenderProvider extends ChangeNotifier {
     }
   }
 
-
   Future uploadPatientFile({
     required BuildContext context,
     required String patientID,
@@ -188,7 +187,6 @@ class CalenderProvider extends ChangeNotifier {
       _createAppointmentModel =
           CreateAppointmentModel.fromJson(json.decode(response));
       if (globalStatusCode == 200 || globalStatusCode == 201) {
-
         getAppointments();
       } else {
         showCommonDialog(
@@ -223,25 +221,51 @@ class CalenderProvider extends ChangeNotifier {
       DateTime now = DateTime.now();
 
       return _patientDetailsModel!.patients.where((patient) {
-        DateTime dateTime = DateTime.parse(patient.dateOfBirth.toString());
+        if (patient.gender.toString().toLowerCase() == "female") {
+          DateTime dateTime = DateTime.parse(patient.dateOfBirth.toString());
+          int patientAge = now.year - dateTime.year;
 
-        String formattedDate =
-            formatDate(formatDate: 'yyyy-MM-dd', date: dateTime);
-        DateTime dob = DateTime.parse(formattedDate);
-        int patientAge = now.year - dob.year;
+          // Adjust for cases where the birthday hasn't occurred this year yet
+          if (now.month < dateTime.month ||
+              (now.month == dateTime.month && now.day < dateTime.day)) {
+            patientAge--;
+          }
 
-        // Adjust for cases where the birthday hasn't occurred this year yet
-        if (now.month < dob.month ||
-            (now.month == dob.month && now.day < dob.day)) {
-          patientAge--;
+          // Return true if the patient meets the age condition
+          return isUnder ? patientAge < age : patientAge >= age;
         }
-
-        // Return true if the patient meets the age condition
-        return isUnder ? patientAge < age : patientAge >= age;
+        return false; // Return false if not female
       }).toList();
     }
     return [];
   }
+
+  /* List<Patients>? filterByAge({required int age, required bool isUnder}) {
+    if (_patientDetailsModel != null) {
+      DateTime now = DateTime.now();
+
+      return _patientDetailsModel!.patients.where((patient) {
+        if (patient.gender.toString().toLowerCase() == "female") {
+          DateTime dateTime = DateTime.parse(patient.dateOfBirth.toString());
+
+          String formattedDate =
+              formatDate(formatDate: 'yyyy-MM-dd', date: dateTime);
+          DateTime dob = DateTime.parse(formattedDate);
+          int patientAge = now.year - dob.year;
+
+          // Adjust for cases where the birthday hasn't occurred this year yet
+          if (now.month < dob.month ||
+              (now.month == dob.month && now.day < dob.day)) {
+            patientAge--;
+          }
+          return isUnder ? patientAge < age : patientAge >= age;
+        }
+
+        // Return true if the patient meets the age condition
+      }).toList();
+    }
+    return [];
+  }*/
 
   // Get today's and yesterday's date
   List<Appointments>? getTodayAppointments() {
@@ -262,8 +286,8 @@ class CalenderProvider extends ChangeNotifier {
 
   List<Appointments>? getYesterdayAppointments() {
     DateTime now = DateTime.now().toUtc();
-    DateTime yesterday =
-        DateTime(now.year, now.month, now.day).subtract(const Duration(days: 1));
+    DateTime yesterday = DateTime(now.year, now.month, now.day)
+        .subtract(const Duration(days: 1));
     return _appointmentsModel?.appointments?.where((appointment) {
       DateTime dateTime =
           DateTime.parse(appointment.dateTime ?? DateTime.now().toString());
