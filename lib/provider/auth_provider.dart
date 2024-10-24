@@ -52,6 +52,21 @@ class AuthProviders extends ChangeNotifier {
   TextEditingController get tetDob => _tetDob;
   TextEditingController get tetConfirmPassword => _tetConfirmPassword;
 
+
+  final List<String> itemGenderList = [
+    'Male',
+    'Female',
+    'Other',
+  ];
+
+  String? _selectedGender;
+
+  String? get selectedGender => _selectedGender;
+
+  set setGenderValue(String newPin) {
+    _selectedGender = newPin;
+    notifyListeners();
+  }
   void togglePasswordVisibility() {
     _isPasswordVisible = !_isPasswordVisible;
     notifyListeners();
@@ -62,14 +77,14 @@ class AuthProviders extends ChangeNotifier {
     notifyListeners();
   }
 
-  Gender _selectedGender = Gender.male; // Default selection
+/*  Gender _selectedGender = Gender.male; // Default selection
 
   Gender get selectedGender => _selectedGender;
 
   void selectGender(Gender gender) {
     _selectedGender = gender;
     notifyListeners();
-  }
+  }*/
 
   //Date Picker
 
@@ -278,28 +293,6 @@ class AuthProviders extends ChangeNotifier {
     _selectedSpecializations.clear();
     notifyListeners();
   }
-  /*void clearSelection() {
-    _specializationsList.clear();
-    notifyListeners();
-  }
-  void toggleSelection(SpecializationsModel item) {
-    if (_specializationsList.contains(item)) {
-      _specializationsList.remove(item);
-    } else {
-      _specializationsList.add(item);
-    }
-    notifyListeners();
-  }
-
-  void toggleSelectionSelected(SpecializationsModel item) {
-    if (_specializationsListSelected.contains(item)) {
-      _specializationsListSelected.remove(item);
-    } else {
-      _specializationsListSelected.add(item);
-    }
-    notifyListeners();
-  }*/
-  //===========================SignUP
 
   SignupModel? _signupModel;
 
@@ -316,7 +309,7 @@ class AuthProviders extends ChangeNotifier {
 
       _signupModel = SignupModel.fromJson(json.decode(response));
 
-      if (globalStatusCode == 200) {
+      if (globalStatusCode == 200 || globalStatusCode==201) {
         if (_signupModel?.doctor?.sId != null) {}
       } else {
         showCommonDialog(

@@ -11,9 +11,14 @@ class ErrorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size=MediaQuery.sizeOf(context);
-    return  SizedBox(
+    return  Container(
+
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10)),
       width: size.width,
-      height: size.height*zero5,
+      padding: EdgeInsets.all(16),
+      height: size.height,
       child: Image.asset(
         width: twoHundred,
           height: twoHundred,

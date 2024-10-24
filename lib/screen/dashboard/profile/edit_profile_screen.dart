@@ -18,17 +18,9 @@ class EditProfileScreen extends StatelessWidget {
     var size = MediaQuery.sizeOf(context);
 
     var isMobile = Responsive.isMobile(context);
-    return Container(
-        child: SizedBox(
-      width: size.width,
-      child: _mobileView(size: size, isMobile: isMobile),
-    )
-        /* : Container(
-        color: colorBG,
-            child: Center(
-                child: _mobileView(size: size),
-              ),
-          ),*/
+    return SizedBox(
+          width: size.width,
+          child: _mobileView(size: size, isMobile: isMobile),
         );
   }
 
@@ -103,7 +95,9 @@ class EditProfileScreen extends StatelessWidget {
                   children: [
                     Expanded(
                         child: commonTextFiled(
-                      title: "Name",
+                   //   title: "Name",
+
+
                       width: size.width,
                       size: size,
                     )),
@@ -139,7 +133,9 @@ class EditProfileScreen extends StatelessWidget {
                       onChanged: (String? value) {
                         provider.setGenderValue = value ?? '';
                       },
-                      selectedValue: provider.selectedGender,
+
+                          selectedValue: provider.selectedGender??'Male',
+                          // selectedValue: provider.selectedGender,
                     ))
                   ],
                 ),
@@ -153,6 +149,7 @@ class EditProfileScreen extends StatelessWidget {
                       title: "Date of birth",
                       width: size.width,
                       size: size,
+                          // value:'1976-02-29',
                     )),
                     const SizedBox(
                       width: 20,
@@ -338,7 +335,8 @@ class EditProfileScreen extends StatelessWidget {
         radius: 5,
         width: width ?? size.width * 0.1,
         topTextField: 5,
-        title: title ?? "Name*");
+      title: title ?? "Name*",
+    );
   }
 
   commonDropDown(

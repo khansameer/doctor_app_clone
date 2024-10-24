@@ -6,12 +6,17 @@ class  Validation{
     return regex.hasMatch(value);
   }
 
-  static bool validateMobile(String value) {
+ /* static bool validateMobile(String value) {
     Pattern pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
     RegExp regex = RegExp(pattern.toString());
     return regex.hasMatch(value);
+  }*/
+  static bool validateUSMobile(String value) {
+    // Regular expression to match US mobile numbers
+    Pattern pattern = r'^(?:\+1|1)?[2-9][0-9]{2}[2-9][0-9]{2}[0-9]{4}$';
+    RegExp regex = RegExp(pattern.toString());
+    return regex.hasMatch(value);
   }
-
   static bool isEmptyString(String value) {
     Pattern pattern = r'^$';
     RegExp regex = RegExp(pattern.toString());

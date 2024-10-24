@@ -12,12 +12,15 @@ import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/screen/admin/new_dashboard/calender_new_screen.dart';
 import 'package:doctor_app/screen/admin/new_dashboard/patient_new_screen.dart';
 import 'package:doctor_app/screen/admin/setting/admin_setting_screen.dart';
+import 'package:doctor_app/screen/authentication/login/view/login_view.dart';
 import 'package:doctor_app/screen/dashboard/profile/edit_profile_screen.dart';
-import 'package:doctor_app/screen/dashboard/profile/profile_screen.dart';
+
 import 'package:doctor_app/shared_preferences/preference_helper.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'consultation/consultation_screen.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -40,7 +43,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
     });
     super.initState();
   }
-
+  @override
+  void dispose() {
+    pageController.dispose();
+    sideMenu.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     var isMobile = Responsive.isMobile(context);
@@ -122,7 +130,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 itemHeight: 48,
                 itemBorderRadius: BorderRadius.circular(4),
                 itemOuterPadding:
-                    EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 itemInnerSpacing: 8,
 
                 displayMode: SideMenuDisplayMode.auto,
@@ -176,6 +184,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   },
                   icon: const Icon(Icons.person),
                 ),
+
                 commonMenuDivider(),
                 SideMenuItem(
                   title: 'Communications',
@@ -339,13 +348,20 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       padding: EdgeInsets.all(16),
                       child: PatientNewScreen(),
                     ),
+
                     SizedBox.shrink(),
-                    Center(
-                      child: ErrorPage(),
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Center(
+                        child: ErrorPage(),
+                      ),
                     ),
                     SizedBox.shrink(),
-                    Center(
-                      child: ErrorPage(),
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Center(
+                        child: ErrorPage(),
+                      ),
                     ),
                     SizedBox.shrink(),
                     Padding(
@@ -353,8 +369,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       child: AdminSettingScreen(),
                     ),
                     SizedBox.shrink(),
-                    Center(
-                      child: ErrorPage(),
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Center(
+                        child: ErrorPage(),
+                      ),
                     ),
                     EditProfileScreen(),
                   ],

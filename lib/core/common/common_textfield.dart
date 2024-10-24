@@ -1,3 +1,4 @@
+import 'package:doctor_app/core/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
@@ -149,13 +150,13 @@ class CommonTextField extends StatelessWidget {
                 gapPadding: ten,
                 borderSide: BorderSide(
                   width: 1,
-                  color: borderColor ?? colorGreen,
+                  color: borderColor ?? AppColors.primary,
                 ),
                 borderRadius:
                     BorderRadius.all(Radius.circular(radius ?? eight))),
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: colorGreen.withOpacity(0.20),
+                  color: AppColors.primary.withOpacity(0.20),
                   width: 1,
                 ),
                 borderRadius:
@@ -164,7 +165,7 @@ class CommonTextField extends StatelessWidget {
                 gapPadding: ten,
                 borderSide: BorderSide(
                   width: 1,
-                  color: borderColor ?? colorGreen,
+                  color: borderColor ?? AppColors.primary,
                 ),
                 borderRadius:
                     BorderRadius.all(Radius.circular(radius ?? eight)))),

@@ -56,7 +56,7 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
       ]
     },*/
     {
-      'title': 'Smart Group',
+      'title': 'Categories',
       'items': [
         'All Female Customer',
         'All Male Customer',
@@ -183,19 +183,20 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                                               selectedInnerIndex == innerIndex;
                                       return GestureDetector(
                                         onTap: () {
-                                          setState(() {
-                                            provider.setPatientDetailsPage(
-                                                context: context,
-                                                value:
-                                                    '${outerList[outerIndex]['items'][innerIndex]}');
-                                            // provider.setPatientDetailsPage() = '${outerList[outerIndex]['items'][innerIndex]}';
-                                            print('======${innerIndex}');
-                                            print(
-                                                '======${outerList[outerIndex]['items'][innerIndex]}');
-                                            selectedOuterIndex = outerIndex;
-                                            selectedInnerIndex = innerIndex;
+                                         /* setState(() {
+
                                             //selectedInnerIndex[outerIndex] = innerIndex;
-                                          });
+                                          });*/
+                                          provider.setPatientDetailsPage(
+                                              context: context,
+                                              value:
+                                              '${outerList[outerIndex]['items'][innerIndex]}');
+                                          // provider.setPatientDetailsPage() = '${outerList[outerIndex]['items'][innerIndex]}';
+                                          print('======${innerIndex}');
+                                          print(
+                                              '======${outerList[outerIndex]['items'][innerIndex]}');
+                                          selectedOuterIndex = outerIndex;
+                                          selectedInnerIndex = innerIndex;
                                         },
                                         child: Container(
                                           color: isSelected

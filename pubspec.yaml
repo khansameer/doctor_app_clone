@@ -49,7 +49,9 @@ dependencies:
   syncfusion_flutter_calendar: ^27.1.53
   file_picker: any
   easy_sidemenu: ^0.6.0
-  
+  searchfield: ^1.1.7
+  zego_uikit_prebuilt_call: ^4.16.3
+  zego_uikit_signaling_plugin: ^2.8.4
   permission_handler: ^11.3.1
 
 

@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:doctor_app/core/component/component.dart';
+import 'package:doctor_app/core/route/route.dart';
+import 'package:doctor_app/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
@@ -153,6 +155,15 @@ Future getResponse(Response response) async {
       globalStatusCode == 503) {
     return "{\"status\":\"false\",\"message\":\"Internal server issue\"}";
   } else if (globalStatusCode == 401) {
+
+
+    showCommonDialog(context: navigatorKey.currentState!.context, title: "Error", content: "your session is expired please login again",
+      btnPositive: "Login Again",
+      onPressPositive: (){
+        pushNamedAndRemoveUntil(context:  navigatorKey.currentState!.context, routeName: RouteName.loginScreen);
+      },
+      isMessage: true,);
+
     final parsedJson = jsonDecode(response.body.toString());
     final message = parsedJson['message'].toString();
     return "{\"status\":\"false\",\"message\":\"$message\"}";

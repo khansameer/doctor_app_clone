@@ -1,4 +1,3 @@
-import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/CustomAlertDialog.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/common_textfield.dart';
@@ -11,7 +10,6 @@ import 'package:doctor_app/screen/admin/model/patient_details_model.dart';
 import 'package:doctor_app/screen/admin/new_dashboard/calender/add_appointments_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/common/file_picker_helper.dart';
@@ -20,27 +18,22 @@ class PatientProfilePage extends StatefulWidget {
   const PatientProfilePage({super.key, this.title});
 
   final String? title;
+
   @override
   State<PatientProfilePage> createState() => _PatientProfilePageState();
 }
 
 class _PatientProfilePageState extends State<PatientProfilePage> {
   List<Patients> patients = [];
-  //List<Patients> filteredPatients = [];
+  List<Patients> filteredPatients = [];
   TextEditingController searchController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     final provider = Provider.of<CalenderProvider>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      provider.getPatientDetails().then((value) {
-        print('===sss==${widget.title}');
-        setState(() {});
-
-        setState(() {
-          // filteredPatients = List.from(patients);
-        });
-      });
+      provider.getPatientDetails().then((value) {});
     });
     setState(() {
       //searchController.addListener(_filterPatients);
@@ -49,12 +42,12 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
 
   @override
   void dispose() {
-    //searchController.removeListener(_filterPatients);
+    searchController.removeListener(_filterPatients);
     searchController.dispose();
     super.dispose();
   }
 
-  /* void _filterPatients() {
+  void _filterPatients() {
     String query = searchController.text.toLowerCase();
 
     setState(() {
@@ -64,7 +57,16 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
             patient.phoneNumber.toString().toLowerCase().contains(query);
       }).toList();
     });
-  }*/
+  }
+
+  bool _isHovered = false;
+  bool _isMenuVisible = false;
+
+  void _toggleMenuVisibility() {
+    setState(() {
+      _isMenuVisible = !_isMenuVisible;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,10 +75,10 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
     return Consumer<CalenderProvider>(builder: (context, provider, child) {
       if (widget.title == "all") {
         patients = provider.patientDetailsModel?.patients ?? [];
-        //filteredPatients = List.from(patients);
+        filteredPatients = List.from(patients);
       } else if (widget.title == "all_female") {
         patients = provider.filterBYGender(gender: 'female') ?? [];
-        //  filteredPatients = List.from(patients);
+        filteredPatients = List.from(patients);
       } else if (widget.title == "all_male") {
         patients = provider.filterBYGender(gender: 'male') ?? [];
         // filteredPatients = List.from(patients);
@@ -108,13 +110,38 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                                     child: SizedBox(
                                   height: 40,
                                   child: CommonTextField(
+                                    hint:
+                                        "Search Patient Name / ID /Phone number",
                                     colorFill: Colors.white,
-                                    hint: "Search Patient Name/ID/Phone number",
+                                    //  hint: "Search Patient Name/ID/Phone number",
                                   ),
                                 )),
                                 const SizedBox(
                                   width: 10,
                                 ),
+                                MouseRegion(
+                                  onEnter: (_) =>
+                                      setState(() => _isHovered = true),
+                                  onExit: (_) =>
+                                      setState(() => _isHovered = false),
+                                  child: GestureDetector(
+                                    onTap: _toggleMenuVisibility,
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 10),
+                                      decoration: BoxDecoration(
+                                        color: _isHovered
+                                            ? Colors.blueAccent
+                                            : Colors.blue,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Text(
+                                        'Filter',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                             const SizedBox(
@@ -171,13 +198,17 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                                     WidgetStateProperty.resolveWith<Color>(
                                         (Set<WidgetState> states) {
                                   // Set color for heading row
-                                  return Colors.blueGrey[200]!; // example color
+                                  //return Colors.blueGrey[200]!; // example color
+                                  return const Color.fromRGBO(
+                                      48, 180, 128, 1); // example color
                                 }),
                                 dataRowColor:
                                     WidgetStateProperty.resolveWith<Color>(
                                         (Set<WidgetState> states) {
                                   // Set color for data rows
-                                  return Colors.grey[200]!; // example color
+                                  //   return Colors.grey[200]!; // example color
+                                  return const Color.fromARGB(
+                                      255, 240, 242, 241); // example color
                                 }),
                                 // Add other customizations here
                               ),
@@ -191,32 +222,38 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                                     DataColumn(
                                         label: CommonTextWidget(
                                       text: 'Name',
+                                      textColor: Colors.white,
                                       fontWeight: FontWeight.w600,
                                     )),
                                     DataColumn(
                                         label: CommonTextWidget(
                                       text: 'Email',
+                                      textColor: Colors.white,
                                       fontWeight: FontWeight.w600,
                                     )),
                                     DataColumn(
                                         label: CommonTextWidget(
                                       text: 'Phone Number',
+                                      textColor: Colors.white,
                                       fontWeight: FontWeight.w600,
                                     )),
                                     DataColumn(
                                         label: CommonTextWidget(
                                       text: 'Gender',
+                                      textColor: Colors.white,
                                       fontWeight: FontWeight.w600,
                                     )),
                                     DataColumn(
                                         label: CommonTextWidget(
                                       text: 'Age',
+                                      textColor: Colors.white,
                                       fontWeight: FontWeight.w600,
                                     )),
                                     DataColumn(
                                       numeric: true,
                                       label: CommonTextWidget(
                                         text: 'Action',
+                                        textColor: Colors.white,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -245,6 +282,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
 
 class MyData extends DataTableSource {
   MyData(this.patients, this.context);
+
   List<Patients>? patients;
   BuildContext context;
 
@@ -306,11 +344,15 @@ class MyData extends DataTableSource {
           String? filePath = await FilePickerHelper.pickFile();
           if (filePath != null) {
             // Handle the selected file path
-            print('Selected file: $filePath');
+            if (kDebugMode) {
+              print('Selected file: $filePath');
+            }
             // You can also display it in a dialog or another widget
           } else {
             // Handle the case when no file is selected
-            print('No file selected or permission denied');
+            if (kDebugMode) {
+              print('No file selected or permission denied');
+            }
           }
 
           // Handle Inactive logic
@@ -320,17 +362,21 @@ class MyData extends DataTableSource {
         }
       },
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-        const PopupMenuItem<String>(
+        PopupMenuItem<String>(
           value: 'create',
-          child: Text('Create An Appointments'),
+          child: CommonTextWidget(text: 'Create An Appointments'),
         ),
-        const PopupMenuItem<String>(
+        PopupMenuItem<String>(
+          value: 'consultation',
+          child: CommonTextWidget(text: 'Consult'),
+        ),
+        PopupMenuItem<String>(
           value: 'upload',
-          child: Text('Upload File'),
+          child: CommonTextWidget(text: 'Upload File'),
         ),
-        const PopupMenuItem<String>(
+        PopupMenuItem<String>(
           value: 'delete',
-          child: Text('Delete'),
+          child: CommonTextWidget(text: 'Delete'),
         ),
       ],
       child: const Icon(

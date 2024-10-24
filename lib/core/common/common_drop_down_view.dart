@@ -13,6 +13,7 @@ class CommonDropDownView extends StatelessWidget {
     this.horizontal,
     this.onChanged,
     this.hintColor,
+    this.padding,
     this.height,
     required this.items,
     this.selectedValue,
@@ -23,6 +24,7 @@ class CommonDropDownView extends StatelessWidget {
   final Color? hintColor;
   final String? selectedValue;
   final double? height;
+  final EdgeInsetsGeometry? padding;
   final double? horizontal;
   final void Function(String?)? onChanged;
   final List<String> items;
@@ -31,7 +33,11 @@ class CommonDropDownView extends StatelessWidget {
     return DropdownButtonHideUnderline(
       child: DropdownButton2<String>(
         isDense: true,
+        iconStyleData: const IconStyleData(
+          icon: Icon(Icons.keyboard_arrow_down,color: Colors.grey,)
+        ),
         isExpanded: true,
+
         dropdownStyleData: DropdownStyleData(
           offset: const Offset(-0, -10),
           decoration: BoxDecoration(
@@ -58,7 +64,7 @@ class CommonDropDownView extends StatelessWidget {
                   value: item,
                   child: CommonTextWidget(
                     text: item,
-                    fontSize: 12,
+                    fontSize: 14,
                     left: horizontal != null ? 10 : 0,
                   ),
                 ))
@@ -79,7 +85,7 @@ class CommonDropDownView extends StatelessWidget {
                 ),
                 //color: Colors.redAccent,
               ),
-          padding: EdgeInsets.symmetric(horizontal: horizontal ?? 0),
+          padding: padding??EdgeInsets.symmetric(horizontal: horizontal ?? 0),
           height: height ?? 40,
           width: size.width * 0.7,
         ),

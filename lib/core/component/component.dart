@@ -246,7 +246,7 @@ commonTextFiledView({
         fontSize: fontSize,
         obscureText: obscureText,
         controller: controller,
-        radius: radius ?? twelve,
+        radius: radius ?? 8,
         top: topTextField,
         maxLines: maxLines,
       )
@@ -436,6 +436,7 @@ commonList({
     child: child,
   );
 }
+/*
 
 genderView({required AuthProviders provider}) {
   return Column(
@@ -482,6 +483,7 @@ genderView({required AuthProviders provider}) {
     ],
   );
 }
+*/
 
 appBarView({required BuildContext context, String? title}) {
   return commonAppBar(

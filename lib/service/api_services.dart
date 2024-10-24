@@ -1,7 +1,10 @@
 
 
 
+import 'package:doctor_app/core/component/component.dart';
+import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:doctor_app/service/network_repository.dart';
+import 'package:flutter/cupertino.dart';
 
 class ApiService {
 
@@ -9,6 +12,7 @@ class ApiService {
   Future<String> callPostMethodApi(
       {required Map<String, dynamic> body, required String url}) async {
     var response = await callPostMethod(url, body);
+
     return response;
   }
 
@@ -35,8 +39,12 @@ class ApiService {
     return response;
   }
 
-  Future<String> callGetMethod({required String url, String? key}) async {
+  Future<String> callGetMethod({required String url, String? key,}) async {
+
+
     var response = await callGETMethod(url: url, key: key);
+
+
     return response;
   }
 }

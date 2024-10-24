@@ -35,7 +35,7 @@ class SplashScreenState extends State<SplashScreen> {
           height: size.height,
           decoration: commonBoxDecoration(
               image:  DecorationImage(
-                  fit: BoxFit.cover, image: AssetImage(isMobile?icLogo:icBg))),
+                  fit: BoxFit.cover, image: AssetImage(isMobile?icLogo:icBg1))),
           child: Container(
             width: size.width,
             height: size.height,

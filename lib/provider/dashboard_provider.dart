@@ -86,6 +86,14 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners(); // Notify listeners to rebuild
   }
 
+
+  String _getClickPageValue="all";
+  String? get getClickPageValue => _getClickPageValue;
+
+  set settClickPageValue(String value){
+    _getClickPageValue=value;
+    notifyListeners();
+  }
   Widget _currentPatientPage = const PatientProfilePage(
     title: "all",
   ); // Default page
@@ -93,23 +101,34 @@ class DashboardProvider extends ChangeNotifier {
 
   void setPatientDetailsPage(
       {required String value, required BuildContext context}) {
-    print('=======${value}');
+    print('==value====${value}');
     if (value == "All Patients") {
       _currentPatientPage = const PatientProfilePage(
         title: "all",
       );
+
+      settClickPageValue="all";
+      notifyListeners();
     } else if (value == "Recently Visited") {
       _currentPatientPage = const PatientProfilePage(
         title: "all",
       );
+      notifyListeners();
     } else if (value == "All Female Customer") {
       _currentPatientPage = const PatientProfilePage(title: "all_female");
+
+      settClickPageValue="all_female";
+      notifyListeners();
     } else if (value == "All Male Customer") {
       _currentPatientPage = const PatientProfilePage(title: "all_male");
+      settClickPageValue="all_male";
     } else if (value == "Female Customer under 30") {
       _currentPatientPage = const PatientProfilePage(title: "female_under30");
+
+      settClickPageValue="female_under30";
     } else if (value == "Female Customer Over 30") {
       _currentPatientPage = const PatientProfilePage(title: "female_over30");
+      settClickPageValue="female_over30";
     } else {
       _currentPatientPage = const ErrorPage();
     }
@@ -120,9 +139,13 @@ class DashboardProvider extends ChangeNotifier {
   Widget get currentAdminSettingPage => _currentAdminSettingPage;
 
   set setAdminSettingPagePage(String value) {
-    if (value == "Invoice") {
+   /* if (value == "Invoice") {
       _currentAdminSettingPage = InvoiceScreen();
-    } else if (value == "Clinic Address") {
+    } */
+    if (value == "Procedure Catalog") {
+      _currentAdminSettingPage = InvoiceScreen();
+    }
+    else if (value == "Clinic Address") {
       _currentAdminSettingPage = const ErrorPage();
     } else {
       _currentAdminSettingPage = const ErrorPage();

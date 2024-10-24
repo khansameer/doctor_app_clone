@@ -153,9 +153,10 @@ class _GetEditAppointmentsDetailsWidgetState
                       ),*/
                       commonTextFiledView(
                           height: 45,
-                          fontSize: 12,
+                          fontSize: 14,
                           radius: 8,
                           topText: 5,
+
                           controller: tetDate,
                           isReadOnly: true,
                           onTap: () {
@@ -175,7 +176,7 @@ class _GetEditAppointmentsDetailsWidgetState
                           title: "Date"),
                       commonTextFiledView(
                           height: 45,
-                          fontSize: 12,
+                          fontSize: 14,
                           topText: 10,
                           isReadOnly: true,
                           onTap: () {
@@ -192,7 +193,8 @@ class _GetEditAppointmentsDetailsWidgetState
                           radius: 8,
                           title: "Time"),
                       CommonTextWidget(
-                        text: "Select Patient",
+                       /* text: "Select Patient",*/
+                        text: "Patient Name",
                         top: 10,
                       ),
                       const SizedBox(
@@ -225,14 +227,17 @@ class _GetEditAppointmentsDetailsWidgetState
                                   return '${patient.firstName} ${patient.lastName}';
                                 }).toList()
                               : []),
+
+
                       commonTextFiledView(
                         title: "Description",
                         topText: 10,
-                        maxLines: 3,
-                        fontSize: 12,
+
+                        fontSize: 14,
                         controller: tetReason,
                         topTextField: 10,
-                        height: 45,
+                        keyboardType: TextInputType.multiline ,
+                        maxLines: 3,
                         radius: 8,
                       ),
                       const SizedBox(
@@ -289,6 +294,29 @@ class _GetEditAppointmentsDetailsWidgetState
                           Expanded(
                             child: CommonButtonWidget(
                               text: "Cancel",
+                              height: 40,
+                              radius: 8,
+                              colorBorder: Colors.black,
+                              colorButton: Colors.white,
+                              colorText: Colors.black,
+                              onPressed: () {
+                                SchedulerBinding.instance
+                                    .addPostFrameCallback((_) {
+                                  setState(() {
+                                    provider.selectedID == null;
+                                    Navigator.of(context).pop();
+                                  });
+                                });
+                              },
+                              fontSize: 12,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: CommonButtonWidget(
+                              text: "Consult",
                               height: 40,
                               radius: 8,
                               colorBorder: Colors.black,

@@ -1,5 +1,3 @@
-import 'package:doctor_app/core/app_constants.dart';
-import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/screen/authentication/login/view/login_view.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +11,8 @@ class LoginScreen extends StatelessWidget {
     var isMobile = Responsive.isMobile(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      /*color: Colors.red,
-      left: isMobile ? null : zero,
-      right: isMobile ? null : zero,*/
-      body: Container(
+
+      body: SizedBox(
         width: size.width,
         height: size.height,
         child: LoginView(
