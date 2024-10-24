@@ -1,6 +1,7 @@
 import 'package:doctor_app/core/app_constants.dart';
 import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/responsive.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
@@ -30,14 +31,16 @@ class CommonDropDownView extends StatelessWidget {
   final List<String> items;
   @override
   Widget build(BuildContext context) {
+    var isMobile = Responsive.isMobile(context);
     return DropdownButtonHideUnderline(
       child: DropdownButton2<String>(
         isDense: true,
         iconStyleData: const IconStyleData(
-          icon: Icon(Icons.keyboard_arrow_down,color: Colors.grey,)
-        ),
+            icon: Icon(
+          Icons.keyboard_arrow_down,
+          color: Colors.grey,
+        )),
         isExpanded: true,
-
         dropdownStyleData: DropdownStyleData(
           offset: const Offset(-0, -10),
           decoration: BoxDecoration(
@@ -85,9 +88,9 @@ class CommonDropDownView extends StatelessWidget {
                 ),
                 //color: Colors.redAccent,
               ),
-          padding: padding??EdgeInsets.symmetric(horizontal: horizontal ?? 0),
+          padding: padding ?? EdgeInsets.symmetric(horizontal: horizontal ?? 0),
           height: height ?? 40,
-          width: size.width * 0.7,
+          width: isMobile ? size.width : size.width * 0.7,
         ),
         menuItemStyleData: MenuItemStyleData(
           height: height ?? 40,

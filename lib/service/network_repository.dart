@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/main.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
@@ -66,17 +67,18 @@ Future callPostMethodWithToken(String url, Map<String, dynamic> params) async {
     return getResponse(response);
   });
 }
+
 Future callPutMethodWithToken(String url, Map<String, dynamic> params) async {
   String? token = await getAuthToken();
   Map<String, String> commonHeadersToken = {
     'Content-Type': 'application/json',
     'accept': '*/*',
     "Authorization":
-    token != null && token.toString().isNotEmpty ? "Bearer $token" : "",
+        token != null && token.toString().isNotEmpty ? "Bearer $token" : "",
   };
   return await http
       .put(Uri.parse(url),
-      body: utf8.encode(json.encode(params)), headers: commonHeadersToken)
+          body: utf8.encode(json.encode(params)), headers: commonHeadersToken)
       .then((http.Response response) {
     return getResponse(response);
   });
@@ -155,17 +157,21 @@ Future getResponse(Response response) async {
       globalStatusCode == 503) {
     return "{\"status\":\"false\",\"message\":\"Internal server issue\"}";
   } else if (globalStatusCode == 401) {
-
-
-    showCommonDialog(context: navigatorKey.currentState!.context, title: "Error", content: "your session is expired please login again",
-      btnPositive: "Login Again",
-      onPressPositive: (){
-        pushNamedAndRemoveUntil(context:  navigatorKey.currentState!.context, routeName: RouteName.loginScreen);
-      },
-      isMessage: true,);
-
     final parsedJson = jsonDecode(response.body.toString());
     final message = parsedJson['message'].toString();
+    showCommonDialog(
+      context: navigatorKey.currentState!.context,
+      title: "Error",
+      content: message,
+      btnPositive: "Close",
+      onPressPositive: () {
+        Navigator.of(navigatorKey.currentState!.context).pop();
+        /*pushNamedAndRemoveUntil(
+            context: navigatorKey.currentState!.context,
+            routeName: RouteName.loginScreen);*/
+      },
+      isMessage: true,
+    );
     return "{\"status\":\"false\",\"message\":\"$message\"}";
   } else if (globalStatusCode == 403) {
     // final parsedJson = jsonDecode(response.body.toString());

@@ -52,7 +52,6 @@ class AuthProviders extends ChangeNotifier {
   TextEditingController get tetDob => _tetDob;
   TextEditingController get tetConfirmPassword => _tetConfirmPassword;
 
-
   final List<String> itemGenderList = [
     'Male',
     'Female',
@@ -67,6 +66,7 @@ class AuthProviders extends ChangeNotifier {
     _selectedGender = newPin;
     notifyListeners();
   }
+
   void togglePasswordVisibility() {
     _isPasswordVisible = !_isPasswordVisible;
     notifyListeners();
@@ -107,6 +107,7 @@ class AuthProviders extends ChangeNotifier {
           pushNamedAndRemoveUntil(
               context: context, routeName: RouteName.adminDashboardScreen);
         } else {
+          print('======csaaaa}');
           pushNamedAndRemoveUntil(
               context: context, routeName: RouteName.dashboardScreen);
         }
@@ -196,13 +197,13 @@ class AuthProviders extends ChangeNotifier {
               key: PreferenceHelper.isLOGIN, value: true);
         }
       } else {
-        showCommonDialog(
+        /*showCommonDialog(
             context: context,
             title: "Error",
             content: _loginModel?.message != null
                 ? '${_loginModel?.message.toString()}'
                 : "Something went wrong please try again after sometime.",
-            isMessage: true);
+            isMessage: true);*/
       }
     } catch (e) {
       // _registerModel = RegisterModel(message: 'server_error'.tr());
@@ -309,7 +310,7 @@ class AuthProviders extends ChangeNotifier {
 
       _signupModel = SignupModel.fromJson(json.decode(response));
 
-      if (globalStatusCode == 200 || globalStatusCode==201) {
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
         if (_signupModel?.doctor?.sId != null) {}
       } else {
         showCommonDialog(

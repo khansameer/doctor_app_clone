@@ -19,23 +19,23 @@ class SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-    context.read<AuthProviders>().redirectToLogin(context: context);
+      context.read<AuthProviders>().redirectToLogin(context: context);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
     var size = MediaQuery.sizeOf(context);
-    var isMobile=Responsive.isMobile(context);
+    var isMobile = Responsive.isMobile(context);
     return Scaffold(
         backgroundColor: Colors.white,
         body: Container(
           width: size.width,
           height: size.height,
           decoration: commonBoxDecoration(
-              image:  DecorationImage(
-                  fit: BoxFit.cover, image: AssetImage(isMobile?icLogo:icBg1))),
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage(isMobile ? icLogo : icBg1))),
           child: Container(
             width: size.width,
             height: size.height,

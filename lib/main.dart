@@ -6,7 +6,6 @@ import 'package:doctor_app/provider/auth_provider.dart';
 import 'package:doctor_app/provider/calender_provider.dart';
 import 'package:doctor_app/provider/chat_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
-import 'package:doctor_app/screen/demosa.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -24,7 +23,7 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider<CalenderProvider>(create: (_) => CalenderProvider()),
 ];
 
-void main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   PreferenceHelper.load().then((value) {});
@@ -41,10 +40,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         navigatorKey: navigatorKey, // Set the navigatorKey
         title: appName,
-       // home: AdminDashboard(),
-      //  home: AdminDashboard(),
-       initialRoute: RouteName.splashScreen,
-       onGenerateRoute: RouteGenerator.generateRoute,
+
+        initialRoute: RouteName.splashScreen,
+        onGenerateRoute: RouteGenerator.generateRoute,
 
         debugShowCheckedModeBanner: false,
         builder: (context, child) {

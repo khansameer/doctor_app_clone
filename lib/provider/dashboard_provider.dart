@@ -2,13 +2,22 @@ import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/error_page.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
+import 'package:doctor_app/main.dart';
 import 'package:doctor_app/provider/calender_provider.dart';
 import 'package:doctor_app/provider/model/dummy_model.dart';
 import 'package:doctor_app/screen/admin/new_dashboard/calender_new_screen.dart';
 import 'package:doctor_app/screen/admin/new_dashboard/client_note_screen.dart';
 import 'package:doctor_app/screen/admin/new_dashboard/invoice/invoice_screen.dart';
 import 'package:doctor_app/screen/admin/new_dashboard/patient_profile_page.dart';
+import 'package:doctor_app/screen/dashboard/calender/calender_screen.dart';
+import 'package:doctor_app/screen/dashboard/chat_screen/chat_screen.dart';
+import 'package:doctor_app/screen/dashboard/chat_screen/patient_list_screen.dart';
+import 'package:doctor_app/screen/dashboard/consult/consult_screen.dart';
 import 'package:doctor_app/screen/dashboard/dashboard_model.dart';
+import 'package:doctor_app/screen/dashboard/health_feed/health_feed_screen.dart';
+import 'package:doctor_app/screen/dashboard/home/home_screen.dart';
+import 'package:doctor_app/screen/dashboard/paitent_screen/patients_screen.dart';
+import 'package:doctor_app/screen/dashboard/profile/profile_screen.dart';
 import 'package:doctor_app/screen/dashboard/reach/reach_screen.dart';
 import 'package:doctor_app/screen/dashboard/report/report_screen.dart';
 import 'package:doctor_app/screen/dashboard/setting/setting_screen.dart';
@@ -16,6 +25,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../screen/admin/new_dashboard/patient_new_screen.dart';
+import '../screen/dashboard/patient_stories/patient_stories_screen.dart';
+import '../screen/dashboard/prime/prime_screen.dart';
+import '../screen/dashboard/profile/edit_profile_screen.dart';
+import '../screen/dashboard/weekly_earning/weekly_earning_screen.dart';
 
 class DashboardProvider extends ChangeNotifier {
   int? _hoveredIndex;
@@ -65,10 +78,6 @@ class DashboardProvider extends ChangeNotifier {
 
   Widget _currentPage = const CalenderNewScreen(); // Default page
 
-  String? _page;
-
-  String? get page => _page;
-
   Widget _currentPageProfile = const PatientProfilePage(); // Default page
 
   Widget get currentPageProfile => _currentPageProfile;
@@ -86,14 +95,14 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners(); // Notify listeners to rebuild
   }
 
-
-  String _getClickPageValue="all";
+  String _getClickPageValue = "all";
   String? get getClickPageValue => _getClickPageValue;
 
-  set settClickPageValue(String value){
-    _getClickPageValue=value;
+  set settClickPageValue(String value) {
+    _getClickPageValue = value;
     notifyListeners();
   }
+
   Widget _currentPatientPage = const PatientProfilePage(
     title: "all",
   ); // Default page
@@ -107,7 +116,7 @@ class DashboardProvider extends ChangeNotifier {
         title: "all",
       );
 
-      settClickPageValue="all";
+      settClickPageValue = "all";
       notifyListeners();
     } else if (value == "Recently Visited") {
       _currentPatientPage = const PatientProfilePage(
@@ -117,18 +126,18 @@ class DashboardProvider extends ChangeNotifier {
     } else if (value == "All Female Customer") {
       _currentPatientPage = const PatientProfilePage(title: "all_female");
 
-      settClickPageValue="all_female";
+      settClickPageValue = "all_female";
       notifyListeners();
     } else if (value == "All Male Customer") {
       _currentPatientPage = const PatientProfilePage(title: "all_male");
-      settClickPageValue="all_male";
+      settClickPageValue = "all_male";
     } else if (value == "Female Customer under 30") {
       _currentPatientPage = const PatientProfilePage(title: "female_under30");
 
-      settClickPageValue="female_under30";
+      settClickPageValue = "female_under30";
     } else if (value == "Female Customer Over 30") {
       _currentPatientPage = const PatientProfilePage(title: "female_over30");
-      settClickPageValue="female_over30";
+      settClickPageValue = "female_over30";
     } else {
       _currentPatientPage = const ErrorPage();
     }
@@ -139,13 +148,12 @@ class DashboardProvider extends ChangeNotifier {
   Widget get currentAdminSettingPage => _currentAdminSettingPage;
 
   set setAdminSettingPagePage(String value) {
-   /* if (value == "Invoice") {
+    /* if (value == "Invoice") {
       _currentAdminSettingPage = InvoiceScreen();
     } */
     if (value == "Procedure Catalog") {
       _currentAdminSettingPage = InvoiceScreen();
-    }
-    else if (value == "Clinic Address") {
+    } else if (value == "Clinic Address") {
       _currentAdminSettingPage = const ErrorPage();
     } else {
       _currentAdminSettingPage = const ErrorPage();
@@ -153,55 +161,88 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners(); // Notify listeners to rebuild
   }
 
+  String? _pageApp;
+  String? get page => _pageApp;
+  Widget _currentAppPage = HomeScreen(onSelectedPage: (value) {
+    final dashboardProvider = Provider.of<DashboardProvider>(
+        navigatorKey.currentState!.context,
+        listen: false);
+    dashboardProvider.updateAppPage = value;
+  });
+
+  Widget get currentAppPage => _currentAppPage;
+  set updateAppPage(String value) {
+    print('========${value}');
+    _pageApp = value;
+    if (_pageApp == "Profile") {
+      _currentAppPage = const ProfileScreen();
+      notifyListeners();
+    }
+    if (_pageApp == "Home") {
+      _currentAppPage = HomeScreen(onSelectedPage: (value) {
+        final dashboardProvider = Provider.of<DashboardProvider>(
+            navigatorKey.currentState!.context,
+            listen: false);
+        dashboardProvider.updateAppPage = value;
+      });
+    }
+    if (_pageApp == "Reach") {
+      _currentAppPage = const ReachScreen();
+      notifyListeners();
+    }
+    if (_pageApp == "Chat") {
+      _currentAppPage = const ChatScreen();
+      notifyListeners();
+    }
+
+    if (_pageApp == "Patient Stories") {
+      _currentAppPage = const PatientStoriesScreen();
+    }
+    if (_pageApp == "Consult") {
+      _currentAppPage = const ConsultScreen();
+    }
+    if (_pageApp == "Healthfeed") {
+      _currentAppPage = const HealthFeedScreen();
+    }
+    if (_pageApp == "Prime") {
+      _currentAppPage = const PrimeScreen();
+    }
+
+    if (_pageApp == "Report") {
+      _currentAppPage = const ReportScreen();
+    }
+    if (_pageApp == "Earning") {
+      _currentAppPage = const WeeklyEarningScreen();
+    }
+    if (_pageApp == "Calender") {
+      _currentAppPage = const CalenderScreen();
+    }
+    if (_pageApp == "Patient") {
+      _currentAppPage = const PatientsScreen();
+    }
+    if (_pageApp == "edit_profile") {
+      _currentAppPage = const EditProfileScreen();
+    }
+    if (_pageApp == "chat_user_list") {
+      _currentAppPage = const PatientListScreen();
+    }
+    if (_pageApp == "chat_screen") {
+      _currentAppPage = const ChatScreen();
+    }
+
+    notifyListeners();
+  }
 /*
   set getPageSelected(String  value) {
     print('==================sameer$value');
-    _page = value;
-    final provider = Provider.of<DashboardProvider>(navigatorKey.currentState!.context, listen: false);
-    if(_page=="Profile"){
-      provider.updatePage=const ProfileScreen();
-    }
-    if(_page=="Home"){
-      provider.updatePage= HomeScreen(onSelectedPage: (value){
-        final dashboardProvider = Provider.of<DashboardProvider>(navigatorKey.currentState!.context, listen: false);
-        dashboardProvider.getPageSelected=value;
 
-      });
-    }
-    if(_page=="Reach"){
-      provider.updatePage=const ReachScreen();
-    }
 
-    if(_page=="Patient Stories"){
-      provider.updatePage=const PatientStoriesScreen();
-    }
-    if(_page=="Consult"){
-      provider.updatePage=const ConsultScreen();
-    }
-    if(_page=="Healthfeed"){
-      provider.updatePage=const HealthFeedScreen();
-    }
-    if(_page=="Prime"){
-      provider.updatePage=const PrimeScreen();
-    }
-    if(_page=="Report"){
-      provider.updatePage=const ReportScreen();
-    }
-    if(_page=="Earning"){
-      provider.updatePage=const WeeklyEarningScreen();
-    }
-    if(_page=="Calender"){
-      provider.updatePage=const CalenderScreen();
-    }
-    if(_page=="Patient"){
-      provider.updatePage=const PatientsScreen();
-    }
-    if(_page=="edit_profile"){
-      provider.updatePage=const EditProfileScreen();
-    }
-    if(_page=="chat_user_list"){
-      provider.updatePage=const PatientListScreen();
-    }
+
+
+
+
+
+
     if(_page=="chat_screen"){
       provider.updatePage=const ChatScreen();
     }
