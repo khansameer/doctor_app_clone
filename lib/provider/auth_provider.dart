@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:doctor_app/screen/authentication/model/login_model.dart';
 import 'package:doctor_app/screen/authentication/model/signup_model.dart';
 import 'package:doctor_app/screen/authentication/model/specializations_model.dart';
@@ -7,6 +8,7 @@ import 'package:doctor_app/service/api_config.dart';
 import 'package:doctor_app/service/api_services.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:doctor_app/shared_preferences/preference_helper.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -77,16 +79,6 @@ class AuthProviders extends ChangeNotifier {
     notifyListeners();
   }
 
-/*  Gender _selectedGender = Gender.male; // Default selection
-
-  Gender get selectedGender => _selectedGender;
-
-  void selectGender(Gender gender) {
-    _selectedGender = gender;
-    notifyListeners();
-  }*/
-
-  //Date Picker
 
   DateTime _selectedDate = DateTime.now();
 

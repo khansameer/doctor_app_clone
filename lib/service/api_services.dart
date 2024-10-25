@@ -1,10 +1,5 @@
 
-
-
-import 'package:doctor_app/core/component/component.dart';
-import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:doctor_app/service/network_repository.dart';
-import 'package:flutter/cupertino.dart';
 
 class ApiService {
 

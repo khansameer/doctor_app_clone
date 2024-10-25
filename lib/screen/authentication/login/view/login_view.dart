@@ -112,7 +112,7 @@ class MobileView extends StatelessWidget {
                   ),
                   CommonTextWidget(
                     width: size.width,
-                    textAlign: isMobile ? TextAlign.start : TextAlign.center,
+                    textAlign: isMobile ? TextAlign.start : TextAlign.start,
                     text: "Login to your Juno Health Pro Account",
                     textStyle: GoogleFonts.inter(
                       fontWeight: FontWeight.w600,

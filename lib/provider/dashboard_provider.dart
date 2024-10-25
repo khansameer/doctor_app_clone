@@ -3,32 +3,36 @@ import 'package:doctor_app/core/common/error_page.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/main.dart';
-import 'package:doctor_app/provider/calender_provider.dart';
+
 import 'package:doctor_app/provider/model/dummy_model.dart';
-import 'package:doctor_app/screen/admin/new_dashboard/calender_new_screen.dart';
-import 'package:doctor_app/screen/admin/new_dashboard/client_note_screen.dart';
-import 'package:doctor_app/screen/admin/new_dashboard/invoice/invoice_screen.dart';
-import 'package:doctor_app/screen/admin/new_dashboard/patient_profile_page.dart';
-import 'package:doctor_app/screen/dashboard/calender/calender_screen.dart';
-import 'package:doctor_app/screen/dashboard/chat_screen/chat_screen.dart';
-import 'package:doctor_app/screen/dashboard/chat_screen/patient_list_screen.dart';
-import 'package:doctor_app/screen/dashboard/consult/consult_screen.dart';
-import 'package:doctor_app/screen/dashboard/dashboard_model.dart';
-import 'package:doctor_app/screen/dashboard/health_feed/health_feed_screen.dart';
-import 'package:doctor_app/screen/dashboard/home/home_screen.dart';
-import 'package:doctor_app/screen/dashboard/paitent_screen/patients_screen.dart';
-import 'package:doctor_app/screen/dashboard/profile/profile_screen.dart';
-import 'package:doctor_app/screen/dashboard/reach/reach_screen.dart';
-import 'package:doctor_app/screen/dashboard/report/report_screen.dart';
-import 'package:doctor_app/screen/dashboard/setting/setting_screen.dart';
+import 'package:doctor_app/screen/mobile_view/calender/calender_screen.dart';
+import 'package:doctor_app/screen/mobile_view/chat_screen/chat_screen.dart';
+import 'package:doctor_app/screen/mobile_view/chat_screen/patient_list_screen.dart';
+import 'package:doctor_app/screen/mobile_view/consult/consult_screen.dart';
+import 'package:doctor_app/screen/mobile_view/dashboard_model.dart';
+import 'package:doctor_app/screen/mobile_view/health_feed/health_feed_screen.dart';
+import 'package:doctor_app/screen/mobile_view/home/home_screen.dart';
+import 'package:doctor_app/screen/mobile_view/paitent_screen/patients_screen.dart';
+import 'package:doctor_app/screen/mobile_view/patient_stories/patient_stories_screen.dart';
+import 'package:doctor_app/screen/mobile_view/prime/prime_screen.dart';
+import 'package:doctor_app/screen/mobile_view/profile/edit_profile_screen.dart';
+import 'package:doctor_app/screen/mobile_view/profile/profile_screen.dart';
+import 'package:doctor_app/screen/mobile_view/reach/reach_screen.dart';
+import 'package:doctor_app/screen/mobile_view/report/report_screen.dart';
+import 'package:doctor_app/screen/mobile_view/setting/setting_screen.dart';
+import 'package:doctor_app/screen/mobile_view/weekly_earning/weekly_earning_screen.dart';
+import 'package:doctor_app/screen/web_view/screen/calender/admin_calender_screen.dart';
+import 'package:doctor_app/screen/web_view/screen/client_note_screen.dart';
+import 'package:doctor_app/screen/web_view/screen/patient_profile_page.dart';
+import 'package:flutter/foundation.dart';
+
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../screen/admin/new_dashboard/patient_new_screen.dart';
-import '../screen/dashboard/patient_stories/patient_stories_screen.dart';
-import '../screen/dashboard/prime/prime_screen.dart';
-import '../screen/dashboard/profile/edit_profile_screen.dart';
-import '../screen/dashboard/weekly_earning/weekly_earning_screen.dart';
+import '../screen/web_view/screen/invoice/invoice_screen.dart';
+import '../screen/web_view/screen/patient_new_screen.dart';
+
 
 class DashboardProvider extends ChangeNotifier {
   int? _hoveredIndex;
@@ -76,24 +80,13 @@ class DashboardProvider extends ChangeNotifier {
 
   int _selectedIndex = 0;
 
-  Widget _currentPage = const CalenderNewScreen(); // Default page
+  Widget _currentPage = const AdminCalenderScreen(); // Default page
 
   Widget _currentPageProfile = const PatientProfilePage(); // Default page
 
   Widget get currentPageProfile => _currentPageProfile;
 
-  set updateProfilePage(String value) {
-    if (value == "Profile") {
-      _currentPageProfile = const PatientProfilePage();
-    } else if (value == "client_note") {
-      _currentPageProfile = const ClientNoteScreen();
-    } else {
-      _currentPageProfile = Center(
-        child: commonText(text: "no"),
-      ); // Default page or other pages
-    }
-    notifyListeners(); // Notify listeners to rebuild
-  }
+
 
   String _getClickPageValue = "all";
   String? get getClickPageValue => _getClickPageValue;
@@ -108,9 +101,13 @@ class DashboardProvider extends ChangeNotifier {
   ); // Default page
   Widget get currentPatientPage => _currentPatientPage;
 
+
+  //for patient new screen  for redirect screen
   void setPatientDetailsPage(
       {required String value, required BuildContext context}) {
-    print('==value====${value}');
+    if (kDebugMode) {
+      print('==value====$value');
+    }
     if (value == "All Patients") {
       _currentPatientPage = const PatientProfilePage(
         title: "all",
@@ -144,13 +141,13 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners(); // Notify listeners to rebuild
   }
 
+
+  //for admin setting page
   Widget _currentAdminSettingPage = InvoiceScreen(); // Default page
   Widget get currentAdminSettingPage => _currentAdminSettingPage;
 
   set setAdminSettingPagePage(String value) {
-    /* if (value == "Invoice") {
-      _currentAdminSettingPage = InvoiceScreen();
-    } */
+
     if (value == "Procedure Catalog") {
       _currentAdminSettingPage = InvoiceScreen();
     } else if (value == "Clinic Address") {
@@ -161,7 +158,9 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners(); // Notify listeners to rebuild
   }
 
-  String? _pageApp;
+
+  //for admin dashboard screen
+  String? _pageApp="Home";
   String? get page => _pageApp;
   Widget _currentAppPage = HomeScreen(onSelectedPage: (value) {
     final dashboardProvider = Provider.of<DashboardProvider>(
@@ -170,9 +169,8 @@ class DashboardProvider extends ChangeNotifier {
     dashboardProvider.updateAppPage = value;
   });
 
-  Widget get currentAppPage => _currentAppPage;
+  Widget? get currentAppPage => _currentAppPage;
   set updateAppPage(String value) {
-    print('========${value}');
     _pageApp = value;
     if (_pageApp == "Profile") {
       _currentAppPage = const ProfileScreen();
@@ -214,7 +212,7 @@ class DashboardProvider extends ChangeNotifier {
     if (_pageApp == "Earning") {
       _currentAppPage = const WeeklyEarningScreen();
     }
-    if (_pageApp == "Calender") {
+    if (_pageApp == "Calendar") {
       _currentAppPage = const CalenderScreen();
     }
     if (_pageApp == "Patient") {
@@ -229,25 +227,13 @@ class DashboardProvider extends ChangeNotifier {
     if (_pageApp == "chat_screen") {
       _currentAppPage = const ChatScreen();
     }
+    if (_pageApp == "Profile") {
+      _currentAppPage = const EditProfileScreen();
+    }
 
     notifyListeners();
   }
-/*
-  set getPageSelected(String  value) {
-    print('==================sameer$value');
 
-
-
-
-
-
-
-
-    if(_page=="chat_screen"){
-      provider.updatePage=const ChatScreen();
-    }
-    notifyListeners(); // Notify the listeners to rebuild the UI
-  }*/
 
   String? _appBarTitle = "Home";
 
@@ -257,30 +243,6 @@ class DashboardProvider extends ChangeNotifier {
 
   Widget get currentPage => _currentPage;
   PageController pageController = PageController();
-
-  set updatePage(String value) {
-    if (value == "Patients") {
-      _currentPage = const PatientNewScreen();
-    } else if (value == "profile") {
-      _currentPage = Container();
-    } else if (value == "setting") {
-      _currentPage = InvoiceScreen();
-    } else if (value == "menu_setting") {
-      _currentPage = const SettingScreen();
-    } else if (value == "menu_report") {
-      _currentPage = const ReportScreen();
-    } else if (value == "menu_reach") {
-      _currentPage = const ReachScreen();
-    } else if (value == "Calender") {
-      _currentPage = const CalenderNewScreen();
-    } else {
-      _currentPage = Center(
-        child: CommonTextWidget(text: "no"),
-      ); // Default page or other pages
-    }
-
-    notifyListeners(); // Notify listeners to rebuild
-  }
 
   void updatePageValue(int index) {
     pageController.jumpToPage(index);
@@ -292,7 +254,7 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setAppBarTitle(String value) {
+  void setAppBarTitle(String? value) {
     _appBarTitle = value;
     notifyListeners();
   }
@@ -369,7 +331,7 @@ class DashboardProvider extends ChangeNotifier {
 
   List<DummyModel> get appList => _appList;
   final List<DummyModel> _rayList = [
-    DummyModel(date: "Calender", icon: icMenuCalender, items: []),
+    DummyModel(date: "Calendar", icon: icMenuCalender, items: []),
     DummyModel(date: "Patient", icon: icMenuPatient, items: []),
   ];
 
@@ -456,16 +418,6 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  final List<String> items = [
-    'Item1',
-    'Item2',
-    'Item3',
-    'Item4',
-    'Item5',
-    'Item6',
-    'Item7',
-    'Item8',
-  ];
 
   final List<Booking> _bookings = [
     Booking(

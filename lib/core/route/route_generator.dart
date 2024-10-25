@@ -1,34 +1,36 @@
 import 'package:doctor_app/core/route/route.dart';
-import 'package:doctor_app/screen/admin/new_dashboard/admin_dashboard.dart';
+import 'package:doctor_app/screen/web_view/screen/admin_dashboard/admin_dashboard.dart';
+
+
 import 'package:doctor_app/screen/authentication/forgot/forgot_password_opt_view.dart';
 import 'package:doctor_app/screen/authentication/forgot/forgot_password_reset_view.dart';
 import 'package:doctor_app/screen/authentication/forgot/forgot_screen.dart';
 import 'package:doctor_app/screen/authentication/login/login_screen.dart';
 import 'package:doctor_app/screen/authentication/login/view/signup_view.dart';
-import 'package:doctor_app/screen/dashboard/calender/calender_screen.dart';
-import 'package:doctor_app/screen/dashboard/chat_screen/chat_screen.dart';
-import 'package:doctor_app/screen/dashboard/consult/consult_screen.dart';
-import 'package:doctor_app/screen/dashboard/dashboard_screen.dart';
-import 'package:doctor_app/screen/dashboard/health_feed/health_feed_screen.dart';
-import 'package:doctor_app/screen/dashboard/notification/notificatio_screen.dart';
-import 'package:doctor_app/screen/dashboard/paitent_screen/patient_information_screen.dart';
-import 'package:doctor_app/screen/dashboard/paitent_screen/patients_screen.dart';
+import 'package:doctor_app/screen/mobile_view/calender/calender_screen.dart';
+import 'package:doctor_app/screen/mobile_view/chat_screen/chat_screen.dart';
+import 'package:doctor_app/screen/mobile_view/consult/consult_screen.dart';
+import 'package:doctor_app/screen/mobile_view/dashboard_screen.dart';
+import 'package:doctor_app/screen/mobile_view/health_feed/health_feed_screen.dart';
+import 'package:doctor_app/screen/mobile_view/notification/notificatio_screen.dart';
+import 'package:doctor_app/screen/mobile_view/paitent_screen/patient_information_screen.dart';
+import 'package:doctor_app/screen/mobile_view/paitent_screen/patients_screen.dart';
 
-import 'package:doctor_app/screen/dashboard/profile/add_clinic_screen.dart';
-import 'package:doctor_app/screen/dashboard/profile/edit_profile_screen.dart';
+import 'package:doctor_app/screen/mobile_view/profile/add_clinic_screen.dart';
+import 'package:doctor_app/screen/mobile_view/profile/edit_profile_screen.dart';
 
-import 'package:doctor_app/screen/dashboard/patient_stories/patient_stories_screen.dart';
-import 'package:doctor_app/screen/dashboard/prime/prime_screen.dart';
+import 'package:doctor_app/screen/mobile_view/patient_stories/patient_stories_screen.dart';
+import 'package:doctor_app/screen/mobile_view/prime/prime_screen.dart';
 
-import 'package:doctor_app/screen/dashboard/profile/profile_screen.dart';
-import 'package:doctor_app/screen/dashboard/report/report_screen.dart';
-import 'package:doctor_app/screen/dashboard/setting/setting_screen.dart';
-import 'package:doctor_app/screen/dashboard/weekly_earning/weekly_earning_screen.dart';
+import 'package:doctor_app/screen/mobile_view/profile/profile_screen.dart';
+import 'package:doctor_app/screen/mobile_view/report/report_screen.dart';
+import 'package:doctor_app/screen/mobile_view/setting/setting_screen.dart';
+import 'package:doctor_app/screen/mobile_view/weekly_earning/weekly_earning_screen.dart';
 import 'package:doctor_app/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../screen/dashboard/reach/reach_screen.dart';
-import '../../screen/dashboard/report_and_issue/report_and_issue_screen.dart';
+import '../../screen/mobile_view/reach/reach_screen.dart';
+import '../../screen/mobile_view/report_and_issue/report_and_issue_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {

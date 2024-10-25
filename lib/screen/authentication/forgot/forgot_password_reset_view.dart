@@ -6,7 +6,6 @@ import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
 
 class ForgotPasswordResetView extends StatelessWidget {
   const ForgotPasswordResetView({super.key});

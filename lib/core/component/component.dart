@@ -4,12 +4,12 @@ import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/route/route.dart';
-import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:doctor_app/main.dart';
-import 'package:doctor_app/provider/auth_provider.dart';
+
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/shared_preferences/preference_helper.dart';
-import 'package:file_picker/file_picker.dart';
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -113,17 +113,17 @@ commonButton(
   );
 }
 
-commonBackRedirectButton({String? page}) {
+commonBackRedirectButton({String? page,Color? color}) {
   return IconButton(
       onPressed: () {
-        /* final dashboardProvider = Provider.of<DashboardProvider>(
+         final dashboardProvider = Provider.of<DashboardProvider>(
             navigatorKey.currentState!.context,
             listen: false);
-        dashboardProvider.getPageSelected = page??"Home";*/
+        dashboardProvider.updateAppPage = page??"Home";
       },
-      icon: const Icon(
+      icon:  Icon(
         Icons.arrow_back_ios,
-        color: colorText,
+        color: color??colorText,
       ));
 }
 
@@ -486,6 +486,7 @@ genderView({required AuthProviders provider}) {
 */
 
 appBarView({required BuildContext context, String? title}) {
+  print('=================${title}');
   return commonAppBar(
       title: title,
       leading: const Icon(

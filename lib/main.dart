@@ -1,17 +1,19 @@
 import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/core/route/route_generator.dart';
+
 import 'package:doctor_app/core/string/string_utils.dart';
 
 import 'package:doctor_app/provider/auth_provider.dart';
 import 'package:doctor_app/provider/calender_provider.dart';
 import 'package:doctor_app/provider/chat_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
+import 'package:doctor_app/shared_preferences/preference_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 import 'provider/profile_provider.dart';
-import 'shared_preferences/preference_helper.dart';
+
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 

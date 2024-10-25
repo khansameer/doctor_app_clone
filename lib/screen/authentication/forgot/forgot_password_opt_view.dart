@@ -1,7 +1,6 @@
 import 'package:doctor_app/core/app_constants.dart';
 import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
-import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
