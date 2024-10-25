@@ -30,7 +30,7 @@ class _SignupViewState extends State<SignupView> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<AuthProviders>().getSpecializationsList();
+      context.read<AuthProviders>().getSpecializationsList(context: context);
     });
   }
 

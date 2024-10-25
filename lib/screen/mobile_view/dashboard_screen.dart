@@ -1,6 +1,5 @@
 import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
-import 'package:doctor_app/core/common/CommonUnauthorizedDialog.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
@@ -21,7 +20,6 @@ class DashboardScreen extends StatelessWidget {
     final provider = Provider.of<DashboardProvider>(context);
     var isMobile = Responsive.isMobile(context);
 
-
     final List<Widget> screens = [
       HomeScreen(
         onSelectedPage: (value) {
@@ -31,14 +29,14 @@ class DashboardScreen extends StatelessWidget {
       ),
       Container(),
       const PatientListScreen(),
-       const EditProfileScreen()
+      const EditProfileScreen()
     ];
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         elevation: 2,
-        type:BottomNavigationBarType.fixed ,
+        type: BottomNavigationBarType.fixed,
         selectedItemColor: colorAmber,
         selectedLabelStyle: commonTextStyle(fontSize: 11),
         unselectedLabelStyle: commonTextStyle(fontSize: 11),
@@ -67,7 +65,8 @@ class DashboardScreen extends StatelessWidget {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Q&A'),
-          BottomNavigationBarItem(icon: Icon(Icons.mark_unread_chat_alt), label: 'Chat'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.mark_unread_chat_alt), label: 'Chat'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
@@ -79,8 +78,7 @@ class DashboardScreen extends StatelessWidget {
               context: context, title: isMobile ? provider.appBarTitle : null)
           : commonAppBar(
               title: provider.appBarTitle,
-              color:AppColors.primary,
-
+              color: AppColors.primary,
               leading: commonBackRedirectButton(color: Colors.white),
               colorText: Colors.white,
             ),

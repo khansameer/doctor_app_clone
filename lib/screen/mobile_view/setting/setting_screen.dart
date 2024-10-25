@@ -7,8 +7,6 @@ import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../web_view/screen/procedure_charges_screen.dart';
-
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
 
@@ -30,24 +28,34 @@ class SettingScreen extends StatelessWidget {
           child: ListView(
             children: [
               commonList(
-                title:"Procedure Catalog",
-                 ),
+                title: "Procedure Catalog",
+              ),
               commonList(
-                  title: "Clinic Address",),
+                title: "Clinic Address",
+              ),
               commonList(
-
-                  title: "Notification",
-                 ),
+                title: "Notification",
+              ),
               commonList(title: "Consent Forms"),
               commonList(title: "Billing"),
-              commonList(title: "EMR",),
+              commonList(
+                title: "EMR",
+              ),
               commonList(
                 title: "Prescriptions",
               ),
-              commonList(title: "Calendar", ),
-              commonList(title: "Communications",),
-              commonList(title: "Contacts",),
-              commonList(title: "Email PDF Settings",),
+              commonList(
+                title: "Calendar",
+              ),
+              commonList(
+                title: "Communications",
+              ),
+              commonList(
+                title: "Contacts",
+              ),
+              commonList(
+                title: "Email PDF Settings",
+              ),
               commonList(title: "Medical History"),
             ],
           ),
@@ -56,11 +64,7 @@ class SettingScreen extends StatelessWidget {
     });
   }
 
-  commonList(
-      {String? title,
-
-      double? top,
-      VoidCallback? onTap}) {
+  commonList({String? title, double? top, VoidCallback? onTap}) {
     return Container(
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       decoration: commonBoxDecoration(
@@ -71,12 +75,11 @@ class SettingScreen extends StatelessWidget {
         onTap: onTap,
         dense: true,
         titleAlignment: ListTileTitleAlignment.center,
-        trailing:
-            const Icon(
-              Icons.arrow_forward_ios_outlined,
-              color: Colors.grey,
-              size: 15,
-            ),
+        trailing: const Icon(
+          Icons.arrow_forward_ios_outlined,
+          color: Colors.grey,
+          size: 15,
+        ),
         title: CommonTextWidget(
           text: title ?? "Sync Now",
           fontWeight: FontWeight.w600,

@@ -29,24 +29,27 @@ class _PatientsScreenState extends State<PatientsScreen> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-
-      context.read<CalenderProvider>().getPatientDetails().then((value) {
-        if(globalStatusCode==401){
+      context
+          .read<CalenderProvider>()
+          .getPatientDetails(context: context)
+          .then((value) {
+        if (globalStatusCode == 401) {
           showCommonDialog(
             context: context,
             title: "Error",
-            content: errorMessage??'',
+            content: errorMessage ?? '',
             btnPositive: "Close",
             onPressPositive: () {
               pushNamedAndRemoveUntil(
-              context: context,
-              routeName: RouteName.loginScreen);
+                  context: context, routeName: RouteName.loginScreen);
             },
             isMessage: true,
           );
         }
         _searchController.addListener(() {
-          context.read<CalenderProvider>().searchPatients(_searchController.text);
+          context
+              .read<CalenderProvider>()
+              .searchPatients(_searchController.text);
         });
       });
     });
@@ -61,123 +64,126 @@ class _PatientsScreenState extends State<PatientsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var provider=context.watch<CalenderProvider>();
+    var provider = context.watch<CalenderProvider>();
     return AppScaffold(
         right: 0,
         left: 0,
         color: Colors.white,
-         child: Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-
-
-            const SizedBox(height: 10,),
-
+            const SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-
-
                   Expanded(
                     flex: 6,
-                  child: CommonTextField(
-                    right: 20,
-                    height: 36,
-                    padding: 0,
-                    controller: _searchController,
-                    fontSize: 12,
-
-                    colorFill: Colors.white,
-                    hint: "Search Patient Name/ID/Phone number",
+                    child: CommonTextField(
+                      right: 20,
+                      height: 36,
+                      padding: 0,
+                      controller: _searchController,
+                      fontSize: 12,
+                      colorFill: Colors.white,
+                      hint: "Search Patient Name/ID/Phone number",
+                    ),
                   ),
-                ),
-                Expanded(
-                  flex: 4,
-                  child:  Align(
-                      alignment: Alignment.centerRight,
-                      child: buildPopupMenuFilter()),
-                ),
-
-                  const SizedBox(width: 15,)
-
-              ],),
+                  Expanded(
+                    flex: 4,
+                    child: Align(
+                        alignment: Alignment.centerRight,
+                        child: buildPopupMenuFilter()),
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  )
+                ],
+              ),
             ),
-
             const Divider(
               height: 2,
               thickness: 0.3,
             ),
-
             Expanded(
               child: Stack(
                 children: [
-
-
-                  provider.filteredPatients!=null? ListView.separated(
-                    shrinkWrap: true,
-                      padding: EdgeInsets.zero,
-                      itemCount:  provider.filteredPatients?.length ?? 0,
-                      itemBuilder: (context,index){
-                    var data=provider.filteredPatients?[index];
-                    return  Container(
-
-                      margin: const EdgeInsets.all(0),
-                      child: ListTile(
-
-                        dense: true
-                        ,
-                        onTap: () {
-                         /* pushScreen(
+                  provider.filteredPatients != null
+                      ? ListView.separated(
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          itemCount: provider.filteredPatients?.length ?? 0,
+                          itemBuilder: (context, index) {
+                            var data = provider.filteredPatients?[index];
+                            return Container(
+                              margin: const EdgeInsets.all(0),
+                              child: ListTile(
+                                dense: true,
+                                onTap: () {
+                                  /* pushScreen(
                             context: context,
                             routeName: RouteName.patientInfoScreen,
                           );*/
-                        },
-                        trailing: buildPopupMenu(id: data?.toString()),
-                        leading: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: commonBoxDecoration(
-                            shape: BoxShape.circle,
-                            color:AppColors.primary,
-                            border: Border.all(color: Colors.grey, width: 0),
+                                },
+                                trailing: buildPopupMenu(id: data?.toString()),
+                                leading: Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: commonBoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: AppColors.primary,
+                                    border: Border.all(
+                                        color: Colors.grey, width: 0),
+                                  ),
+                                  child: Center(
+                                    child: CommonTextWidget(
+                                      textColor: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      text: data?.firstName
+                                          .toString()
+                                          .toUpperCase()[0],
+                                    ),
+                                  ),
+                                ),
+                                title: CommonTextWidget(
+                                  text:
+                                      '${data?.firstName?.toString().toCapitalize()} ${data?.lastName.toString()}',
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 13,
+                                ),
+                                subtitle: CommonTextWidget(
+                                  text: data?.gender.toString(),
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const Divider(
+                              thickness: 0.3,
+                            );
+                          },
+                        )
+                      : Center(
+                          child: CommonTextWidget(
+                            text: "Data not found",
                           ),
-                          child: Center(
-                             child: CommonTextWidget(
-                               textColor: Colors.white,
-                               fontSize: 14,
-                               fontWeight: FontWeight.w600,
-                               text:data?.firstName.toString().toUpperCase()[0] ,),
-                          ),
                         ),
-                        title: CommonTextWidget(
-                          text: '${data?.firstName?.toString().toCapitalize()} ${data?.lastName.toString()}' ,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 13,
-                        ),
-                        subtitle: CommonTextWidget(
-                          text: data?.gender.toString(),
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12,
-                        ),
-                      ),
-                    );
-                  }, separatorBuilder: (BuildContext context, int index) { return const Divider(thickness: 0.3,); },):Center(
-                    child: CommonTextWidget(text: "Data not found",),
-                  ),
-                  provider.isAdding?showLoaderList():const SizedBox.shrink()
+                  provider.isAdding ? showLoaderList() : const SizedBox.shrink()
                 ],
               ),
             ),
-
           ],
         ));
   }
 
   Widget buildPopupMenu({String? id}) {
-
     return PopupMenuButton<String>(
       offset: const Offset(-0, 30),
       color: Colors.white,
@@ -219,19 +225,20 @@ class _PatientsScreenState extends State<PatientsScreen> {
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
         PopupMenuItem<String>(
           value: 'create',
-          child: commonMenuWidget(text: 'Create An Appointments',icon: Icons.person_add ),
+          child: commonMenuWidget(
+              text: 'Create An Appointments', icon: Icons.person_add),
         ),
         PopupMenuItem<String>(
           value: 'consultation',
-          child: commonMenuWidget(text: 'Consult',icon: Icons.video_call),
+          child: commonMenuWidget(text: 'Consult', icon: Icons.video_call),
         ),
         PopupMenuItem<String>(
           value: 'upload',
-          child: commonMenuWidget(text: 'Upload File',icon: Icons.upload_file),
+          child: commonMenuWidget(text: 'Upload File', icon: Icons.upload_file),
         ),
         PopupMenuItem<String>(
           value: 'delete',
-          child: commonMenuWidget(text: 'Delete',icon: Icons.delete),
+          child: commonMenuWidget(text: 'Delete', icon: Icons.delete),
         ),
       ],
       child: const Icon(
@@ -248,12 +255,12 @@ class _PatientsScreenState extends State<PatientsScreen> {
       offset: const Offset(-0, 30),
       color: Colors.white,
       onSelected: (String value) async {
-        final provider = context.read<CalenderProvider>();// Handle the create option
+        final provider =
+            context.read<CalenderProvider>(); // Handle the create option
 
         if (value == 'All') {
           provider.getAllPatientsData();
-        }
-        else  if (value == 'all_female') {
+        } else if (value == 'all_female') {
           provider.filterBYGenders(gender: 'female');
         } else if (value == 'all_male') {
           provider.filterBYGenders(gender: 'male');
@@ -262,32 +269,33 @@ class _PatientsScreenState extends State<PatientsScreen> {
         } else if (value == 'female_over30') {
           provider.filterByAges(age: 30, isUnder: false);
         }
-
       },
 
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-      PopupMenuItem<String>(
-        value: 'All',
+        PopupMenuItem<String>(
+          value: 'All',
+          child: commonMenuWidget(
+              text: "All Patients", icon: Icons.personal_injury_outlined),
+        ),
 
-        child: commonMenuWidget(text: "All Patients",icon:Icons.personal_injury_outlined ),
-      ),
-
-      //
+        //
         PopupMenuItem<String>(
           value: 'all_female',
-          child: commonMenuWidget(text: "All Female Customer",icon: Icons.female),
+          child:
+              commonMenuWidget(text: "All Female Customer", icon: Icons.female),
         ),
         PopupMenuItem<String>(
           value: 'all_male',
-          child:commonMenuWidget(text:"All Male Customer",icon:Icons.male),
+          child: commonMenuWidget(text: "All Male Customer", icon: Icons.male),
         ),
         PopupMenuItem<String>(
           value: 'female_under30',
-          child:commonMenuWidget(text: "Female Customer under 30",icon: Icons.female) ,
+          child: commonMenuWidget(
+              text: "Female Customer under 30", icon: Icons.female),
         ),
         PopupMenuItem<String>(
           value: 'female_over30',
-          child:commonMenuWidget(),
+          child: commonMenuWidget(),
         ),
       ],
       child: const Icon(
@@ -297,13 +305,24 @@ class _PatientsScreenState extends State<PatientsScreen> {
     );
   }
 
-
-
-  commonMenuWidget({String? text,IconData? icon, }){
+  commonMenuWidget({
+    String? text,
+    IconData? icon,
+  }) {
     return Row(
       children: [
-         Icon(icon??Icons.female ,color: Colors.black.withOpacity(0.6),),
-        Flexible(child: CommonTextWidget(text: text??'Female Customer Over 30',fontSize: 11,left: 5,fontWeight: FontWeight.w600,textColor: Colors.black.withOpacity(0.6),)),
+        Icon(
+          icon ?? Icons.female,
+          color: Colors.black.withOpacity(0.6),
+        ),
+        Flexible(
+            child: CommonTextWidget(
+          text: text ?? 'Female Customer Over 30',
+          fontSize: 11,
+          left: 5,
+          fontWeight: FontWeight.w600,
+          textColor: Colors.black.withOpacity(0.6),
+        )),
       ],
     );
   }

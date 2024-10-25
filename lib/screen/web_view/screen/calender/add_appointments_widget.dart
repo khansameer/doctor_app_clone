@@ -23,6 +23,7 @@ class AddAppointmentsWidget extends StatefulWidget {
   @override
   State<AddAppointmentsWidget> createState() => _AddAppointmentsWidgetState();
 }
+
 class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
   var tetDate = TextEditingController();
   var tetTime = TextEditingController();
@@ -40,11 +41,9 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
       final provider = Provider.of<CalenderProvider>(context, listen: false);
       tetTime.text = "${now?.hour}:${now?.minute}:${now?.second}";
       tetDate.text = '${now?.year}-${now?.month}-${now?.day}';
-      provider.getPatientDetails();
+      provider.getPatientDetails(context: context);
     });
   }
-
-
 
   resetField() {
     tetDate.clear();
@@ -53,9 +52,7 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
     tetPatientName.clear();
     tetPatientPhone.clear();
     tetDesc.clear();
-
   }
-
 
   @override
   void dispose() {
@@ -66,7 +63,6 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
     tetPatientName.dispose();
     tetPatientEmail.dispose();
     tetPatientPhone.dispose();
-
   }
 
   @override
@@ -76,12 +72,12 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
 
     var width = MediaQuery.of(context).size.width;
     final provider = context.read<CalenderProvider>();
-    return  SizedBox(
+    return SizedBox(
       width: isMobile
           ? width * zero9
           : isDesktop
-          ? width * 0.3
-          : width * 0.19,
+              ? width * 0.3
+              : width * 0.19,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -116,7 +112,6 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                             ))
                       ],
                     ),
-
                     const SizedBox(height: 20),
                     commonTextFiledView(
                         height: 45,
@@ -134,13 +129,11 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                         topTextField: 10,
                         radius: 8,
                         title: "Time"),
-
                     widget.patientID == null
                         ? const SizedBox(
-                      height: 10,
-                    )
+                            height: 10,
+                          )
                         : const SizedBox.shrink(),
-
                     CommonTextWidget(
                       /* text: "Select Patient",*/
                       text: "Patient Name",
@@ -150,29 +143,33 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                       height: 10,
                     ),
                     SearchField<Patients>(
-
-
                       suggestionStyle: commonTextStyle(),
                       searchInputDecoration: SearchInputDecoration(
                           labelStyle: commonTextStyle(fontSize: 14),
-                          hintText:  "Search Patient Name",
-                          suffixIcon: const Icon(Icons.keyboard_arrow_down_sharp,color: Colors.grey,),
-                          hintStyle: commonTextStyle(color: Colors.grey,fontSize: 14,fontWeight: FontWeight.w400),
+                          hintText: "Search Patient Name",
+                          suffixIcon: const Icon(
+                            Icons.keyboard_arrow_down_sharp,
+                            color: Colors.grey,
+                          ),
+                          hintStyle: commonTextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400),
                           border: const OutlineInputBorder(
                               gapPadding: ten,
                               borderSide: BorderSide(
                                 width: 1,
-                                color:  AppColors.primary,
+                                color: AppColors.primary,
                               ),
                               borderRadius:
-                              BorderRadius.all(Radius.circular(eight))),
+                                  BorderRadius.all(Radius.circular(eight))),
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: AppColors.primary.withOpacity(0.20),
                                 width: 1,
                               ),
-                              borderRadius:
-                              const BorderRadius.all(Radius.circular( eight))),
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(eight))),
                           focusedBorder: const OutlineInputBorder(
                               gapPadding: ten,
                               borderSide: BorderSide(
@@ -180,33 +177,33 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                                 color: AppColors.primary,
                               ),
                               borderRadius:
-                              BorderRadius.all(Radius.circular(eight)))),
+                                  BorderRadius.all(Radius.circular(eight)))),
                       textInputAction: TextInputAction.next,
-
-                      controller:tetPatientName ,
-
-
-                      suggestions: provider.patientDetailsModel?.patients!=null? provider.patientDetailsModel!.patients
-                          .map(
-                            (patient) => SearchFieldListItem<Patients>(
-                          patient.firstName.toString(), // Create a fullName getter if necessary
-                          item: patient,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-
-                                const SizedBox(width: 10),
-                                Text(patient.firstName ?? ' ${patient.lastName}' ?? ''),
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
-                          .toList():[],
+                      controller: tetPatientName,
+                      suggestions:
+                          provider.patientDetailsModel?.patients != null
+                              ? provider.patientDetailsModel!.patients
+                                  .map(
+                                    (patient) => SearchFieldListItem<Patients>(
+                                      patient.firstName
+                                          .toString(), // Create a fullName getter if necessary
+                                      item: patient,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          children: [
+                                            const SizedBox(width: 10),
+                                            Text(patient.firstName ??
+                                                ' ${patient.lastName}'),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                  .toList()
+                              : [],
                       onSuggestionTap: (suggestion) {
                         // Handle the tap event (e.g., populate a text field with the selected patient's name)
-                        print('Selected patient: ${suggestion.item?.firstName.toString()} ${suggestion.item?.lastName}');
                       },
                     ),
                     const SizedBox(
@@ -214,35 +211,33 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                     ),
                     widget.patientID == null
                         ? commonTextFiledView(
-                      title: "Patient Email Address",
-                      topText: 10,
-                      maxLines: 3,
-                      controller: tetPatientEmail,
-                      topTextField: 10,
-                      height: 45,
-                      radius: 8,
-                    )
+                            title: "Patient Email Address",
+                            topText: 10,
+                            maxLines: 3,
+                            controller: tetPatientEmail,
+                            topTextField: 10,
+                            height: 45,
+                            radius: 8,
+                          )
                         : const SizedBox.shrink(),
                     widget.patientID == null
                         ? commonTextFiledView(
-                      title: "Patient Phone No",
-                      topText: 10,
-                      maxLines: 3,
-                      controller: tetPatientPhone,
-                      topTextField: 10,
-                      height: 45,
-                      radius: 8,
-                    )
+                            title: "Patient Phone No",
+                            topText: 10,
+                            maxLines: 3,
+                            controller: tetPatientPhone,
+                            topTextField: 10,
+                            height: 45,
+                            radius: 8,
+                          )
                         : const SizedBox.shrink(),
-
                     commonTextFiledView(
                       title: "Description",
                       topText: 10,
-                      keyboardType: TextInputType.multiline ,
+                      keyboardType: TextInputType.multiline,
                       maxLines: 3,
                       controller: tetDesc,
                       topTextField: 10,
-
                       radius: 8,
                     ),
                     const SizedBox(
@@ -255,12 +250,13 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                         Expanded(
                           child: CommonButtonWidget(
                             radius: 8,
-                            height: isMobile?null:40,
+                            height: isMobile ? null : 40,
                             onPressed: () async {
                               String userId = await getUserID();
 
                               Map<String, dynamic> body = {
-                                "patientId": widget.patientID ?? provider.selectedID,
+                                "patientId":
+                                    widget.patientID ?? provider.selectedID,
                                 "doctorId": userId,
                                 "dateTime": widget.dateTime.toString(),
                                 "reason": tetDesc.text,
@@ -292,7 +288,7 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                           child: CommonButtonWidget(
                             text: "Cancel",
                             radius: 8,
-                            height: isMobile?null:40,
+                            height: isMobile ? null : 40,
                             colorBorder: Colors.black,
                             colorButton: Colors.white,
                             colorText: Colors.black,
@@ -303,7 +299,6 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                                   resetField();
                                   provider.selectedID == null;
 
-                                  print('==new==${tetPatientName.text}');
                                   Navigator.of(context).pop();
                                 });
                               });
@@ -316,7 +311,9 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                   ],
                 ),
               ),
-              context.watch <CalenderProvider>().isAdding ? showLoaderList() : const SizedBox.shrink()
+              context.watch<CalenderProvider>().isAdding
+                  ? showLoaderList()
+                  : const SizedBox.shrink()
             ],
           ),
         ],

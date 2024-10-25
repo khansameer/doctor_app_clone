@@ -79,7 +79,6 @@ class AuthProviders extends ChangeNotifier {
     notifyListeners();
   }
 
-
   DateTime _selectedDate = DateTime.now();
 
   DateTime get selectedDate => _selectedDate;
@@ -188,6 +187,8 @@ class AuthProviders extends ChangeNotifier {
           await PreferenceHelper.setBool(
               key: PreferenceHelper.isLOGIN, value: true);
         }
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
       } else {
         /*showCommonDialog(
             context: context,
@@ -227,16 +228,23 @@ class AuthProviders extends ChangeNotifier {
     return _selectedItems.contains(item);
   }
 
-  Future getSpecializationsList() async {
+  Future getSpecializationsList({required BuildContext context}) async {
     _isLoading = true;
     notifyListeners();
     try {
       final response =
           await _service.callGetMethod(url: ApiConfig.getSpecializations);
       List<dynamic> body = jsonDecode(response);
-      _specializationsList = body
-          .map((dynamic item) => SpecializationsModel.fromJson(item))
-          .toList();
+
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+        _specializationsList = body
+            .map((dynamic item) => SpecializationsModel.fromJson(item))
+            .toList();
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
+      } else {
+        _specializationsList = [];
+      }
 
       _isLoading = false;
       notifyListeners();
@@ -250,18 +258,18 @@ class AuthProviders extends ChangeNotifier {
   //
 
   Future addProcedureCharges(
-    Map<String, dynamic> body,
-  ) async {
+      {required Map<String, dynamic> body,
+      required BuildContext context}) async {
     _isLoading = true;
     notifyListeners();
     try {
       final response = await _service.callPostMethodApiWithToken(
           url: ApiConfig.addProcedurCharges, body: body);
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
+      }
       print('======${response.toString()}');
-      /* List<dynamic> body = jsonDecode(response);
-      _specializationsList = body
-          .map((dynamic item) => SpecializationsModel.fromJson(item))
-          .toList();*/
 
       _isLoading = false;
       notifyListeners();
@@ -304,6 +312,8 @@ class AuthProviders extends ChangeNotifier {
 
       if (globalStatusCode == 200 || globalStatusCode == 201) {
         if (_signupModel?.doctor?.sId != null) {}
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
       } else {
         showCommonDialog(
             context: context,

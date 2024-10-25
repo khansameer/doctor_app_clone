@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:doctor_app/core/component/component.dart';
-import 'package:doctor_app/core/route/route.dart';
-import 'package:doctor_app/main.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
@@ -116,7 +114,9 @@ Future callDeleteMethod(String url, Map<String, dynamic> params) async {
 
 Future callGETMethod({required String url, String? key}) async {
   String? token = await getAuthToken();
-  print('=====Token${token}');
+  if (kDebugMode) {
+    print('=====Token$token');
+  }
   Map<String, String> commonHeadersToken = {
     'Content-Type': 'application/json',
     'accept': '*/*',
@@ -155,18 +155,17 @@ Future getResponse(Response response) async {
   if (globalStatusCode == 500 ||
       globalStatusCode == 502 ||
       globalStatusCode == 503) {
-
     final parsedJson = jsonDecode(response.body.toString());
-    errorMessage= parsedJson['message'].toString();
+    errorMessage = parsedJson['message'].toString();
     return "{\"status\":\"false\",\"message\":\"Internal server issue\"}";
   } else if (globalStatusCode == 401) {
     final parsedJson = jsonDecode(response.body.toString());
     final message = parsedJson['message'].toString();
-    errorMessage= parsedJson['message'].toString();
+    errorMessage = parsedJson['message'].toString();
     return "{\"status\":\"false\",\"message\":\"$message\"}";
   } else if (globalStatusCode == 403) {
     final parsedJson = jsonDecode(response.body.toString());
-    errorMessage= parsedJson['message'].toString();
+    errorMessage = parsedJson['message'].toString();
 
     return "{\"status\":\"false\",\"message\":\"Internal server issue\"}";
   } else if (globalStatusCode == 405) {
@@ -174,11 +173,11 @@ Future getResponse(Response response) async {
     String error = "This Method not allowed.";
     printWrapped("response--$error");
     final parsedJson = jsonDecode(response.body.toString());
-    errorMessage= parsedJson['message'].toString();
+    errorMessage = parsedJson['message'].toString();
     return "{\"status\":\"0\",\"message\":\"$error\"}";
   } else if (globalStatusCode == 400) {
     final parsedJson = jsonDecode(response.body.toString());
-    errorMessage= parsedJson['message'].toString();
+    errorMessage = parsedJson['message'].toString();
     // final message = parsedJson['message'].toString();
     /* statusValue == false;
     errorMessage == parsedJson['message'].toString();*/
@@ -187,21 +186,20 @@ Future getResponse(Response response) async {
     //  print('======status=par$status');
     return response.body;
   } else if (globalStatusCode == 422) {
-;
     final parsedJson = jsonDecode(response.body.toString());
-    errorMessage= parsedJson['message'].toString();
+    errorMessage = parsedJson['message'].toString();
     final message = parsedJson['message'].toString();
     return "{\"status\":\"false\",\"message\":\"${message.replaceAll(RegExp(r'[^\w\s]+'), '')}\"}";
   } else if (globalStatusCode == 204) {
     final parsedJson = jsonDecode(response.body.toString());
     final message = parsedJson['message'].toString();
-    errorMessage= parsedJson['message'].toString();
+    errorMessage = parsedJson['message'].toString();
     return "{\"status\":\"false\",\"message\":\"${message.replaceAll(RegExp(r'[^\w\s]+'), '')}\"}";
   } else if (globalStatusCode < 200 || globalStatusCode > 404) {
     String error = response.headers['message'].toString();
     printWrapped("response--$error");
     final parsedJson = jsonDecode(response.body.toString());
-    errorMessage= parsedJson['message'].toString();
+    errorMessage = parsedJson['message'].toString();
     return "{\"status\":\"0\",\"message\":\"$error\"}";
   }
   return response.body;

@@ -5,6 +5,7 @@ import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:doctor_app/provider/calender_provider.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/get_edit_appointments_details_widget.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,6 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import 'add_appointments_widget.dart';
 import 'calender_view_left_screen.dart';
-
 
 class AdminCalenderScreen extends StatefulWidget {
   const AdminCalenderScreen({super.key});
@@ -36,7 +36,10 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
     isSelected = [false, true, false];
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<CalenderProvider>().getAppointments().then((value) {
+      context
+          .read<CalenderProvider>()
+          .getAppointments(context: context)
+          .then((value) {
         setState(() {});
       });
     });
@@ -388,7 +391,9 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
         if (details.appointments != null && details.appointments!.isNotEmpty) {
           Appointment tappedAppointment = details.appointments!.first;
           String? appointmentId = tappedAppointment.id as String?;
-          print('Appointment ID: $appointmentId');
+          if (kDebugMode) {
+            print('Appointment ID: $appointmentId');
+          }
           showDialog(
               barrierDismissible: false,
               context: context,

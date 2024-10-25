@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const colorSplash = Color.fromRGBO(150, 115, 217, 1);
 
-const colorGreen = Color.fromRGBO(18, 166, 108,1);
+const colorGreen = Color.fromRGBO(18, 166, 108, 1);
 const colorGreen1 = Color.fromRGBO(47, 52, 136, 0.8);
 const colorBlueLight = Color.fromRGBO(100, 141, 219, 1);
 const colorBlack = Color.fromRGBO(0, 0, 0, 1);
@@ -10,6 +10,7 @@ const colorWhite = Color.fromRGBO(255, 255, 255, 1);
 const colorGray = Color.fromRGBO(178, 178, 178, 1);
 const colorFillBg = Color.fromRGBO(217, 217, 217, 1);
 const colorBG = Color.fromRGBO(240, 240, 240, 1);
+const colorBGWithOpacity = Color.fromRGBO(240, 240, 240, 0.60);
 const colorYellow = Color.fromRGBO(253, 255, 147, 1);
 const colorPinkLight = Color.fromRGBO(150, 115, 217, 0.20);
 const colorSender = Color.fromRGBO(53, 53, 53, 1);
@@ -17,8 +18,7 @@ const color1 = Color.fromRGBO(255, 200, 3, 1);
 const color2 = Color.fromRGBO(150, 115, 217, 1);
 const color3 = Color.fromRGBO(37, 188, 126, 1);
 const color4 = Color.fromRGBO(204, 204, 204, 1);
-const colorText = Color.fromRGBO(56,55,60,1);
-const colorAmber = Color.fromRGBO(254,193,68,1);
-
+const colorText = Color.fromRGBO(56, 55, 60, 1);
+const colorAmber = Color.fromRGBO(254, 193, 68, 1);
 
 //const colorMenu = Color.fromRGBO(123, 123, 123, 1);

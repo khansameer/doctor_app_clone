@@ -12,8 +12,6 @@ import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
-
-
 class CalenderProvider extends ChangeNotifier {
   //for  remove line
 
@@ -31,7 +29,6 @@ class CalenderProvider extends ChangeNotifier {
 
   String? get selectedID => _selectedID;
 
-
   void updateValue(String? data) {
     _selectedValue = data;
     notifyListeners();
@@ -42,19 +39,16 @@ class CalenderProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-
   ////////////////////////////////////////AppCode
-
-
 
   DateTime _selectedDate = DateTime.now();
 
   List<Appointments>? get appointments => _appointmentsModel?.appointments
       ?.where((appointment) =>
-  appointment.dateTime?.startsWith(_selectedDate.toString().substring(0, 10)) ?? false)
+          appointment.dateTime
+              ?.startsWith(_selectedDate.toString().substring(0, 10)) ??
+          false)
       .toList();
-
 
   DateTime get selectedDate => _selectedDate;
   void setSelectedDate(DateTime date) {
@@ -67,7 +61,8 @@ class CalenderProvider extends ChangeNotifier {
 
   AppointmentsModel? get appointmentsModel => _appointmentsModel;
 
-  Future getAppointments({bool? isConsultation=false}) async {
+  Future getAppointments(
+      {bool? isConsultation = false, required BuildContext context}) async {
     String userId = await getUserID();
 
     _isFetching = true;
@@ -79,10 +74,12 @@ class CalenderProvider extends ChangeNotifier {
       if (kDebugMode) {
         print('==Appointments==${json.decode(response)}');
       }
+
       _appointmentsModel = AppointmentsModel.fromJson(json.decode(response));
 
-
-
+      if (globalStatusCode == 401) {
+        commonSessionError(context: context);
+      }
 
       _isFetching = false;
       notifyListeners();
@@ -97,7 +94,8 @@ class CalenderProvider extends ChangeNotifier {
 
   GetAppointmentsDetailsModel? get appointmentsDetailsModel =>
       _appointmentsDetailsModel;
-  Future getAppointmentsDetailsBYID(String appointmentsID) async {
+  Future getAppointmentsDetailsBYID(
+      {required String appointmentsID, required BuildContext context}) async {
     // String userId = await getUserID();
 
     _isFetching = true;
@@ -106,11 +104,15 @@ class CalenderProvider extends ChangeNotifier {
       final response = await _service.callGetMethod(
           url: '${ApiConfig.createAppointment}/$appointmentsID');
 
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+        _appointmentsDetailsModel =
+            GetAppointmentsDetailsModel.fromJson(json.decode(response));
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
+      }
       if (kDebugMode) {
         print('==Appointments==${json.decode(response)}');
       }
-      _appointmentsDetailsModel =
-          GetAppointmentsDetailsModel.fromJson(json.decode(response));
 
       _isFetching = false;
       notifyListeners();
@@ -127,7 +129,7 @@ class CalenderProvider extends ChangeNotifier {
   List<Patients>? _filteredPatients;
   List<Patients>? get filteredPatients => _filteredPatients;
 
-  Future getPatientDetails() async {
+  Future getPatientDetails({required BuildContext context}) async {
     String userId = await getUserID();
 
     _isAdding = true;
@@ -136,9 +138,14 @@ class CalenderProvider extends ChangeNotifier {
       final response = await _service.callGetMethod(
           url: '${ApiConfig.getPatientDetails}/$userId/patients');
 
-      _patientDetailsModel =
-          PatientDetailsModel.fromJson(json.decode(response));
-      _filteredPatients = _patientDetailsModel?.patients;
+      if (globalStatusCode == 200 || globalStatusCode == 200) {
+        _patientDetailsModel =
+            PatientDetailsModel.fromJson(json.decode(response));
+        _filteredPatients = _patientDetailsModel?.patients;
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
+      }
+
       _isAdding = false;
       notifyListeners();
     } catch (e) {
@@ -162,7 +169,9 @@ class CalenderProvider extends ChangeNotifier {
       _createAppointmentModel =
           CreateAppointmentModel.fromJson(json.decode(response));
       if (globalStatusCode == 200 || globalStatusCode == 201) {
-        getAppointments();
+        getAppointments(context: context);
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
       } else {
         showCommonDialog(
             context: context,
@@ -192,7 +201,9 @@ class CalenderProvider extends ChangeNotifier {
       _createAppointmentModel =
           CreateAppointmentModel.fromJson(json.decode(response));
       if (globalStatusCode == 200 || globalStatusCode == 201) {
-        getAppointments();
+        getAppointments(context: context);
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
       } else {
         showCommonDialog(
             context: context,
@@ -222,7 +233,9 @@ class CalenderProvider extends ChangeNotifier {
       _createAppointmentModel =
           CreateAppointmentModel.fromJson(json.decode(response));
       if (globalStatusCode == 200 || globalStatusCode == 201) {
-        getAppointments();
+        getAppointments(context: context);
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
       } else {
         showCommonDialog(
             context: context,
@@ -241,7 +254,8 @@ class CalenderProvider extends ChangeNotifier {
 
   void filterBYGenders({required String gender}) {
     _filteredPatients = _patientDetailsModel?.patients
-        .where((patient) => patient.gender?.toLowerCase() == gender.toLowerCase())
+        .where(
+            (patient) => patient.gender?.toLowerCase() == gender.toLowerCase())
         .toList();
     notifyListeners();
   }
@@ -251,23 +265,30 @@ class CalenderProvider extends ChangeNotifier {
       _filteredPatients = _patientDetailsModel?.patients;
     } else {
       _filteredPatients = _patientDetailsModel?.patients.where((patient) {
-        return patient.firstName.toString().toLowerCase().contains(query.toLowerCase()) ||
+        return patient.firstName
+                .toString()
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
             patient.sId.toString().contains(query) ||
             patient.phoneNumber.toString().contains(query);
       }).toList();
     }
     notifyListeners();
   }
+
   void getAllPatientsData() {
-    _filteredPatients = _patientDetailsModel?.patients; // Reset to show all patients
+    _filteredPatients =
+        _patientDetailsModel?.patients; // Reset to show all patients
     notifyListeners();
   }
+
   void filterByAges({required int age, required bool isUnder}) {
     DateTime now = DateTime.now();
     _filteredPatients = _patientDetailsModel?.patients.where((patient) {
       DateTime dateTime = DateTime.parse(patient.dateOfBirth.toString());
       int patientAge = now.year - dateTime.year;
-      if (now.month < dateTime.month || (now.month == dateTime.month && now.day < dateTime.day)) {
+      if (now.month < dateTime.month ||
+          (now.month == dateTime.month && now.day < dateTime.day)) {
         patientAge--;
       }
       return isUnder ? patientAge < age : patientAge >= age;
@@ -276,27 +297,27 @@ class CalenderProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   List<Appointments>? getTodayAppointments() {
     DateTime now = DateTime.now().toUtc();
     DateTime today = DateTime(now.year, now.month, now.day);
 
     // Filter today's appointments
-    List<Appointments>? todayAppointments = _appointmentsModel?.appointments?.where((appointment) {
+    List<Appointments>? todayAppointments =
+        _appointmentsModel?.appointments?.where((appointment) {
       if (appointment.dateTime == null) return false;
 
       DateTime dateTime = DateTime.parse(appointment.dateTime!);
 
       // Check if dateTime is on the same day as today
       return dateTime.isAtSameMomentAs(today) ||
-          (dateTime.isAfter(today) && dateTime.isBefore(today.add(Duration(days: 1))));
+          (dateTime.isAfter(today) &&
+              dateTime.isBefore(today.add(Duration(days: 1))));
     }).toList();
 
     notifyListeners();
 
     return todayAppointments;
   }
-
 
   List<Appointments>? getYesterdayAppointments() {
     DateTime now = DateTime.now().toUtc();
@@ -316,7 +337,6 @@ class CalenderProvider extends ChangeNotifier {
           day == yesterday.day;
     }).toList();
   }
-
 
   List<String> _names = ['Alice', 'Bob', 'Charlie']; // Initial list of names
   String _searchTerm = '';
@@ -353,8 +373,4 @@ class CalenderProvider extends ChangeNotifier {
   }
 
   bool get isNameNotFound => filteredNames.isEmpty && _searchTerm.isNotEmpty;
-
-
-
-
 }

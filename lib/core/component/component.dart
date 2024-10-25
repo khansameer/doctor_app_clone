@@ -7,8 +7,8 @@ import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/main.dart';
 
 import 'package:doctor_app/provider/dashboard_provider.dart';
+import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:doctor_app/shared_preferences/preference_helper.dart';
-
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -113,17 +113,17 @@ commonButton(
   );
 }
 
-commonBackRedirectButton({String? page,Color? color}) {
+commonBackRedirectButton({String? page, Color? color}) {
   return IconButton(
       onPressed: () {
-         final dashboardProvider = Provider.of<DashboardProvider>(
+        final dashboardProvider = Provider.of<DashboardProvider>(
             navigatorKey.currentState!.context,
             listen: false);
-        dashboardProvider.updateAppPage = page??"Home";
+        dashboardProvider.updateAppPage = page ?? "Home";
       },
-      icon:  Icon(
+      icon: Icon(
         Icons.arrow_back_ios,
-        color: color??colorText,
+        color: color ?? colorText,
       ));
 }
 
@@ -375,6 +375,21 @@ void showCommonDialog(
               ),
             ],
           ));
+}
+
+commonSessionError({required BuildContext context}) {
+  showCommonDialog(
+    context: context,
+    title: "Error",
+    content: errorMessage ?? '',
+    btnPositive: "Close",
+    onPressPositive: () {
+      PreferenceHelper.clear();
+      pushNamedAndRemoveUntil(
+          context: context, routeName: RouteName.loginScreen);
+    },
+    isMessage: true,
+  );
 }
 
 Widget showLoaderList() {

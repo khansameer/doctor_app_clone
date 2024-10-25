@@ -12,7 +12,6 @@ class InvoiceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
-    var isDesktop = Responsive.isDesktop(context);
     var isMobile = Responsive.isMobile(context);
     return Container(
       width: size.width,
@@ -36,7 +35,6 @@ class InvoiceScreen extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      var height = MediaQuery.of(context).size.height;
                       var width = MediaQuery.of(context).size.width;
 
                       return CustomAlertDialog(
@@ -68,15 +66,16 @@ class InvoiceScreen extends StatelessWidget {
                 headingRowColor: WidgetStateProperty.resolveWith<Color>(
                     (Set<WidgetState> states) {
                   // Set color for heading row
-                //  return Colors.blueGrey[200]!; // example color
-                      return const Color.fromRGBO(48, 180, 128, 1); // example color
+                  //  return Colors.blueGrey[200]!; // example color
+                  return const Color.fromRGBO(48, 180, 128, 1); // example color
                 }),
                 dataRowColor: WidgetStateProperty.resolveWith<Color>(
                     (Set<WidgetState> states) {
                   // Set color for data rows
-                 // return Colors.grey[200]!; // example color
+                  // return Colors.grey[200]!; // example color
 
-                      return const Color.fromARGB(255, 240, 242, 241); // example color
+                  return const Color.fromARGB(
+                      255, 240, 242, 241); // example color
                 }),
                 // Add other customizations here
               ),
@@ -86,7 +85,7 @@ class InvoiceScreen extends StatelessWidget {
               width: size.width,
               child: PaginatedDataTable(
                 header: CommonTextWidget(
-                 // text: 'Invoice Items',
+                  // text: 'Invoice Items',
                   text: 'Procedure Catalog',
                   fontWeight: FontWeight.w600,
                 ),
@@ -95,13 +94,13 @@ class InvoiceScreen extends StatelessWidget {
                       label: CommonTextWidget(
                     text: 'Procedure',
                     fontSize: 12,
-                        textColor: Colors.white,
+                    textColor: Colors.white,
                     fontWeight: FontWeight.w700,
                   )),
                   DataColumn(
                       label: CommonTextWidget(
                     text: 'Cost',
-                        textColor: Colors.white,
+                    textColor: Colors.white,
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
                   )),
@@ -109,21 +108,21 @@ class InvoiceScreen extends StatelessWidget {
                       label: CommonTextWidget(
                     fontSize: 12,
                     text: 'Discount',
-                        textColor: Colors.white,
+                    textColor: Colors.white,
                     fontWeight: FontWeight.w700,
                   )),
                   DataColumn(
                       label: CommonTextWidget(
                     text: 'Note',
                     fontSize: 12,
-                        textColor: Colors.white,
+                    textColor: Colors.white,
                     fontWeight: FontWeight.w700,
                   )),
                   DataColumn(
                       label: CommonTextWidget(
                     text: 'Total',
                     fontSize: 12,
-                        textColor: Colors.white,
+                    textColor: Colors.white,
                     fontWeight: FontWeight.w700,
                   )),
                   DataColumn(

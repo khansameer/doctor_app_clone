@@ -16,38 +16,57 @@ class WeeklyEarningScreen extends StatelessWidget {
     return AppScaffold(
       left: 0,
       right: 0,
-      appBar:  isMobile?PreferredSize(preferredSize: Size.zero, child: Container()):commonAppBar(title: "Weekly Earnings",color: colorBG,colorText:colorText,  leading:commonBackRedirectButton(), ),
-
+      appBar: isMobile
+          ? PreferredSize(preferredSize: Size.zero, child: Container())
+          : commonAppBar(
+              title: "Weekly Earnings",
+              color: colorBG,
+              colorText: colorText,
+              leading: commonBackRedirectButton(),
+            ),
       child: Container(
         width: size.width,
-        color: isMobile?colorBG:Colors.white,
+        color: isMobile ? colorBG : Colors.white,
         height: size.height,
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: ListView(
             children: [
-
-              isMobile?Column(
-                children: [
-                  _topView(),
-                  _bottomView(size: size,isShowLastIndex: true),
-                  SizedBox(height: 10,),
-                  _bottomView(size: size,colorLine: colorAmber,isShowLastIndex: false,totalText: "Total Instant Earning"),
-                ],
-              ):Column(
-                children: [
-                  _topView(),
-
-                  Row(children: [
-                    Expanded(child: _bottomView(size: size,isShowLastIndex: true),),
-                    Expanded(child:  _bottomView(size: size,colorLine: colorAmber,isShowLastIndex: false,totalText: "Total Instant Earning"),)
-                  ],),
-
-
-
-                ],
-              ),
-
+              isMobile
+                  ? Column(
+                      children: [
+                        _topView(),
+                        _bottomView(size: size, isShowLastIndex: true),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        _bottomView(
+                            size: size,
+                            colorLine: colorAmber,
+                            isShowLastIndex: false,
+                            totalText: "Total Instant Earning"),
+                      ],
+                    )
+                  : Column(
+                      children: [
+                        _topView(),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _bottomView(
+                                  size: size, isShowLastIndex: true),
+                            ),
+                            Expanded(
+                              child: _bottomView(
+                                  size: size,
+                                  colorLine: colorAmber,
+                                  isShowLastIndex: false,
+                                  totalText: "Total Instant Earning"),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
             ],
           ),
         ),
@@ -133,7 +152,11 @@ class WeeklyEarningScreen extends StatelessWidget {
     );
   }
 
-  _bottomView({required Size size,Color? colorLine,String ?totalText,bool isShowLastIndex=false}) {
+  _bottomView(
+      {required Size size,
+      Color? colorLine,
+      String? totalText,
+      bool isShowLastIndex = false}) {
     return commonList(
         child: Padding(
       padding: const EdgeInsets.all(16.0),
@@ -150,7 +173,7 @@ class WeeklyEarningScreen extends StatelessWidget {
             Container(
               width: 3, // Width of the vertical line
               height: size.height * 0.24,
-              color: colorLine??Colors.purple, // Color of the vertical line
+              color: colorLine ?? Colors.purple, // Color of the vertical line
             ),
             const SizedBox(width: 0), // Space between line and text
             // The text part
@@ -160,7 +183,8 @@ class WeeklyEarningScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 12.0,right: 12,top: 10,bottom: 10),
+                    padding: const EdgeInsets.only(
+                        left: 12.0, right: 12, top: 10, bottom: 10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,7 +197,7 @@ class WeeklyEarningScreen extends StatelessWidget {
                         CommonTextWidget(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
-                          text: totalText??'Total Prime Earnings',
+                          text: totalText ?? 'Total Prime Earnings',
                         ),
                       ],
                     ),
@@ -181,40 +205,55 @@ class WeeklyEarningScreen extends StatelessWidget {
                   const Divider(),
                   // SizedBox(height: 16),
                   Padding(
-                    padding: const EdgeInsets.only(left: 12.0,right: 12,top: 5,bottom: 5),
-                    child: Column(children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CommonTextWidget(text: 'Amount Paid'),
-                          CommonTextWidget(text: '$rupee 0'),
-                        ],
-                      ),
-                      const SizedBox(height: 15,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CommonTextWidget(text: 'Amount Pending'),
-                          CommonTextWidget(text: '$rupee 0'),
-                        ],
-                      ),
-                      const SizedBox(height: 15,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CommonTextWidget(text: 'Total Connection'),
-                          CommonTextWidget(text: '0'),
-                        ],
-                      ),
-                      isShowLastIndex? const SizedBox(height: 15,):SizedBox.shrink(),
-                      isShowLastIndex? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CommonTextWidget(text: 'Completed Connection'),
-                          CommonTextWidget(text: '0'),
-                        ],
-                      ):SizedBox.shrink(),
-                    ],),
+                    padding: const EdgeInsets.only(
+                        left: 12.0, right: 12, top: 5, bottom: 5),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CommonTextWidget(text: 'Amount Paid'),
+                            CommonTextWidget(text: '$rupee 0'),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CommonTextWidget(text: 'Amount Pending'),
+                            CommonTextWidget(text: '$rupee 0'),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CommonTextWidget(text: 'Total Connection'),
+                            CommonTextWidget(text: '0'),
+                          ],
+                        ),
+                        isShowLastIndex
+                            ? const SizedBox(
+                                height: 15,
+                              )
+                            : const SizedBox.shrink(),
+                        isShowLastIndex
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CommonTextWidget(
+                                      text: 'Completed Connection'),
+                                  CommonTextWidget(text: '0'),
+                                ],
+                              )
+                            : const SizedBox.shrink(),
+                      ],
+                    ),
                   )
                 ],
               ),

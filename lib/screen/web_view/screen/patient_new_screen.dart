@@ -1,8 +1,6 @@
 import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
-import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
-import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/calender_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
@@ -28,7 +26,10 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<DashboardProvider>().getUserName();
-      context.read<CalenderProvider>().getPatientDetails().then((value) {
+      context
+          .read<CalenderProvider>()
+          .getPatientDetails(context: context)
+          .then((value) {
         setState(() {});
       });
     });
@@ -183,11 +184,10 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                                               selectedInnerIndex == innerIndex;
                                       return GestureDetector(
                                         onTap: () {
-
                                           provider.setPatientDetailsPage(
                                               context: context,
                                               value:
-                                              '${outerList[outerIndex]['items'][innerIndex]}');
+                                                  '${outerList[outerIndex]['items'][innerIndex]}');
 
                                           selectedOuterIndex = outerIndex;
                                           selectedInnerIndex = innerIndex;

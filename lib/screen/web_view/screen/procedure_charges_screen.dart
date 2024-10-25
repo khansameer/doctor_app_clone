@@ -2,8 +2,8 @@ import 'package:doctor_app/core/app_constants.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
-import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/auth_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +21,6 @@ class _ProcedureChargesScreenState extends State<ProcedureChargesScreen> {
   final formProcedureKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    var isMobile = Responsive.isMobile(context);
     return Consumer<AuthProviders>(builder: (context, provider, child) {
       return Form(
         key: formProcedureKey,
@@ -111,11 +110,11 @@ class _ProcedureChargesScreenState extends State<ProcedureChargesScreen> {
                       "cost": tetCost.text,
                       "description": tetDescription.text,
                     };
-                    print('====${body.toString()}');
+                    if (kDebugMode) {
+                      print('====${body.toString()}');
+                    }
                     provider
-                        .addProcedureCharges(
-                      body,
-                    )
+                        .addProcedureCharges(body: body, context: context)
                         .then((value) {
                       Navigator.of(context).pop();
                     });

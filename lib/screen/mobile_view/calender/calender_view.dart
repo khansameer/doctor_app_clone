@@ -21,7 +21,10 @@ class _CalenderViewState extends State<CalenderView> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<CalenderProvider>().getAppointments().then((value) {
+      context
+          .read<CalenderProvider>()
+          .getAppointments(context: context)
+          .then((value) {
         setState(() {});
       });
     });
@@ -78,9 +81,7 @@ class _CalenderViewState extends State<CalenderView> {
     return SfCalendar(
       controller: _calendarController,
       headerHeight: 0,
-
       onTap: (CalendarTapDetails details) {
-
         if (details.targetElement == CalendarElement.appointment) {
           Appointment tappedAppointment = details.appointments!.first;
           String? appointmentId = tappedAppointment.id as String?;
@@ -113,7 +114,6 @@ class _CalenderViewState extends State<CalenderView> {
       },
       backgroundColor: Colors.white,
       headerStyle: const CalendarHeaderStyle(backgroundColor: Colors.white),
-
       dataSource: AppointmentDataSource(calendarAppointments ?? []),
     );
   }

@@ -39,16 +39,15 @@ class _GetEditAppointmentsDetailsWidgetState
 
     final provider = Provider.of<CalenderProvider>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      provider.getPatientDetails().then((value) {});
+      provider.getPatientDetails(context: context).then((value) {});
       provider
-          .getAppointmentsDetailsBYID(widget.appointmentsID ?? "0")
+          .getAppointmentsDetailsBYID(
+              context: context, appointmentsID: widget.appointmentsID ?? "0")
           .then((value) {
         setState(() {
           setData();
         });
       });
-
-      //   tetDate.text=formattedDate;
     });
   }
 
@@ -156,14 +155,12 @@ class _GetEditAppointmentsDetailsWidgetState
                           fontSize: 14,
                           radius: 8,
                           topText: 5,
-
                           controller: tetDate,
                           isReadOnly: true,
                           onTap: () {
                             DateTimeUtils.displayDatePicker(
                                 context: context,
                                 getDate: (value) {
-                                  print('========da${value}');
                                   setState(() {
                                     isDatePicked = true;
                                     tetDate.text =
@@ -183,7 +180,6 @@ class _GetEditAppointmentsDetailsWidgetState
                             DateTimeUtils.displayTimePicker(
                                 context: context,
                                 getTime: (value) {
-                                  print('========da${value}');
                                   tetTime.text = value;
                                   isTimePicked = true;
                                 });
@@ -193,7 +189,7 @@ class _GetEditAppointmentsDetailsWidgetState
                           radius: 8,
                           title: "Time"),
                       CommonTextWidget(
-                       /* text: "Select Patient",*/
+                        /* text: "Select Patient",*/
                         text: "Patient Name",
                         top: 10,
                       ),
@@ -227,16 +223,13 @@ class _GetEditAppointmentsDetailsWidgetState
                                   return '${patient.firstName} ${patient.lastName}';
                                 }).toList()
                               : []),
-
-
                       commonTextFiledView(
                         title: "Description",
                         topText: 10,
-
                         fontSize: 14,
                         controller: tetReason,
                         topTextField: 10,
-                        keyboardType: TextInputType.multiline ,
+                        keyboardType: TextInputType.multiline,
                         maxLines: 3,
                         radius: 8,
                       ),
@@ -249,7 +242,7 @@ class _GetEditAppointmentsDetailsWidgetState
                         children: [
                           Expanded(
                             child: CommonButtonWidget(
-                              height: isMobile?null:40,
+                              height: isMobile ? null : 40,
                               radius: 8,
                               onPressed: () async {
                                 String userId = await getUserID();
@@ -258,7 +251,6 @@ class _GetEditAppointmentsDetailsWidgetState
 
                                 DateTime dateTime = DateTime.parse(dateString);
 
-                                print(dateTime.toIso8601String()); // Outputs: 2
                                 Map<String, dynamic> body = {
                                   "patientId": provider.selectedID,
                                   "doctorId": userId,
@@ -294,7 +286,7 @@ class _GetEditAppointmentsDetailsWidgetState
                           Expanded(
                             child: CommonButtonWidget(
                               text: "Cancel",
-                              height: isMobile?null:40,
+                              height: isMobile ? null : 40,
                               radius: 8,
                               colorBorder: Colors.black,
                               colorButton: Colors.white,
@@ -317,7 +309,7 @@ class _GetEditAppointmentsDetailsWidgetState
                           Expanded(
                             child: CommonButtonWidget(
                               text: "Consult",
-                              height: isMobile?null:40,
+                              height: isMobile ? null : 40,
                               radius: 8,
                               colorBorder: Colors.black,
                               colorButton: Colors.white,
