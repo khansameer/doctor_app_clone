@@ -16,8 +16,6 @@ class PatientNewScreen extends StatefulWidget {
 }
 
 class _PatientNewScreenState extends State<PatientNewScreen> {
-  final bool _isExpanded = false;
-
   int? expandedIndex;
   PageController pageController = PageController();
   SideMenuController sideMenu = SideMenuController();

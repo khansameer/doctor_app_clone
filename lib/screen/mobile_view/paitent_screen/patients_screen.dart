@@ -1,8 +1,6 @@
-import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/CustomAlertDialog.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
-import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/common_textfield.dart';
 import 'package:doctor_app/core/common/file_picker_helper.dart';

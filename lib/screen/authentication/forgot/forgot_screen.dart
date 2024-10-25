@@ -105,7 +105,7 @@ class ForgotPasswordView extends StatelessWidget {
               topText: size.height * 0.03,
               topTextField: ten),
           CommonButtonWidget(
-            padding: isMobile ? null : EdgeInsets.all(twenty),
+            padding: isMobile ? null : const EdgeInsets.all(twenty),
             onPressed: () {
               pushScreen(
                   context: context, routeName: RouteName.forgotPasswordOptView);
