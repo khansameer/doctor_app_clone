@@ -229,7 +229,7 @@ class _PatientsScreenState extends State<PatientsScreen> {
               text: 'Create An Appointments', icon: Icons.person_add),
         ),
         PopupMenuItem<String>(
-          value: 'consultation',
+          value: 'Consultation',
           child: commonMenuWidget(text: 'Consult', icon: Icons.video_call),
         ),
         PopupMenuItem<String>(

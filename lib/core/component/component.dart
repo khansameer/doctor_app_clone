@@ -9,6 +9,7 @@ import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/main.dart';
 
 import 'package:doctor_app/provider/dashboard_provider.dart';
+import 'package:doctor_app/provider/procedure_provider.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:doctor_app/shared_preferences/preference_helper.dart';
 
@@ -711,7 +712,7 @@ PopupMenuItem<int> buildPopupMenuItem(
   );
 }
 
-Widget buildPopupMenu() {
+Widget buildPopupMenu({required ProcedureProvider provider, String? id}) {
   return PopupMenuButton<String>(
     color: Colors.white,
     onSelected: (String value) {
@@ -722,10 +723,7 @@ Widget buildPopupMenu() {
           print('Active selected');
         }
       } else if (value == 'delete') {
-        // Handle Inactive logic
-        if (kDebugMode) {
-          print('Inactive selected');
-        }
+        //  provider.deleteProcedureCharges(context: context)
       }
     },
     itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[

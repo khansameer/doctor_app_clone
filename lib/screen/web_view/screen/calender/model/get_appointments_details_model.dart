@@ -10,34 +10,34 @@ class GetAppointmentsDetailsModel {
   Prescription? prescription;
   VirtualAppointment? virtualAppointment;
   Invoice? invoice;
- /* List<Null>? patientFiles;*/
+  /* List<Null>? patientFiles;*/
   String? createdAt;
   String? updatedAt;
   int? iV;
 
   GetAppointmentsDetailsModel(
       {this.sId,
-        this.patient,
-        this.doctor,
-        this.doctorName,
-        this.dateTime,
-        this.status,
-        this.reason,
-        this.duration,
-        this.prescription,
-        this.virtualAppointment,
-        this.invoice,
-       // this.patientFiles,
-        this.createdAt,
-        this.updatedAt,
-        this.iV});
+      this.patient,
+      this.doctor,
+      this.doctorName,
+      this.dateTime,
+      this.status,
+      this.reason,
+      this.duration,
+      this.prescription,
+      this.virtualAppointment,
+      this.invoice,
+      // this.patientFiles,
+      this.createdAt,
+      this.updatedAt,
+      this.iV});
 
   GetAppointmentsDetailsModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     patient =
-    json['patient'] != null ? new Patient.fromJson(json['patient']) : null;
+        json['patient'] != null ? new Patient.fromJson(json['patient']) : null;
     doctor =
-    json['doctor'] != null ? new Patient.fromJson(json['doctor']) : null;
+        json['doctor'] != null ? new Patient.fromJson(json['doctor']) : null;
     doctorName = json['doctorName'];
     dateTime = json['dateTime'];
     status = json['status'];
@@ -49,8 +49,9 @@ class GetAppointmentsDetailsModel {
     virtualAppointment = json['virtualAppointment'] != null
         ? new VirtualAppointment.fromJson(json['virtualAppointment'])
         : null;
-    invoice =
-    json['invoice'] != null ? new Invoice.fromJson(json['invoice']) : null;
+    invoice = json['procedure'] != null
+        ? new Invoice.fromJson(json['procedure'])
+        : null;
     /*if (json['patientFiles'] != null) {
       patientFiles = <Null>[];
       json['patientFiles'].forEach((v) {
@@ -83,9 +84,9 @@ class GetAppointmentsDetailsModel {
       data['virtualAppointment'] = virtualAppointment!.toJson();
     }
     if (invoice != null) {
-      data['invoice'] = invoice!.toJson();
+      data['procedure'] = invoice!.toJson();
     }
-   /* if (this.patientFiles != null) {
+    /* if (this.patientFiles != null) {
       data['patientFiles'] = this.patientFiles!.map((v) => v.toJson()).toList();
     }*/
     data['createdAt'] = createdAt;
@@ -175,10 +176,10 @@ class Invoice {
 
   Invoice(
       {this.items,
-        this.totalCost,
-        this.finalAmount,
-        this.totalDiscount,
-        this.paid});
+      this.totalCost,
+      this.finalAmount,
+      this.totalDiscount,
+      this.paid});
 
   Invoice.fromJson(Map<String, dynamic> json) {
     if (json['items'] != null) {
@@ -215,7 +216,7 @@ class Items {
   Items({this.procedure, this.cost, this.discount, this.sId});
 
   Items.fromJson(Map<String, dynamic> json) {
-    procedure = json['procedure'];
+    procedure = json['Consultation'];
     cost = json['cost'];
     discount = json['discount'];
     sId = json['_id'];
@@ -223,7 +224,7 @@ class Items {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['procedure'] = procedure;
+    data['Consultation'] = procedure;
     data['cost'] = cost;
     data['discount'] = discount;
     data['_id'] = sId;

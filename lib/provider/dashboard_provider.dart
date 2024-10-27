@@ -1,4 +1,3 @@
-import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/error_page.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
@@ -19,23 +18,18 @@ import 'package:doctor_app/screen/mobile_view/profile/edit_profile_screen.dart';
 import 'package:doctor_app/screen/mobile_view/profile/profile_screen.dart';
 import 'package:doctor_app/screen/mobile_view/reach/reach_screen.dart';
 import 'package:doctor_app/screen/mobile_view/report/report_screen.dart';
-import 'package:doctor_app/screen/mobile_view/setting/setting_screen.dart';
 import 'package:doctor_app/screen/mobile_view/weekly_earning/weekly_earning_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/admin_calender_screen.dart';
-import 'package:doctor_app/screen/web_view/screen/client_note_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/patient_profile_page.dart';
-import 'package:doctor_app/service/api_config.dart';
-import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../screen/web_view/screen/invoice/invoice_screen.dart';
-import '../screen/web_view/screen/patient_new_screen.dart';
+import '../screen/web_view/screen/procedure/procedure_screen.dart';
 
 class DashboardProvider extends ChangeNotifier {
-  bool _isLoading = false;
+  final bool _isLoading = false;
   bool get isLoading => _isLoading;
   Widget? _dashboardPage;
   Widget? get dashboardPage => _dashboardPage;
@@ -93,9 +87,9 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Widget _currentPage = const AdminCalenderScreen(); // Default page
+  final Widget _currentPage = const AdminCalenderScreen(); // Default page
 
-  Widget _currentPageProfile = const PatientProfilePage(); // Default page
+  final Widget _currentPageProfile = const PatientProfilePage(); // Default page
 
   Widget get currentPageProfile => _currentPageProfile;
 
@@ -152,12 +146,12 @@ class DashboardProvider extends ChangeNotifier {
   }
 
   //for admin setting page
-  Widget _currentAdminSettingPage = InvoiceScreen(); // Default page
+  Widget _currentAdminSettingPage = const ProcedureScreen(); // Default page
   Widget get currentAdminSettingPage => _currentAdminSettingPage;
 
   set setAdminSettingPagePage(String value) {
     if (value == "Procedure Catalog") {
-      _currentAdminSettingPage = InvoiceScreen();
+      _currentAdminSettingPage = const ProcedureScreen();
     } else if (value == "Clinic Address") {
       _currentAdminSettingPage = const ErrorPage();
     } else {

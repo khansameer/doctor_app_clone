@@ -344,7 +344,7 @@ class MyData extends DataTableSource {
           child: CommonTextWidget(text: 'Create An Appointments'),
         ),
         PopupMenuItem<String>(
-          value: 'consultation',
+          value: 'Consultation',
           child: CommonTextWidget(text: 'Consult'),
         ),
         PopupMenuItem<String>(

@@ -30,8 +30,7 @@ import 'package:flutter/material.dart';
 
 import '../../screen/mobile_view/reach/reach_screen.dart';
 import '../../screen/mobile_view/report_and_issue/report_and_issue_screen.dart';
-import '../../screen/web_view/screen/invoice/invoice_screen.dart';
-import '../../screen/web_view/screen/procedure_charges_screen.dart';
+import '../../screen/web_view/screen/procedure/procedure_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -157,7 +156,7 @@ class RouteGenerator {
 
       case RouteName.procedureChargesScreen:
         return MaterialPageRoute(
-            builder: (_) => InvoiceScreen(),
+            builder: (_) => const ProcedureScreen(),
             settings:
                 const RouteSettings(name: RouteName.procedureChargesScreen));
       default:

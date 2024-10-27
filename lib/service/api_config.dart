@@ -9,7 +9,6 @@ class ApiConfig {
   static const getSymptoms = '$baseUrl/symptoms';
   static const getPatients = '$baseUrl/patients';
   static const addProcedureCharges = '$baseUrl/procedure-charges';
-  static const getProcedureCharges = '$baseUrl/procedure-charges';
 
   static const getDoctorAppointments = '$baseUrl/appointments/doctor';
   static const getPatientDetails = '$baseUrl/doctors';

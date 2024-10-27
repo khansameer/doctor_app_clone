@@ -46,7 +46,7 @@ class CreateAppointmentModel {
         ? VirtualAppointment.fromJson(json['virtualAppointment'])
         : null;
     invoice =
-        json['invoice'] != null ? Invoice.fromJson(json['invoice']) : null;
+        json['procedure'] != null ? Invoice.fromJson(json['procedure']) : null;
     sId = json['_id'];
 
     createdAt = json['createdAt'];
@@ -70,7 +70,7 @@ class CreateAppointmentModel {
       data['virtualAppointment'] = virtualAppointment!.toJson();
     }
     if (invoice != null) {
-      data['invoice'] = invoice!.toJson();
+      data['procedure'] = invoice!.toJson();
     }
     data['_id'] = sId;
 
@@ -164,7 +164,7 @@ class Items {
   Items({this.procedure, this.cost, this.discount, this.sId});
 
   Items.fromJson(Map<String, dynamic> json) {
-    procedure = json['procedure'];
+    procedure = json['Consultation'];
     cost = json['cost'];
     discount = json['discount'];
     sId = json['_id'];
@@ -172,7 +172,7 @@ class Items {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['procedure'] = procedure;
+    data['Consultation'] = procedure;
     data['cost'] = cost;
     data['discount'] = discount;
     data['_id'] = sId;
