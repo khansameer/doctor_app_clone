@@ -5,6 +5,7 @@ import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/screen/mobile_view/home/home_screen.dart';
 import 'package:doctor_app/screen/mobile_view/profile/edit_profile_screen.dart';
+import 'package:doctor_app/screen/mobile_view/profile/profile_menu_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,7 @@ class DashboardScreen extends StatelessWidget {
       ),
       Container(),
       const PatientListScreen(),
-      const EditProfileScreen()
+      const ProfileMenuScreen()
     ];
 
     return Scaffold(
@@ -37,7 +38,7 @@ class DashboardScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 2,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: colorAmber,
+        selectedItemColor: AppColors.primary,
         selectedLabelStyle: commonTextStyle(fontSize: 11),
         unselectedLabelStyle: commonTextStyle(fontSize: 11),
         unselectedItemColor: Colors.grey,
@@ -46,20 +47,17 @@ class DashboardScreen extends StatelessWidget {
           provider.setIndex(index);
 
           if (index == 0) {
-            provider.setAppBarTitle("Home");
-            provider.updateAppPage = "Home";
+            provider.setAppBarTitle("Home".toUpperCase());
           }
           if (index == 1) {
-            provider.setAppBarTitle("Q&A");
-            provider.updateAppPage = "Q&A";
+            provider.setAppBarTitle("Q&A".toUpperCase());
           }
           if (index == 2) {
-            provider.setAppBarTitle("Chat");
-            provider.updateAppPage = "Chat";
+            provider.setAppBarTitle("Chat".toUpperCase());
+            //provider.updateAppPage = "Chat".to;
           }
           if (index == 3) {
-            provider.setAppBarTitle("Profile");
-            provider.updateAppPage = "Profile";
+            provider.setAppBarTitle("Profile".toUpperCase());
           }
         },
         items: const [
@@ -71,23 +69,10 @@ class DashboardScreen extends StatelessWidget {
         ],
       ),
       backgroundColor: Colors.white,
-      appBar: provider.page == "Home" ||
-              provider.page == "Chat" ||
-              provider.page == "Q&A"
-          ? appBarView(
-              context: context, title: isMobile ? provider.appBarTitle : null)
-          : commonAppBar(
-              title: provider.appBarTitle,
-              color: AppColors.primary,
-              leading: commonBackRedirectButton(color: Colors.white),
-              colorText: Colors.white,
-            ),
+      appBar: appBarView(
+          context: context, title: isMobile ? provider.appBarTitle : null),
       body: Container(
-        /* child: provider.currentAppPage != null
-            ? provider.currentAppPage
-            : screens[
-                provider.selectedIndex],*/
-        child: provider.currentAppPage ?? screens[provider.selectedIndex],
+        child: screens[provider.selectedIndex],
       ),
     );
   }

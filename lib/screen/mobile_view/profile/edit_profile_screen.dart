@@ -18,17 +18,24 @@ class EditProfileScreen extends StatelessWidget {
     var size = MediaQuery.sizeOf(context);
 
     var isMobile = Responsive.isMobile(context);
-    return SizedBox(
+    return AppScaffold(
+      appBar: isMobile
+          ? commonAppBar(title: "Edit Profile".toUpperCase())
+          : PreferredSize(preferredSize: Size.zero, child: Container()),
+      child: SafeArea(
+        child: SizedBox(
           width: size.width,
           child: _mobileView(size: size, isMobile: isMobile),
-        );
+        ),
+      ),
+    );
   }
 
   _mobileView({required Size size, required bool isMobile}) {
     return Consumer<ProfileProvider>(builder: (context, provider, child) {
       return Container(
         color: Colors.white,
-        padding: const EdgeInsets.all(25.0),
+        padding: EdgeInsets.all(isMobile ? 15 : 25.0),
         child: ListView(
           children: [
             Column(
@@ -95,8 +102,7 @@ class EditProfileScreen extends StatelessWidget {
                   children: [
                     Expanded(
                         child: commonTextFiled(
-                   //   title: "Name",
-
+                      //   title: "Name",
 
                       width: size.width,
                       size: size,
@@ -134,8 +140,8 @@ class EditProfileScreen extends StatelessWidget {
                         provider.setGenderValue = value ?? '';
                       },
 
-                          selectedValue: provider.selectedGender??'Male',
-                          // selectedValue: provider.selectedGender,
+                      selectedValue: provider.selectedGender ?? 'Male',
+                      // selectedValue: provider.selectedGender,
                     ))
                   ],
                 ),
@@ -149,7 +155,7 @@ class EditProfileScreen extends StatelessWidget {
                       title: "Date of birth",
                       width: size.width,
                       size: size,
-                          // value:'1976-02-29',
+                      // value:'1976-02-29',
                     )),
                     const SizedBox(
                       width: 20,
@@ -313,11 +319,12 @@ class EditProfileScreen extends StatelessWidget {
                   alignment: Alignment.topRight,
                   child: CommonButtonWidget(
                     text: "Save Change",
+
                     fontSize: 13,
                     radius: 8,
                     //bottom: 45,
                     width: isMobile ? size.width * 0.3 : size.width * 0.1,
-                    height: 40,
+                    height: isMobile ? null : 40,
                   ),
                 )
               ],
@@ -330,11 +337,11 @@ class EditProfileScreen extends StatelessWidget {
 
   commonTextFiled({String? title, required Size size, double? width}) {
     return commonTextFiledView(
-        textFontSize: 12,
-        height: 40,
-        radius: 5,
-        width: width ?? size.width * 0.1,
-        topTextField: 5,
+      textFontSize: 12,
+      height: 40,
+      radius: 5,
+      width: width ?? size.width * 0.1,
+      topTextField: 5,
       title: title ?? "Name*",
     );
   }

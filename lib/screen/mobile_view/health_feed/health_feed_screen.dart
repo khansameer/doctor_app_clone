@@ -16,14 +16,9 @@ class HealthFeedScreen extends StatelessWidget {
     return AppScaffold(
         left: 0,
         right: 0,
-        appBar: isMobile
-            ? PreferredSize(preferredSize: Size.zero, child: Container())
-            : commonAppBar(
-                title: "Health Feed",
-                color: colorBG,
-                colorText: colorText,
-                leading: commonBackRedirectButton(),
-              ),
+        appBar: commonAppBar(
+          title: "Health Feed".toUpperCase(),
+        ),
         // appBar: commonAppBar(title: "Health Feed".toUpperCase()),
         child: Container(
           width: size.width,

@@ -1,7 +1,6 @@
 import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/screen/web_view/screen/admin_dashboard/admin_dashboard.dart';
 
-
 import 'package:doctor_app/screen/authentication/forgot/forgot_password_opt_view.dart';
 import 'package:doctor_app/screen/authentication/forgot/forgot_password_reset_view.dart';
 import 'package:doctor_app/screen/authentication/forgot/forgot_screen.dart';
@@ -31,6 +30,8 @@ import 'package:flutter/material.dart';
 
 import '../../screen/mobile_view/reach/reach_screen.dart';
 import '../../screen/mobile_view/report_and_issue/report_and_issue_screen.dart';
+import '../../screen/web_view/screen/invoice/invoice_screen.dart';
+import '../../screen/web_view/screen/procedure_charges_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -71,7 +72,8 @@ class RouteGenerator {
       case RouteName.adminDashboardScreen:
         return MaterialPageRoute(
             builder: (_) => const AdminDashboard(),
-            settings: const RouteSettings(name: RouteName.adminDashboardScreen));
+            settings:
+                const RouteSettings(name: RouteName.adminDashboardScreen));
       case RouteName.notificationScreen:
         return MaterialPageRoute(
             builder: (_) => const NotificationScreen(),
@@ -120,7 +122,6 @@ class RouteGenerator {
       case RouteName.reportScreen:
         return MaterialPageRoute(
             builder: (_) => const ReportScreen(),
-
             settings: const RouteSettings(name: RouteName.reportScreen));
       case RouteName.editprofileScreen:
         return MaterialPageRoute(
@@ -136,26 +137,29 @@ class RouteGenerator {
       case RouteName.primeScreen:
         return MaterialPageRoute(
             builder: (_) => const PrimeScreen(),
-            settings:
-            const RouteSettings(name: RouteName.primeScreen));
+            settings: const RouteSettings(name: RouteName.primeScreen));
 
       case RouteName.patientStoriesScreen:
         return MaterialPageRoute(
             builder: (_) => const PatientStoriesScreen(),
             settings:
-            const RouteSettings(name: RouteName.patientStoriesScreen));
+                const RouteSettings(name: RouteName.patientStoriesScreen));
 
       case RouteName.reachScreen:
         return MaterialPageRoute(
             builder: (_) => const ReachScreen(),
-            settings:
-            const RouteSettings(name: RouteName.reachScreen));
+            settings: const RouteSettings(name: RouteName.reachScreen));
 
       case RouteName.weeklyEarningScreen:
         return MaterialPageRoute(
             builder: (_) => const WeeklyEarningScreen(),
+            settings: const RouteSettings(name: RouteName.weeklyEarningScreen));
+
+      case RouteName.procedureChargesScreen:
+        return MaterialPageRoute(
+            builder: (_) => InvoiceScreen(),
             settings:
-            const RouteSettings(name: RouteName.weeklyEarningScreen));
+                const RouteSettings(name: RouteName.procedureChargesScreen));
       default:
         return MaterialPageRoute(
             builder: (_) =>

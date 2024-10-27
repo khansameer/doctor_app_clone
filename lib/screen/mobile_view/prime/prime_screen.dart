@@ -18,84 +18,101 @@ class PrimeScreen extends StatelessWidget {
     return AppScaffold(
       left: 0,
       right: 0,
-      appBar: isMobile?PreferredSize(preferredSize: Size.zero, child: Container()):commonAppBar(
-          color: colorBG,
-          colorText: colorText,
-          leading:commonBackRedirectButton(),
+      appBar: commonAppBar(
+          colorText: Colors.white,
           title: "Prime".toUpperCase(),
           actions: [
             commonInkWell(
                 child: CommonTextWidget(
               text: "Add Budget".toUpperCase(),
-              textColor: colorText,
+              textColor: Colors.white,
               fontWeight: FontWeight.w600,
               right: 10,
             ))
           ]),
       child: Container(
-        color: isMobile?colorBG:Colors.white,
+        color: isMobile ? colorBG : Colors.white,
         child: Padding(
-          padding:  EdgeInsets.all(isMobile?10:20.0),
+          padding: EdgeInsets.all(isMobile ? 10 : 20.0),
           child: ListView(
             children: [
               isMobile
-                  ? _mobileView(  size: size,
-                isMobile: isMobile,)
+                  ? _mobileView(
+                      size: size,
+                      isMobile: isMobile,
+                    )
                   : Column(
                       children: [
                         Row(
                           children: [
                             Expanded(
                               child: SizedBox(
-                                height: size.height*0.12,
-                                child: _topView( fontSize: 18,),
-                              ),
-                            ),
-                            const SizedBox(width: 20,),
-                            Expanded(
-                              child: SizedBox(
-                                height: size.height*0.12,
+                                height: size.height * 0.12,
                                 child: _topView(
                                   fontSize: 18,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                height: size.height * 0.12,
+                                child: _topView(
+                                    fontSize: 18,
                                     title: "Performance Duration",
                                     desc: "12 Sep 2024-12 Oct 2024"),
                               ),
                             )
                           ],
                         ),
-                        const SizedBox(height: 20,),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         Row(
                           children: [
-                            Expanded(child: _middleView(color: Colors.green,size: size,isMobile: isMobile)),
+                            Expanded(
+                                child: _middleView(
+                                    color: Colors.green,
+                                    size: size,
+                                    isMobile: isMobile)),
                             const SizedBox(
                               width: 10,
                             ),
                             Expanded(
                                 child: _middleView(
-                                    size: size,isMobile: isMobile,
-                                    title: "Budget\nSpent", value: "$rupee 4050")),
+                                    size: size,
+                                    isMobile: isMobile,
+                                    title: "Budget\nSpent",
+                                    value: "$rupee 4050")),
                             const SizedBox(
                               width: 10,
                             ),
                             Expanded(
                                 child: _middleView(
-                                    size: size,isMobile: isMobile,
-                                    title: "Unique Connections\nCharged", value: "11")),
+                                    size: size,
+                                    isMobile: isMobile,
+                                    title: "Unique Connections\nCharged",
+                                    value: "11")),
                             const SizedBox(
                               width: 10,
                             ),
                             Expanded(
                                 child: _middleView(
-                                    size: size,isMobile: isMobile,
-                                    title: "Repeat Connections Not\nCharged", value: "6")),
+                                    size: size,
+                                    isMobile: isMobile,
+                                    title: "Repeat Connections Not\nCharged",
+                                    value: "6")),
                             const SizedBox(
                               width: 10,
                             ),
                             Expanded(
-                                child:
-                                _middleView(
-                                    size: size,isMobile: isMobile,
-                                    title: "Refunded\nConnections", value: "3")),
+                                child: _middleView(
+                                    size: size,
+                                    isMobile: isMobile,
+                                    title: "Refunded\nConnections",
+                                    value: "3")),
                           ],
                         )
                       ],
@@ -107,7 +124,7 @@ class PrimeScreen extends StatelessWidget {
     );
   }
 
-  _mobileView({required bool isMobile,required Size size}) {
+  _mobileView({required bool isMobile, required Size size}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,23 +134,26 @@ class PrimeScreen extends StatelessWidget {
           height: 10,
         ),
         _topView(
-            title: "Performance Duration", desc: "12 Sep 2024-12 Oct 2024"),const SizedBox(
+            title: "Performance Duration", desc: "12 Sep 2024-12 Oct 2024"),
+        const SizedBox(
           height: 10,
         ),
-
         Container(
           padding: const EdgeInsets.all(0),
           child: Row(
             children: [
-              Expanded(child: _middleView(color: Colors.green,size: size,isMobile: isMobile)),
+              Expanded(
+                  child: _middleView(
+                      color: Colors.green, size: size, isMobile: isMobile)),
               const SizedBox(
                 width: 10,
               ),
               Expanded(
                   child: _middleView(
-                    size: size,
+                      size: size,
                       isMobile: isMobile,
-                      title: "Budget\nSpent", value: "$rupee 4050")),
+                      title: "Budget\nSpent",
+                      value: "$rupee 4050")),
             ],
           ),
         ),
@@ -148,7 +168,8 @@ class PrimeScreen extends StatelessWidget {
                   child: _middleView(
                       size: size,
                       isMobile: isMobile,
-                      title: "Unique Connections\nCharged", value: "11")),
+                      title: "Unique Connections\nCharged",
+                      value: "11")),
               const SizedBox(
                 width: 10,
               ),
@@ -156,7 +177,8 @@ class PrimeScreen extends StatelessWidget {
                   child: _middleView(
                       size: size,
                       isMobile: isMobile,
-                      title: "Repeat Connections Not\nCharged", value: "6")),
+                      title: "Repeat Connections Not\nCharged",
+                      value: "6")),
             ],
           ),
         ),
@@ -168,9 +190,12 @@ class PrimeScreen extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                  child:
-                      _middleView(title: "Refunded\nConnections", value: "3",  size: size,
-                        isMobile: isMobile,)),
+                  child: _middleView(
+                title: "Refunded\nConnections",
+                value: "3",
+                size: size,
+                isMobile: isMobile,
+              )),
               const SizedBox(
                 width: 10,
               ),
@@ -186,7 +211,7 @@ class PrimeScreen extends StatelessWidget {
     );
   }
 
-  _topView({String? title, String? desc,double ?fontSize}) {
+  _topView({String? title, String? desc, double? fontSize}) {
     return commonList(
         child: ListTile(
       dense: true,
@@ -218,10 +243,15 @@ class PrimeScreen extends StatelessWidget {
     ));
   }
 
-  _middleView({String? title, String? value, Color? color,required bool isMobile,required Size size}) {
+  _middleView(
+      {String? title,
+      String? value,
+      Color? color,
+      required bool isMobile,
+      required Size size}) {
     return commonList(
         child: Container(
-          height: isMobile?null:size.height*0.15,
+      height: isMobile ? null : size.height * 0.15,
       padding: const EdgeInsets.only(top: 10.0, bottom: 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -231,7 +261,7 @@ class PrimeScreen extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: CommonTextWidget(
                 text: title ?? "Available\nBudget",
-                fontSize: isMobile?12:14,
+                fontSize: isMobile ? 12 : 14,
                 left: 10,
                 textColor: Colors.black.withOpacity(0.80),
               )),
@@ -240,7 +270,7 @@ class PrimeScreen extends StatelessWidget {
               child: CommonTextWidget(
                 text: ' ${value ?? '$rupee 17,350'}',
                 fontWeight: FontWeight.w600,
-                fontSize: isMobile?15:18,
+                fontSize: isMobile ? 15 : 18,
                 right: 10,
                 textColor: color ?? Colors.black,
               ))

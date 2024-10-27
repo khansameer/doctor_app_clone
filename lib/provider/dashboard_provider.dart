@@ -26,15 +26,26 @@ import 'package:doctor_app/screen/web_view/screen/client_note_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/patient_profile_page.dart';
 import 'package:flutter/foundation.dart';
 
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../screen/web_view/screen/invoice/invoice_screen.dart';
 import '../screen/web_view/screen/patient_new_screen.dart';
 
-
 class DashboardProvider extends ChangeNotifier {
+  Widget? _dashboardPage;
+  Widget? get dashboardPage => _dashboardPage;
+  int _selectedIndex = 0;
+  set updateDashboardPage(Widget? value) {
+    _dashboardPage = value;
+    notifyListeners();
+  }
+
+  clearPage() {
+    _dashboardPage = null;
+    notifyListeners();
+  }
+
   int? _hoveredIndex;
 
   int? get hoveredIndex => _hoveredIndex;
@@ -78,15 +89,11 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int _selectedIndex = 0;
-
   Widget _currentPage = const AdminCalenderScreen(); // Default page
 
   Widget _currentPageProfile = const PatientProfilePage(); // Default page
 
   Widget get currentPageProfile => _currentPageProfile;
-
-
 
   String _getClickPageValue = "all";
   String? get getClickPageValue => _getClickPageValue;
@@ -100,7 +107,6 @@ class DashboardProvider extends ChangeNotifier {
     title: "all",
   ); // Default page
   Widget get currentPatientPage => _currentPatientPage;
-
 
   //for patient new screen  for redirect screen
   void setPatientDetailsPage(
@@ -141,13 +147,11 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners(); // Notify listeners to rebuild
   }
 
-
   //for admin setting page
   Widget _currentAdminSettingPage = InvoiceScreen(); // Default page
   Widget get currentAdminSettingPage => _currentAdminSettingPage;
 
   set setAdminSettingPagePage(String value) {
-
     if (value == "Procedure Catalog") {
       _currentAdminSettingPage = InvoiceScreen();
     } else if (value == "Clinic Address") {
@@ -158,9 +162,8 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners(); // Notify listeners to rebuild
   }
 
-
   //for admin dashboard screen
-  String? _pageApp="Home";
+  String? _pageApp = "Home";
   String? get page => _pageApp;
   Widget _currentAppPage = HomeScreen(onSelectedPage: (value) {
     final dashboardProvider = Provider.of<DashboardProvider>(
@@ -234,7 +237,6 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   String? _appBarTitle = "Home";
 
   int get selectedIndex => _selectedIndex;
@@ -251,6 +253,7 @@ class DashboardProvider extends ChangeNotifier {
 
   void setSelectedIndex(int index) {
     _selectedIndex = index;
+
     notifyListeners();
   }
 
@@ -417,7 +420,6 @@ class DashboardProvider extends ChangeNotifier {
     _selectedValue = newPin;
     notifyListeners();
   }
-
 
   final List<Booking> _bookings = [
     Booking(

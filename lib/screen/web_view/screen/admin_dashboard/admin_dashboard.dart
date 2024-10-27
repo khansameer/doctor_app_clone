@@ -20,7 +20,6 @@ import 'package:provider/provider.dart';
 import '../../../../shared_preferences/preference_helper.dart';
 import '../../../mobile_view/profile/edit_profile_screen.dart';
 
-
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
 
@@ -42,12 +41,14 @@ class _AdminDashboardState extends State<AdminDashboard> {
     });
     super.initState();
   }
+
   @override
   void dispose() {
     pageController.dispose();
     sideMenu.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     var isMobile = Responsive.isMobile(context);
@@ -183,7 +184,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   },
                   icon: const Icon(Icons.person),
                 ),
-
                 commonMenuDivider(),
                 SideMenuItem(
                   title: 'Communications',
@@ -225,103 +225,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 commonMenuDivider(),
                 SideMenuItem(
                   onTap: (index, _) {
-                    showDialog(
-                        barrierDismissible: false,
+                    commonLogoutDialog(
                         context: context,
-                        builder: (BuildContext context) {
-                          var width = MediaQuery.of(context).size.width;
-                          return CustomAlertDialog(
-                            content: SizedBox(
-                              width: isMobile
-                                  ? width * zero9
-                                  : isDesktop
-                                      ? width * 0.3
-                                      : width * 0.19,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        CommonTextWidget(
-                                          text:
-                                              "Are you sure you want to sign out?",
-                                          fontSize: 16,
-                                          textAlign: TextAlign.center,
-                                          fontWeight: FontWeight.w700,
-                                          top: 20,
-                                        ),
-                                        CommonTextWidget(
-                                          text:
-                                              "You are also logged out from local data apps open in this browser.",
-                                          fontSize: 14,
-                                          textAlign: TextAlign.center,
-                                          top: 20,
-                                        ),
-                                        const SizedBox(
-                                          height: 50,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            CommonButtonWidget(
-                                              height: 40,
-                                              radius: 8,
-                                              onPressed: () async {
-                                                await PreferenceHelper.clear();
-                                                pushNamedAndRemoveUntil(
-                                                    context: context,
-                                                    routeName:
-                                                        RouteName.loginScreen);
-                                              },
-                                              colorButton: Colors.red,
-                                              fontSize: 12,
-                                              padding: const EdgeInsets.only(
-                                                  left: 40,
-                                                  right: 40,
-                                                  top: 10,
-                                                  bottom: 10),
-                                              text: "Logout",
-                                            ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            CommonButtonWidget(
-                                              text: "Cancel",
-                                              height: 40,
-                                              radius: 8,
-                                              colorBorder: Colors.black,
-                                              colorButton: Colors.white,
-                                              colorText: Colors.black,
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              fontSize: 12,
-                                              padding: const EdgeInsets.only(
-                                                  left: 40, right: 40),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        });
-                    //provider.updatePageValue(8);
-                    //   sideMenu.changePage(index);
-
-                    //showCommonDialog(context: context, title: "title", content: "content");
+                        isDesktop: isDesktop,
+                        isMobile: isDesktop);
                   },
                   title: 'Logout',
                   icon: const Icon(Icons.exit_to_app),
@@ -347,7 +254,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       padding: EdgeInsets.all(16),
                       child: PatientNewScreen(),
                     ),
-
                     SizedBox.shrink(),
                     Padding(
                       padding: EdgeInsets.all(16),

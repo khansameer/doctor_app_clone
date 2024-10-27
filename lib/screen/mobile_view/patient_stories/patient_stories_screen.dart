@@ -19,14 +19,9 @@ class PatientStoriesScreen extends StatelessWidget {
     return AppScaffold(
       left: 0,
       right: 0,
-      appBar: isMobile
-          ? PreferredSize(preferredSize: Size.zero, child: Container())
-          : commonAppBar(
-              title: "Patient Stories",
-              color: colorBG,
-              colorText: colorText,
-              leading: commonBackRedirectButton(),
-            ),
+      appBar: commonAppBar(
+        title: "Patient Stories".toUpperCase(),
+      ),
       child: Container(
         width: size.width,
         color: isMobile ? colorGreen : Colors.white,

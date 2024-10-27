@@ -3,6 +3,7 @@ import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
+import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,11 @@ class SettingScreen extends StatelessWidget {
           child: ListView(
             children: [
               commonList(
+                onTap: () {
+                  pushScreen(
+                      context: context,
+                      routeName: RouteName.procedureChargesScreen);
+                },
                 title: "Procedure Catalog",
               ),
               commonList(

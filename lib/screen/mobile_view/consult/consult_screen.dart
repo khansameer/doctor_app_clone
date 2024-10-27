@@ -19,27 +19,23 @@ class ConsultScreen extends StatelessWidget {
       return AppScaffold(
         left: 0,
         right: 0,
-        appBar: isMobile
-            ? PreferredSize(preferredSize: Size.zero, child: Container())
-            : commonAppBar(
-                color: colorBG,
-                colorText: colorText,
-                leading: commonBackRedirectButton(),
-                title: "Consult".toUpperCase(),
-                actions: [
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.settings_outlined,
-                          color: colorText,
-                        )),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.more_horiz,
-                          color: colorText,
-                        ))
-                  ]),
+        appBar: commonAppBar(
+            //   leading: commonBackRedirectButton(color: Colors.white,onTap: ),
+            title: "Consult".toUpperCase(),
+            actions: [
+              IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.settings_outlined,
+                    color: Colors.white,
+                  )),
+              IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.more_horiz,
+                    color: Colors.white,
+                  ))
+            ]),
         child: Container(
           color: isMobile ? colorBG : Colors.white,
           width: size.width,

@@ -18,14 +18,9 @@ class ReportScreen extends StatelessWidget {
       left: 0,
 
       right: 0,
-      appBar: isMobile
-          ? PreferredSize(preferredSize: Size.zero, child: Container())
-          : commonAppBar(
-              title: "Report",
-              color: colorBG,
-              colorText: colorText,
-              leading: commonBackRedirectButton(),
-            ),
+      appBar: commonAppBar(
+        title: "Report".toUpperCase(),
+      ),
       // appBar: commonAppBar(title: "Report".toUpperCase(), actions: []),
       child: Container(
         color: isMobile ? colorBG : Colors.white,

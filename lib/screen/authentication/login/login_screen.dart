@@ -11,7 +11,6 @@ class LoginScreen extends StatelessWidget {
     var isMobile = Responsive.isMobile(context);
     return Scaffold(
       backgroundColor: Colors.white,
-
       body: SizedBox(
         width: size.width,
         height: size.height,

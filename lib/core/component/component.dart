@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
+import 'package:doctor_app/core/common/CustomAlertDialog.dart';
+import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/route/route.dart';
@@ -113,14 +115,15 @@ commonButton(
   );
 }
 
-commonBackRedirectButton({String? page, Color? color}) {
+commonBackRedirectButton({String? page, Color? color, VoidCallback? onTap}) {
   return IconButton(
-      onPressed: () {
-        final dashboardProvider = Provider.of<DashboardProvider>(
-            navigatorKey.currentState!.context,
-            listen: false);
-        dashboardProvider.updateAppPage = page ?? "Home";
-      },
+      onPressed: onTap ??
+          () {
+            final dashboardProvider = Provider.of<DashboardProvider>(
+                navigatorKey.currentState!.context,
+                listen: false);
+            dashboardProvider.updateAppPage = page ?? "Home";
+          },
       icon: Icon(
         Icons.arrow_back_ios,
         color: color ?? colorText,
@@ -289,25 +292,30 @@ AppBar commonAppBar(
     List<Widget>? actions,
     Color? colorText,
     Color? iconColor,
+    bool? centerTitle,
     Widget? leading,
+    Widget? titleWidget,
     double? leadingWidth,
+    double? titleSpacing,
     double? toolbarHeight,
     PreferredSizeWidget? bottom}) {
   return AppBar(
     leadingWidth: leadingWidth,
     backgroundColor: color ?? colorGreen,
-    centerTitle: true,
+    centerTitle: centerTitle ?? true,
     bottom: bottom,
+    titleSpacing: titleSpacing,
     toolbarHeight: toolbarHeight,
     leading: leading,
     iconTheme: IconThemeData(color: iconColor ?? Colors.white),
     actions: actions,
-    title: CommonTextWidget(
-      text: title,
-      fontSize: 14,
-      fontWeight: FontWeight.w700,
-      textColor: colorText ?? Colors.white,
-    ),
+    title: titleWidget ??
+        CommonTextWidget(
+          text: title,
+          fontSize: 14,
+          fontWeight: FontWeight.w700,
+          textColor: colorText ?? Colors.white,
+        ),
   );
 }
 
@@ -736,6 +744,7 @@ Widget buildPopupMenu() {
     ), // Icon to trigger the pop-up menu
   );
 }
+
 /*
 Future<List<PlatformFile>?> pickFiles() async {
   List<PlatformFile>? _paths;
@@ -772,3 +781,100 @@ Future<List<PlatformFile>?> pickFiles() async {
 
   return _paths;
 }*/
+commonLogoutDialog(
+    {required BuildContext context,
+    required bool isMobile,
+    required bool isDesktop}) {
+  showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        var width = MediaQuery.of(context).size.width;
+        return CustomAlertDialog(
+          content: SizedBox(
+            width: isMobile
+                ? width * zero9
+                : isDesktop
+                    ? width * 0.3
+                    : width * 0.19,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CommonTextWidget(
+                        text: "Are you sure you want to sign out?",
+                        fontSize: 16,
+                        textAlign: TextAlign.center,
+                        fontWeight: FontWeight.w700,
+                        top: 20,
+                      ),
+                      CommonTextWidget(
+                        text:
+                            "You are also logged out from local data apps open in this browser.",
+                        fontSize: 14,
+                        textAlign: TextAlign.center,
+                        top: 20,
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: CommonButtonWidget(
+                              height: 40,
+                              radius: 8,
+                              onPressed: () async {
+                                await PreferenceHelper.clear();
+                                pushNamedAndRemoveUntil(
+                                    context: context,
+                                    routeName: RouteName.loginScreen);
+                              },
+                              colorButton: Colors.red,
+                              fontSize: 11,
+                              padding: EdgeInsets.only(
+                                  left: isMobile ? 0 : 40,
+                                  right: isMobile ? 0 : 40,
+                                  top: 10,
+                                  bottom: 10),
+                              text: "Logout",
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: CommonButtonWidget(
+                              text: "Cancel",
+                              height: 40,
+                              radius: 8,
+                              colorBorder: Colors.black,
+                              colorButton: Colors.white,
+                              colorText: Colors.black,
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              fontSize: 11,
+                              padding: EdgeInsets.only(
+                                  left: isMobile ? 0 : 40,
+                                  right: isMobile ? 0 : 40),
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      });
+}

@@ -5,8 +5,11 @@ import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/provider/model/dummy_model.dart';
+import 'package:doctor_app/screen/mobile_view/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../core/route/route.dart';
 
 class AppListView extends StatelessWidget {
   const AppListView({super.key, required this.onSelectedPage});
@@ -25,17 +28,15 @@ class AppListView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                commonGridView(list: provider.appList, context: context,provider: provider),
+                commonGridView(
+                    list: provider.appList,
+                    context: context,
+                    provider: provider),
                 const Divider(),
-                /*CommonTextWidget(
-                  text: "Ray",
-                  left: 20,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18,
-                  marginBottom: 10,
-                  top: 10,
-                ),*/
-                commonGridView(list: provider.rayList, context: context,provider: provider)
+                commonGridView(
+                    list: provider.rayList,
+                    context: context,
+                    provider: provider)
               ],
             ),
           ],
@@ -45,7 +46,9 @@ class AppListView extends StatelessWidget {
   }
 
   commonGridView(
-      {required List<DummyModel> list, required BuildContext context,required DashboardProvider provider}) {
+      {required List<DummyModel> list,
+      required BuildContext context,
+      required DashboardProvider provider}) {
     var isMobile = Responsive.isMobile(context);
     var isTablet = Responsive.isTablet(context);
 
@@ -71,13 +74,10 @@ class AppListView extends StatelessWidget {
         itemCount: list.length,
         itemBuilder: (context, index) {
           return commonInkWell(
-
-
             onTap: () {
-
-              onSelectedPage('${list[index].date}');
+              //  onSelectedPage('${list[index].date}');
               provider.setAppBarTitle('${list[index].date}');
-              /*     if (list[index].date == "Healthfeed") {
+              if (list[index].date == "Healthfeed") {
                 pushScreen(
                     context: context, routeName: RouteName.healthFeedScreen);
               }
@@ -89,7 +89,7 @@ class AppListView extends StatelessWidget {
                 pushScreen(
                     context: context, routeName: RouteName.patientsScreen);
               }
-              if (list[index].date == "Calender") {
+              if (list[index].date == "Calendar") {
                 pushScreen(
                     context: context, routeName: RouteName.calenderScreen);
               }
@@ -116,10 +116,6 @@ class AppListView extends StatelessWidget {
                 pushScreen(
                     context: context, routeName: RouteName.weeklyEarningScreen);
               }
-*/
-
-             /* onSelectedPage('${list[index].date}');
-              print('=============list${list[index].date}');*/
             },
             child: Container(
               decoration: commonBoxDecoration(

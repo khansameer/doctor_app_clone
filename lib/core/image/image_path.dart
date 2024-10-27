@@ -33,3 +33,4 @@ const icPageError = '$baseImagePath/page_error.jpg';
 //const icBg1 = '$baseImagePath/ic_bg1.png';
 const icBg1 = '$baseImagePath/ic_bg3.png';
 const icBg2 = '$baseImagePath/ic_bg2.png';
+const icDummyUser = '$baseImagePath/ic_richard.png';

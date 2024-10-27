@@ -49,7 +49,7 @@ class ChatListWidget extends StatelessWidget {
                           : Container(
                               width: 40,
                               height: 40,
-                              margin: EdgeInsets.all(5),
+                              margin: const EdgeInsets.all(5),
                               decoration: commonBoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Colors.white,

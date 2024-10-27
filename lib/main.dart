@@ -12,8 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
+import 'core/common/common_mobile_app_scaffold_view.dart';
 import 'provider/profile_provider.dart';
-
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey, // Set the navigatorKey
         title: appName,
 
+        // home: CommonMobileAppScaffoldView(),
         initialRoute: RouteName.splashScreen,
         onGenerateRoute: RouteGenerator.generateRoute,
 

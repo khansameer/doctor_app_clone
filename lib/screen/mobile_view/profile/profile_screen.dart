@@ -1,6 +1,7 @@
 import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
+import 'package:doctor_app/core/common/common_mobile_app_scaffold_view.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
@@ -23,18 +24,9 @@ class ProfileScreen extends StatelessWidget {
     return AppScaffold(
       left: 0,
       right: 0,
-      color: Colors.white,
-      /* appBar: isMobile
-          ? commonAppBar(title: "PROFILE")
-          : PreferredSize(preferredSize: Size.zero, child: Container()),*/
-      appBar: isMobile
-          ? PreferredSize(preferredSize: Size.zero, child: Container())
-          : commonAppBar(
-              title: "PROFILE",
-              color: colorBG,
-              leading: commonBackRedirectButton(),
-              colorText: colorText,
-             ),
+      appBar: commonAppBar(
+        title: "PROFILE",
+      ),
       child: Consumer<DashboardProvider>(builder: (context, provider, child) {
         return Container(
           width: size.width,
@@ -45,7 +37,7 @@ class ProfileScreen extends StatelessWidget {
             children: [
               isMobile
                   ? _isMobileView(
-                isTablet: isTablet,
+                      isTablet: isTablet,
                       provider: provider,
                       isMobile: isMobile,
                       size: size,
@@ -102,9 +94,10 @@ class ProfileScreen extends StatelessWidget {
                                           : const EdgeInsets.all(18),
                                       width: isMobile
                                           ? size.width * 0.8
-                                          : isTablet?size.width * 0.3:size.width * 0.1,
+                                          : isTablet
+                                              ? size.width * 0.3
+                                              : size.width * 0.1,
                                       icon: const Icon(
-
                                         Icons.flag,
                                         color: Colors.black,
                                       ),
@@ -145,7 +138,6 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-
               _profileView(size: size, isMobile: isMobile),
               const SizedBox(
                 height: 10,
@@ -262,7 +254,9 @@ class ProfileScreen extends StatelessWidget {
                                   : const EdgeInsets.all(18),
                               width: isMobile
                                   ? size.width * 0.8
-                                  : isTablet?size.width * 0.3:size.width * 0.1,
+                                  : isTablet
+                                      ? size.width * 0.3
+                                      : size.width * 0.1,
                               text: "View live profile",
                               colorButton: Colors.green,
                             )
@@ -311,7 +305,7 @@ class ProfileScreen extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
                 onTap: () {
-                /*  final dashboardProvider = Provider.of<DashboardProvider>(
+                  /*  final dashboardProvider = Provider.of<DashboardProvider>(
                       navigatorKey.currentState!.context,
                       listen: false);
                   dashboardProvider.getPageSelected = "edit_profile";*/
@@ -462,5 +456,4 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
-
 }

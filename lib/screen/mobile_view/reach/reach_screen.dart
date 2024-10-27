@@ -20,13 +20,11 @@ class ReachScreen extends StatelessWidget {
     return AppScaffold(
       left: 0,
       right: 0,
-      appBar: isMobile
-          ? PreferredSize(preferredSize: Size.zero, child: Container())
-          : commonAppBar(
-              leading: commonBackRedirectButton(),
-              title: "Reach",
-              color: colorBG,
-              colorText: colorText),
+
+      appBar: commonAppBar(
+        title: "Reach".toUpperCase(),
+      ),
+
       // appBar: isMobile?commonAppBar():PreferredSize(preferredSize: Size.zero, child: Container()),
       child: Container(
         width: size.width,

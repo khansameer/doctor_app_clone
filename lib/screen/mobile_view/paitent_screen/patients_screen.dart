@@ -67,6 +67,7 @@ class _PatientsScreenState extends State<PatientsScreen> {
         right: 0,
         left: 0,
         color: Colors.white,
+        appBar: commonAppBar(title: "Patient".toUpperCase()),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -122,10 +123,10 @@ class _PatientsScreenState extends State<PatientsScreen> {
                               child: ListTile(
                                 dense: true,
                                 onTap: () {
-                                  /* pushScreen(
-                            context: context,
-                            routeName: RouteName.patientInfoScreen,
-                          );*/
+                                  pushScreen(
+                                    context: context,
+                                    routeName: RouteName.patientInfoScreen,
+                                  );
                                 },
                                 trailing: buildPopupMenu(id: data?.toString()),
                                 leading: Container(
@@ -171,6 +172,7 @@ class _PatientsScreenState extends State<PatientsScreen> {
                       : Center(
                           child: CommonTextWidget(
                             text: "Data not found",
+                            fontWeight: FontWeight.w800,
                           ),
                         ),
                   provider.isAdding ? showLoaderList() : const SizedBox.shrink()
