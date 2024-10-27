@@ -24,6 +24,8 @@ import 'package:doctor_app/screen/mobile_view/weekly_earning/weekly_earning_scre
 import 'package:doctor_app/screen/web_view/screen/calender/admin_calender_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/client_note_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/patient_profile_page.dart';
+import 'package:doctor_app/service/api_config.dart';
+import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
@@ -33,6 +35,8 @@ import '../screen/web_view/screen/invoice/invoice_screen.dart';
 import '../screen/web_view/screen/patient_new_screen.dart';
 
 class DashboardProvider extends ChangeNotifier {
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
   Widget? _dashboardPage;
   Widget? get dashboardPage => _dashboardPage;
   int _selectedIndex = 0;
@@ -478,6 +482,8 @@ class DashboardProvider extends ChangeNotifier {
       label: "Chat",
     ),
   ];
+
+  //
 }
 
 class Booking {

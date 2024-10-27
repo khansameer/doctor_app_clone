@@ -7,6 +7,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../provider/procedure_provider.dart';
+
 class ProcedureChargesScreen extends StatefulWidget {
   const ProcedureChargesScreen({super.key});
 
@@ -21,7 +23,7 @@ class _ProcedureChargesScreenState extends State<ProcedureChargesScreen> {
   final formProcedureKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthProviders>(builder: (context, provider, child) {
+    return Consumer<ProcedureProvider>(builder: (context, provider, child) {
       return Form(
         key: formProcedureKey,
         child: Padding(

@@ -257,29 +257,6 @@ class AuthProviders extends ChangeNotifier {
 
   //
 
-  Future addProcedureCharges(
-      {required Map<String, dynamic> body,
-      required BuildContext context}) async {
-    _isLoading = true;
-    notifyListeners();
-    try {
-      final response = await _service.callPostMethodApiWithToken(
-          url: ApiConfig.addProcedurCharges, body: body);
-      if (globalStatusCode == 200 || globalStatusCode == 201) {
-      } else if (globalStatusCode == 401) {
-        commonSessionError(context: context);
-      }
-      print('======${response.toString()}');
-
-      _isLoading = false;
-      notifyListeners();
-      return response;
-    } catch (e) {
-      _isLoading = false;
-      notifyListeners();
-    }
-  }
-
   //
   void toggleSelection(SpecializationsModel specialization) {
     if (_selectedSpecializations.contains(specialization)) {

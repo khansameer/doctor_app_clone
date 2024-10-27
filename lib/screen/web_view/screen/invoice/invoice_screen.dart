@@ -4,12 +4,34 @@ import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
+import 'package:doctor_app/provider/procedure_provider.dart';
 import 'package:doctor_app/screen/web_view/screen/procedure_charges_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class InvoiceScreen extends StatelessWidget {
+class InvoiceScreen extends StatefulWidget {
   InvoiceScreen({super.key});
+
+  @override
+  State<InvoiceScreen> createState() => _InvoiceScreenState();
+}
+
+class _InvoiceScreenState extends State<InvoiceScreen> {
   final DataTableSource _data = MyData();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context
+          .read<ProcedureProvider>()
+          .getProcedureCharges(context: context)
+          .then((value) {
+        setState(() {});
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
@@ -52,34 +74,32 @@ class InvoiceScreen extends StatelessWidget {
                 ? SizedBox.shrink()
                 : Align(
                     alignment: Alignment.topRight,
-                    child: Expanded(
-                      child: CommonButtonWidget(
-                        fontSize: 12,
-                        right: 10,
-                        radius: 8,
-                        borderWidth: 1,
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              var width = MediaQuery.of(context).size.width;
+                    child: CommonButtonWidget(
+                      fontSize: 12,
+                      right: 10,
+                      radius: 8,
+                      borderWidth: 1,
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            var width = MediaQuery.of(context).size.width;
 
-                              return CustomAlertDialog(
-                                content: SizedBox(
-                                    //  height: isMobile ? height * 0.4 : height * 0.7,
-                                    width: isMobile ? width * 0.9 : width * 0.3,
-                                    child: const ProcedureChargesScreen()),
-                              );
-                            },
-                          );
-                        },
-                        colorButton: Colors.white,
-                        colorBorder: Colors.black,
-                        colorText: Colors.black,
-                        padding: EdgeInsets.zero,
-                        width: isMobile ? size.width * 0.3 : size.width * 0.1,
-                        text: "Add Procedure",
-                      ),
+                            return CustomAlertDialog(
+                              content: SizedBox(
+                                  //  height: isMobile ? height * 0.4 : height * 0.7,
+                                  width: isMobile ? width * 0.9 : width * 0.3,
+                                  child: const ProcedureChargesScreen()),
+                            );
+                          },
+                        );
+                      },
+                      colorButton: Colors.white,
+                      colorBorder: Colors.black,
+                      colorText: Colors.black,
+                      padding: EdgeInsets.zero,
+                      width: isMobile ? size.width * 0.3 : size.width * 0.1,
+                      text: "Add Procedure",
                     ),
                   ),
             Theme(
