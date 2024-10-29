@@ -335,7 +335,7 @@ pushScreen({
 pushNamedAndRemoveUntil(
     {required BuildContext context, required String routeName}) {
   Navigator.pushNamedAndRemoveUntil(
-      Navigator.of(context, rootNavigator: true).context,
+      Navigator.of(context, rootNavigator: false).context,
       routeName,
       (route) => true);
 }
