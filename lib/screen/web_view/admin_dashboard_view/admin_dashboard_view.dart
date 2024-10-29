@@ -19,46 +19,61 @@ class AdminDashboardView extends StatelessWidget {
           color: Colors.white, borderRadius: BorderRadius.circular(10)),
       child:
           Consumer<AdminDashboardProvider>(builder: (context, provider, child) {
-        return isMobile?_mobile(provider):_webView(provider);
+        return isMobile ? _mobile(provider) : _webView(provider);
       }),
     );
   }
 
-  _webView(AdminDashboardProvider provider){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
+  _webView(AdminDashboardProvider provider) {
+    return ListView(
       children: [
-        Expanded(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DashboardPatientView(provider: provider,),
-              const AdminPatientGraph(),
-              AdminOverAllAppointment(provider: provider,),
-            ],
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  DashboardPatientView(
+                    provider: provider,
+                  ),
+                  const AdminPatientGraph(),
+                  AdminOverAllAppointment(
+                    provider: provider,
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+                child: AdminUpComingAppointmentsView(
+              provider: provider,
+            ))
+          ],
         ),
-        Expanded(
-            child: AdminUpComingAppointmentsView(provider: provider,))
       ],
     );
   }
 
-  _mobile(AdminDashboardProvider provider){
+  _mobile(AdminDashboardProvider provider) {
     return ListView(
-
       children: [
         Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            DashboardPatientView(provider: provider,),
+            DashboardPatientView(
+              provider: provider,
+            ),
             const AdminPatientGraph(),
-            AdminOverAllAppointment(provider: provider,),
-           //
+            AdminOverAllAppointment(
+              provider: provider,
+            ),
+            //
           ],
         ),
-        AdminUpComingAppointmentsView(provider: provider,)
+        AdminUpComingAppointmentsView(
+          provider: provider,
+        )
       ],
     );
   }

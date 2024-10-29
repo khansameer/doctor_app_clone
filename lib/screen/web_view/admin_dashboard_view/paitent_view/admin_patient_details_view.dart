@@ -4,6 +4,7 @@ import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
+import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/paitent_details/admin_patient_appointment.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/paitent_details/bill_info_view.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/paitent_details/next_followup_date.dart';
@@ -19,8 +20,10 @@ class AdminPatientDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
+    var isMobile = Responsive.isMobile(context);
+    var isDesktop = Responsive.isDesktop(context);
     return SizedBox(
-      width: size.width * 0.7,
+      width: isDesktop ? size.width : size.width * 0.7,
       height: size.height,
       child: Column(
         children: [
@@ -56,31 +59,45 @@ class AdminPatientDetailsView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-
-                            const SizedBox(height: 20,),
+                            const SizedBox(
+                              height: 20,
+                            ),
                             ClipRRect(
-
                               borderRadius: BorderRadius.circular(8),
                               child: setAssetImage(
-                                width: size.width*0.06,
+                                width: 180,
                                 height: 180,
                                 fit: BoxFit.cover,
-                                image:icDummyUser,
+                                image: icDummyUser,
                               ),
                             ),
-                            CommonTextWidget(text: "Robert Jones",fontWeight: FontWeight.w600,fontSize: 16,top: 15,),
-                            CommonTextWidget(text: "Active",
-                            top: 5,
-                            textColor: Colors.green,),
-
-                            const SizedBox(height: 10,),
+                            CommonTextWidget(
+                              text: "Robert Jones",
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              top: 15,
+                            ),
+                            CommonTextWidget(
+                              text: "Active",
+                              top: 5,
+                              textColor: Colors.green,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             commonRow(),
-                            const SizedBox(height: 10,),
-                            commonRow(title: "Age",desc: "20"),
-                            const SizedBox(height: 10,),
-                            commonRow(title: "Language",desc: "English"),
-                            const SizedBox(height: 10,),
-                            commonRow(title: "Height",desc: "5Ft"),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            commonRow(title: "Age", desc: "20"),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            commonRow(title: "Language", desc: "English"),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            commonRow(title: "Height", desc: "5Ft"),
                           ],
                         ),
                       ),
@@ -90,46 +107,46 @@ class AdminPatientDetailsView extends StatelessWidget {
                     child: Container(
                       height: size.height,
                       color: Colors.white,
-                      child: DefaultTabController(length: 7, child: Column(
-                        children: [
-                          Container(
-                            color: colorBG, // Customize the background color of the TabBar
-                            child:  TabBar(
-                              labelStyle: commonTextStyle(
-                                fontWeight: FontWeight.w600
+                      child: DefaultTabController(
+                          length: 7,
+                          child: Column(
+                            children: [
+                              Container(
+                                color:
+                                    colorBG, // Customize the background color of the TabBar
+                                child: TabBar(
+                                  labelStyle: commonTextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w600),
+                                  labelColor: AppColors.colorText,
+                                  indicatorColor: AppColors.colorText,
+                                  unselectedLabelColor: Colors.grey,
+                                  tabs: const [
+                                    Tab(text: 'Doctor Notes'),
+                                    Tab(text: 'Demographics Details'),
+                                    Tab(text: 'Reports'),
+                                    Tab(text: 'Appointment Details'),
+                                    Tab(text: 'Next Followup date'),
+                                    Tab(text: 'Chat with Patient'),
+                                    Tab(text: 'Bill Info'),
+                                  ],
+                                ),
                               ),
-                              labelColor:AppColors.colorText,
-                              indicatorColor: AppColors.colorText,
-                              unselectedLabelColor:  Colors.grey,
-                              tabs: const [
-                                Tab( text: 'Doctor Notes'),
-                                Tab( text: 'Demographics Details'),
-                                Tab( text: 'Reports'),
-                                Tab( text: 'Appointment Details'),
-                                Tab( text: 'Next Followup date'),
-                                Tab( text: 'Chat with Patient'),
-                                Tab( text: 'Bill Info'),
-
-                              ],
-                            ),
-                          ),
-                          const Expanded(
-                            child: TabBarView(
-                              children: [
-                                DoctorNoteView(),
-                                DemographicsView(),
-                                AdminPatientReportView(),
-                                AdminPatientAppointment(),
-                                NextFollowupDate(),
-                                Center(child: Text('Coming soon')),
-                                BillInfoView()
-                              ],
-                            ),
-                          ),
-
-
-                        ],
-                      )),
+                              const Expanded(
+                                child: TabBarView(
+                                  children: [
+                                    DoctorNoteView(),
+                                    DemographicsView(),
+                                    AdminPatientReportView(),
+                                    AdminPatientAppointment(),
+                                    NextFollowupDate(),
+                                    Center(child: Text('Coming soon')),
+                                    BillInfoView()
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )),
                     ))
               ],
             ),
@@ -139,14 +156,24 @@ class AdminPatientDetailsView extends StatelessWidget {
     );
   }
 
-  commonRow({String ?title,String ? desc}){
+  commonRow({String? title, String? desc}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CommonTextWidget(text:title?? "Gender",textColor: Colors.grey,fontSize: 13,),
-        CommonTextWidget(text: desc??"Male",textColor: Colors.black,fontSize: 13,),
-      const SizedBox(width: 20,),
+        CommonTextWidget(
+          text: title ?? "Gender",
+          textColor: Colors.grey,
+          fontSize: 13,
+        ),
+        CommonTextWidget(
+          text: desc ?? "Male",
+          textColor: Colors.black,
+          fontSize: 13,
+        ),
+        const SizedBox(
+          width: 20,
+        ),
       ],
     );
   }

@@ -9,15 +9,19 @@ class Patient {
   final String name;
   final String description;
   final String? time;
-  final String? photo;
+//  final String? photo;
   final String? price;
   final bool? isActive;
 
-
-  Patient({required this.name, required this.description, required this.time,this.photo,this.price,this.isActive=true});
+  Patient(
+      {required this.name,
+      required this.description,
+      required this.time,
+      this.price,
+      this.isActive = true});
 }
-class AdminDashboardProvider with  ChangeNotifier {
 
+class AdminDashboardProvider with ChangeNotifier {
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
 
@@ -37,44 +41,73 @@ class AdminDashboardProvider with  ChangeNotifier {
 
   final List<Patient> patients = [
     Patient(
-      isActive: false,
-        price: "19.15",
-        name: 'Corey Aguilar', description: 'Kidney function test', time: '9:30',photo: "https://www.stryx.com/cdn/shop/articles/man-looking-attractive.jpg?v=1666662774"),
-    Patient(
-        price: "35.15",
-        name: 'Samantha Lee', description: 'Cardiovascular assessment', time: '10:00',photo: "https://t3.ftcdn.net/jpg/02/79/78/48/360_F_279784836_4eKMjfIfDtaICKmaSBAyft2Y43u5V76Q.jpg"),
-    Patient(
-        price: "52.15",
         isActive: false,
-        name: 'Michael Smith', description: 'Routine check-up', time: '10:30',photo: "https://t4.ftcdn.net/jpg/03/25/73/59/360_F_325735908_TkxHU7okor9CTWHBhkGfdRumONWfIDEb.jpg"),
+        price: "19.15",
+        name: 'Corey Aguilar',
+        description: 'Kidney function test',
+        time: '9:30'),
     Patient(
-        price: "96.15",
-        name: 'Linda Johnson', description: 'Blood pressure monitoring',time: '11:00',photo: "https://c8.alamy.com/comp/2AMC079/portrait-of-young-professional-man-wearing-suit-and-tie-while-staning-in-the-office-and-looking-at-camera-2AMC079.jpg"),
+      price: "35.15",
+      name: 'Samantha Lee',
+      description: 'Cardiovascular assessment',
+      time: '10:00',
+    ),
+    Patient(
+      price: "52.15",
+      isActive: false,
+      name: 'Michael Smith',
+      description: 'Routine check-up',
+      time: '10:30',
+    ),
+    Patient(
+      price: "96.15",
+      name: 'Linda Johnson',
+      description: 'Blood pressure monitoring',
+      time: '11:00',
+    ),
     Patient(
         price: "44.15",
         isActive: false,
-        name: 'James Williams', description: 'Diabetes check', time: '11:30',photo: "https://www.fashionbeans.com/wp-content/uploads/2023/06/sidmashburn_maninnavysuitandbrowntie.jpg"),
+        name: 'James Williams',
+        description: 'Diabetes check',
+        time: '11:30'),
     Patient(
-        price: "55.15",
-        name: 'Patricia Brown', description: 'Cholesterol screening', time: '12:00',photo: "https://thehelmclothing.com/cdn/shop/articles/DSC0341.jpg?format=webp&quality=65&v=1529429074&width=2400"),
+      price: "55.15",
+      name: 'Patricia Brown',
+      description: 'Cholesterol screening',
+      time: '12:00',
+    ),
     Patient(
-        price: "50.15",
-        isActive: false,
-        name: 'Robert Jones', description: 'Annual physical', time: '12:30',photo: "https://techcloudltd.com/wp-content/uploads/2024/06/male-professional-headshots-1024x638.webp"),
+      price: "50.15",
+      isActive: false,
+      name: 'Robert Jones',
+      description: 'Annual physical',
+      time: '12:30',
+    ),
     Patient(
         price: "78.15",
-        name: 'Jennifer Garcia', description: 'Follow-up visit', time: '1:00',photo: "https://cdn.luxe.digital/media/2019/09/12090452/business-professional-dress-code-men-harvey-specter-suit-style-luxe-digital.jpg"),
+        name: 'Jennifer Garcia',
+        description: 'Follow-up visit',
+        time: '1:00'),
     Patient(
-        price: "90.15",
-        isActive: false,
-        name: 'David Martinez', description: 'Orthopedic consultation', time: '1:30',photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPbL7x4NTXMwlumGrhzZX6aWr7QFUiN0XfoDwe9EPjGFkX2fKSurG8sawVo-tAK8m3cC8&usqp=CAU"),
+      price: "90.15",
+      isActive: false,
+      name: 'David Martinez',
+      description: 'Orthopedic consultation',
+      time: '1:30',
+    ),
     Patient(
-        price: "25.15",
-        name: 'Sarah Robinson', description: 'Pediatric check-up', time: '2:00',photo: "https://thumbs.dreamstime.com/b/portrait-male-african-american-professional-possibly-business-executive-corporate-ceo-finance-attorney-lawyer-sales-stylish-155546880.jpg"),
+      price: "25.15",
+      name: 'Sarah Robinson',
+      description: 'Pediatric check-up',
+      time: '2:00',
+    ),
     Patient(
-        price: "29.90",
-        name: 'Thomas Clark', description: 'Dental cleaning',time: '2:30',photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTFPX-kd-uLp3OUggaZhpclBOWHQwXZFaZ0z-Bz08WXNPkOCDVPleTIIawkw2TKGwFbxw&usqp=CAU"),
-
+      price: "29.90",
+      name: 'Thomas Clark',
+      description: 'Dental cleaning',
+      time: '2:30',
+    ),
   ];
 
   int _selectedIndex = 0;
@@ -100,16 +133,14 @@ class AdminDashboardProvider with  ChangeNotifier {
         title: "all",
       );
 
-
       notifyListeners();
-    }  else if (value == "female") {
+    } else if (value == "female") {
       _currentPatientPage = const PatientProfilePage(title: "all_female");
 
       notifyListeners();
     } else if (value == "male") {
       _currentPatientPage = const PatientProfilePage(title: "all_male");
-
-    }  else {
+    } else {
       _currentPatientPage = const AdminAllListScreen();
     }
     notifyListeners(); // Notify listeners to rebuild
@@ -814,4 +845,47 @@ class AdminDashboardProvider with  ChangeNotifier {
     },
   ];
 
+  // for chat
+
+  int _selectedUserIndex = 0;
+
+  int get selectedUserIndex => _selectedUserIndex;
+  List<String> get messages => _chatMessages[_selectedUserIndex];
+
+  // Messages for each user
+  final List<List<String>> _chatMessages = [
+    ["Hello, how are you?", "I'm good!"],
+    ["Hi!", "Hey, what's up?"],
+    ["Good Morning!", "Good Morning!"],
+    ["Are you free?", "Yes, tell me!"],
+    ["Hello, how are you?", "I'm good!"],
+    ["Hi!", "Hey, what's up?"],
+    ["Good Morning!", "Good Morning!"],
+    ["Are you free?", "Yes, tell me!"],
+    ["Hello, how are you?", "I'm good!"],
+    ["Hi!", "Hey, what's up?"],
+    ["Good Morning!", "Good Morning!"],
+    ["Are you free?", "Yes, tell me!"],
+    ["Hello, how are you?", "I'm good!"],
+    ["Hi!", "Hey, what's up?"],
+    ["Good Morning!", "Good Morning!"],
+    ["Are you free?", "Yes, tell me!"],
+    ["Hello, how are you?", "I'm good!"],
+    ["Hi!", "Hey, what's up?"],
+    ["Good Morning!", "Good Morning!"],
+    ["Are you free?", "Yes, tell me!"],
+    ["Hello, how are you?", "I'm good!"],
+    ["Hi!", "Hey, what's up?"],
+    ["Good Morning!", "Good Morning!"],
+    ["Are you free?", "Yes, tell me!"],
+    ["Hello, how are you?", "I'm good!"],
+    ["Hi!", "Hey, what's up?"],
+    ["Good Morning!", "Good Morning!"],
+    ["Are you free?", "Yes, tell me!"],
+  ];
+
+  void selectUser(int index) {
+    _selectedUserIndex = index;
+    notifyListeners();
+  }
 }

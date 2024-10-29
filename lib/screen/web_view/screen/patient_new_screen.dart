@@ -30,12 +30,10 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
       context
           .read<CalenderProvider>()
           .getPatientDetails(context: context)
-          .then((value) {
-        setState(() {});
-      });
+          .then((value) {});
     });
     sideMenu.addListener((index) {
-   //   pageController.jumpToPage(index);
+      //   pageController.jumpToPage(index);
     });
     super.initState();
   }
@@ -118,18 +116,21 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
               ),
             ),
           ],
-        ))*/,
+        ))*/
+        ,
       );
     });
   }
-  
-  _view({required bool isMobile,required DashboardProvider provider,required Size size}){
+
+  _view(
+      {required bool isMobile,
+      required DashboardProvider provider,
+      required Size size}) {
     return ListView(
       children: [
         Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,7 +148,7 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                       child: ListView.builder(
                         shrinkWrap: true,
                         itemCount:
-                        outerList.length, // Number of outer list items
+                            outerList.length, // Number of outer list items
                         itemBuilder: (context, outerIndex) {
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -166,10 +167,9 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                               // Inner ListView
                               ListView.builder(
                                 shrinkWrap: true,
-                                physics:
-                                const NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 itemCount:
-                                outerList[outerIndex]['items'].length,
+                                    outerList[outerIndex]['items'].length,
                                 itemBuilder: (context1, innerIndex) {
                                   bool isSelected =
                                       selectedOuterIndex == outerIndex &&
@@ -179,7 +179,7 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                                       provider.setPatientDetailsPage(
                                           context: context,
                                           value:
-                                          '${outerList[outerIndex]['items'][innerIndex]}');
+                                              '${outerList[outerIndex]['items'][innerIndex]}');
 
                                       selectedOuterIndex = outerIndex;
                                       selectedInnerIndex = innerIndex;
@@ -190,11 +190,10 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                                           : colorBG,
                                       padding: const EdgeInsets.all(10.0),
                                       child: CommonTextWidget(
-                                          textColor: isSelected
-                                              ? Colors.white
-                                              : null,
-                                          text: outerList[outerIndex]
-                                          ['items'][innerIndex],
+                                          textColor:
+                                              isSelected ? Colors.white : null,
+                                          text: outerList[outerIndex]['items']
+                                              [innerIndex],
                                           fontSize: 12),
                                     ),
                                   );

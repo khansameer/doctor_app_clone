@@ -1,5 +1,6 @@
 import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
+import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,7 @@ class TabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.sizeOf(context);
     final tabProvider = Provider.of<AdminDashboardProvider>(context);
     final isSelected = [
       tabProvider.selectedIndex == 0,
@@ -30,39 +32,42 @@ class TabView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Flexible(
-            child: ToggleButtons(
+      body: SizedBox(
+        height: size.height,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ToggleButtons(
               borderRadius: BorderRadius.circular(8),
               fillColor: Colors.blue.shade50,
-              selectedColor:AppColors.colorBlue,
-              color: AppColors.colorBlue,
+              selectedColor: AppColors.colorText,
+              color: AppColors.colorText,
+              textStyle: commonTextStyle(fontWeight: FontWeight.w600),
               borderColor: colorBGWithOpacity,
+              borderWidth: 2,
               selectedBorderColor: Colors.transparent,
               isSelected: isSelected,
               onPressed: (index) {
                 tabProvider.setTab(index);
-            
+
                 print('=========index=====$index==');
                 // Navigate to the respective page based on the selected index
                 if (index == 0) {
-            
-                  tabProvider.setPatientDetailsPage(value: "all", context: context);
+                  tabProvider.setPatientDetailsPage(
+                      value: "all", context: context);
                   //    Navigator.push(context, MaterialPageRoute(builder: (context) => AllPage()));
                 } else if (index == 1) {
-            
-                  tabProvider.setPatientDetailsPage(value: "male", context: context);
-                //  Navigator.push(context, MaterialPageRoute(builder: (context) => MenPage()));
+                  tabProvider.setPatientDetailsPage(
+                      value: "male", context: context);
+                  //  Navigator.push(context, MaterialPageRoute(builder: (context) => MenPage()));
                 } else if (index == 2) {
-                  tabProvider.setPatientDetailsPage(value: "female", context: context);
+                  tabProvider.setPatientDetailsPage(
+                      value: "female", context: context);
                   //Navigator.push(context, MaterialPageRoute(builder: (context) => WomenPage()));
-                }
-                else if (index == 3) {
-                  tabProvider.setPatientDetailsPage(value: "All List", context: context);
+                } else if (index == 3) {
+                  tabProvider.setPatientDetailsPage(
+                      value: "All List", context: context);
                   //Navigator.push(context, MaterialPageRoute(builder: (context) => WomenPage()));
                 }
               },
@@ -85,10 +90,9 @@ class TabView extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-          Expanded(child:    tabProvider.currentPatientPage)
-
-        ],
+            Expanded(child: tabProvider.currentPatientPage)
+          ],
+        ),
       ),
     );
   }

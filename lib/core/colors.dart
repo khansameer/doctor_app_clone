@@ -23,6 +23,7 @@ class AppColors {
   static const colorRevenue = Color.fromRGBO(244, 199, 253, 1);
   static const primary = Color.fromRGBO(18, 166, 108, 1);
   static const primaryLight = Color.fromRGBO(18, 166, 108, 0.7);
+  static const primaryLight1 = Color.fromRGBO(18, 166, 108, 0.3);
   static const colorMenuBG = Color.fromRGBO(208, 211, 217, 0.5);
   static const colorText = Color.fromRGBO(20, 27, 96, 1);
   // static const colorHover = Color.fromRGBO(241, 249, 232, 1);

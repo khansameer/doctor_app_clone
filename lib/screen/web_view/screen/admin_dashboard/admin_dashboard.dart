@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 
 import '../../../mobile_view/profile/edit_profile_screen.dart';
 import '../../admin_dashboard_view/admin_dashboard_view.dart';
+import '../../admin_dashboard_view/communication_screen.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -51,7 +52,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
   Widget build(BuildContext context) {
     var isMobile = Responsive.isMobile(context);
     var isDesktop = Responsive.isDesktop(context);
-    var size=MediaQuery.sizeOf(context);
+    var size = MediaQuery.sizeOf(context);
 
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
       return Scaffold(
@@ -171,7 +172,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Dashboard',
                   onTap: (index, _) {
-                 //   provider.updatePageValue(1);
+                    //   provider.updatePageValue(1);
                     sideMenu.changePage(index); // Navigate to Calendar page
                     // sideMenu.changePage(index);
                   },
@@ -181,7 +182,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Appointment',
                   onTap: (index, _) {
-                   // provider.updatePageValue(1);
+                    // provider.updatePageValue(1);
                     sideMenu.changePage(index); // Navigate to Calendar page
                     // sideMenu.changePage(index);
                   },
@@ -189,12 +190,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   tooltipContent: "This is a tooltip for Dashboard item",
                 ),
                 commonMenuDivider(),
-
-
                 SideMenuItem(
                   title: 'Patients',
                   onTap: (index, _) {
-                   // provider.updatePageValue(2);
+                    // provider.updatePageValue(2);
                     sideMenu.changePage(index);
                     //    sideMenu.changePage(index);
                   },
@@ -204,7 +203,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Communications',
                   onTap: (index, _) {
-                   // provider.updatePageValue(3);
+                    // provider.updatePageValue(3);
                     sideMenu.changePage(index);
                     //sideMenu.changePage(index);
                   },
@@ -214,7 +213,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Reports',
                   onTap: (index, _) {
-                   // provider.updatePageValue(4);
+                    // provider.updatePageValue(4);
                     sideMenu.changePage(index);
                     //sideMenu.changePage(index);
                   },
@@ -224,7 +223,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Settings',
                   onTap: (index, _) {
-                 //   provider.updatePageValue(5);
+                    //   provider.updatePageValue(5);
                     sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.settings_outlined),
@@ -233,14 +232,14 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Feedback',
                   onTap: (index, _) {
-                 //   provider.updatePageValue(7);
+                    //   provider.updatePageValue(7);
                     sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.thumb_up_alt_outlined),
                 ),
                 commonMenuDivider(),
 
-              /*  SideMenuExpansionItem(
+                /*  SideMenuExpansionItem(
                   title: "Patient Management",
                   icon: const Icon(Icons.person),
                   children: [
@@ -263,10 +262,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   onTap: (index, _) {
                     commonLogoutDialog(
-                        width: isMobile
-                            ? size.width * zero9
-
-                            : size.width * 0.3,
+                        width: isMobile ? size.width * zero9 : size.width * 0.3,
                         contextAd: context,
                         isDesktop: isDesktop,
                         isMobile: isMobile);
@@ -285,7 +281,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 color: AppColors.colorBackground,
                 child: PageView(
                   controller: provider.pageController,
-                  children:  const [
+                  children: [
                     Padding(
                       padding: EdgeInsets.all(16),
                       child: AdminDashboardView(),
@@ -303,7 +299,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     Padding(
                       padding: EdgeInsets.all(16),
                       child: Center(
-                        child: ErrorPage(),
+                        child: CommunicationScreen(),
                       ),
                     ),
                     SizedBox.shrink(),
@@ -325,7 +321,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         child: ErrorPage(),
                       ),
                     ),
-                   /* Padding(
+                    /* Padding(
                       padding: EdgeInsets.all(16),
                       child: AdminCalenderScreen(),
                     ),*/
@@ -335,7 +331,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         child: ErrorPage(),
                       ),
                     ),
-                   // EditProfileScreen(),
+                    // EditProfileScreen(),
                   ],
                 ),
               ),
