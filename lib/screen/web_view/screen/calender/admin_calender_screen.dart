@@ -1,5 +1,7 @@
+import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/CustomAlertDialog.dart';
+import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/core/string/string_utils.dart';
@@ -36,11 +38,12 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
     isSelected = [false, true, false];
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+
+
       context
           .read<CalenderProvider>()
           .getAppointments(context: context)
           .then((value) {
-        setState(() {});
       });
     });
   }
@@ -83,6 +86,32 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+
+                    isMobile?SizedBox.shrink():  Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          CommonTextWidget(text: "Today appointments",fontWeight: FontWeight.w700,
+                          textColor: Colors.black,
+                          fontSize: 16,),
+
+                          SizedBox(width: 10,),
+                          Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                color: colorBG,
+                                shape: BoxShape.circle),
+                            child: Center(
+                              child: CommonTextWidget(text: "0",
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12,
+                              textColor: Colors.black,),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                     isMobile
                         ? Column(
                             children: [

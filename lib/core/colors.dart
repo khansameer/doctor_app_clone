@@ -16,12 +16,13 @@ class AppColors {
   static const colorHeptro = Color.fromRGBO(255, 210, 0, 1);
   static const colorHemoptic = Color.fromRGBO(244, 166, 157, 1);
   static const colorDental = Color.fromRGBO(52, 74, 252, 1);
+  static const colorBlue = Color.fromRGBO(52, 74, 252, 1);
   static const colorDoctor = Color.fromRGBO(187, 235, 255, 1);
   static const colorPatient = Color.fromRGBO(183, 199, 254, 1);
   static const colorAppointment = Color.fromRGBO(195, 229, 176, 1);
   static const colorRevenue = Color.fromRGBO(244, 199, 253, 1);
   static const primary = Color.fromRGBO(18, 166, 108, 1);
-  static const primaryLight = Color.fromRGBO(18, 166, 108, 0.5);
+  static const primaryLight = Color.fromRGBO(18, 166, 108, 0.7);
   static const colorMenuBG = Color.fromRGBO(208, 211, 217, 0.5);
   static const colorText = Color.fromRGBO(20, 27, 96, 1);
   // static const colorHover = Color.fromRGBO(241, 249, 232, 1);

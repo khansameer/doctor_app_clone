@@ -100,7 +100,7 @@ class AuthProviders extends ChangeNotifier {
         } else {
           print('======csaaaa}');
           pushNamedAndRemoveUntil(
-              context: context, routeName: RouteName.dashboardScreen);
+              context: context, routeName: RouteName.adminDashboardScreen);
         }
       } else {
         Navigator.pushNamedAndRemoveUntil(

@@ -2,6 +2,7 @@ import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/core/route/route_generator.dart';
 
 import 'package:doctor_app/core/string/string_utils.dart';
+import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 
 import 'package:doctor_app/provider/auth_provider.dart';
 import 'package:doctor_app/provider/calender_provider.dart';
@@ -25,6 +26,7 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider<ProfileProvider>(create: (_) => ProfileProvider()),
   ChangeNotifierProvider<CalenderProvider>(create: (_) => CalenderProvider()),
   ChangeNotifierProvider<ProcedureProvider>(create: (_) => ProcedureProvider()),
+  ChangeNotifierProvider<AdminDashboardProvider>(create: (_) => AdminDashboardProvider()),
 ];
 
 void main() async {

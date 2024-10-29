@@ -63,12 +63,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
     super.initState();
   }
 
-  @override
-  void dispose() {
 
-    super.dispose();
-    _searchController.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +123,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                 : Row(
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           const SizedBox(
                             width: 10,
@@ -228,6 +223,12 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                                       fontWeight: FontWeight.w600,
                                     )),
                                     DataColumn(
+                                        label: CommonTextWidget(
+                                          text: 'Status',
+                                          textColor: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                        )),
+                                    DataColumn(
                                       numeric: true,
                                       label: CommonTextWidget(
                                         text: 'Action',
@@ -287,6 +288,8 @@ class MyData extends DataTableSource {
                 '${DateTimeUtils.calculateAge(date: user!.dateOfBirth.toString())}' /*DateFormat('yyyy-MM-dd')
                 .format(DateTime.parse('${user?.dateOfBirth.toString()}'))*/
             )),
+
+        DataCell(CommonTextWidget(fontSize: 12, text: "Active",fontWeight: FontWeight.w700,textColor: Colors.green  ,)),
         DataCell(buildPopupMenu(id: user.sId.toString())),
       ],
     );

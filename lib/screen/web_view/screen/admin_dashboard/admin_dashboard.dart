@@ -1,13 +1,11 @@
 import 'package:doctor_app/core/app_constants.dart';
 import 'package:doctor_app/core/colors.dart';
-import 'package:doctor_app/core/common/CustomAlertDialog.dart';
-import 'package:doctor_app/core/common/common_button_widget.dart';
+
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/error_page.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
-import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/admin_calender_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/patient_new_screen.dart';
@@ -17,8 +15,8 @@ import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../shared_preferences/preference_helper.dart';
 import '../../../mobile_view/profile/edit_profile_screen.dart';
+import '../../admin_dashboard_view/admin_dashboard_view.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -28,7 +26,7 @@ class AdminDashboard extends StatefulWidget {
 }
 
 class _AdminDashboardState extends State<AdminDashboard> {
-  PageController pageController = PageController();
+  //PageController pageControllerDashBoard = PageController();
   SideMenuController sideMenu = SideMenuController();
 
   @override
@@ -44,7 +42,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
   @override
   void dispose() {
-    pageController.dispose();
+    context.read<DashboardProvider>().pageController.dispose();
     sideMenu.dispose();
     super.dispose();
   }
@@ -53,6 +51,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
   Widget build(BuildContext context) {
     var isMobile = Responsive.isMobile(context);
     var isDesktop = Responsive.isDesktop(context);
+    var size=MediaQuery.sizeOf(context);
 
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
       return Scaffold(
@@ -135,9 +134,14 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
                 displayMode: SideMenuDisplayMode.auto,
                 showHamburger: isMobile ? true : false,
-                arrowCollapse: Colors.white,
+                //for sub Menu
+                arrowCollapse: Colors.black,
+                arrowOpen: Colors.black,
+                toggleColor: Colors.black,
                 unselectedIconColorExpandable: AppColors.colorText,
-                selectedIconColorExpandable: Colors.white,
+                selectedIconColorExpandable: Colors.black,
+
+                //===
                 unselectedIconColor: AppColors.colorText,
                 unselectedTitleTextStyle: commonTextStyle(
                     color: AppColors.colorText,
@@ -165,9 +169,19 @@ class _AdminDashboardState extends State<AdminDashboard> {
               ),
               items: [
                 SideMenuItem(
-                  title: 'Calender',
+                  title: 'Dashboard',
                   onTap: (index, _) {
-                    provider.updatePageValue(1);
+                 //   provider.updatePageValue(1);
+                    sideMenu.changePage(index); // Navigate to Calendar page
+                    // sideMenu.changePage(index);
+                  },
+                  icon: const Icon(Icons.calendar_month_sharp),
+                  tooltipContent: "This is a tooltip for Dashboard item",
+                ),
+                SideMenuItem(
+                  title: 'Appointment',
+                  onTap: (index, _) {
+                   // provider.updatePageValue(1);
                     sideMenu.changePage(index); // Navigate to Calendar page
                     // sideMenu.changePage(index);
                   },
@@ -175,10 +189,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   tooltipContent: "This is a tooltip for Dashboard item",
                 ),
                 commonMenuDivider(),
+
+
                 SideMenuItem(
                   title: 'Patients',
                   onTap: (index, _) {
-                    provider.updatePageValue(2);
+                   // provider.updatePageValue(2);
                     sideMenu.changePage(index);
                     //    sideMenu.changePage(index);
                   },
@@ -188,7 +204,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Communications',
                   onTap: (index, _) {
-                    provider.updatePageValue(3);
+                   // provider.updatePageValue(3);
                     sideMenu.changePage(index);
                     //sideMenu.changePage(index);
                   },
@@ -198,7 +214,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Reports',
                   onTap: (index, _) {
-                    provider.updatePageValue(4);
+                   // provider.updatePageValue(4);
                     sideMenu.changePage(index);
                     //sideMenu.changePage(index);
                   },
@@ -208,7 +224,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Settings',
                   onTap: (index, _) {
-                    provider.updatePageValue(5);
+                 //   provider.updatePageValue(5);
                     sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.settings_outlined),
@@ -217,18 +233,43 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Feedback',
                   onTap: (index, _) {
-                    provider.updatePageValue(7);
+                 //   provider.updatePageValue(7);
                     sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.thumb_up_alt_outlined),
                 ),
                 commonMenuDivider(),
+
+              /*  SideMenuExpansionItem(
+                  title: "Patient Management",
+                  icon: const Icon(Icons.person),
+                  children: [
+                    SideMenuItem(
+                      title: 'Appointment',
+                      onTap: (index, _) {
+                        sideMenu.changePage(index);
+                      },
+                      icon: const Icon(Icons.calendar_month),
+                    ),
+                    SideMenuItem(
+                      title: 'Patients',
+                      onTap: (index, _) {
+                        sideMenu.changePage(index);
+                      },
+                      icon: const Icon(Icons.supervisor_account),
+                    )
+                  ],
+                ),*/
                 SideMenuItem(
                   onTap: (index, _) {
                     commonLogoutDialog(
-                        context: context,
+                        width: isMobile
+                            ? size.width * zero9
+
+                            : size.width * 0.3,
+                        contextAd: context,
                         isDesktop: isDesktop,
-                        isMobile: isDesktop);
+                        isMobile: isMobile);
                   },
                   title: 'Logout',
                   icon: const Icon(Icons.exit_to_app),
@@ -244,7 +285,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 color: AppColors.colorBackground,
                 child: PageView(
                   controller: provider.pageController,
-                  children: const [
+                  children:  const [
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                      child: AdminDashboardView(),
+                    ),
                     Padding(
                       padding: EdgeInsets.all(16),
                       child: AdminCalenderScreen(),
@@ -280,7 +325,17 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         child: ErrorPage(),
                       ),
                     ),
-                    EditProfileScreen(),
+                   /* Padding(
+                      padding: EdgeInsets.all(16),
+                      child: AdminCalenderScreen(),
+                    ),*/
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Center(
+                        child: ErrorPage(),
+                      ),
+                    ),
+                   // EditProfileScreen(),
                   ],
                 ),
               ),

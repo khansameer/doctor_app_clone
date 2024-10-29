@@ -70,7 +70,7 @@ class ProfileMenuScreen extends StatelessWidget {
           commonList(
             onTap: () {
               commonLogoutDialog(
-                  context: context, isDesktop: isDesktop, isMobile: isDesktop);
+                  contextAd: context, isDesktop: isDesktop, isMobile: isDesktop);
             },
             icon: Icons.exit_to_app_outlined,
             title: "Logout",

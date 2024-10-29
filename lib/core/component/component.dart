@@ -780,21 +780,24 @@ Future<List<PlatformFile>?> pickFiles() async {
   return _paths;
 }*/
 commonLogoutDialog(
-    {required BuildContext context,
+    {required BuildContext contextAd,
     required bool isMobile,
+      double ?width,
+
     required bool isDesktop}) {
   showDialog(
       barrierDismissible: false,
-      context: context,
+      context: contextAd,
       builder: (BuildContext context) {
-        var width = MediaQuery.of(context).size.width;
+        var size = MediaQuery.sizeOf(contextAd);
         return CustomAlertDialog(
           content: SizedBox(
-            width: isMobile
+            /*width: isMobile
                 ? width * zero9
                 : isDesktop
                     ? width * 0.3
-                    : width * 0.19,
+                    : width * 0.19,*/
+            width: width,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -825,9 +828,10 @@ commonLogoutDialog(
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Expanded(
+                          Flexible(
                             child: CommonButtonWidget(
                               height: 40,
+                            width: isMobile?size.width:size.width*0.08,
                               radius: 8,
                               onPressed: () async {
                                 await PreferenceHelper.clear();
@@ -848,10 +852,11 @@ commonLogoutDialog(
                           const SizedBox(
                             width: 10,
                           ),
-                          Expanded(
+                          Flexible(
                             child: CommonButtonWidget(
                               text: "Cancel",
                               height: 40,
+                              width: isMobile?size.width:size.width*0.08,
                               radius: 8,
                               colorBorder: Colors.black,
                               colorButton: Colors.white,
