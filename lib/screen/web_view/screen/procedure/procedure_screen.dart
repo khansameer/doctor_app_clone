@@ -267,6 +267,7 @@ Widget buildPopupMenu(
       if (value == 'edit') {
         // Handle Active logic
       } else if (value == 'delete') {
+        print('======onClickDelete');
         provider.deleteProcedureCharges(context: context, ID: id.toString());
       }
     },

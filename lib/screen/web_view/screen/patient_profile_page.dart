@@ -65,8 +65,9 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
 
   @override
   void dispose() {
-    _searchController.dispose();
+
     super.dispose();
+    _searchController.dispose();
   }
 
   @override

@@ -96,7 +96,7 @@ Future callPostMethodWithToken11(
   return await http.post(uri, headers: commonHeadersToken);
 }
 
-Future callDeleteMethod(String url, Map<String, dynamic> params) async {
+Future callDeleteMethod({required String url, Map<String, dynamic> ?params}) async {
   String? token = await getAuthToken();
   Map<String, String> commonHeadersToken = {
     'Content-Type': 'application/json',

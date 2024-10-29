@@ -76,10 +76,10 @@ class ProcedureProvider extends ChangeNotifier {
     notifyListeners();
     try {
       //String userID = await getUserID();
-      final response = await _service.callDeleteMethod(
+      final response = await _service.callDeleteMethods(
           url: '${ApiConfig.addProcedureCharges}/$ID');
 
-      print('=====z${jsonDecode(response)}');
+      print('===addProcedureCharges ==z${globalStatusCode}');
 
       if (globalStatusCode == 200 || globalStatusCode == 201) {
         getProcedureCharges(context: context);

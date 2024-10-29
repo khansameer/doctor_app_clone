@@ -36,11 +36,13 @@ class ApiService {
     return response;
   }
 
-  Future<String> callDeleteMethod({
+  Future<String> callDeleteMethods({
     required String url,
     String? key,
   }) async {
-    var response = await callDeleteMethod(url: url, key: key);
+    print('callDeleteMethods  ${url}');
+    var response = await callDeleteMethod(url: url, );
+
     return response;
   }
 }
