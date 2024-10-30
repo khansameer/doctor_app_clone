@@ -4,6 +4,7 @@ import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/common_textfield.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
+import 'package:doctor_app/provider/patient_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,7 @@ class TabView extends StatelessWidget {
       tabProvider.selectedIndex == 0,
       tabProvider.selectedIndex == 1,
       tabProvider.selectedIndex == 2,
-     // tabProvider.selectedIndex == 3,
+      // tabProvider.selectedIndex == 3,
     ];
 
     return Scaffold(
@@ -46,18 +47,17 @@ class TabView extends StatelessWidget {
                 Expanded(
                   flex: 8,
                   child: Container(
-                    margin: const EdgeInsets.only(bottom: 20,top: 10),
+                    margin: const EdgeInsets.only(bottom: 20, top: 10),
                     height: 40,
                     child: ToggleButtons(
-
                       borderRadius: BorderRadius.circular(8),
-                      fillColor:  AppColors.colorBgNew,
+                      fillColor: AppColors.colorBgNew,
                       selectedColor: AppColors.colorText,
-                      color: const Color.fromRGBO(250, 251, 253,1),
+                      color: const Color.fromRGBO(250, 251, 253, 1),
                       textStyle: commonTextStyle(fontWeight: FontWeight.w600),
                       borderColor: AppColors.colorBgNew,
                       borderWidth: 1,
-                      hoverColor:  AppColors.colorBgNew,
+                      hoverColor: AppColors.colorBgNew,
                       selectedBorderColor: AppColors.colorBgNew,
                       isSelected: isSelected,
                       onPressed: (index) {
@@ -66,36 +66,37 @@ class TabView extends StatelessWidget {
                         if (index == 0) {
                           tabProvider.setPatientDetailsPage(
                               value: "all", context: context);
-
                         } else if (index == 1) {
                           tabProvider.setPatientDetailsPage(
                               value: "male", context: context);
-
                         } else if (index == 2) {
                           tabProvider.setPatientDetailsPage(
                               value: "female", context: context);
                         }
                       },
-                      children:  [
+                      children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                          child: commonText(text: 'All',
+                          child: commonText(
+                            text: 'All',
                             fontWeight: FontWeight.w400,
-                            color: AppColors.colorBlue,),
+                            color: AppColors.colorBlue,
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                          child: commonText(text: 'Men',
+                          child: commonText(
+                              text: 'Men',
                               fontWeight: FontWeight.w400,
                               color: AppColors.colorBlue),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                          child: commonText(text: 'Women',
+                          child: commonText(
+                              text: 'Women',
                               fontWeight: FontWeight.w400,
                               color: AppColors.colorBlue),
                         ),
-
                       ],
                     ),
                   ),
@@ -103,10 +104,11 @@ class TabView extends StatelessWidget {
                 Expanded(
                   child: SizedBox(
                     height: 40,
-                    
                     child: CommonTextField(
                       onChange: (query) {
-                        context.read<AdminDashboardProvider>().updateSearchQuery(query);
+                        context
+                            .read<PatientProvider>()
+                            .updateSearchQuery(query);
                       },
                       hint: "Search Patient Name / ID /Phone number",
                       colorFill: Colors.white,
@@ -114,8 +116,6 @@ class TabView extends StatelessWidget {
                     ),
                   ),
                 ),
-
-
               ],
             ),
             Expanded(child: tabProvider.currentPatientPage)

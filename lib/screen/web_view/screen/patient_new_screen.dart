@@ -79,17 +79,18 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
         child: ListView(
           children: [
             CommonTextWidget(
-              letterSpacing: 1  ,
-              text: "Patients List",fontSize: 20,fontWeight: FontWeight.w700,),
-
-            const SizedBox(height: 20,),
+              letterSpacing: 1,
+              text: "Patients List",
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             Container(
-              
               width: size.width,
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8)
-              ),
+                  color: Colors.white, borderRadius: BorderRadius.circular(8)),
               padding: const EdgeInsets.all(0),
               height: size.height,
               child: const Padding(

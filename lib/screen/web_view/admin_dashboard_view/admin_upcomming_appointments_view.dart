@@ -134,7 +134,10 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                const Icon(Icons.access_time,color: AppColors.colorTextNew,),
+                                const Icon(
+                                  Icons.access_time,
+                                  color: AppColors.colorTextNew,
+                                ),
                                 const SizedBox(
                                   width: 10,
                                 ),

@@ -8,6 +8,7 @@ import 'package:doctor_app/provider/auth_provider.dart';
 import 'package:doctor_app/provider/calender_provider.dart';
 import 'package:doctor_app/provider/chat_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
+import 'package:doctor_app/provider/patient_provider.dart';
 import 'package:doctor_app/provider/procedure_provider.dart';
 import 'package:doctor_app/shared_preferences/preference_helper.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,9 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider<ProfileProvider>(create: (_) => ProfileProvider()),
   ChangeNotifierProvider<CalenderProvider>(create: (_) => CalenderProvider()),
   ChangeNotifierProvider<ProcedureProvider>(create: (_) => ProcedureProvider()),
-  ChangeNotifierProvider<AdminDashboardProvider>(create: (_) => AdminDashboardProvider()),
+  ChangeNotifierProvider<AdminDashboardProvider>(
+      create: (_) => AdminDashboardProvider()),
+  ChangeNotifierProvider<PatientProvider>(create: (_) => PatientProvider()),
 ];
 
 void main() async {
