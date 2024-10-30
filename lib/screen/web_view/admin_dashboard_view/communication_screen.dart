@@ -35,7 +35,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                   color: Colors.grey.withOpacity(0.3), //color of shadow
                   spreadRadius: 2, //spread radius
                   blurRadius: 3, // blur radius
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 )
               ],
               borderRadius: BorderRadius.circular(8)
@@ -113,7 +113,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                     color: Colors.grey.withOpacity(0.3), //color of shadow
                     spreadRadius: 2, //spread radius
                     blurRadius: 3, // blur radius
-                    offset: Offset(0, 2),
+                    offset: const Offset(0, 2),
                   )
                 ],
                 borderRadius: BorderRadius.circular(8)
@@ -155,7 +155,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10,),
+                              const SizedBox(width: 10,),
                               Flexible(
                                 child: Container(
                                   alignment: Alignment.topLeft,
@@ -173,7 +173,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10,),
+                              const SizedBox(width: 10,),
                             ],
                           ))
 
@@ -183,28 +183,28 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                     const Divider(thickness: 0.3,),
                     Expanded(
                       child: ListView.builder(
-                        itemCount: chatModel.messages.length,
+                        itemCount: chatModel.chatMessages.length,
 
                         itemBuilder: (context, index) {
 
-                          if( index % 2 == 0){
-                            return SenderMessageView(msg: chatModel.messages[index],);
+                          if(chatModel.chatMessages[index].sentByUser){
+                            return SenderMessageView(chatMessage: chatModel.chatMessages[index],);
                           }
                           else
                             {
 
-                              return ReviceMessageView(msg: chatModel.messages[index],);
+                              return ReviceMessageView(chatMessage: chatModel.chatMessages[index],);
                             }
                         
                         },
                       ),
                     ),
-                    Divider(thickness: 0.3,),
+                    const Divider(thickness: 0.3,),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          SizedBox(width: 10,),
+                          const SizedBox(width: 10,),
                           const Expanded(
                             child: TextField(
                               decoration: InputDecoration(
@@ -217,7 +217,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                           Container(
                             width: 50,
                             height: 50,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               color: AppColors.colorBgNew
                             ),
@@ -246,13 +246,13 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
           children: [
             Expanded(
               child: ListView.builder(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 shrinkWrap: true,
                 itemCount: chatModel.dummyChatUsers.length,
                 itemBuilder: (context, index) {
                   var data = chatModel.dummyChatUsers[index];
                   return Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                   margin: const EdgeInsets.only(top: 0),
                     decoration: BoxDecoration(
                       color: index == chatModel.selectedUserIndex
@@ -288,7 +288,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                               image: icDummyUser,
                             ) /*commonImageNetworkWidget(path: provider.patients[index].photo)*/,
                           ),
-                          data.messageCount==0?SizedBox.shrink(): Positioned(
+                          data.messageCount==0?const SizedBox.shrink(): Positioned(
                               right: -5,
 
                               top: -3,
@@ -318,7 +318,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                 },
               ),
             ),
-            Divider(thickness: 0.3,),
+            const Divider(thickness: 0.3,),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: SizedBox(

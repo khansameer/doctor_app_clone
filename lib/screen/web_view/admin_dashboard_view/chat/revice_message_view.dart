@@ -1,10 +1,13 @@
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ReviceMessageView extends StatelessWidget {
-  const ReviceMessageView({super.key, this.msg });
-final String ?msg;
+  const ReviceMessageView({super.key, this.chatMessage });
+  final  ChatMessage ? chatMessage;
+//final String ?msg;
   @override
   Widget build(BuildContext context) {
     return  Align(
@@ -18,7 +21,7 @@ final String ?msg;
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            CommonTextWidget(text: "John Doe, 01:15 PM",left: 15,fontSize: 12,),
+            CommonTextWidget(text: "${chatMessage?.sender.toString()}, ${DateFormat('hh:mm a').format(DateTime.parse('${chatMessage?.date.toString()}'))}",left: 15,fontSize: 10,top: 20,),
             Container(
               decoration: BoxDecoration(
                   color: AppColors.colorBgNew,
@@ -30,7 +33,7 @@ final String ?msg;
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  CommonTextWidget(text: msg,)
+                  CommonTextWidget(text: chatMessage?.message.toString(),)
                 ],
               ),
             ),

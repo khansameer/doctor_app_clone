@@ -2,10 +2,13 @@ import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../../../../provider/admin_dashboard_provider.dart';
 
 class SenderMessageView extends StatelessWidget {
-  const SenderMessageView({super.key,this.msg});
- final  String ? msg;
+  const SenderMessageView({super.key,this.chatMessage});
+ final  ChatMessage ? chatMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,8 @@ class SenderMessageView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                CommonTextWidget(text: "You, 01:15 PM",right: 10,fontSize: 12,),
+                CommonTextWidget(text: "You, ${DateFormat('hh:mm a').format(DateTime.parse('${chatMessage?.date.toString()}'))}",right: 10,fontSize: 10,top: 20,),
+                //CommonTextWidget(text: "You, 01:15 PM",right: 10,fontSize: 12,),
                 Container(
 
                   decoration: BoxDecoration(
@@ -40,7 +44,7 @@ class SenderMessageView extends StatelessWidget {
                     children: [
 
 
-                      CommonTextWidget(text: msg,)
+                      CommonTextWidget(text: chatMessage?.message.toString(),)
                     ],
                   ),
                 ),
