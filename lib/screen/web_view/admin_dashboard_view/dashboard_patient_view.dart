@@ -1,5 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
@@ -16,11 +17,14 @@ class DashboardPatientView extends StatelessWidget {
     final PageController pageControllerPatientView = PageController();
     var size = MediaQuery.sizeOf(context);
     var isDeskTop = Responsive.isDesktop(context);
+    var isTablet = Responsive.isTablet(context);
+    //CarouselSliderController buttonCarouselController = CarouselSliderController();
+
     return Container(
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-          color: colorBGWithOpacity, borderRadius: BorderRadius.circular(8)),
+          color: Colors.white, borderRadius: BorderRadius.circular(8)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,6 +49,7 @@ class DashboardPatientView extends StatelessWidget {
                           provider.previousItem();
                           pageControllerPatientView
                               .jumpToPage(provider.currentIndex);
+
                         },
                         icon: const Icon(
                           Icons.arrow_back_ios_new_outlined,
@@ -57,6 +62,7 @@ class DashboardPatientView extends StatelessWidget {
                           provider.nextItem(provider.patients.length);
                           pageControllerPatientView
                               .jumpToPage(provider.currentIndex);
+                         // buttonCarouselController.nextPage();
                         },
                         icon: const Icon(
                           Icons.arrow_forward_ios_outlined,
@@ -69,7 +75,7 @@ class DashboardPatientView extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: isDeskTop ? size.height * 0.23 : size.height * 0.13,
+            height: isDeskTop ? size.height * 0.13 : isTablet? size.height* 0.13:size.height * 0.13,
             child: PageView.builder(
                 controller: pageControllerPatientView,
                 onPageChanged: (value) {
@@ -97,7 +103,7 @@ class DashboardPatientView extends StatelessWidget {
                                       height: 70,
                                       fit: BoxFit.cover,
                                       image: icDummyUser,
-                                    ) /*commonImageNetworkWidget(path: provider.patients[index].photo)*/,
+                                    )
                                   ),
                                   const SizedBox(
                                     width: 10,
@@ -135,7 +141,7 @@ class DashboardPatientView extends StatelessWidget {
                                     alignment: Alignment.topLeft,
                                     width: 40,
                                     decoration: const BoxDecoration(
-                                        color: Colors.white,
+                                        color: AppColors.colorBgNew,
                                         shape: BoxShape.circle),
                                     height: 40,
                                     child: const Center(
@@ -162,7 +168,7 @@ class DashboardPatientView extends StatelessWidget {
                             Expanded(
                                 child: Row(
                               children: [
-                                const Icon(Icons.access_time),
+                                const Icon(Icons.access_time,color: AppColors.colorTextNew,),
                                 const SizedBox(
                                   width: 10,
                                 ),
@@ -179,7 +185,7 @@ class DashboardPatientView extends StatelessWidget {
                               children: [
                                 Icon(
                                   Icons.more_horiz,
-                                  color: Colors.grey,
+                                  color: AppColors.colorTextNew,
                                 ),
                               ],
                             ))
@@ -190,6 +196,7 @@ class DashboardPatientView extends StatelessWidget {
                   );
                 }),
           ),
+
         ],
       ),
     );

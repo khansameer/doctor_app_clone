@@ -22,7 +22,7 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
       margin: const EdgeInsets.all(20),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          color: colorBGWithOpacity, borderRadius: BorderRadius.circular(8)),
+          color: Colors.white, borderRadius: BorderRadius.circular(8)),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView(
@@ -86,7 +86,7 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
                                         CommonTextWidget(
                                           text: provider
                                               .patients[index].description,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           fontSize: 14,
                                           top: 5,
                                         ),
@@ -108,7 +108,7 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
                                     alignment: Alignment.topLeft,
                                     width: 40,
                                     decoration: const BoxDecoration(
-                                        color: Colors.white,
+                                        color: AppColors.colorBgNew,
                                         shape: BoxShape.circle),
                                     height: 40,
                                     child: const Center(
@@ -134,18 +134,18 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                const Icon(Icons.access_time),
+                                const Icon(Icons.access_time,color: AppColors.colorTextNew,),
                                 const SizedBox(
                                   width: 10,
                                 ),
                                 CommonTextWidget(
                                   text: provider.patients[index].time,
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w500,
                                 )
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 50,
                             ),
                             Row(
@@ -154,7 +154,7 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
                                 CommonTextWidget(
                                   text: '\$${provider.patients[index].price}',
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w500,
                                 )
                               ],
                             )

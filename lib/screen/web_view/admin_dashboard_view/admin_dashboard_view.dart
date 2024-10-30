@@ -1,3 +1,4 @@
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_over_all_appointment.dart';
@@ -16,7 +17,7 @@ class AdminDashboardView extends StatelessWidget {
     var isMobile = Responsive.isMobile(context);
     return Container(
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(10)),
+          color: AppColors.colorBgNew, borderRadius: BorderRadius.circular(10)),
       child:
           Consumer<AdminDashboardProvider>(builder: (context, provider, child) {
         return isMobile ? _mobile(provider) : _webView(provider);

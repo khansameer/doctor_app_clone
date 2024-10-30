@@ -23,7 +23,7 @@ class AdminOverAllAppointment extends StatelessWidget {
       margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
 
-          color: colorBGWithOpacity, borderRadius: BorderRadius.circular(8)),
+          color: Colors.white, borderRadius: BorderRadius.circular(8)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +88,9 @@ class AdminOverAllAppointment extends StatelessWidget {
       margin: const EdgeInsets.all(20),
       child: BarChart(
         BarChartData(
+
           borderData: FlBorderData(
+            show: false,
             border: Border.all(color: Colors.grey),
           ),
           backgroundColor: Colors.white,
@@ -122,8 +124,10 @@ class AdminOverAllAppointment extends StatelessWidget {
                 getTitlesWidget: (value, meta) {
                   if (value.toInt() < labels.length) {
                     return CommonTextWidget(
+                      top: 10,
                       text: labels[value.toInt()],
-                        textColor: Colors.black, fontSize: 10
+                        fontWeight: FontWeight.w600,
+                        textColor:AppColors.colorTextNew, fontSize: 12
                     );
                   }
                   return const SizedBox.shrink();
@@ -131,16 +135,19 @@ class AdminOverAllAppointment extends StatelessWidget {
               ),
             ),
           ),
-          gridData: const FlGridData(show: true),
+          gridData: const FlGridData(show: false,
+
+              drawVerticalLine: false,
+              drawHorizontalLine: false),
           barGroups: List.generate(barValues.length, (index) {
             return BarChartGroupData(
               x: index,
               barRods: [
                 BarChartRodData(
-                  width: 30,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8)),
+                  width: 25,
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8),bottomRight: Radius.circular(8),bottomLeft: Radius.circular(8)),
                   toY: barValues[index],
-                  color: AppColors.primaryLight,
+                  color: AppColors.colorBarChart,
                 ),
               ],
             );

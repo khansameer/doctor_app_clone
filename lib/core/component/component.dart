@@ -15,6 +15,7 @@ import 'package:doctor_app/shared_preferences/preference_helper.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -268,12 +269,18 @@ commonDivider() {
 Widget commonInkWell({
   Widget? child,
   VoidCallback? onTap,
+  void Function(PointerEnterEvent)? onEnter,
+  void Function(PointerExitEvent)? onExit,
 }) {
-  return InkWell(
-    highlightColor: Colors.transparent,
-    splashColor: Colors.transparent,
-    onTap: onTap,
-    child: child,
+  return MouseRegion(
+    onEnter:onEnter ,
+    onExit:onExit ,
+    child: InkWell(
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      onTap: onTap,
+      child: child,
+    ),
   );
 }
 
@@ -340,6 +347,18 @@ pushNamedAndRemoveUntil(
       (route) => true);
 }
 
+commonProfileIcon({double? width,double ?height}){
+
+  return ClipRRect(
+    borderRadius: BorderRadius.circular(8),
+    child: setAssetImage(
+      width:width?? 60,
+      height:height?? 60,
+      fit: BoxFit.cover,
+      image: icDummyUser,
+    ) /*commonImageNetworkWidget(path: provider.patients[index].photo)*/,
+  );
+}
 void showCommonDialog(
     {required BuildContext context,
     required String title,
@@ -605,12 +624,12 @@ commonText({
           left: left ?? zero,
           right: right ?? zero,
           bottom: bottom ?? zero),
-      child: Text(text ?? '',
+      child: CommonTextWidget(text:text ?? '',
           textAlign: textAlign,
-          style: TextStyle(
-              color: color,
+
+              textColor: color,
               fontWeight: fontWeight ?? FontWeight.w500,
-              fontSize: fontSize ?? fourteen)));
+              fontSize: fontSize ?? fourteen));
 }
 
 commonMenu(

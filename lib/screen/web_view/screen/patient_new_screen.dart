@@ -1,12 +1,11 @@
 import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
-import 'package:doctor_app/core/component/component.dart';
+
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/calender_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/paitent_view/admin_patient_view.dart';
-import 'package:doctor_app/screen/web_view/screen/calender/admin_calender_screen.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -74,50 +73,67 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
-      return Container(
-        color: Colors.white,
+      return SizedBox(
         width: size.width,
-        padding: const EdgeInsets.all(0),
         height: size.height,
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: AdminPatientView(),
-        ) /*DefaultTabController(length: 2, child: Column(
+        child: ListView(
           children: [
+            CommonTextWidget(
+              letterSpacing: 1  ,
+              text: "Patients List",fontSize: 20,fontWeight: FontWeight.w700,),
+
+            const SizedBox(height: 20,),
             Container(
-              color: colorBGWithOpacity, // Background color for the TabBar
-              child:  TabBar(
-                dividerColor: Colors.transparent,
-                labelColor: colorText,
-                labelStyle: commonTextStyle(fontWeight: FontWeight.w700),
-                unselectedLabelColor:colorText,
-                indicatorColor:colorText,
-                tabs: [
-                  Tab(text: "Appointment"),
-                  Tab(text: "Paitent"),
-
-                ],
+              
+              width: size.width,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8)
               ),
-            ),
-            const Expanded(
-              // Content for each tab
-              child: TabBarView(
+              padding: const EdgeInsets.all(0),
+              height: size.height,
+              child: const Padding(
+                padding: EdgeInsets.all(16),
+                child: AdminPatientView(),
+              ) /*DefaultTabController(length: 2, child: Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.all(16),
-                    child: AdminCalenderScreen(),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(16),
-                    child: AdminPatientView(),
-                  ),
+                  Container(
+                    color: colorBGWithOpacity, // Background color for the TabBar
+                    child:  TabBar(
+                      dividerColor: Colors.transparent,
+                      labelColor: colorText,
+                      labelStyle: commonTextStyle(fontWeight: FontWeight.w700),
+                      unselectedLabelColor:colorText,
+                      indicatorColor:colorText,
+                      tabs: [
+                        Tab(text: "Appointment"),
+                        Tab(text: "Paitent"),
 
+                      ],
+                    ),
+                  ),
+                  const Expanded(
+                    // Content for each tab
+                    child: TabBarView(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(16),
+                          child: AdminCalenderScreen(),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(16),
+                          child: AdminPatientView(),
+                        ),
+
+                      ],
+                    ),
+                  ),
                 ],
-              ),
+              ))*/
+              ,
             ),
           ],
-        ))*/
-        ,
+        ),
       );
     });
   }

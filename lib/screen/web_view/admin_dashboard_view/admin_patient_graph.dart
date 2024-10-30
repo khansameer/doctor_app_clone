@@ -1,4 +1,6 @@
 import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
+import 'package:doctor_app/core/common/LegendItem.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +24,7 @@ class PatientsPaceChart extends StatelessWidget {
       margin: const EdgeInsets.all(20),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: colorBGWithOpacity,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(8),
 
       ),
@@ -54,7 +56,7 @@ class PatientsPaceChart extends StatelessWidget {
                       const FlSpot(6, 1.8),
                     ],
                     isCurved: true,
-                    color: Colors.greenAccent,
+                    color:AppColors.colorLineChart1,
                     barWidth: 4,
                     isStrokeCapRound: true,
                     dotData: const FlDotData(show: false),
@@ -70,7 +72,7 @@ class PatientsPaceChart extends StatelessWidget {
                       const FlSpot(6, 2.4),
                     ],
                     isCurved: true,
-                    color: Colors.cyanAccent,
+                    color: AppColors.colorLineChart2,
                     barWidth: 4,
                     isStrokeCapRound: true,
                     dotData: const FlDotData(show: false),
@@ -83,9 +85,9 @@ class PatientsPaceChart extends StatelessWidget {
           const Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              LegendItem(color: Colors.greenAccent, text: "New Patients"),
+              LegendItem(color: AppColors.colorLineChart1, text: "New Patients"),
               SizedBox(width: 10),
-              LegendItem(color: Colors.cyanAccent, text: "Returned Patients"),
+              LegendItem(color:AppColors.colorLineChart2, text: "Returned Patients"),
             ],
           ),
         ],
@@ -94,23 +96,3 @@ class PatientsPaceChart extends StatelessWidget {
   }
 }
 
-class LegendItem extends StatelessWidget {
-  final Color color;
-  final String text;
-
-  const LegendItem({required this.color, required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(Icons.circle, color: color, size: 12),
-        const SizedBox(width: 4),
-        Text(
-          text,
-          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-        ),
-      ],
-    );
-  }
-}

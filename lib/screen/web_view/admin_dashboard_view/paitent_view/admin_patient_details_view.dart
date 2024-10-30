@@ -52,7 +52,7 @@ class AdminPatientDetailsView extends StatelessWidget {
                     flex: 2,
                     child: Container(
                       height: size.height,
-                      color: colorBG,
+                      color: AppColors.colorBgNew,
                       child: Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: Column(
@@ -113,13 +113,13 @@ class AdminPatientDetailsView extends StatelessWidget {
                             children: [
                               Container(
                                 color:
-                                    colorBG, // Customize the background color of the TabBar
+                                AppColors.colorBgNew, // Customize the background color of the TabBar
                                 child: TabBar(
                                   labelStyle: commonTextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.w600),
-                                  labelColor: AppColors.colorText,
-                                  indicatorColor: AppColors.colorText,
+                                  labelColor: AppColors.colorTextNew,
+                                  indicatorColor: AppColors.colorTextNew,
                                   unselectedLabelColor: Colors.grey,
                                   tabs: const [
                                     Tab(text: 'Doctor Notes'),

@@ -27,7 +27,7 @@ class AdminDashboard extends StatefulWidget {
 }
 
 class _AdminDashboardState extends State<AdminDashboard> {
-  //PageController pageControllerDashBoard = PageController();
+  PageController pageControllerDashBoard = PageController();
   SideMenuController sideMenu = SideMenuController();
 
   @override
@@ -36,14 +36,14 @@ class _AdminDashboardState extends State<AdminDashboard> {
       context.read<DashboardProvider>().getUserName();
     });
     sideMenu.addListener((index) {
-      context.read<DashboardProvider>().pageController.jumpToPage(index);
+      pageControllerDashBoard.jumpToPage(index);
     });
     super.initState();
   }
 
   @override
   void dispose() {
-    context.read<DashboardProvider>().pageController.dispose();
+    pageControllerDashBoard.dispose();
     sideMenu.dispose();
     super.dispose();
   }
@@ -68,17 +68,60 @@ class _AdminDashboardState extends State<AdminDashboard> {
           elevation: 0,
           toolbarHeight: 86,
           actions: [
+
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  width: thirtyFive,
+                  height: thirtyFive,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: commonBoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white,
+                ),
+                  child: const Icon(Icons.notifications_none,color: AppColors.colorTextNew,size: 18,),
+                ),
+                Positioned(
+                    right: 0,
+                    top: -5,
+                    child: Container(width: 12,
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.colorNotification),
+
+                height: 12,)),
+
+
+              ],
+            ),
+            const SizedBox(width: 10,),
             Container(
               width: thirtyFive,
               height: thirtyFive,
-              clipBehavior: Clip.antiAlias,
-              decoration: commonBoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.grey, width: one)),
-              child: loadAssetImage(path: icDoctorWidget),
+              child: commonProfileIcon(),
             ),
             const SizedBox(
-              width: ten,
+              width: 10,
+            ),
+
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CommonTextWidget(
+                    text: provider.name ?? "",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    textColor: AppColors.colorText),
+                CommonTextWidget(
+                    text:"Surgeon",
+                    fontSize: 12,
+                    textColor: AppColors.colorText),
+              ],
+            ),
+            const SizedBox(
+              width: 40,
             ),
             PopupMenuButton<int>(
               color: Colors.white,
@@ -90,23 +133,17 @@ class _AdminDashboardState extends State<AdminDashboard> {
               itemBuilder: (context) => [],
               child: commonInkWell(
                 onTap: () {
-                  provider.updatePageValue(11);
+
+                 // provider.updatePageValue(11);
                 },
-                child: Row(
-                  children: [
-                    CommonTextWidget(
-                        text: provider.name ?? "",
-                        textColor: AppColors.colorText),
-                    const Icon(
-                      Icons.keyboard_arrow_down_sharp,
-                      color: AppColors.colorText,
-                    )
-                  ],
+                child: const Icon(
+                  Icons.keyboard_arrow_down_sharp,
+                  color: Colors.grey,
                 ),
               ),
             ),
             const SizedBox(
-              width: ten,
+              width: 30,
             ),
           ],
           leadingWidth: isMobile ? 100 : 130,
@@ -119,7 +156,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
               AssetImage(
                 icLogoApps,
               )),
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.colorBgNew,
         ),
         body: Row(
           children: [
@@ -136,34 +173,38 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 displayMode: SideMenuDisplayMode.auto,
                 showHamburger: isMobile ? true : false,
                 //for sub Menu
-                arrowCollapse: Colors.black,
-                arrowOpen: Colors.black,
-                toggleColor: Colors.black,
-                unselectedIconColorExpandable: AppColors.colorText,
-                selectedIconColorExpandable: Colors.black,
+                //arrowCollapse: Colors.black,
+               // arrowOpen: Colors.black,
+               // toggleColor: Colors.black,
+           //     unselectedIconColorExpandable: AppColors.colorText,
+            //    selectedIconColorExpandable: Colors.red,
 
                 //===
-                unselectedIconColor: AppColors.colorText,
+              //  unselectedIconColor: AppColors.colorText,
                 unselectedTitleTextStyle: commonTextStyle(
-                    color: AppColors.colorText,
+                    color: AppColors.colorMenuUnSelectedText,
                     fontSize: 14,
-                    fontWeight: FontWeight.w600),
-                selectedTitleTextStyleExpandable: commonTextStyle(
-                    color: AppColors.colorText,
+                    fontWeight: FontWeight.w500),
+             /*   selectedTitleTextStyleExpandable: commonTextStyle(
+                    color: AppColors.colorBlue,
                     fontSize: 14,
-                    fontWeight: FontWeight.w600),
-                hoverColor: AppColors.colorHover,
-                selectedHoverColor: AppColors.colorHover,
-                selectedColor: AppColors.colorActive,
+                    fontWeight: FontWeight.w500),*/
+                //hoverColor: AppColors.colorHover,
+                //selectedHoverColor: AppColors.colorHover,
+                selectedColor: AppColors.colorBgNew,
                 selectedTitleTextStyle: commonTextStyle(
-                    color: Colors.white,
+                    color:AppColors.colorBlue,
                     fontSize: 14,
                     fontWeight: FontWeight.w600),
-                selectedIconColor: Colors.white,
+                selectedIconColor: AppColors.colorBlue,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.colorBgNew,
+                    boxShadow: [const BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 10.0,
+                    ),],
                   border: Border.all(
-                      color: Colors.white.withOpacity(0.40), width: 1),
+                      color: AppColors.colorBgNew, width: 1),
                   borderRadius: const BorderRadius.all(Radius.circular(0)),
                 ),
                 // backgroundColor: Colors.grey[200]
@@ -273,15 +314,15 @@ class _AdminDashboardState extends State<AdminDashboard> {
               ],
             ),
             const VerticalDivider(
-              color: AppColors.colorStock,
-              width: 1,
+              color: AppColors.colorBgNew,
+              width: 2,
             ),
             Expanded(
               child: Container(
-                color: AppColors.colorBackground,
+                color: AppColors.colorBgNew,
                 child: PageView(
-                  controller: provider.pageController,
-                  children: [
+                  controller: pageControllerDashBoard,
+                  children: const [
                     Padding(
                       padding: EdgeInsets.all(16),
                       child: AdminDashboardView(),
@@ -347,8 +388,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
       builder: (context, displayMode) {
         return const Divider(
           height: 0,
-          //  color: AppColors.colorMenuBG,
-          color: Colors.white,
+           color: AppColors.colorBgNew,
+         // color: Colors.white,
           endIndent: 8,
           indent: 0,
           thickness: 0.5,

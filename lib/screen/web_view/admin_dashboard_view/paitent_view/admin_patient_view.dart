@@ -1,5 +1,7 @@
 import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
+import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/common/common_textfield.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +29,7 @@ class TabView extends StatelessWidget {
       tabProvider.selectedIndex == 0,
       tabProvider.selectedIndex == 1,
       tabProvider.selectedIndex == 2,
-      tabProvider.selectedIndex == 3,
+     // tabProvider.selectedIndex == 3,
     ];
 
     return Scaffold(
@@ -38,56 +40,82 @@ class TabView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ToggleButtons(
-              borderRadius: BorderRadius.circular(8),
-              fillColor: Colors.blue.shade50,
-              selectedColor: AppColors.colorText,
-              color: AppColors.colorText,
-              textStyle: commonTextStyle(fontWeight: FontWeight.w600),
-              borderColor: colorBGWithOpacity,
-              borderWidth: 2,
-              selectedBorderColor: Colors.transparent,
-              isSelected: isSelected,
-              onPressed: (index) {
-                tabProvider.setTab(index);
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 8,
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 20,top: 10),
+                    height: 40,
+                    child: ToggleButtons(
 
-                print('=========index=====$index==');
-                // Navigate to the respective page based on the selected index
-                if (index == 0) {
-                  tabProvider.setPatientDetailsPage(
-                      value: "all", context: context);
-                  //    Navigator.push(context, MaterialPageRoute(builder: (context) => AllPage()));
-                } else if (index == 1) {
-                  tabProvider.setPatientDetailsPage(
-                      value: "male", context: context);
-                  //  Navigator.push(context, MaterialPageRoute(builder: (context) => MenPage()));
-                } else if (index == 2) {
-                  tabProvider.setPatientDetailsPage(
-                      value: "female", context: context);
-                  //Navigator.push(context, MaterialPageRoute(builder: (context) => WomenPage()));
-                } else if (index == 3) {
-                  tabProvider.setPatientDetailsPage(
-                      value: "All List", context: context);
-                  //Navigator.push(context, MaterialPageRoute(builder: (context) => WomenPage()));
-                }
-              },
-              children: const [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Text('All'),
+                      borderRadius: BorderRadius.circular(8),
+                      fillColor:  AppColors.colorBgNew,
+                      selectedColor: AppColors.colorText,
+                      color: const Color.fromRGBO(250, 251, 253,1),
+                      textStyle: commonTextStyle(fontWeight: FontWeight.w600),
+                      borderColor: AppColors.colorBgNew,
+                      borderWidth: 1,
+                      hoverColor:  AppColors.colorBgNew,
+                      selectedBorderColor: AppColors.colorBgNew,
+                      isSelected: isSelected,
+                      onPressed: (index) {
+                        tabProvider.setTab(index);
+
+                        if (index == 0) {
+                          tabProvider.setPatientDetailsPage(
+                              value: "all", context: context);
+
+                        } else if (index == 1) {
+                          tabProvider.setPatientDetailsPage(
+                              value: "male", context: context);
+
+                        } else if (index == 2) {
+                          tabProvider.setPatientDetailsPage(
+                              value: "female", context: context);
+                        }
+                      },
+                      children:  [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                          child: commonText(text: 'All',
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.colorBlue,),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                          child: commonText(text: 'Men',
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.colorBlue),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                          child: commonText(text: 'Women',
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.colorBlue),
+                        ),
+
+                      ],
+                    ),
+                  ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Text('Men'),
+                Expanded(
+                  child: SizedBox(
+                    height: 40,
+                    
+                    child: CommonTextField(
+                      onChange: (query) {
+                        context.read<AdminDashboardProvider>().updateSearchQuery(query);
+                      },
+                      hint: "Search Patient Name / ID /Phone number",
+                      colorFill: Colors.white,
+                      //  hint: "Search Patient Name/ID/Phone number",
+                    ),
+                  ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Text('Women'),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Text('All List'),
-                ),
+
+
               ],
             ),
             Expanded(child: tabProvider.currentPatientPage)

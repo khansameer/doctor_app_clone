@@ -1,5 +1,6 @@
 
 import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class BillInfoView extends StatelessWidget {
                   padding:const EdgeInsets.all(12),
                   margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      color: colorBG,
+                      color: AppColors.colorListView,
                       borderRadius: BorderRadius.circular(8)
                   ),
                   child:
