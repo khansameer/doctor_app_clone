@@ -18,6 +18,13 @@ class PatientProvider with ChangeNotifier {
 
   List<Patients>? _filteredPatients;
   List<Patients>? get filteredPatients => _filteredPatients;
+  String? _selectedID;
+
+  String? get selectedID => _selectedID;
+  void updateID(String? data) {
+    _selectedID = data;
+    notifyListeners();
+  }
 
   Future getPatientDetails({required BuildContext context}) async {
     String userId = await getUserID();
@@ -50,7 +57,10 @@ class PatientProvider with ChangeNotifier {
   List<Patients>? get patients {
     return _filteredPatients?.where((patient) {
       final matchesLetter = _selectedLetter == null ||
-          patient.firstName.toString().startsWith(_selectedLetter!);
+          patient.firstName
+              .toString()
+              .toUpperCase()
+              .startsWith(_selectedLetter!);
       final matchesGender = _selectedGender == null ||
           patient.gender.toString().toLowerCase() == _selectedGender;
       final matchesQuery = patient.firstName
@@ -69,6 +79,7 @@ class PatientProvider with ChangeNotifier {
 
   void selectLetter(String? letter) {
     _selectedLetter = letter;
+    print('=========latter$letter');
     notifyListeners();
   }
 
@@ -87,5 +98,37 @@ class PatientProvider with ChangeNotifier {
     _selectedGender = null;
     _searchQuery = "";
     notifyListeners();
+  }
+
+  Future uploadPatientFile({
+    required BuildContext context,
+    required String patientID,
+    required Map<String, dynamic> body,
+  }) async {
+    _isAdding = true;
+    notifyListeners();
+    try {
+      final response = await _service.callPutMethodApiWithToken(
+          url: '${ApiConfig.createAppointment}/$patientID/files', body: body);
+      /* _createAppointmentModel =
+          CreateAppointmentModel.fromJson(json.decode(response));*/
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+        // getAppointments(context: context);
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
+      } else {
+        showCommonDialog(
+            context: context,
+            title: "Error",
+            content: "Something went wrong please try again after sometime.",
+            isMessage: true);
+      }
+
+      _isAdding = false;
+      notifyListeners();
+    } catch (e) {
+      _isAdding = false;
+      notifyListeners();
+    }
   }
 }

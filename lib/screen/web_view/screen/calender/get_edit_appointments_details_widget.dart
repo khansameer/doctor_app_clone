@@ -6,7 +6,8 @@ import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/date_time_utils.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
-import 'package:doctor_app/provider/calender_provider.dart';
+import 'package:doctor_app/provider/appointments_provider.dart';
+import 'package:doctor_app/provider/patient_provider.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class _GetEditAppointmentsDetailsWidgetState
   var tetDate = TextEditingController();
   var tetTime = TextEditingController();
   var tetReason = TextEditingController();
+  final FocusNode searchFieldFocusNode = FocusNode();
 
   bool isDatePicked = false;
   bool isTimePicked = false;
@@ -37,9 +39,12 @@ class _GetEditAppointmentsDetailsWidgetState
   void initState() {
     super.initState();
 
-    final provider = Provider.of<CalenderProvider>(context, listen: false);
+    final provider = Provider.of<AppointmentsProvider>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      provider.getPatientDetails(context: context).then((value) {});
+      context
+          .read<PatientProvider>()
+          .getPatientDetails(context: context)
+          .then((value) {});
       provider
           .getAppointmentsDetailsBYID(
               context: context, appointmentsID: widget.appointmentsID ?? "0")
@@ -52,7 +57,7 @@ class _GetEditAppointmentsDetailsWidgetState
   }
 
   void setData() async {
-    final provider = Provider.of<CalenderProvider>(context, listen: false);
+    final provider = Provider.of<AppointmentsProvider>(context, listen: false);
 
     setState(() {
       String formattedDate = provider.appointmentsDetailsModel?.dateTime != null
@@ -100,7 +105,7 @@ class _GetEditAppointmentsDetailsWidgetState
 
     var width = MediaQuery.of(context).size.width;
 
-    return Consumer<CalenderProvider>(builder: (context, provider, child) {
+    return Consumer<AppointmentsProvider>(builder: (context, provider, child) {
       return SizedBox(
         width: isMobile
             ? width * zero9
@@ -203,8 +208,10 @@ class _GetEditAppointmentsDetailsWidgetState
                           onChanged: (value) {
                             provider.updateValue(value);
                             if (provider.selectedValue != null) {
-                              provider.updateID(provider
-                                  .patientDetailsModel?.patients
+                              provider.updateID(context
+                                  .read<PatientProvider>()
+                                  .patientDetailsModel
+                                  ?.patients
                                   .firstWhere((item) =>
                                       '${item.firstName} ${item.lastName}' ==
                                       value)
@@ -217,8 +224,15 @@ class _GetEditAppointmentsDetailsWidgetState
                             }
                           },
                           size: size,
-                          items: provider.patientDetailsModel?.patients != null
-                              ? provider.patientDetailsModel!.patients
+                          items: context
+                                      .read<PatientProvider>()
+                                      .patientDetailsModel
+                                      ?.patients !=
+                                  null
+                              ? context
+                                  .read<PatientProvider>()
+                                  .patientDetailsModel!
+                                  .patients
                                   .map((patient) {
                                   return '${patient.firstName} ${patient.lastName}';
                                 }).toList()
@@ -259,6 +273,7 @@ class _GetEditAppointmentsDetailsWidgetState
                                   "isVirtual": true,
                                 };
 
+                                print('=====${body.toString()}');
                                 provider
                                     .updateAppointmentData(
                                   body: body,

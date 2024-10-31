@@ -1,4 +1,5 @@
 import 'package:doctor_app/core/common/error_page.dart';
+import 'package:doctor_app/core/image/image_path.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -11,13 +12,19 @@ class Patient {
   final String? time;
   final String? gender;
   final String? price;
+  final String? latestMessage;
+  final String? profile;
   final bool? isActive;
+  final int? messageCount;
 
   Patient(
       {required this.name,
       required this.description,
       required this.time,
       this.price,
+      this.latestMessage,
+      this.profile,
+      this.messageCount,
       this.gender,
       this.isActive = true});
 }
@@ -47,18 +54,24 @@ class AdminDashboardProvider with ChangeNotifier {
 
   final List<Patient> _patients = [
     Patient(
-        isActive: false,
-        price: "19.15",
-        name: 'Corey Aguilar',
-        gender: 'male',
-        description: 'Kidney function test',
-        time: '9:30'),
+      isActive: false,
+      price: "19.15",
+      messageCount: 0,
+      latestMessage: "See you later!",
+      name: 'Corey Aguilar',
+      gender: 'male',
+      description: 'Kidney function test',
+      time: '9:30',
+      profile: icPatientUser1,
+    ),
     Patient(
       price: "35.15",
       name: 'Samantha Lee',
       gender: 'male',
+      messageCount: 10,
       description: 'Cardiovascular assessment',
       time: '10:00',
+      profile: icPatientUser2,
     ),
     Patient(
       price: "52.15",
@@ -67,64 +80,78 @@ class AdminDashboardProvider with ChangeNotifier {
       gender: 'male',
       description: 'Routine check-up',
       time: '10:30',
+      messageCount: 12,
+      profile: icPatientUser3,
     ),
     Patient(
       price: "96.15",
       name: 'Linda Johnson',
       gender: 'female',
+      messageCount: 8,
       description: 'Blood pressure monitoring',
       time: '11:00',
+      profile: icPatientUser4,
     ),
     Patient(
-        price: "44.15",
-        isActive: false,
-        name: 'James Williams',
-        gender: 'female',
-        description: 'Diabetes check',
-        time: '11:30'),
-    Patient(
-      price: "55.15",
-      name: 'Patricia Brown',
-      gender: 'female',
-      description: 'Cholesterol screening',
-      time: '12:00',
-    ),
-    Patient(
-      price: "50.15",
+      price: "44.15",
       isActive: false,
-      name: 'Robert Jones',
-      gender: 'male',
-      description: 'Annual physical',
-      time: '12:30',
+      name: 'James Williams',
+      gender: 'female',
+      messageCount: 11,
+      description: 'Diabetes check',
+      time: '11:30',
+      profile: icPatientUser5,
     ),
+    Patient(
+        price: "55.15",
+        name: 'Patricia Brown',
+        gender: 'female',
+        messageCount: 23,
+        description: 'Cholesterol screening',
+        time: '12:00',
+        profile: icPatientUser6),
+    Patient(
+        price: "50.15",
+        isActive: false,
+        name: 'Robert Jones',
+        gender: 'male',
+        messageCount: 18,
+        description: 'Annual physical',
+        time: '12:30',
+        profile: icPatientUser7),
     Patient(
         price: "78.15",
         name: 'Jennifer Garcia',
         gender: 'male',
+        messageCount: 12,
         description: 'Follow-up visit',
-        time: '1:00'),
+        time: '1:00',
+        profile: icPatientUser8),
     Patient(
-      price: "90.15",
-      isActive: false,
-      name: 'David Martinez',
-      gender: 'male',
-      description: 'Orthopedic consultation',
-      time: '1:30',
-    ),
+        price: "90.15",
+        isActive: false,
+        messageCount: 12,
+        name: 'David Martinez',
+        gender: 'male',
+        description: 'Orthopedic consultation',
+        time: '1:30',
+        profile: icPatientUser9),
     Patient(
-      price: "25.15",
-      name: 'Sarah Robinson',
-      gender: 'male',
-      description: 'Pediatric check-up',
-      time: '2:00',
-    ),
+        price: "25.15",
+        name: 'Sarah Robinson',
+        messageCount: 1,
+        gender: 'male',
+        description: 'Pediatric check-up',
+        time: '2:00',
+        profile: icPatientUser10),
     Patient(
-      price: "29.90",
-      name: 'Thomas Clark',
-      gender: 'male',
-      description: 'Dental cleaning',
-      time: '2:30',
-    ),
+        price: "29.90",
+        name: 'Thomas Clark',
+        messageCount: 5,
+        gender: 'male',
+        description: 'Dental cleaning',
+        time: '2:30',
+        profile: icPatientUser11),
   ];
 
   String? _selectedGender;
@@ -959,27 +986,66 @@ class AdminDashboardProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Patient? _chatUserInfo;
+  Patient? get chatUserInfo => _chatUserInfo;
+
+  void chatUserInfoValue(Patient data) {
+    _chatUserInfo = data;
+    print('======${data.name}');
+    notifyListeners();
+  }
+
   List<ChatUser> dummyChatUsers = [
     ChatUser(
-        name: "Alice", latestMessage: "Hey, how are you?", messageCount: 15),
+        profile: icPatientUser1,
+        name: "Alice",
+        latestMessage: "Hey, how are you?",
+        messageCount: 15),
     ChatUser(
-        name: "Bob", latestMessage: "Let's meet tomorrow", messageCount: 5),
+        profile: icPatientUser2,
+        name: "Bob",
+        latestMessage: "Let's meet tomorrow",
+        messageCount: 5),
     ChatUser(
         name: "Charlie",
+        profile: icPatientUser3,
         latestMessage: "Can you send the file?",
         messageCount: 8),
-    ChatUser(name: "Diana", latestMessage: "Thank you!", messageCount: 12),
     ChatUser(
-        name: "Edward", latestMessage: "I'll check on that", messageCount: 0),
-    ChatUser(name: "Fiona", latestMessage: "See you later!", messageCount: 20),
+        name: "Diana",
+        profile: icPatientUser4,
+        latestMessage: "Thank you!",
+        messageCount: 12),
     ChatUser(
-        name: "George", latestMessage: "Can we reschedule?", messageCount: 4),
-    ChatUser(name: "Hannah", latestMessage: "Happy birthday!", messageCount: 0),
+        name: "Edward",
+        profile: icPatientUser5,
+        latestMessage: "I'll check on that",
+        messageCount: 0),
     ChatUser(
+        profile: icPatientUser6,
+        name: "Fiona",
+        latestMessage: "See you later!",
+        messageCount: 20),
+    ChatUser(
+        profile: icPatientUser7,
+        name: "George",
+        latestMessage: "Can we reschedule?",
+        messageCount: 4),
+    ChatUser(
+        profile: icPatientUser8,
+        name: "Hannah",
+        latestMessage: "Happy birthday!",
+        messageCount: 0),
+    ChatUser(
+        profile: icPatientUser9,
         name: "Isaac",
         latestMessage: "I'll be there in 10 mins",
         messageCount: 7),
-    ChatUser(name: "Julia", latestMessage: "Got it, thanks!", messageCount: 13),
+    ChatUser(
+        profile: icPatientUser10,
+        name: "Julia",
+        latestMessage: "Got it, thanks!",
+        messageCount: 13),
   ];
   List<ChatMessage> chatMessages = [
     ChatMessage(
@@ -1247,10 +1313,12 @@ class AdminDashboardProvider with ChangeNotifier {
 class ChatUser {
   final String name;
   final String latestMessage;
+  final String? profile;
   final int messageCount;
 
   ChatUser(
       {required this.name,
+      this.profile,
       required this.latestMessage,
       required this.messageCount});
 }

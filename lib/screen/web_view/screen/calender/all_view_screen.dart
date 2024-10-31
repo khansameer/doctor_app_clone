@@ -1,5 +1,4 @@
-
-import 'package:doctor_app/provider/calender_provider.dart';
+import 'package:doctor_app/provider/appointments_provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,13 +7,12 @@ import '../../../../core/component/component.dart';
 import '../../model/appointments_model.dart';
 
 class AllViewScreen extends StatelessWidget {
-  const AllViewScreen({super.key,required this.data,required this.appointments});
+  const AllViewScreen(
+      {super.key, required this.data, required this.appointments});
   final String data;
   final List<Appointments>? appointments;
   @override
   Widget build(BuildContext context) {
-
-
     var size = MediaQuery.sizeOf(context);
     return SizedBox(
       width: size.width,
@@ -29,7 +27,11 @@ class AllViewScreen extends StatelessWidget {
               IntrinsicHeight(
                 child: Row(
                   children: [
-                    Expanded(child: commonView(textValue: appointments!=null?'${appointments?.length}':"0")),
+                    Expanded(
+                        child: commonView(
+                            textValue: appointments != null
+                                ? '${appointments?.length}'
+                                : "0")),
                     const VerticalDivider(
                       thickness: 0.3,
                     ),
@@ -59,56 +61,58 @@ class AllViewScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Consumer<CalenderProvider>(
-                builder: (context,provider,child) {
-                  return ListView.separated(
-                    itemCount: appointments!=null?appointments!.length:0,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      var data=appointments?[index];
-                      DateTime dateTime = DateTime.parse('${data?.dateTime.toString()}');
+              Consumer<AppointmentsProvider>(
+                  builder: (context, provider, child) {
+                return ListView.separated(
+                  itemCount: appointments != null ? appointments!.length : 0,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    var data = appointments?[index];
+                    DateTime dateTime =
+                        DateTime.parse('${data?.dateTime.toString()}');
 
-                      // Extract time components
-                      int hour = dateTime.hour;
-                      int minute = dateTime.minute;
+                    // Extract time components
+                    int hour = dateTime.hour;
+                    int minute = dateTime.minute;
 
-                      String amPm = hour >= 12 ? 'PM' : 'AM';
+                    String amPm = hour >= 12 ? 'PM' : 'AM';
 
-                      return ListTile(
-                        titleAlignment: ListTileTitleAlignment.top,
-                        leading: commonText(
-                            //text: "10:24 AM",
-                            text: '$hour:$minute:$amPm',
-                            fontSize: 12,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w400),
-                        title: commonText(  text: '${data?.patientName.toString()}', color: Colors.black),
-                        subtitle: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            commonText(
-                                text: '${data?.reason.toString()}',
-                                color: Colors.grey,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400),
-                            commonText(
-                                text: '${data?.doctorName.toString()}',
-                                fontSize: 12,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w400)
-                          ],
-                        ),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const Divider(
-                        thickness: 0.3,
-                      );
-                    },
-                  );
-                }
-              )
+                    return ListTile(
+                      titleAlignment: ListTileTitleAlignment.top,
+                      leading: commonText(
+                          //text: "10:24 AM",
+                          text: '$hour:$minute:$amPm',
+                          fontSize: 12,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w400),
+                      title: commonText(
+                          text: '${data?.patientName.toString()}',
+                          color: Colors.black),
+                      subtitle: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          commonText(
+                              text: '${data?.reason.toString()}',
+                              color: Colors.grey,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400),
+                          commonText(
+                              text: '${data?.doctorName.toString()}',
+                              fontSize: 12,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w400)
+                        ],
+                      ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const Divider(
+                      thickness: 0.3,
+                    );
+                  },
+                );
+              })
             ],
           ),
         ],

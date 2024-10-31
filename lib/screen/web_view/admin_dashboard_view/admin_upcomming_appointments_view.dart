@@ -35,7 +35,7 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
             ),
             CommonTextWidget(
               top: 12,
-              textColor: AppColors.colorBlue,
+              textColor: AppColors.colorActive,
               fontWeight: FontWeight.w700,
               fontSize: 12,
               text: DateFormat(dMMYYYY).format(
@@ -66,7 +66,8 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
                                       width: 60,
                                       height: 60,
                                       fit: BoxFit.cover,
-                                      image: icDummyUser,
+                                      image: provider.patients[index].profile ??
+                                          icDummyUser,
                                     ) /*commonImageNetworkWidget(path: provider.patients[index].photo)*/,
                                   ),
                                   const SizedBox(

@@ -273,8 +273,8 @@ Widget commonInkWell({
   void Function(PointerExitEvent)? onExit,
 }) {
   return MouseRegion(
-    onEnter:onEnter ,
-    onExit:onExit ,
+    onEnter: onEnter,
+    onExit: onExit,
     child: InkWell(
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
@@ -347,18 +347,18 @@ pushNamedAndRemoveUntil(
       (route) => true);
 }
 
-commonProfileIcon({double? width,double ?height}){
-
+commonProfileIcon({double? width, double? height, String? path}) {
   return ClipRRect(
     borderRadius: BorderRadius.circular(8),
     child: setAssetImage(
-      width:width?? 60,
-      height:height?? 60,
+      width: width ?? 60,
+      height: height ?? 60,
       fit: BoxFit.cover,
-      image: icDummyUser,
+      image: path ?? icPatientUser4,
     ) /*commonImageNetworkWidget(path: provider.patients[index].photo)*/,
   );
 }
+
 void showCommonDialog(
     {required BuildContext context,
     required String title,
@@ -624,12 +624,12 @@ commonText({
           left: left ?? zero,
           right: right ?? zero,
           bottom: bottom ?? zero),
-      child: CommonTextWidget(text:text ?? '',
+      child: CommonTextWidget(
+          text: text ?? '',
           textAlign: textAlign,
-
-              textColor: color,
-              fontWeight: fontWeight ?? FontWeight.w500,
-              fontSize: fontSize ?? fourteen));
+          textColor: color,
+          fontWeight: fontWeight ?? FontWeight.w500,
+          fontSize: fontSize ?? fourteen));
 }
 
 commonMenu(
@@ -801,8 +801,7 @@ Future<List<PlatformFile>?> pickFiles() async {
 commonLogoutDialog(
     {required BuildContext contextAd,
     required bool isMobile,
-      double ?width,
-
+    double? width,
     required bool isDesktop}) {
   showDialog(
       barrierDismissible: false,
@@ -850,7 +849,7 @@ commonLogoutDialog(
                           Flexible(
                             child: CommonButtonWidget(
                               height: 40,
-                            width: isMobile?size.width:size.width*0.08,
+                              width: isMobile ? size.width : size.width * 0.08,
                               radius: 8,
                               onPressed: () async {
                                 await PreferenceHelper.clear();
@@ -875,7 +874,7 @@ commonLogoutDialog(
                             child: CommonButtonWidget(
                               text: "Cancel",
                               height: 40,
-                              width: isMobile?size.width:size.width*0.08,
+                              width: isMobile ? size.width : size.width * 0.08,
                               radius: 8,
                               colorBorder: Colors.black,
                               colorButton: Colors.white,

@@ -5,7 +5,7 @@ import 'package:doctor_app/core/common/LegendItem.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
-import 'package:doctor_app/provider/calender_provider.dart';
+import 'package:doctor_app/provider/appointments_provider.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/get_edit_appointments_details_widget.dart';
 import 'package:flutter/foundation.dart';
 
@@ -38,16 +38,14 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
     isSelected = [false, true, false];
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-
-
       context
-          .read<CalenderProvider>()
+          .read<AppointmentsProvider>()
           .getAppointments(context: context)
-          .then((value) {
-      });
+          .then((value) {});
     });
     _calendarController = CalendarController();
   }
+
   @override
   void dispose() {
     _calendarController.dispose();
@@ -58,7 +56,7 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
-    return Consumer<CalenderProvider>(builder: (context, provider, child) {
+    return Consumer<AppointmentsProvider>(builder: (context, provider, child) {
       List<Appointment>? calendarAppointments =
           provider.appointmentsModel?.appointments?.map((appointment) {
         if (appointment.patient != null) {
@@ -84,12 +82,15 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
           ListView(
             shrinkWrap: true,
             children: [
-
               CommonTextWidget(
-                letterSpacing: 1  ,
-                text: "Your appointments",fontSize: 20,fontWeight: FontWeight.w700,),
-
-              const SizedBox(height: 20,),
+                letterSpacing: 1,
+                text: "Your appointments",
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               Container(
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -98,8 +99,7 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
-                  /*  isMobile?SizedBox.shrink():  Padding(
+                    /*  isMobile?SizedBox.shrink():  Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -110,7 +110,7 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                         fontSize: 16,),
                       ),
                     ),*/
-                  /*  isMobile
+                    /*  isMobile
                         ? Column(
                             children: [
                               Padding(
@@ -214,7 +214,7 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                                         ),
                                       ),
                                     ),
-                                    *//*Container(
+                                    */ /*Container(
                                       height: 35,
                                       decoration: commonBoxDecoration(
                                           color: Colors.white,
@@ -227,7 +227,7 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                                       child: const Center(
                                         child: Icon(Icons.print),
                                       ),
-                                    ),*//*
+                                    ),*/ /*
                                   ],
                                 ),
                               ),
@@ -263,10 +263,11 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                               ),
                             ],
                           )
-                        : */Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                             /* Row(
+                        : */
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        /* Row(
                                 children: [
                                   const Icon(
                                     Icons.arrow_back_ios,
@@ -288,17 +289,18 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                               const SizedBox(
                                 width: 20,
                               ),*/
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CommonTextWidget(
-                                  left: 10,
-                                  text: "Daily appointments scheduler",fontWeight: FontWeight.w600,
-
-                                  fontSize: 16,),
-                              ),
-
-                              Row(children: [
-                               /* Container(
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CommonTextWidget(
+                            left: 10,
+                            text: "Daily appointments scheduler",
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            /* Container(
                                   height: 35,
                                   decoration: commonBoxDecoration(
                                       color: Colors.white,
@@ -313,82 +315,86 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                                     ),
                                   ),
                                 ),*/
-                                Container(
-                                  margin: const EdgeInsets.all(10),
-                                  height: 45,
-                                  child: ToggleButtons(
-
-                                    borderRadius: BorderRadius.circular(8),
-                                    fillColor:  AppColors.colorBgNew,
-                                    selectedColor: AppColors.colorText,
-                                    color: const Color.fromRGBO(250, 251, 253,1),
-                                    textStyle: commonTextStyle(fontWeight: FontWeight.w600),
-                                    borderColor: AppColors.colorBgNew,
-                                    borderWidth: 1,
-                                    hoverColor:  AppColors.colorBgNew,
-                                    selectedBorderColor: AppColors.colorBgNew,
-                                    onPressed: (int index) {
-
-                                      if(index==0){
-                                        setState(() {
-                                          _calendarController.view = CalendarView.day;
-                                        });
-                                      }
-
-                                      else if(index==1){
-                                        setState(() {
-                                          _calendarController.view = CalendarView.week;
-                                        });
-                                      }
-                                      else if(index==2){
-                                        setState(() {
-                                          _calendarController.view = CalendarView.month;
-                                        });
-                                      }
-                                    /*  if(index==1){
+                            Container(
+                              margin: const EdgeInsets.all(10),
+                              height: 45,
+                              child: ToggleButtons(
+                                borderRadius: BorderRadius.circular(8),
+                                fillColor: AppColors.colorBgNew,
+                                selectedColor: AppColors.colorText,
+                                color: const Color.fromRGBO(250, 251, 253, 1),
+                                textStyle: commonTextStyle(
+                                    fontWeight: FontWeight.w600),
+                                borderColor: AppColors.colorBgNew,
+                                borderWidth: 1,
+                                hoverColor: AppColors.colorBgNew,
+                                selectedBorderColor: AppColors.colorBgNew,
+                                onPressed: (int index) {
+                                  if (index == 0) {
+                                    setState(() {
+                                      _calendarController.view =
+                                          CalendarView.day;
+                                    });
+                                  } else if (index == 1) {
+                                    setState(() {
+                                      _calendarController.view =
+                                          CalendarView.week;
+                                    });
+                                  } else if (index == 2) {
+                                    setState(() {
+                                      _calendarController.view =
+                                          CalendarView.month;
+                                    });
+                                  }
+                                  /*  if(index==1){
                                         _changeCalendarView(CalendarView.week);
                                       }
                                       if(index==1){
                                         _changeCalendarView(CalendarView.month);
                                       }*/
-                                      setState(() {
-                                        for (int i = 0;
+                                  setState(() {
+                                    for (int i = 0;
                                         i < isSelected.length;
                                         i++) {
-                                          isSelected[i] = i == index;
-                                        }
-                                      });
-                                    },
-                                    isSelected: isSelected,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 50.0,vertical: 5),
-                                        child: commonText(
-                                          fontWeight: FontWeight.w400,
-                                          color: AppColors.colorBlue,
-                                          text: 'Day',
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 50.0,vertical: 5),
-                                        child: commonText(
-                                          fontWeight: FontWeight.w400,
-                                          color: AppColors.colorBlue,
-                                          text: 'Week',
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 50.0,vertical: 5),
-                                        child: commonText(fontWeight: FontWeight.w400,
-                                          color: AppColors.colorBlue,
-                                          text: 'Month',
-                                        ),
-                                      ),
-                                    ],
+                                      isSelected[i] = i == index;
+                                    }
+                                  });
+                                },
+                                isSelected: isSelected,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 50.0, vertical: 5),
+                                    child: commonText(
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.colorBlue,
+                                      text: 'Day',
+                                    ),
                                   ),
-                                ),
-                              ],)
-                              /* Container(
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 50.0, vertical: 5),
+                                    child: commonText(
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.colorBlue,
+                                      text: 'Week',
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 50.0, vertical: 5),
+                                    child: commonText(
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.colorBlue,
+                                      text: 'Month',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                        /* Container(
                                 height: 35,
                                 decoration: commonBoxDecoration(
                                     color: Colors.white,
@@ -401,8 +407,8 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                                   child: Icon(Icons.print),
                                 ),
                               ),*/
-                            ],
-                          ),
+                      ],
+                    ),
                     isMobile
                         ? Column(
                             children: [
@@ -425,7 +431,7 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                               Expanded(
                                 flex: 7,
                                 child: SizedBox(
-                                    height: size.height*0.7,
+                                    height: size.height * 0.7,
                                     child:
                                         commonSfCalendar(calendarAppointments)),
                               ),
@@ -440,22 +446,30 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                                   ))*/
                             ],
                           ),
-
-                    const Divider(thickness: 0.3,),
+                    const Divider(
+                      thickness: 0.3,
+                    ),
                     const Padding(
                       padding: EdgeInsets.all(12.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          LegendItem(color:Colors.red, text: "Emergency"),
+                          LegendItem(color: Colors.red, text: "Emergency"),
                           SizedBox(width: 10),
-                          LegendItem(color:AppColors.colorBlue, text: "Consultation"),
+                          LegendItem(
+                              color: AppColors.colorBlue, text: "Consultation"),
                           SizedBox(width: 10),
-                          LegendItem(color:AppColors.colorLineChart2, text: "Examination"),
+                          LegendItem(
+                              color: AppColors.colorLineChart2,
+                              text: "Examination"),
                           SizedBox(width: 10),
-                          LegendItem(color:AppColors.colorSurgery, text: "Routine checkup"),
+                          LegendItem(
+                              color: AppColors.colorSurgery,
+                              text: "Routine checkup"),
                           SizedBox(width: 10),
-                          LegendItem(color:AppColors.colorDrawerLight, text: "Sick visit"),
+                          LegendItem(
+                              color: AppColors.colorDrawerLight,
+                              text: "Sick visit"),
                         ],
                       ),
                     ),

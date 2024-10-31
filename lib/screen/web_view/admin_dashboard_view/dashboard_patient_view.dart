@@ -102,10 +102,12 @@ class DashboardPatientView extends StatelessWidget {
                                     ClipRRect(
                                         borderRadius: BorderRadius.circular(8),
                                         child: setAssetImage(
-                                          width: 70,
-                                          height: 70,
-                                          fit: BoxFit.cover,
-                                          image: icDummyUser,
+                                          width: 50,
+                                          height: 50,
+                                          fit: BoxFit.scaleDown,
+                                          image: provider
+                                                  .patients[index].profile ??
+                                              icDummyUsers,
                                         )),
                                     const SizedBox(
                                       width: 10,

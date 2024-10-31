@@ -10,12 +10,9 @@ class AdminPatientGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  PatientsPaceChart();
+    return PatientsPaceChart();
   }
-
-
 }
-
 
 class PatientsPaceChart extends StatelessWidget {
   @override
@@ -26,13 +23,12 @@ class PatientsPaceChart extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CommonTextWidget(text:
-            "Patients Treated".toUpperCase(),
+          CommonTextWidget(
+            text: "Patients Treated".toUpperCase(),
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
@@ -56,7 +52,7 @@ class PatientsPaceChart extends StatelessWidget {
                       const FlSpot(6, 1.8),
                     ],
                     isCurved: true,
-                    color:AppColors.colorLineChart1,
+                    color: const Color.fromARGB(255, 33, 211, 80),
                     barWidth: 4,
                     isStrokeCapRound: true,
                     dotData: const FlDotData(show: false),
@@ -72,7 +68,7 @@ class PatientsPaceChart extends StatelessWidget {
                       const FlSpot(6, 2.4),
                     ],
                     isCurved: true,
-                    color: AppColors.colorLineChart2,
+                    color: const Color.fromARGB(255, 230, 211, 45),
                     barWidth: 4,
                     isStrokeCapRound: true,
                     dotData: const FlDotData(show: false),
@@ -81,13 +77,19 @@ class PatientsPaceChart extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           const Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              LegendItem(color: AppColors.colorLineChart1, text: "New Patients"),
+              LegendItem(
+                  color: Color.fromARGB(255, 33, 211, 74),
+                  text: "New Patients"),
               SizedBox(width: 10),
-              LegendItem(color:AppColors.colorLineChart2, text: "Returned Patients"),
+              LegendItem(
+                  color: Color.fromARGB(255, 209, 231, 41),
+                  text: "Existing Patients"),
             ],
           ),
         ],
@@ -95,4 +97,3 @@ class PatientsPaceChart extends StatelessWidget {
     );
   }
 }
-

@@ -9,6 +9,7 @@ import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/provider/patient_provider.dart';
+import 'package:doctor_app/screen/web_view/admin_dashboard_view/chat/web_chat_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -68,12 +69,11 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                         final letter = String.fromCharCode(
                             65 + index); // ASCII value of A is 65
                         final isAvailable =
-                            provider.availableLetters?.contains(letter) ??
-                                false;
+                            provider.availableLetters?.contains(letter);
 
                         return Expanded(
                           child: GestureDetector(
-                            onTap: isAvailable
+                            onTap: isAvailable == true
                                 ? () => provider.selectLetter(letter)
                                 : null,
                             child: Container(
@@ -81,7 +81,9 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                               //  padding: const EdgeInsets.all(0.0),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(6),
-                                  color: isAvailable ? Colors.white : null),
+                                  color: isAvailable == true
+                                      ? Colors.white
+                                      : null),
 
                               child: Padding(
                                 padding: const EdgeInsets.all(15.0),
@@ -89,10 +91,10 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                                   text: letter,
                                   fontSize: 12,
                                   textAlign: TextAlign.center,
-                                  textColor: isAvailable
+                                  textColor: isAvailable == true
                                       ? AppColors.colorBlue
                                       : AppColors.colorTextNew,
-                                  fontWeight: isAvailable
+                                  fontWeight: isAvailable == true
                                       ? FontWeight.w600
                                       : FontWeight.w600,
                                 ),
@@ -141,17 +143,32 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                                     ),
                                   ),
                                 ),*/
-                                Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                      shape: BoxShape.circle),
-                                  child: const Center(
-                                    child: Icon(
-                                      Icons.chat,
-                                      size: 20,
-                                      color: Colors.grey,
+                                commonInkWell(
+                                  onTap: () {
+                                    //  chatModel.chatUserInfoValue(data);
+                                    showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return const CustomAlertDialog(
+                                            content: WebChatScreen(
+                                              communication: false,
+                                            ),
+                                          );
+                                        });
+                                  },
+                                  child: Container(
+                                    width: 50,
+                                    height: 50,
+                                    decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle),
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.chat,
+                                        size: 20,
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -219,7 +236,7 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                             ),
                             title: CommonTextWidget(
                               text:
-                                  '${data?.firstName.toString()} (${data?.gender.toString().toUpperCase()[0]})',
+                                  '${data?.firstName.toString()} ${data?.lastName.toString()}(${data?.gender.toString().toUpperCase()[0]})',
                               fontWeight: FontWeight.w700,
                               fontSize: 15,
                             ),
