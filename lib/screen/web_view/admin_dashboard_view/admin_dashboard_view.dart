@@ -10,10 +10,8 @@ import 'package:provider/provider.dart';
 
 class AdminDashboardView extends StatelessWidget {
   const AdminDashboardView({super.key});
-
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
     return Container(
       decoration: BoxDecoration(

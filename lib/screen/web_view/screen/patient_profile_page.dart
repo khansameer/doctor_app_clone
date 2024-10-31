@@ -6,7 +6,8 @@ import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/context_extension.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/core/route/route.dart';
-import 'package:doctor_app/provider/calender_provider.dart';
+import 'package:doctor_app/provider/appointments_provider.dart';
+import 'package:doctor_app/provider/patient_provider.dart';
 
 import 'package:doctor_app/screen/web_view/model/patient_details_model.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/add_appointments_widget.dart';
@@ -37,7 +38,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context
-          .read<CalenderProvider>()
+          .read<PatientProvider>()
           .getPatientDetails(context: context)
           .then((value) {
         if (globalStatusCode == 401) {
@@ -53,11 +54,11 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
             isMessage: true,
           );
         }
-        _searchController.addListener(() {
+        /*_searchController.addListener(() {
           context
-              .read<CalenderProvider>()
+              .read<AppointmentsProvider>()
               .searchPatients(_searchController.text);
-        });
+        });*/
       });
     });
     super.initState();
@@ -67,9 +68,9 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
-    var provider = context.watch<CalenderProvider>();
+    var provider = context.watch<AppointmentsProvider>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.title == "all") {
+      /* if (widget.title == "all") {
         _searchController.text.isEmpty ? provider.getAllPatientsData() : ();
       } else if (widget.title == "all_female") {
         provider.filterBYGenders(gender: 'female');
@@ -79,7 +80,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
         provider.filterByAges(age: 30, isUnder: true);
       } else if (widget.title == "female_over30") {
         provider.filterByAges(age: 30, isUnder: false);
-      }
+      }*/
     });
 
     return SizedBox(
@@ -152,7 +153,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
               const Divider(
                 thickness: 0.3,
               ),
-              Row(
+              /* Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -256,7 +257,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                     ),
                   )
                 ],
-              ),
+              ),*/
             ],
           ),
           provider.isAdding ? showLoaderList() : const SizedBox.shrink()

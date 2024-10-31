@@ -1,28 +1,35 @@
 import 'package:doctor_app/core/common/error_page.dart';
+import 'package:doctor_app/core/image/image_path.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../screen/web_view/admin_dashboard_view/paitent_view/admin_all_list_screen.dart';
 import '../screen/web_view/screen/patient_profile_page.dart';
+
 class Patient {
   final String name;
   final String description;
   final String? time;
   final String? gender;
   final String? price;
+  final String? latestMessage;
+  final String? profile;
   final bool? isActive;
+  final int? messageCount;
 
   Patient(
       {required this.name,
       required this.description,
       required this.time,
       this.price,
+      this.latestMessage,
+      this.profile,
+      this.messageCount,
       this.gender,
       this.isActive = true});
 }
 
 class AdminDashboardProvider with ChangeNotifier {
-
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
 
@@ -40,30 +47,31 @@ class AdminDashboardProvider with ChangeNotifier {
     }
   }
 
-
-
-
-
   void updateIndex(int index) {
     _currentIndex = index;
     notifyListeners();
   }
 
-
   final List<Patient> _patients = [
     Patient(
-        isActive: false,
-        price: "19.15",
-        name: 'Corey Aguilar',
-        gender: 'male',
-        description: 'Kidney function test',
-        time: '9:30'),
+      isActive: false,
+      price: "19.15",
+      messageCount: 0,
+      latestMessage: "See you later!",
+      name: 'Corey Aguilar',
+      gender: 'male',
+      description: 'Kidney function test',
+      time: '9:30',
+      profile: icPatientUser1,
+    ),
     Patient(
       price: "35.15",
       name: 'Samantha Lee',
       gender: 'male',
+      messageCount: 10,
       description: 'Cardiovascular assessment',
       time: '10:00',
+      profile: icPatientUser2,
     ),
     Patient(
       price: "52.15",
@@ -72,93 +80,110 @@ class AdminDashboardProvider with ChangeNotifier {
       gender: 'male',
       description: 'Routine check-up',
       time: '10:30',
+      messageCount: 12,
+      profile: icPatientUser3,
     ),
     Patient(
       price: "96.15",
       name: 'Linda Johnson',
       gender: 'female',
+      messageCount: 8,
       description: 'Blood pressure monitoring',
       time: '11:00',
+      profile: icPatientUser4,
     ),
     Patient(
-        price: "44.15",
-        isActive: false,
-        name: 'James Williams',
-        gender: 'female',
-        description: 'Diabetes check',
-        time: '11:30'),
-    Patient(
-      price: "55.15",
-      name: 'Patricia Brown',
-      gender: 'female',
-      description: 'Cholesterol screening',
-      time: '12:00',
-    ),
-    Patient(
-      price: "50.15",
+      price: "44.15",
       isActive: false,
-      name: 'Robert Jones',
-      gender: 'male',
-      description: 'Annual physical',
-      time: '12:30',
+      name: 'James Williams',
+      gender: 'female',
+      messageCount: 11,
+      description: 'Diabetes check',
+      time: '11:30',
+      profile: icPatientUser5,
     ),
+    Patient(
+        price: "55.15",
+        name: 'Patricia Brown',
+        gender: 'female',
+        messageCount: 23,
+        description: 'Cholesterol screening',
+        time: '12:00',
+        profile: icPatientUser6),
+    Patient(
+        price: "50.15",
+        isActive: false,
+        name: 'Robert Jones',
+        gender: 'male',
+        messageCount: 18,
+        description: 'Annual physical',
+        time: '12:30',
+        profile: icPatientUser7),
     Patient(
         price: "78.15",
         name: 'Jennifer Garcia',
         gender: 'male',
+        messageCount: 12,
         description: 'Follow-up visit',
-        time: '1:00'),
+        time: '1:00',
+        profile: icPatientUser8),
     Patient(
-      price: "90.15",
-      isActive: false,
-      name: 'David Martinez',
-      gender: 'male',
-      description: 'Orthopedic consultation',
-      time: '1:30',
-    ),
+        price: "90.15",
+        isActive: false,
+        messageCount: 12,
+        name: 'David Martinez',
+        gender: 'male',
+        description: 'Orthopedic consultation',
+        time: '1:30',
+        profile: icPatientUser9),
     Patient(
-      price: "25.15",
-      name: 'Sarah Robinson',
-      gender: 'male',
-      description: 'Pediatric check-up',
-      time: '2:00',
-    ),
+        price: "25.15",
+        name: 'Sarah Robinson',
+        messageCount: 1,
+        gender: 'male',
+        description: 'Pediatric check-up',
+        time: '2:00',
+        profile: icPatientUser10),
     Patient(
-      price: "29.90",
-      name: 'Thomas Clark',
-      gender: 'male',
-      description: 'Dental cleaning',
-      time: '2:30',
-    ),
+        price: "29.90",
+        name: 'Thomas Clark',
+        messageCount: 5,
+        gender: 'male',
+        description: 'Dental cleaning',
+        time: '2:30',
+        profile: icPatientUser11),
   ];
-  // Getter for the list of patients
-/*  List<Patient> get patients => _patients;*/
 
-  // Extract first letters of patient names
-
-/*
-  List<Patient> get patients {
-    if (_selectedLetter == null) return _patients;
-    return _patients
-        .where((patient) => patient.name.startsWith(_selectedLetter!))
-        .toList();
-  }
-*/
   String? _selectedGender;
   String _searchQuery = "";
   String? _selectedLetter;
+  /* List<Patient> get patients {
+    return _patients.where((patient) {
+      final matchesLetter =
+          _selectedLetter == null || patient.name.startsWith(_selectedLetter!);
+      final matchesGender =
+          _selectedGender == null || patient.gender == _selectedGender;
+      final matchesQuery =
+          patient.name.toLowerCase().contains(_searchQuery.toLowerCase());
+      return matchesLetter && matchesGender && matchesQuery;
+    }).toList();
+  }*/
+
   List<Patient> get patients {
     return _patients.where((patient) {
-      final matchesLetter = _selectedLetter == null || patient.name.startsWith(_selectedLetter!);
-      final matchesGender = _selectedGender == null || patient.gender == _selectedGender;
-      final matchesQuery = patient.name.toLowerCase().contains(_searchQuery.toLowerCase());
+      final matchesLetter =
+          _selectedLetter == null || patient.name.startsWith(_selectedLetter!);
+      final matchesGender =
+          _selectedGender == null || patient.gender == _selectedGender;
+      final matchesQuery =
+          patient.name.toLowerCase().contains(_searchQuery.toLowerCase());
       return matchesLetter && matchesGender && matchesQuery;
     }).toList();
   }
+
   Set<String> get availableLetters {
     return _patients.map((patient) => patient.name[0].toUpperCase()).toSet();
   }
-
 
   void selectLetter(String? letter) {
     _selectedLetter = letter;
@@ -181,10 +206,6 @@ class AdminDashboardProvider with ChangeNotifier {
     _searchQuery = "";
     notifyListeners();
   }
-
-
-
-
 
   int _selectedIndex = 0;
 
@@ -965,83 +986,343 @@ class AdminDashboardProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Patient? _chatUserInfo;
+  Patient? get chatUserInfo => _chatUserInfo;
 
+  void chatUserInfoValue(Patient data) {
+    _chatUserInfo = data;
+    print('======${data.name}');
+    notifyListeners();
+  }
 
   List<ChatUser> dummyChatUsers = [
-    ChatUser(name: "Alice", latestMessage: "Hey, how are you?", messageCount: 15),
-    ChatUser(name: "Bob", latestMessage: "Let's meet tomorrow", messageCount: 5),
-    ChatUser(name: "Charlie", latestMessage: "Can you send the file?", messageCount: 8),
-    ChatUser(name: "Diana", latestMessage: "Thank you!", messageCount: 12),
-    ChatUser(name: "Edward", latestMessage: "I'll check on that", messageCount: 0),
-    ChatUser(name: "Fiona", latestMessage: "See you later!", messageCount: 20),
-    ChatUser(name: "George", latestMessage: "Can we reschedule?", messageCount: 4),
-    ChatUser(name: "Hannah", latestMessage: "Happy birthday!", messageCount: 0),
-    ChatUser(name: "Isaac", latestMessage: "I'll be there in 10 mins", messageCount: 7),
-    ChatUser(name: "Julia", latestMessage: "Got it, thanks!", messageCount: 13),
+    ChatUser(
+        profile: icPatientUser1,
+        name: "Alice",
+        latestMessage: "Hey, how are you?",
+        messageCount: 15),
+    ChatUser(
+        profile: icPatientUser2,
+        name: "Bob",
+        latestMessage: "Let's meet tomorrow",
+        messageCount: 5),
+    ChatUser(
+        name: "Charlie",
+        profile: icPatientUser3,
+        latestMessage: "Can you send the file?",
+        messageCount: 8),
+    ChatUser(
+        name: "Diana",
+        profile: icPatientUser4,
+        latestMessage: "Thank you!",
+        messageCount: 12),
+    ChatUser(
+        name: "Edward",
+        profile: icPatientUser5,
+        latestMessage: "I'll check on that",
+        messageCount: 0),
+    ChatUser(
+        profile: icPatientUser6,
+        name: "Fiona",
+        latestMessage: "See you later!",
+        messageCount: 20),
+    ChatUser(
+        profile: icPatientUser7,
+        name: "George",
+        latestMessage: "Can we reschedule?",
+        messageCount: 4),
+    ChatUser(
+        profile: icPatientUser8,
+        name: "Hannah",
+        latestMessage: "Happy birthday!",
+        messageCount: 0),
+    ChatUser(
+        profile: icPatientUser9,
+        name: "Isaac",
+        latestMessage: "I'll be there in 10 mins",
+        messageCount: 7),
+    ChatUser(
+        profile: icPatientUser10,
+        name: "Julia",
+        latestMessage: "Got it, thanks!",
+        messageCount: 13),
   ];
   List<ChatMessage> chatMessages = [
-    ChatMessage(sender: "Alice", message: "Hey, how are you?", date: "2024-10-01 09:00", sentByUser: false),
-    ChatMessage(sender: "User", message: "I'm good, thanks! How about you?", date: "2024-10-01 09:01", sentByUser: true),
-    ChatMessage(sender: "Alice", message: "Doing well! Been busy with work.", date: "2024-10-01 09:02", sentByUser: false),
-    ChatMessage(sender: "Bob", message: "Let's meet tomorrow?", date: "2024-10-01 10:15", sentByUser: false),
-    ChatMessage(sender: "User", message: "Sure, what time?", date: "2024-10-01 10:16", sentByUser: true),
-    ChatMessage(sender: "Bob", message: "How about 3 PM?", date: "2024-10-01 10:17", sentByUser: false),
-    ChatMessage(sender: "Charlie", message: "Can you send the file?", date: "2024-10-02 11:20", sentByUser: false),
-    ChatMessage(sender: "User", message: "Just sent it over!", date: "2024-10-02 11:21", sentByUser: true),
-    ChatMessage(sender: "Charlie", message: "Got it, thanks!", date: "2024-10-02 11:22", sentByUser: false),
-    ChatMessage(sender: "Diana", message: "Thank you!", date: "2024-10-03 08:45", sentByUser: false),
-    ChatMessage(sender: "User", message: "Anytime!", date: "2024-10-03 08:46", sentByUser: true),
-    ChatMessage(sender: "Edward", message: "I'll check on that.", date: "2024-10-03 09:30", sentByUser: false),
-    ChatMessage(sender: "User", message: "Sounds good.", date: "2024-10-03 09:31", sentByUser: true),
-    ChatMessage(sender: "Fiona", message: "See you later!", date: "2024-10-03 15:20", sentByUser: false),
-    ChatMessage(sender: "User", message: "Take care!", date: "2024-10-03 15:21", sentByUser: true),
-    ChatMessage(sender: "George", message: "Can we reschedule?", date: "2024-10-04 12:05", sentByUser: false),
-    ChatMessage(sender: "User", message: "Let me check my schedule.", date: "2024-10-04 12:06", sentByUser: true),
-    ChatMessage(sender: "George", message: "Thanks!", date: "2024-10-04 12:07", sentByUser: false),
-    ChatMessage(sender: "Hannah", message: "Happy birthday!", date: "2024-10-05 08:00", sentByUser: false),
-    ChatMessage(sender: "User", message: "Thank you so much!", date: "2024-10-05 08:01", sentByUser: true),
-    ChatMessage(sender: "Isaac", message: "I'll be there in 10 mins.", date: "2024-10-05 13:00", sentByUser: false),
-    ChatMessage(sender: "User", message: "Great, see you soon.", date: "2024-10-05 13:01", sentByUser: true),
-    ChatMessage(sender: "Julia", message: "Got it, thanks!", date: "2024-10-06 09:30", sentByUser: false),
-    ChatMessage(sender: "User", message: "You're welcome!", date: "2024-10-06 09:31", sentByUser: true),
-    ChatMessage(sender: "Alice", message: "Did you finish the report?", date: "2024-10-06 10:00", sentByUser: false),
-    ChatMessage(sender: "User", message: "Almost done.", date: "2024-10-06 10:01", sentByUser: true),
-    ChatMessage(sender: "Bob", message: "See you at 3 PM?", date: "2024-10-07 14:45", sentByUser: false),
-    ChatMessage(sender: "User", message: "Yes, on my way.", date: "2024-10-07 14:46", sentByUser: true),
-    ChatMessage(sender: "Charlie", message: "Thanks for the help.", date: "2024-10-08 11:30", sentByUser: false),
-    ChatMessage(sender: "User", message: "Happy to help!", date: "2024-10-08 11:31", sentByUser: true),
-    ChatMessage(sender: "Diana", message: "Can you check this for me?", date: "2024-10-08 12:15", sentByUser: false),
-    ChatMessage(sender: "User", message: "Sure, give me a minute.", date: "2024-10-08 12:16", sentByUser: true),
-    ChatMessage(sender: "Edward", message: "See you at the meeting.", date: "2024-10-09 09:15", sentByUser: false),
-    ChatMessage(sender: "User", message: "I'll be there!", date: "2024-10-09 09:16", sentByUser: true),
-    ChatMessage(sender: "Fiona", message: "Thanks again!", date: "2024-10-09 16:30", sentByUser: false),
-    ChatMessage(sender: "User", message: "You're welcome!", date: "2024-10-09 16:31", sentByUser: true),
-    ChatMessage(sender: "George", message: "Is there an update?", date: "2024-10-10 11:00", sentByUser: false),
-    ChatMessage(sender: "User", message: "I'll send it shortly.", date: "2024-10-10 11:01", sentByUser: true),
-    ChatMessage(sender: "Hannah", message: "Congratulations!", date: "2024-10-10 12:00", sentByUser: false),
-    ChatMessage(sender: "User", message: "Thank you!", date: "2024-10-10 12:01", sentByUser: true),
-    ChatMessage(sender: "Isaac", message: "Let's catch up soon.", date: "2024-10-11 10:30", sentByUser: false),
-    ChatMessage(sender: "User", message: "Absolutely!", date: "2024-10-11 10:31", sentByUser: true),
-    ChatMessage(sender: "Julia", message: "Do you need help with that?", date: "2024-10-11 15:00", sentByUser: false),
-    ChatMessage(sender: "User", message: "I think I got it, thanks!", date: "2024-10-11 15:01", sentByUser: true),
-    ChatMessage(sender: "Alice", message: "Let's touch base next week.", date: "2024-10-12 11:00", sentByUser: false),
-    ChatMessage(sender: "User", message: "Works for me.", date: "2024-10-12 11:01", sentByUser: true),
-    ChatMessage(sender: "Bob", message: "Lunch on Friday?", date: "2024-10-12 14:30", sentByUser: false),
-    ChatMessage(sender: "User", message: "Yes, looking forward to it.", date: "2024-10-12 14:31", sentByUser: true),
-    ChatMessage(sender: "Charlie", message: "Got the documents.", date: "2024-10-13 09:45", sentByUser: false),
-    ChatMessage(sender: "User", message: "Great!", date: "2024-10-13 09:46", sentByUser: true),
+    ChatMessage(
+        sender: "Alice",
+        message: "Hey, how are you?",
+        date: "2024-10-01 09:00",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "I'm good, thanks! How about you?",
+        date: "2024-10-01 09:01",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Alice",
+        message: "Doing well! Been busy with work.",
+        date: "2024-10-01 09:02",
+        sentByUser: false),
+    ChatMessage(
+        sender: "Bob",
+        message: "Let's meet tomorrow?",
+        date: "2024-10-01 10:15",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "Sure, what time?",
+        date: "2024-10-01 10:16",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Bob",
+        message: "How about 3 PM?",
+        date: "2024-10-01 10:17",
+        sentByUser: false),
+    ChatMessage(
+        sender: "Charlie",
+        message: "Can you send the file?",
+        date: "2024-10-02 11:20",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "Just sent it over!",
+        date: "2024-10-02 11:21",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Charlie",
+        message: "Got it, thanks!",
+        date: "2024-10-02 11:22",
+        sentByUser: false),
+    ChatMessage(
+        sender: "Diana",
+        message: "Thank you!",
+        date: "2024-10-03 08:45",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "Anytime!",
+        date: "2024-10-03 08:46",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Edward",
+        message: "I'll check on that.",
+        date: "2024-10-03 09:30",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "Sounds good.",
+        date: "2024-10-03 09:31",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Fiona",
+        message: "See you later!",
+        date: "2024-10-03 15:20",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "Take care!",
+        date: "2024-10-03 15:21",
+        sentByUser: true),
+    ChatMessage(
+        sender: "George",
+        message: "Can we reschedule?",
+        date: "2024-10-04 12:05",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "Let me check my schedule.",
+        date: "2024-10-04 12:06",
+        sentByUser: true),
+    ChatMessage(
+        sender: "George",
+        message: "Thanks!",
+        date: "2024-10-04 12:07",
+        sentByUser: false),
+    ChatMessage(
+        sender: "Hannah",
+        message: "Happy birthday!",
+        date: "2024-10-05 08:00",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "Thank you so much!",
+        date: "2024-10-05 08:01",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Isaac",
+        message: "I'll be there in 10 mins.",
+        date: "2024-10-05 13:00",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "Great, see you soon.",
+        date: "2024-10-05 13:01",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Julia",
+        message: "Got it, thanks!",
+        date: "2024-10-06 09:30",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "You're welcome!",
+        date: "2024-10-06 09:31",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Alice",
+        message: "Did you finish the report?",
+        date: "2024-10-06 10:00",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "Almost done.",
+        date: "2024-10-06 10:01",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Bob",
+        message: "See you at 3 PM?",
+        date: "2024-10-07 14:45",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "Yes, on my way.",
+        date: "2024-10-07 14:46",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Charlie",
+        message: "Thanks for the help.",
+        date: "2024-10-08 11:30",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "Happy to help!",
+        date: "2024-10-08 11:31",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Diana",
+        message: "Can you check this for me?",
+        date: "2024-10-08 12:15",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "Sure, give me a minute.",
+        date: "2024-10-08 12:16",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Edward",
+        message: "See you at the meeting.",
+        date: "2024-10-09 09:15",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "I'll be there!",
+        date: "2024-10-09 09:16",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Fiona",
+        message: "Thanks again!",
+        date: "2024-10-09 16:30",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "You're welcome!",
+        date: "2024-10-09 16:31",
+        sentByUser: true),
+    ChatMessage(
+        sender: "George",
+        message: "Is there an update?",
+        date: "2024-10-10 11:00",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "I'll send it shortly.",
+        date: "2024-10-10 11:01",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Hannah",
+        message: "Congratulations!",
+        date: "2024-10-10 12:00",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "Thank you!",
+        date: "2024-10-10 12:01",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Isaac",
+        message: "Let's catch up soon.",
+        date: "2024-10-11 10:30",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "Absolutely!",
+        date: "2024-10-11 10:31",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Julia",
+        message: "Do you need help with that?",
+        date: "2024-10-11 15:00",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "I think I got it, thanks!",
+        date: "2024-10-11 15:01",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Alice",
+        message: "Let's touch base next week.",
+        date: "2024-10-12 11:00",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "Works for me.",
+        date: "2024-10-12 11:01",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Bob",
+        message: "Lunch on Friday?",
+        date: "2024-10-12 14:30",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "Yes, looking forward to it.",
+        date: "2024-10-12 14:31",
+        sentByUser: true),
+    ChatMessage(
+        sender: "Charlie",
+        message: "Got the documents.",
+        date: "2024-10-13 09:45",
+        sentByUser: false),
+    ChatMessage(
+        sender: "User",
+        message: "Great!",
+        date: "2024-10-13 09:46",
+        sentByUser: true),
   ];
 
+  bool _isHovered = false;
 
+  bool get isHovered => _isHovered;
+
+  void setHover(bool value) {
+    _isHovered = value;
+    notifyListeners();
+  }
 }
 
 class ChatUser {
   final String name;
   final String latestMessage;
+  final String? profile;
   final int messageCount;
 
-  ChatUser({required this.name, required this.latestMessage, required this.messageCount});
+  ChatUser(
+      {required this.name,
+      this.profile,
+      required this.latestMessage,
+      required this.messageCount});
 }
+
 class ChatMessage {
   final String sender;
   final String message;
@@ -1055,4 +1336,3 @@ class ChatMessage {
     required this.sentByUser,
   });
 }
-

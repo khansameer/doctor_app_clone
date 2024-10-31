@@ -15,7 +15,6 @@ import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../mobile_view/profile/edit_profile_screen.dart';
 import '../../admin_dashboard_view/admin_dashboard_view.dart';
 import '../../admin_dashboard_view/communication_screen.dart';
 
@@ -68,7 +67,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
           elevation: 0,
           toolbarHeight: 86,
           actions: [
-
             Stack(
               clipBehavior: Clip.none,
               children: [
@@ -79,24 +77,29 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   decoration: commonBoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     color: Colors.white,
-                ),
-                  child: const Icon(Icons.notifications_none,color: AppColors.colorTextNew,size: 18,),
+                  ),
+                  child: const Icon(
+                    Icons.notifications_none,
+                    color: AppColors.colorTextNew,
+                    size: 18,
+                  ),
                 ),
                 Positioned(
                     right: 0,
                     top: -5,
-                    child: Container(width: 12,
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.colorNotification),
-
-                height: 12,)),
-
-
+                    child: Container(
+                      width: 12,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color.fromARGB(255, 244, 147, 43)),
+                      height: 12,
+                    )),
               ],
             ),
-            const SizedBox(width: 10,),
-            Container(
+            const SizedBox(
+              width: 10,
+            ),
+            SizedBox(
               width: thirtyFive,
               height: thirtyFive,
               child: commonProfileIcon(),
@@ -104,7 +107,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
             const SizedBox(
               width: 10,
             ),
-
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,7 +117,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     fontSize: 16,
                     textColor: AppColors.colorText),
                 CommonTextWidget(
-                    text:"Surgeon",
+                    text: "Cardiologist",
                     fontSize: 12,
                     textColor: AppColors.colorText),
               ],
@@ -127,15 +129,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
               color: Colors.white,
               constraints: const BoxConstraints.tightFor(width: twoHundred),
               elevation: zero,
-              //  tooltip: "profile",
               offset: const Offset(zero, thirty),
               onSelected: (value) {},
               itemBuilder: (context) => [],
               child: commonInkWell(
-                onTap: () {
-
-                 // provider.updatePageValue(11);
-                },
+                onTap: () {},
                 child: const Icon(
                   Icons.keyboard_arrow_down_sharp,
                   color: Colors.grey,
@@ -147,9 +145,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
             ),
           ],
           leadingWidth: isMobile ? 100 : 130,
-
           iconTheme: const IconThemeData(color: Colors.white),
-          //leading: const SizedBox.shrink(),
           leading: const ImageIcon(
               size: 500,
               color: AppColors.colorActive,
@@ -174,18 +170,18 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 showHamburger: isMobile ? true : false,
                 //for sub Menu
                 //arrowCollapse: Colors.black,
-               // arrowOpen: Colors.black,
-               // toggleColor: Colors.black,
-           //     unselectedIconColorExpandable: AppColors.colorText,
-            //    selectedIconColorExpandable: Colors.red,
+                // arrowOpen: Colors.black,
+                // toggleColor: Colors.black,
+                //     unselectedIconColorExpandable: AppColors.colorText,
+                //    selectedIconColorExpandable: Colors.red,
 
                 //===
-              //  unselectedIconColor: AppColors.colorText,
+                //  unselectedIconColor: AppColors.colorText,
                 unselectedTitleTextStyle: commonTextStyle(
                     color: AppColors.colorMenuUnSelectedText,
                     fontSize: 14,
                     fontWeight: FontWeight.w500),
-             /*   selectedTitleTextStyleExpandable: commonTextStyle(
+                /*   selectedTitleTextStyleExpandable: commonTextStyle(
                     color: AppColors.colorBlue,
                     fontSize: 14,
                     fontWeight: FontWeight.w500),*/
@@ -193,18 +189,19 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 //selectedHoverColor: AppColors.colorHover,
                 selectedColor: AppColors.colorBgNew,
                 selectedTitleTextStyle: commonTextStyle(
-                    color:AppColors.colorBlue,
+                    color: AppColors.colorBlue,
                     fontSize: 14,
                     fontWeight: FontWeight.w600),
                 selectedIconColor: AppColors.colorBlue,
                 decoration: BoxDecoration(
                   color: AppColors.colorBgNew,
-                    boxShadow: [const BoxShadow(
+                  boxShadow: const [
+                    BoxShadow(
                       color: Colors.grey,
                       blurRadius: 10.0,
-                    ),],
-                  border: Border.all(
-                      color: AppColors.colorBgNew, width: 1),
+                    ),
+                  ],
+                  border: Border.all(color: AppColors.colorBgNew, width: 1),
                   borderRadius: const BorderRadius.all(Radius.circular(0)),
                 ),
                 // backgroundColor: Colors.grey[200]
@@ -213,9 +210,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Dashboard',
                   onTap: (index, _) {
-                    //   provider.updatePageValue(1);
                     sideMenu.changePage(index); // Navigate to Calendar page
-                    // sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.calendar_month_sharp),
                   tooltipContent: "This is a tooltip for Dashboard item",
@@ -223,9 +218,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Appointment',
                   onTap: (index, _) {
-                    // provider.updatePageValue(1);
-                    sideMenu.changePage(index); // Navigate to Calendar page
-                    // sideMenu.changePage(index);
+                    sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.calendar_month_sharp),
                   tooltipContent: "This is a tooltip for Dashboard item",
@@ -234,9 +227,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Patients',
                   onTap: (index, _) {
-                    // provider.updatePageValue(2);
                     sideMenu.changePage(index);
-                    //    sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.person),
                 ),
@@ -244,9 +235,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Communications',
                   onTap: (index, _) {
-                    // provider.updatePageValue(3);
                     sideMenu.changePage(index);
-                    //sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.cell_tower),
                 ),
@@ -254,9 +243,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Reports',
                   onTap: (index, _) {
-                    // provider.updatePageValue(4);
                     sideMenu.changePage(index);
-                    //sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.auto_graph),
                 ),
@@ -264,7 +251,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Settings',
                   onTap: (index, _) {
-                    //   provider.updatePageValue(5);
                     sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.settings_outlined),
@@ -273,33 +259,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Feedback',
                   onTap: (index, _) {
-                    //   provider.updatePageValue(7);
                     sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.thumb_up_alt_outlined),
                 ),
                 commonMenuDivider(),
-
-                /*  SideMenuExpansionItem(
-                  title: "Patient Management",
-                  icon: const Icon(Icons.person),
-                  children: [
-                    SideMenuItem(
-                      title: 'Appointment',
-                      onTap: (index, _) {
-                        sideMenu.changePage(index);
-                      },
-                      icon: const Icon(Icons.calendar_month),
-                    ),
-                    SideMenuItem(
-                      title: 'Patients',
-                      onTap: (index, _) {
-                        sideMenu.changePage(index);
-                      },
-                      icon: const Icon(Icons.supervisor_account),
-                    )
-                  ],
-                ),*/
                 SideMenuItem(
                   onTap: (index, _) {
                     commonLogoutDialog(
@@ -362,10 +326,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         child: ErrorPage(),
                       ),
                     ),
-                    /* Padding(
-                      padding: EdgeInsets.all(16),
-                      child: AdminCalenderScreen(),
-                    ),*/
+
                     Padding(
                       padding: EdgeInsets.all(16),
                       child: Center(
@@ -388,8 +349,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
       builder: (context, displayMode) {
         return const Divider(
           height: 0,
-           color: AppColors.colorBgNew,
-         // color: Colors.white,
+          color: AppColors.colorBgNew,
+          // color: Colors.white,
           endIndent: 8,
           indent: 0,
           thickness: 0.5,
