@@ -102,7 +102,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
             SizedBox(
               width: thirtyFive,
               height: thirtyFive,
-              child: commonProfileIcon(),
+              child: commonProfileIcon(path: icDummyUser),
             ),
             const SizedBox(
               width: 10,
