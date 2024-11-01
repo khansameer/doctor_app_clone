@@ -1,6 +1,6 @@
 import 'package:doctor_app/core/common/CustomAlertDialog.dart';
 import 'package:doctor_app/core/component/component.dart';
-import 'package:doctor_app/provider/calender_provider.dart';
+import 'package:doctor_app/provider/appointments_provider.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/add_appointments_widget.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/get_edit_appointments_details_widget.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ class _CalenderViewState extends State<CalenderView> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context
-          .read<CalenderProvider>()
+          .read<AppointmentsProvider>()
           .getAppointments(context: context)
           .then((value) {
         setState(() {});
@@ -34,8 +34,8 @@ class _CalenderViewState extends State<CalenderView> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = context.read<CalenderProvider>();
-    var providerWatch = context.watch<CalenderProvider>();
+    var provider = context.read<AppointmentsProvider>();
+    var providerWatch = context.watch<AppointmentsProvider>();
     List<Appointment>? calendarAppointments =
         provider.appointmentsModel?.appointments?.map((appointment) {
       if (appointment.patient != null) {
@@ -105,7 +105,7 @@ class _CalenderViewState extends State<CalenderView> {
             builder: (BuildContext context) {
               return CustomAlertDialog(
                 content: AddAppointmentsWidget(
-                  dateTime: details.date!,
+                  dateTime: details.date,
                 ),
               );
             },

@@ -15,6 +15,7 @@ import 'package:doctor_app/shared_preferences/preference_helper.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -268,12 +269,18 @@ commonDivider() {
 Widget commonInkWell({
   Widget? child,
   VoidCallback? onTap,
+  void Function(PointerEnterEvent)? onEnter,
+  void Function(PointerExitEvent)? onExit,
 }) {
-  return InkWell(
-    highlightColor: Colors.transparent,
-    splashColor: Colors.transparent,
-    onTap: onTap,
-    child: child,
+  return MouseRegion(
+    onEnter: onEnter,
+    onExit: onExit,
+    child: InkWell(
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      onTap: onTap,
+      child: child,
+    ),
   );
 }
 
@@ -335,9 +342,21 @@ pushScreen({
 pushNamedAndRemoveUntil(
     {required BuildContext context, required String routeName}) {
   Navigator.pushNamedAndRemoveUntil(
-      Navigator.of(context, rootNavigator: true).context,
+      Navigator.of(context, rootNavigator: false).context,
       routeName,
       (route) => true);
+}
+
+commonProfileIcon({double? width, double? height, String? path}) {
+  return ClipRRect(
+    borderRadius: BorderRadius.circular(8),
+    child: setAssetImage(
+      width: width ?? 60,
+      height: height ?? 60,
+      fit: BoxFit.cover,
+      image: path ?? icPatientUser4,
+    ) /*commonImageNetworkWidget(path: provider.patients[index].photo)*/,
+  );
 }
 
 void showCommonDialog(
@@ -605,12 +624,12 @@ commonText({
           left: left ?? zero,
           right: right ?? zero,
           bottom: bottom ?? zero),
-      child: Text(text ?? '',
+      child: CommonTextWidget(
+          text: text ?? '',
           textAlign: textAlign,
-          style: TextStyle(
-              color: color,
-              fontWeight: fontWeight ?? FontWeight.w500,
-              fontSize: fontSize ?? fourteen)));
+          textColor: color,
+          fontWeight: fontWeight ?? FontWeight.w500,
+          fontSize: fontSize ?? fourteen));
 }
 
 commonMenu(
@@ -780,21 +799,23 @@ Future<List<PlatformFile>?> pickFiles() async {
   return _paths;
 }*/
 commonLogoutDialog(
-    {required BuildContext context,
+    {required BuildContext contextAd,
     required bool isMobile,
+    double? width,
     required bool isDesktop}) {
   showDialog(
       barrierDismissible: false,
-      context: context,
+      context: contextAd,
       builder: (BuildContext context) {
-        var width = MediaQuery.of(context).size.width;
+        var size = MediaQuery.sizeOf(contextAd);
         return CustomAlertDialog(
           content: SizedBox(
-            width: isMobile
+            /*width: isMobile
                 ? width * zero9
                 : isDesktop
                     ? width * 0.3
-                    : width * 0.19,
+                    : width * 0.19,*/
+            width: width,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -825,9 +846,10 @@ commonLogoutDialog(
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Expanded(
+                          Flexible(
                             child: CommonButtonWidget(
                               height: 40,
+                              width: isMobile ? size.width : size.width * 0.08,
                               radius: 8,
                               onPressed: () async {
                                 await PreferenceHelper.clear();
@@ -848,10 +870,11 @@ commonLogoutDialog(
                           const SizedBox(
                             width: 10,
                           ),
-                          Expanded(
+                          Flexible(
                             child: CommonButtonWidget(
                               text: "Cancel",
                               height: 40,
+                              width: isMobile ? size.width : size.width * 0.08,
                               radius: 8,
                               colorBorder: Colors.black,
                               colorButton: Colors.white,

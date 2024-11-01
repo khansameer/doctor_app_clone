@@ -98,7 +98,6 @@ class AuthProviders extends ChangeNotifier {
           pushNamedAndRemoveUntil(
               context: context, routeName: RouteName.adminDashboardScreen);
         } else {
-          print('======csaaaa}');
           pushNamedAndRemoveUntil(
               context: context, routeName: RouteName.dashboardScreen);
         }
@@ -106,8 +105,6 @@ class AuthProviders extends ChangeNotifier {
         Navigator.pushNamedAndRemoveUntil(
             context, RouteName.loginScreen, (route) => false);
       }
-      /* Navigator.pushNamedAndRemoveUntil(
-          context, RouteName.loginScreen, (route) => false);*/
     });
   }
 
@@ -189,15 +186,7 @@ class AuthProviders extends ChangeNotifier {
         }
       } else if (globalStatusCode == 401) {
         commonSessionError(context: context);
-      } else {
-        /*showCommonDialog(
-            context: context,
-            title: "Error",
-            content: _loginModel?.message != null
-                ? '${_loginModel?.message.toString()}'
-                : "Something went wrong please try again after sometime.",
-            isMessage: true);*/
-      }
+      } else {}
     } catch (e) {
       // _registerModel = RegisterModel(message: 'server_error'.tr());
     }

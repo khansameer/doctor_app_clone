@@ -2,11 +2,13 @@ import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/core/route/route_generator.dart';
 
 import 'package:doctor_app/core/string/string_utils.dart';
+import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 
 import 'package:doctor_app/provider/auth_provider.dart';
-import 'package:doctor_app/provider/calender_provider.dart';
+import 'package:doctor_app/provider/appointments_provider.dart';
 import 'package:doctor_app/provider/chat_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
+import 'package:doctor_app/provider/patient_provider.dart';
 import 'package:doctor_app/provider/procedure_provider.dart';
 import 'package:doctor_app/shared_preferences/preference_helper.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +25,12 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider<DashboardProvider>(create: (_) => DashboardProvider()),
   ChangeNotifierProvider<ChatProvider>(create: (_) => ChatProvider()),
   ChangeNotifierProvider<ProfileProvider>(create: (_) => ProfileProvider()),
-  ChangeNotifierProvider<CalenderProvider>(create: (_) => CalenderProvider()),
+  ChangeNotifierProvider<AppointmentsProvider>(
+      create: (_) => AppointmentsProvider()),
   ChangeNotifierProvider<ProcedureProvider>(create: (_) => ProcedureProvider()),
+  ChangeNotifierProvider<AdminDashboardProvider>(
+      create: (_) => AdminDashboardProvider()),
+  ChangeNotifierProvider<PatientProvider>(create: (_) => PatientProvider()),
 ];
 
 void main() async {

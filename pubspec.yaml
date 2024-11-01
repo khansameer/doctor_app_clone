@@ -49,6 +49,7 @@ dependencies:
   syncfusion_flutter_calendar: ^27.1.53
   file_picker: any
   easy_sidemenu: ^0.6.0
+  fl_chart: ^0.69.0
   searchfield: ^1.1.7
 
   permission_handler: ^11.3.1

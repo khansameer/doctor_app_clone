@@ -7,7 +7,8 @@ import 'package:doctor_app/core/common/file_picker_helper.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/context_extension.dart';
 import 'package:doctor_app/core/route/route.dart';
-import 'package:doctor_app/provider/calender_provider.dart';
+import 'package:doctor_app/provider/appointments_provider.dart';
+import 'package:doctor_app/provider/patient_provider.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/add_appointments_widget.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:flutter/foundation.dart';
@@ -28,41 +29,17 @@ class _PatientsScreenState extends State<PatientsScreen> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context
-          .read<CalenderProvider>()
+          .read<PatientProvider>()
           .getPatientDetails(context: context)
-          .then((value) {
-        if (globalStatusCode == 401) {
-          showCommonDialog(
-            context: context,
-            title: "Error",
-            content: errorMessage ?? '',
-            btnPositive: "Close",
-            onPressPositive: () {
-              pushNamedAndRemoveUntil(
-                  context: context, routeName: RouteName.loginScreen);
-            },
-            isMessage: true,
-          );
-        }
-        _searchController.addListener(() {
-          context
-              .read<CalenderProvider>()
-              .searchPatients(_searchController.text);
-        });
-      });
+          .then((value) {});
     });
+
     super.initState();
   }
 
   @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    var provider = context.watch<CalenderProvider>();
+    var provider = context.watch<PatientProvider>();
     return AppScaffold(
         right: 0,
         left: 0,
@@ -86,7 +63,11 @@ class _PatientsScreenState extends State<PatientsScreen> {
                       right: 20,
                       height: 36,
                       padding: 0,
-                      controller: _searchController,
+                      onChange: (query) {
+                        context
+                            .read<PatientProvider>()
+                            .updateSearchQuery(query);
+                      },
                       fontSize: 12,
                       colorFill: Colors.white,
                       hint: "Search Patient Name/ID/Phone number",
@@ -111,70 +92,61 @@ class _PatientsScreenState extends State<PatientsScreen> {
             Expanded(
               child: Stack(
                 children: [
-                  provider.filteredPatients != null
-                      ? ListView.separated(
-                          shrinkWrap: true,
-                          padding: EdgeInsets.zero,
-                          itemCount: provider.filteredPatients?.length ?? 0,
-                          itemBuilder: (context, index) {
-                            var data = provider.filteredPatients?[index];
-                            return Container(
-                              margin: const EdgeInsets.all(0),
-                              child: ListTile(
-                                dense: true,
-                                onTap: () {
-                                  pushScreen(
-                                    context: context,
-                                    routeName: RouteName.patientInfoScreen,
-                                  );
-                                },
-                                trailing: buildPopupMenu(id: data?.toString()),
-                                leading: Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: commonBoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: AppColors.primary,
-                                    border: Border.all(
-                                        color: Colors.grey, width: 0),
-                                  ),
-                                  child: Center(
-                                    child: CommonTextWidget(
-                                      textColor: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      text: data?.firstName
-                                          .toString()
-                                          .toUpperCase()[0],
-                                    ),
-                                  ),
-                                ),
-                                title: CommonTextWidget(
-                                  text:
-                                      '${data?.firstName?.toString().toCapitalize()} ${data?.lastName.toString()}',
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13,
-                                ),
-                                subtitle: CommonTextWidget(
-                                  text: data?.gender.toString(),
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12,
-                                ),
+                  ListView.separated(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    itemCount: provider.patients?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      var data = provider.patients?[index];
+                      return Container(
+                        margin: const EdgeInsets.all(0),
+                        child: ListTile(
+                          dense: true,
+                          onTap: () {
+                            pushScreen(
+                              context: context,
+                              routeName: RouteName.patientInfoScreen,
+                            );
+                          },
+                          trailing: buildPopupMenu(id: data?.toString()),
+                          leading: Container(
+                            height: 40,
+                            width: 40,
+                            decoration: commonBoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.primary,
+                              border: Border.all(color: Colors.grey, width: 0),
+                            ),
+                            child: Center(
+                              child: CommonTextWidget(
+                                textColor: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                text:
+                                    data?.firstName.toString().toUpperCase()[0],
                               ),
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return const Divider(
-                              thickness: 0.3,
-                            );
-                          },
-                        )
-                      : Center(
-                          child: CommonTextWidget(
-                            text: "Data not found",
-                            fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                          title: CommonTextWidget(
+                            text:
+                                '${data?.firstName?.toString().toCapitalize()} ${data?.lastName.toString()}',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 13,
+                          ),
+                          subtitle: CommonTextWidget(
+                            text: data?.gender.toString(),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 12,
                           ),
                         ),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const Divider(
+                        thickness: 0.3,
+                      );
+                    },
+                  ),
                   provider.isAdding ? showLoaderList() : const SizedBox.shrink()
                 ],
               ),
@@ -255,19 +227,16 @@ class _PatientsScreenState extends State<PatientsScreen> {
       offset: const Offset(-0, 30),
       color: Colors.white,
       onSelected: (String value) async {
-        final provider =
-            context.read<CalenderProvider>(); // Handle the create option
-
         if (value == 'All') {
-          provider.getAllPatientsData();
+          context.read<PatientProvider>().clearFilter();
         } else if (value == 'all_female') {
-          provider.filterBYGenders(gender: 'female');
+          context.read<PatientProvider>().filterByGender("female");
         } else if (value == 'all_male') {
-          provider.filterBYGenders(gender: 'male');
+          context.read<PatientProvider>().filterByGender("male");
         } else if (value == 'female_under30') {
-          provider.filterByAges(age: 30, isUnder: true);
+          //  provider.filterByAges(age: 30, isUnder: true);
         } else if (value == 'female_over30') {
-          provider.filterByAges(age: 30, isUnder: false);
+          // provider.filterByAges(age: 30, isUnder: false);
         }
       },
 

@@ -6,7 +6,8 @@ import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/context_extension.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/core/route/route.dart';
-import 'package:doctor_app/provider/calender_provider.dart';
+import 'package:doctor_app/provider/appointments_provider.dart';
+import 'package:doctor_app/provider/patient_provider.dart';
 
 import 'package:doctor_app/screen/web_view/model/patient_details_model.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/add_appointments_widget.dart';
@@ -37,7 +38,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context
-          .read<CalenderProvider>()
+          .read<PatientProvider>()
           .getPatientDetails(context: context)
           .then((value) {
         if (globalStatusCode == 401) {
@@ -53,30 +54,23 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
             isMessage: true,
           );
         }
-        _searchController.addListener(() {
+        /*_searchController.addListener(() {
           context
-              .read<CalenderProvider>()
+              .read<AppointmentsProvider>()
               .searchPatients(_searchController.text);
-        });
+        });*/
       });
     });
     super.initState();
   }
 
   @override
-  void dispose() {
-
-    super.dispose();
-    _searchController.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
-    var provider = context.watch<CalenderProvider>();
+    var provider = context.watch<AppointmentsProvider>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.title == "all") {
+      /* if (widget.title == "all") {
         _searchController.text.isEmpty ? provider.getAllPatientsData() : ();
       } else if (widget.title == "all_female") {
         provider.filterBYGenders(gender: 'female');
@@ -86,174 +80,189 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
         provider.filterByAges(age: 30, isUnder: true);
       } else if (widget.title == "female_over30") {
         provider.filterByAges(age: 30, isUnder: false);
-      }
+      }*/
     });
 
-    return Stack(
-      children: [
-        Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            isMobile
-                ? Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
+    return SizedBox(
+      height: size.height,
+      child: Stack(
+        children: [
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              isMobile
+                  ? Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                                child: SizedBox(
+                              height: 40,
+                              child: CommonTextField(
+                                hint: "Search Patient Name / ID /Phone number",
+                                colorFill: Colors.white,
+                                //  hint: "Search Patient Name/ID/Phone number",
+                              ),
+                            )),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Align(
+                              alignment: Alignment.topLeft,
                               child: SizedBox(
-                            height: 40,
-                            child: CommonTextField(
-                              hint: "Search Patient Name / ID /Phone number",
-                              colorFill: Colors.white,
-                              //  hint: "Search Patient Name/ID/Phone number",
+                                height: 40,
+                                width: 350,
+                                child: CommonTextField(
+                                  fontSize: 12,
+                                  controller: _searchController,
+                                  colorFill: Colors.white,
+                                  hint: "Search Patient Name/ID/Phone number",
+                                ),
+                              ),
                             ),
-                          )),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  )
-                : Row(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            height: 40,
-                            width: 350,
-                            child: CommonTextField(
-                              fontSize: 12,
-                              controller: _searchController,
-                              colorFill: Colors.white,
-                              hint: "Search Patient Name/ID/Phone number",
+                            const SizedBox(
+                              width: 10,
                             ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-            const Divider(
-              thickness: 0.3,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 8,
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    color: Colors.white,
-                    child: Theme(
-                      data: Theme.of(context).copyWith(
-                        cardColor: Colors.white,
-                        cardTheme: const CardTheme(
-                          color: Colors.white,
-                          elevation: 0,
+                          ],
                         ),
-                        dataTableTheme: DataTableThemeData(
-                          headingRowColor:
-                              WidgetStateProperty.resolveWith<Color>(
-                                  (Set<WidgetState> states) {
-                            // Set color for heading row
-                            //return Colors.blueGrey[200]!; // example color
-                            return const Color.fromRGBO(
-                                48, 180, 128, 1); // example color
-                          }),
-                          dataRowColor: WidgetStateProperty.resolveWith<Color>(
-                              (Set<WidgetState> states) {
-                            // Set color for data rows
-                            //   return Colors.grey[200]!; // example color
-                            return const Color.fromARGB(
-                                255, 240, 242, 241); // example color
-                          }),
-                          // Add other customizations here
+                      ],
+                    ),
+              const Divider(
+                thickness: 0.3,
+              ),
+              /* Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 8,
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      color: Colors.white,
+                      child: Theme(
+                        data: Theme.of(context).copyWith(
+                          cardColor: Colors.white,
+                          cardTheme: const CardTheme(
+                            color: Colors.white,
+                            elevation: 0,
+                          ),
+                          dataTableTheme: DataTableThemeData(
+                            headingRowColor:
+                                WidgetStateProperty.resolveWith<Color>(
+                                    (Set<WidgetState> states) {
+                              // Set color for heading row
+                              //return Colors.blueGrey[200]!; // example color
+                              return const Color.fromRGBO(
+                                  48, 180, 128, 1); // example color
+                            }),
+                            dataRowColor:
+                                WidgetStateProperty.resolveWith<Color>(
+                                    (Set<WidgetState> states) {
+                              // Set color for data rows
+                              //   return Colors.grey[200]!; // example color
+                              return const Color.fromARGB(
+                                  255, 240, 242, 241); // example color
+                            }),
+                            // Add other customizations here
+                          ),
                         ),
-                      ),
-                      child: Container(
-                          color: Colors.white,
-                          width: size.width,
-                          child: provider.filteredPatients == null ||
-                                  provider.filteredPatients!.isEmpty
-                              ? const Text("")
-                              : PaginatedDataTable(
-                                  showEmptyRows: false,
-                                  columns: [
-                                    DataColumn(
-                                        label: CommonTextWidget(
-                                      text: 'Name',
-                                      textColor: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                    )),
-                                    DataColumn(
-                                        label: CommonTextWidget(
-                                      text: 'Email',
-                                      textColor: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                    )),
-                                    DataColumn(
-                                        label: CommonTextWidget(
-                                      text: 'Phone Number',
-                                      textColor: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                    )),
-                                    DataColumn(
-                                        label: CommonTextWidget(
-                                      text: 'Gender',
-                                      textColor: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                    )),
-                                    DataColumn(
-                                        label: CommonTextWidget(
-                                      text: 'Age',
-                                      textColor: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                    )),
-                                    DataColumn(
-                                      numeric: true,
-                                      label: CommonTextWidget(
-                                        text: 'Action',
+                        child: Container(
+                            color: Colors.white,
+                            width: size.width,
+                            child: provider.filteredPatients == null ||
+                                    provider.filteredPatients!.isEmpty
+                                ? const Text("")
+                                : PaginatedDataTable(
+                                    showEmptyRows: false,
+                                    columns: [
+                                      DataColumn(
+                                          label: CommonTextWidget(
+                                        text: 'Name',
                                         textColor: Colors.white,
                                         fontWeight: FontWeight.w600,
+                                      )),
+                                      DataColumn(
+                                          label: CommonTextWidget(
+                                        text: 'Email',
+                                        textColor: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                      )),
+                                      DataColumn(
+                                          label: CommonTextWidget(
+                                        text: 'Phone Number',
+                                        textColor: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                      )),
+                                      DataColumn(
+                                          label: CommonTextWidget(
+                                        text: 'Gender',
+                                        textColor: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                      )),
+                                      DataColumn(
+                                          label: CommonTextWidget(
+                                        text: 'Age',
+                                        textColor: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                      )),
+                                      DataColumn(
+                                          label: CommonTextWidget(
+                                        text: 'Status',
+                                        textColor: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                      )),
+                                      DataColumn(
+                                        numeric: true,
+                                        label: CommonTextWidget(
+                                          text: 'Action',
+                                          textColor: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                  source: MyData(
-                                      provider.filteredPatients, context),
-                                  //  availableRowsPerPage: const <int>[5, 10, 15], // List of selectable values
-                                  rowsPerPage: (provider.filteredPatients !=
-                                              null &&
-                                          provider.filteredPatients!.isNotEmpty)
-                                      ? provider.filteredPatients!.length
-                                      : 1, // Default value when the list is empty
-                                )),
+                                    ],
+                                    source: MyData(
+                                        provider.filteredPatients, context),
+                                    //  availableRowsPerPage: const <int>[5, 10, 15], // List of selectable values
+                                    rowsPerPage: (provider.filteredPatients !=
+                                                null &&
+                                            provider
+                                                .filteredPatients!.isNotEmpty)
+                                        ? provider.filteredPatients!.length
+                                        : 1, // Default value when the list is empty
+                                  )),
+                      ),
                     ),
-                  ),
-                )
-              ],
-            ),
-          ],
-        ),
-        provider.isAdding ? showLoaderList() : const SizedBox.shrink()
-      ],
+                  )
+                ],
+              ),*/
+            ],
+          ),
+          provider.isAdding ? showLoaderList() : const SizedBox.shrink()
+        ],
+      ),
     );
   }
 }
@@ -287,6 +296,13 @@ class MyData extends DataTableSource {
                 '${DateTimeUtils.calculateAge(date: user!.dateOfBirth.toString())}' /*DateFormat('yyyy-MM-dd')
                 .format(DateTime.parse('${user?.dateOfBirth.toString()}'))*/
             )),
+
+        DataCell(CommonTextWidget(
+          fontSize: 12,
+          text: "Active",
+          fontWeight: FontWeight.w700,
+          textColor: Colors.green,
+        )),
         DataCell(buildPopupMenu(id: user.sId.toString())),
       ],
     );

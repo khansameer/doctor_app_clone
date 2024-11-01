@@ -242,12 +242,6 @@ class DashboardProvider extends ChangeNotifier {
   String? get appBarTitle => _appBarTitle;
 
   Widget get currentPage => _currentPage;
-  PageController pageController = PageController();
-
-  void updatePageValue(int index) {
-    pageController.jumpToPage(index);
-    notifyListeners(); // Notify listeners in case other widgets are depending on this
-  }
 
   void setSelectedIndex(int index) {
     _selectedIndex = index;

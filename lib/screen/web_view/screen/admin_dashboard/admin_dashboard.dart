@@ -1,13 +1,11 @@
 import 'package:doctor_app/core/app_constants.dart';
 import 'package:doctor_app/core/colors.dart';
-import 'package:doctor_app/core/common/CustomAlertDialog.dart';
-import 'package:doctor_app/core/common/common_button_widget.dart';
+
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/error_page.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
-import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/admin_calender_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/patient_new_screen.dart';
@@ -17,8 +15,8 @@ import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../shared_preferences/preference_helper.dart';
-import '../../../mobile_view/profile/edit_profile_screen.dart';
+import '../../admin_dashboard_view/admin_dashboard_view.dart';
+import '../../admin_dashboard_view/communication_screen.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -28,7 +26,7 @@ class AdminDashboard extends StatefulWidget {
 }
 
 class _AdminDashboardState extends State<AdminDashboard> {
-  PageController pageController = PageController();
+  PageController pageControllerDashBoard = PageController();
   SideMenuController sideMenu = SideMenuController();
 
   @override
@@ -37,14 +35,14 @@ class _AdminDashboardState extends State<AdminDashboard> {
       context.read<DashboardProvider>().getUserName();
     });
     sideMenu.addListener((index) {
-      context.read<DashboardProvider>().pageController.jumpToPage(index);
+      pageControllerDashBoard.jumpToPage(index);
     });
     super.initState();
   }
 
   @override
   void dispose() {
-    pageController.dispose();
+    pageControllerDashBoard.dispose();
     sideMenu.dispose();
     super.dispose();
   }
@@ -53,6 +51,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
   Widget build(BuildContext context) {
     var isMobile = Responsive.isMobile(context);
     var isDesktop = Responsive.isDesktop(context);
+    var size = MediaQuery.sizeOf(context);
 
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
       return Scaffold(
@@ -68,58 +67,92 @@ class _AdminDashboardState extends State<AdminDashboard> {
           elevation: 0,
           toolbarHeight: 86,
           actions: [
-            Container(
-              width: thirtyFive,
-              height: thirtyFive,
-              clipBehavior: Clip.antiAlias,
-              decoration: commonBoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.grey, width: one)),
-              child: loadAssetImage(path: icDoctorWidget),
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  width: thirtyFive,
+                  height: thirtyFive,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: commonBoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white,
+                  ),
+                  child: const Icon(
+                    Icons.notifications_none,
+                    color: AppColors.colorTextNew,
+                    size: 18,
+                  ),
+                ),
+                Positioned(
+                    right: 0,
+                    top: -5,
+                    child: Container(
+                      width: 12,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color.fromARGB(255, 244, 147, 43)),
+                      height: 12,
+                    )),
+              ],
             ),
             const SizedBox(
-              width: ten,
+              width: 10,
+            ),
+            SizedBox(
+              width: thirtyFive,
+              height: thirtyFive,
+              child: commonProfileIcon(path: icDummyUser),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CommonTextWidget(
+                    text: provider.name ?? "",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    textColor: AppColors.colorText),
+                CommonTextWidget(
+                    text: "Cardiologist",
+                    fontSize: 12,
+                    textColor: AppColors.colorText),
+              ],
+            ),
+            const SizedBox(
+              width: 40,
             ),
             PopupMenuButton<int>(
               color: Colors.white,
               constraints: const BoxConstraints.tightFor(width: twoHundred),
               elevation: zero,
-              //  tooltip: "profile",
               offset: const Offset(zero, thirty),
               onSelected: (value) {},
               itemBuilder: (context) => [],
               child: commonInkWell(
-                onTap: () {
-                  provider.updatePageValue(11);
-                },
-                child: Row(
-                  children: [
-                    CommonTextWidget(
-                        text: provider.name ?? "",
-                        textColor: AppColors.colorText),
-                    const Icon(
-                      Icons.keyboard_arrow_down_sharp,
-                      color: AppColors.colorText,
-                    )
-                  ],
+                onTap: () {},
+                child: const Icon(
+                  Icons.keyboard_arrow_down_sharp,
+                  color: Colors.grey,
                 ),
               ),
             ),
             const SizedBox(
-              width: ten,
+              width: 30,
             ),
           ],
           leadingWidth: isMobile ? 100 : 130,
-
           iconTheme: const IconThemeData(color: Colors.white),
-          //leading: const SizedBox.shrink(),
           leading: const ImageIcon(
               size: 500,
               color: AppColors.colorActive,
               AssetImage(
                 icLogoApps,
               )),
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.colorBgNew,
         ),
         body: Row(
           children: [
@@ -135,41 +168,57 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
                 displayMode: SideMenuDisplayMode.auto,
                 showHamburger: isMobile ? true : false,
-                arrowCollapse: Colors.white,
-                unselectedIconColorExpandable: AppColors.colorText,
-                selectedIconColorExpandable: Colors.white,
-                unselectedIconColor: AppColors.colorText,
+                //for sub Menu
+                //arrowCollapse: Colors.black,
+                // arrowOpen: Colors.black,
+                // toggleColor: Colors.black,
+                //     unselectedIconColorExpandable: AppColors.colorText,
+                //    selectedIconColorExpandable: Colors.red,
+
+                //===
+                //  unselectedIconColor: AppColors.colorText,
                 unselectedTitleTextStyle: commonTextStyle(
-                    color: AppColors.colorText,
+                    color: AppColors.colorMenuUnSelectedText,
                     fontSize: 14,
-                    fontWeight: FontWeight.w600),
-                selectedTitleTextStyleExpandable: commonTextStyle(
-                    color: AppColors.colorText,
+                    fontWeight: FontWeight.w500),
+                /*   selectedTitleTextStyleExpandable: commonTextStyle(
+                    color: AppColors.colorBlue,
                     fontSize: 14,
-                    fontWeight: FontWeight.w600),
-                hoverColor: AppColors.colorHover,
-                selectedHoverColor: AppColors.colorHover,
-                selectedColor: AppColors.colorActive,
+                    fontWeight: FontWeight.w500),*/
+                //hoverColor: AppColors.colorHover,
+                //selectedHoverColor: AppColors.colorHover,
+                selectedColor: AppColors.colorBgNew,
                 selectedTitleTextStyle: commonTextStyle(
-                    color: Colors.white,
+                    color: AppColors.colorBlue,
                     fontSize: 14,
                     fontWeight: FontWeight.w600),
-                selectedIconColor: Colors.white,
+                selectedIconColor: AppColors.colorBlue,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(
-                      color: Colors.white.withOpacity(0.40), width: 1),
+                  color: AppColors.colorBgNew,
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 10.0,
+                    ),
+                  ],
+                  border: Border.all(color: AppColors.colorBgNew, width: 1),
                   borderRadius: const BorderRadius.all(Radius.circular(0)),
                 ),
                 // backgroundColor: Colors.grey[200]
               ),
               items: [
                 SideMenuItem(
-                  title: 'Calender',
+                  title: 'Dashboard',
                   onTap: (index, _) {
-                    provider.updatePageValue(1);
                     sideMenu.changePage(index); // Navigate to Calendar page
-                    // sideMenu.changePage(index);
+                  },
+                  icon: const Icon(Icons.calendar_month_sharp),
+                  tooltipContent: "This is a tooltip for Dashboard item",
+                ),
+                SideMenuItem(
+                  title: 'Appointment',
+                  onTap: (index, _) {
+                    sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.calendar_month_sharp),
                   tooltipContent: "This is a tooltip for Dashboard item",
@@ -178,9 +227,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Patients',
                   onTap: (index, _) {
-                    provider.updatePageValue(2);
                     sideMenu.changePage(index);
-                    //    sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.person),
                 ),
@@ -188,9 +235,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Communications',
                   onTap: (index, _) {
-                    provider.updatePageValue(3);
                     sideMenu.changePage(index);
-                    //sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.cell_tower),
                 ),
@@ -198,9 +243,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Reports',
                   onTap: (index, _) {
-                    provider.updatePageValue(4);
                     sideMenu.changePage(index);
-                    //sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.auto_graph),
                 ),
@@ -208,7 +251,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Settings',
                   onTap: (index, _) {
-                    provider.updatePageValue(5);
                     sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.settings_outlined),
@@ -217,7 +259,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   title: 'Feedback',
                   onTap: (index, _) {
-                    provider.updatePageValue(7);
                     sideMenu.changePage(index);
                   },
                   icon: const Icon(Icons.thumb_up_alt_outlined),
@@ -226,9 +267,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SideMenuItem(
                   onTap: (index, _) {
                     commonLogoutDialog(
-                        context: context,
+                        width: isMobile ? size.width * zero9 : size.width * 0.3,
+                        contextAd: context,
                         isDesktop: isDesktop,
-                        isMobile: isDesktop);
+                        isMobile: isMobile);
                   },
                   title: 'Logout',
                   icon: const Icon(Icons.exit_to_app),
@@ -236,15 +278,19 @@ class _AdminDashboardState extends State<AdminDashboard> {
               ],
             ),
             const VerticalDivider(
-              color: AppColors.colorStock,
-              width: 1,
+              color: AppColors.colorBgNew,
+              width: 2,
             ),
             Expanded(
               child: Container(
-                color: AppColors.colorBackground,
+                color: AppColors.colorBgNew,
                 child: PageView(
-                  controller: provider.pageController,
+                  controller: pageControllerDashBoard,
                   children: const [
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                      child: AdminDashboardView(),
+                    ),
                     Padding(
                       padding: EdgeInsets.all(16),
                       child: AdminCalenderScreen(),
@@ -258,7 +304,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     Padding(
                       padding: EdgeInsets.all(16),
                       child: Center(
-                        child: ErrorPage(),
+                        child: CommunicationScreen(),
                       ),
                     ),
                     SizedBox.shrink(),
@@ -280,7 +326,14 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         child: ErrorPage(),
                       ),
                     ),
-                    EditProfileScreen(),
+
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Center(
+                        child: ErrorPage(),
+                      ),
+                    ),
+                    // EditProfileScreen(),
                   ],
                 ),
               ),
@@ -296,8 +349,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
       builder: (context, displayMode) {
         return const Divider(
           height: 0,
-          //  color: AppColors.colorMenuBG,
-          color: Colors.white,
+          color: AppColors.colorBgNew,
+          // color: Colors.white,
           endIndent: 8,
           indent: 0,
           thickness: 0.5,

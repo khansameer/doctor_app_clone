@@ -1,3 +1,4 @@
+import 'package:doctor_app/core/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_app/core/color_utils.dart';
 import 'package:flutter/material.dart';
@@ -102,7 +103,7 @@ class CommonTextWidget extends StatelessWidget {
         maxLines: _maxLines,
         textAlign: _textAlign,
         style: _textStyles ??
-            GoogleFonts.inter(
+            GoogleFonts.roboto(
                 shadows: _shadows,
                 decorationColor: _decorationColor,
                 decorationThickness: _decorationThickness,
@@ -110,7 +111,7 @@ class CommonTextWidget extends StatelessWidget {
                 height: _lineHeight ?? zero,
                 letterSpacing: _letterSpacing ?? zero05,
                 fontSize: _fontSize,
-                color: _textColor ?? colorText,
+                color: _textColor ?? AppColors.colorTextNew,
                 fontWeight: _fontWeight,
                 decoration: _textDecoration),
       ),
