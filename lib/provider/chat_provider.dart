@@ -1,12 +1,16 @@
-
 import 'package:flutter/material.dart';
+
 class Patient {
   final String id;
   final String name;
   final int age;
   final String condition;
 
-  Patient({required this.id, required this.name, required this.age, required this.condition});
+  Patient(
+      {required this.id,
+      required this.name,
+      required this.age,
+      required this.condition});
 }
 
 class ChatMessage {
@@ -27,12 +31,12 @@ class ChatProvider extends ChangeNotifier {
     ChatMessage(
         sender: 'Alice',
         text: 'Hi there!',
-        time: DateTime.now().subtract(Duration(minutes: 2)),
+        time: DateTime.now().subtract(const Duration(minutes: 2)),
         isSentByMe: true),
     ChatMessage(
         sender: 'Bob',
         text: 'Hello!',
-        time: DateTime.now().subtract(Duration(minutes: 1)),
+        time: DateTime.now().subtract(const Duration(minutes: 1)),
         isSentByMe: false),
     ChatMessage(
         sender: 'Alice',
@@ -42,12 +46,12 @@ class ChatProvider extends ChangeNotifier {
     ChatMessage(
         sender: 'Bob',
         text: 'I am good, thanks! And you?',
-        time: DateTime.now().add(Duration(minutes: 1)),
+        time: DateTime.now().add(const Duration(minutes: 1)),
         isSentByMe: false),
     ChatMessage(
         sender: 'Alice',
         text: 'Doing well, just working on a Flutter project.',
-        time: DateTime.now().add(Duration(minutes: 2)),
+        time: DateTime.now().add(const Duration(minutes: 2)),
         isSentByMe: false),
   ];
   String _currentMessage = '';
@@ -76,7 +80,6 @@ class ChatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
 // patients list
   final List<Patient> _patients = [
     Patient(id: '1', name: 'John Doe', age: 45, condition: 'Hypertension'),
@@ -93,15 +96,17 @@ class ChatProvider extends ChangeNotifier {
     Patient(id: '12', name: 'Noah Thomas', age: 42, condition: 'Heart Disease'),
     Patient(id: '13', name: 'Emma White', age: 27, condition: 'Depression'),
     Patient(id: '14', name: 'Isabella Harris', age: 36, condition: 'Epilepsy'),
-    Patient(id: '15', name: 'William Martin', age: 55, condition: 'Hypertension'),
-    Patient(id: '16', name: 'Mia Thompson', age: 22, condition: 'Thyroid Issues'),
+    Patient(
+        id: '15', name: 'William Martin', age: 55, condition: 'Hypertension'),
+    Patient(
+        id: '16', name: 'Mia Thompson', age: 22, condition: 'Thyroid Issues'),
     Patient(id: '17', name: 'Lucas Garcia', age: 48, condition: 'Asthma'),
     Patient(id: '18', name: 'Amelia Clark', age: 33, condition: 'Diabetes'),
-    Patient(id: '19', name: 'Benjamin Lewis', age: 44, condition: 'Heart Disease'),
-    Patient(id: '20', name: 'Charlotte Walker', age: 28, condition: 'Osteoporosis'),
+    Patient(
+        id: '19', name: 'Benjamin Lewis', age: 44, condition: 'Heart Disease'),
+    Patient(
+        id: '20', name: 'Charlotte Walker', age: 28, condition: 'Osteoporosis'),
   ];
 
   List<Patient> get patients => _patients;
-
-
 }

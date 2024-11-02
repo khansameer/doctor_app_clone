@@ -4,36 +4,43 @@ import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class ReviceMessageView extends StatelessWidget {
-  const ReviceMessageView({super.key, this.chatMessage });
-  final  ChatMessage ? chatMessage;
-//final String ?msg;
+class ReceiverMessageView extends StatelessWidget {
+  const ReceiverMessageView({super.key, this.chatMessage});
+  final ChatMessage? chatMessage;
+
   @override
   Widget build(BuildContext context) {
-    return  Align(
+    return Align(
       alignment: Alignment.centerLeft,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-        maxWidth: MediaQuery.of(context).size.width - 45,
-      ),
+          maxWidth: MediaQuery.of(context).size.width - 45,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            CommonTextWidget(text: "${chatMessage?.sender.toString()}, ${DateFormat('hh:mm a').format(DateTime.parse('${chatMessage?.date.toString()}'))}",left: 15,fontSize: 10,top: 20,),
+            CommonTextWidget(
+              text:
+                  "${chatMessage?.sender.toString()}, ${DateFormat('hh:mm a').format(DateTime.parse('${chatMessage?.date.toString()}'))}",
+              left: 15,
+              fontSize: 10,
+              top: 20,
+            ),
             Container(
               decoration: BoxDecoration(
                   color: AppColors.colorBgNew,
-                  borderRadius: BorderRadius.circular(8)
-              ),
+                  borderRadius: BorderRadius.circular(8)),
               margin: const EdgeInsets.only(left: 15, top: 5),
               padding: const EdgeInsets.all(15.0),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  CommonTextWidget(text: chatMessage?.message.toString(),)
+                  CommonTextWidget(
+                    text: chatMessage?.message.toString(),
+                  )
                 ],
               ),
             ),

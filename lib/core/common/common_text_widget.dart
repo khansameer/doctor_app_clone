@@ -1,7 +1,5 @@
 import 'package:doctor_app/core/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:doctor_app/core/color_utils.dart';
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../app_constants.dart';

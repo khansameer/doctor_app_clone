@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/screen/web_view//model/appointments_model.dart';
-import 'package:doctor_app/screen/web_view/model/patient_details_model.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/model/create_appointment_model.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/model/get_appointments_details_model.dart';
 

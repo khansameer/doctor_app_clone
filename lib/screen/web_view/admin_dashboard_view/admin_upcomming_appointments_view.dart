@@ -1,14 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
+import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import '../../../core/string/string_utils.dart';
 
 class AdminUpComingAppointmentsView extends StatelessWidget {
   const AdminUpComingAppointmentsView({super.key, required this.provider});
@@ -152,7 +149,7 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
                             const SizedBox(
                               width: 50,
                             ),
-                            Row(
+                            /* Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 CommonTextWidget(
@@ -161,7 +158,7 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
                                   fontWeight: FontWeight.w500,
                                 )
                               ],
-                            )
+                            )*/
                           ],
                         ),
                       )
@@ -169,7 +166,7 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
-                  return Divider(
+                  return const Divider(
                     thickness: 0.3,
                   );
                 },

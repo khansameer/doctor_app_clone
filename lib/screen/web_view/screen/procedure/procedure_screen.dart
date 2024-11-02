@@ -1,4 +1,4 @@
-import 'package:doctor_app/core/common/CustomAlertDialog.dart';
+import 'package:doctor_app/core/common/custom_alert_dialog.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
@@ -6,6 +6,7 @@ import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/procedure_provider.dart';
 import 'package:doctor_app/screen/web_view/screen/procedure_charges_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -56,7 +57,7 @@ class _InvoiceScreenState extends State<ProcedureScreen> {
                       },
                     );
                   },
-                  icon: Icon(Icons.add))
+                  icon: const Icon(Icons.add))
             ])
           : PreferredSize(preferredSize: Size.zero, child: Container()),
       child: Container(
@@ -74,7 +75,7 @@ class _InvoiceScreenState extends State<ProcedureScreen> {
                   height: 10,
                 ),
                 isMobile
-                    ? SizedBox.shrink()
+                    ? const SizedBox.shrink()
                     : Align(
                         alignment: Alignment.topRight,
                         child: CommonButtonWidget(
@@ -143,7 +144,7 @@ class _InvoiceScreenState extends State<ProcedureScreen> {
                           padding: EdgeInsets.zero,
                           child: PaginatedDataTable(
                             header: isMobile
-                                ? SizedBox.shrink()
+                                ? const SizedBox.shrink()
                                 : CommonTextWidget(
                                     // text: 'Invoice Items',
                                     text: 'Procedure Catalog',
@@ -267,8 +268,10 @@ Widget buildPopupMenu(
       if (value == 'edit') {
         // Handle Active logic
       } else if (value == 'delete') {
-        print('======onClickDelete');
-        provider.deleteProcedureCharges(context: context, ID: id.toString());
+        if (kDebugMode) {
+          print('======onClickDelete');
+        }
+        provider.deleteProcedureCharges(context: context, id: id.toString());
       }
     },
     itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[

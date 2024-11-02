@@ -1,4 +1,3 @@
-import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/responsive.dart';
@@ -71,7 +70,7 @@ class _AdminSettingScreenState extends State<AdminSettingScreen> {
                       padding: EdgeInsets.zero,
                       height: size.height,
                       decoration: const BoxDecoration(
-                        color: colorBG,
+                        color: AppColors.colorBG,
                       ),
                       child: Column(
                         children: [
@@ -152,8 +151,8 @@ class _AdminSettingScreenState extends State<AdminSettingScreen> {
                                         child: Container(
                                           color: isSelected
                                               ? AppColors.primary
-                                                  .withOpacity(0.50)
-                                              : colorBG,
+                                                  .withValues(alpha: 0.50)
+                                              : AppColors.colorBG,
                                           padding: const EdgeInsets.all(10.0),
                                           child: CommonTextWidget(
                                               textColor: isSelected

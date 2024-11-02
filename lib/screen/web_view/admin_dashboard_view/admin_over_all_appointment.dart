@@ -1,11 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-
-import '../../../core/color_utils.dart';
 
 class AdminOverAllAppointment extends StatelessWidget {
   const AdminOverAllAppointment({super.key, required this.provider});
@@ -154,7 +151,7 @@ class AdminOverAllAppointment extends StatelessWidget {
               barRods: [
                 BarChartRodData(
                   width: 25,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8),
                       topRight: Radius.circular(8),
                       bottomRight: Radius.circular(8),

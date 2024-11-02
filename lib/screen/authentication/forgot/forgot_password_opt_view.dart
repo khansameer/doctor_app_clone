@@ -1,5 +1,4 @@
 import 'package:doctor_app/core/app_constants.dart';
-import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
@@ -147,7 +146,7 @@ class ForgotPasswordOtpView extends StatelessWidget {
                   disabledBorderWidth: 1,
                   inactiveBorderWidth: 1,
                   activeColor: AppColors.primary,
-                  inactiveColor: AppColors.primary.withOpacity(0.40),
+                  inactiveColor: AppColors.primary.withValues(alpha: 0.40),
                   activeFillColor: Colors.white,
                 ),
                 animationDuration: const Duration(milliseconds: 300),
@@ -206,7 +205,8 @@ class ForgotPasswordOtpView extends StatelessWidget {
                     TextSpan(
                         text: ' $resendEmil',
                         style: commonTextStyle(
-                            color: colorGreen, fontWeight: FontWeight.w700),
+                            color: AppColors.colorGreen,
+                            fontWeight: FontWeight.w700),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             // navigate to desired screen

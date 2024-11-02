@@ -1,10 +1,9 @@
+import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/provider/appointments_provider.dart';
+import 'package:doctor_app/screen/web_view/model/appointments_model.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../../core/component/component.dart';
-import '../../model/appointments_model.dart';
 
 class AllViewScreen extends StatelessWidget {
   const AllViewScreen(

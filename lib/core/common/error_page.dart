@@ -1,6 +1,4 @@
-
 import 'package:doctor_app/core/image/image_path.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../app_constants.dart';
@@ -10,17 +8,15 @@ class ErrorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size=MediaQuery.sizeOf(context);
-    return  Container(
-
+    var size = MediaQuery.sizeOf(context);
+    return Container(
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10)),
+          color: Colors.white, borderRadius: BorderRadius.circular(10)),
       width: size.width,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       height: size.height,
       child: Image.asset(
-        width: twoHundred,
+          width: twoHundred,
           height: twoHundred,
           fit: BoxFit.scaleDown,
           icPageError),

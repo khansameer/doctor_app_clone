@@ -1,10 +1,8 @@
-import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/screen/mobile_view/home/home_screen.dart';
-import 'package:doctor_app/screen/mobile_view/profile/edit_profile_screen.dart';
 import 'package:doctor_app/screen/mobile_view/profile/profile_menu_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -6,9 +6,9 @@ class AppointmentsModel {
 
   AppointmentsModel(
       {this.appointments,
-        this.currentPage,
-        this.totalPages,
-        this.totalAppointments});
+      this.currentPage,
+      this.totalPages,
+      this.totalAppointments});
 
   AppointmentsModel.fromJson(Map<String, dynamic> json) {
     if (json['appointments'] != null) {
@@ -48,15 +48,15 @@ class Appointments {
 
   Appointments(
       {this.sId,
-        this.patient,
-        this.doctor,
-        this.dateTime,
-        this.status,
-        this.reason,
-        this.doctorName,
-        this.patientName,
-        this.patientEmail,
-        this.patientPhoneNumber});
+      this.patient,
+      this.doctor,
+      this.dateTime,
+      this.status,
+      this.reason,
+      this.doctorName,
+      this.patientName,
+      this.patientEmail,
+      this.patientPhoneNumber});
 
   Appointments.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -72,7 +72,7 @@ class Appointments {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['_id'] = sId;
     data['patient'] = patient;
     data['doctor'] = doctor;

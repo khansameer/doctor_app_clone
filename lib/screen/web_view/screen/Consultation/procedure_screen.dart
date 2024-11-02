@@ -1,9 +1,8 @@
+import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/provider/appointments_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-
-import '../../../../core/component/component.dart';
 
 class ConsultationScreen extends StatefulWidget {
   const ConsultationScreen({super.key});

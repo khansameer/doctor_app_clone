@@ -1,19 +1,18 @@
 import 'package:doctor_app/core/app_constants.dart';
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
+
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/appointments_provider.dart';
 import 'package:doctor_app/provider/patient_provider.dart';
+import 'package:doctor_app/screen/web_view/model/patient_details_model.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:searchfield/searchfield.dart';
-
-import '../../../../core/colors.dart';
-import '../../model/patient_details_model.dart';
 
 class AddAppointmentsWidget extends StatefulWidget {
   const AddAppointmentsWidget({super.key, this.dateTime, this.patientID});
@@ -173,7 +172,8 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                                       BorderRadius.all(Radius.circular(eight))),
                               enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: AppColors.primary.withOpacity(0.20),
+                                    color: AppColors.primary
+                                        .withValues(alpha: 0.20),
                                     width: 1,
                                   ),
                                   borderRadius: const BorderRadius.all(
@@ -213,7 +213,6 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                               : [],
                           onSuggestionTap: (suggestion) {
                             final selectedPatientId = suggestion.item?.sId;
-                            print('Selected Patient ID: $selectedPatientId');
 
                             // provider.selectedID=
                             widget.patientID == selectedPatientId;
@@ -273,9 +272,6 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                                 onPressed: () async {
                                   String userId = await getUserID();
 
-                                  print('===widget=====${widget.patientID}');
-                                  print(
-                                      '===provider=====${provider.selectedID}');
                                   Map<String, dynamic> body = {
                                     "patientId":
                                         widget.patientID ?? provider.selectedID,
@@ -284,7 +280,6 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                                     "reason": tetDesc.text,
                                     "isVirtual": true,
                                   };
-                                  print('========${body.toString()}');
                                   context
                                       .read<AppointmentsProvider>()
                                       .createAppointment(
@@ -300,7 +295,7 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                                     }
                                   });
                                 },
-                                colorButton: colorGreen,
+                                colorButton: AppColors.colorGreen,
                                 fontSize: 12,
                                 text: "Add",
                               ),

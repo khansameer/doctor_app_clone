@@ -1,4 +1,3 @@
-import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
@@ -7,6 +6,8 @@ import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../core/colors.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -25,7 +26,7 @@ class SettingScreen extends StatelessWidget {
             : const PreferredSize(
                 preferredSize: Size.zero, child: SizedBox.shrink()),
         child: Container(
-          color: colorBG,
+          color: AppColors.colorBG,
           child: ListView(
             children: [
               commonList(
@@ -75,7 +76,8 @@ class SettingScreen extends StatelessWidget {
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       decoration: commonBoxDecoration(
           color: Colors.white,
-          border: Border.all(color: Colors.grey.withOpacity(0.50), width: 0)),
+          border:
+              Border.all(color: Colors.grey.withValues(alpha: 0.50), width: 0)),
       margin: EdgeInsets.only(left: 0, right: 0, top: top ?? 0),
       child: ListTile(
         onTap: onTap,

@@ -35,23 +35,21 @@ class GetAppointmentsDetailsModel {
   GetAppointmentsDetailsModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     patient =
-        json['patient'] != null ? new Patient.fromJson(json['patient']) : null;
-    doctor =
-        json['doctor'] != null ? new Patient.fromJson(json['doctor']) : null;
+        json['patient'] != null ? Patient.fromJson(json['patient']) : null;
+    doctor = json['doctor'] != null ? Patient.fromJson(json['doctor']) : null;
     doctorName = json['doctorName'];
     dateTime = json['dateTime'];
     status = json['status'];
     reason = json['reason'];
     duration = json['duration'];
     prescription = json['prescription'] != null
-        ? new Prescription.fromJson(json['prescription'])
+        ? Prescription.fromJson(json['prescription'])
         : null;
     virtualAppointment = json['virtualAppointment'] != null
-        ? new VirtualAppointment.fromJson(json['virtualAppointment'])
+        ? VirtualAppointment.fromJson(json['virtualAppointment'])
         : null;
-    invoice = json['procedure'] != null
-        ? new Invoice.fromJson(json['procedure'])
-        : null;
+    invoice =
+        json['procedure'] != null ? Invoice.fromJson(json['procedure']) : null;
     /*if (json['patientFiles'] != null) {
       patientFiles = <Null>[];
       json['patientFiles'].forEach((v) {
@@ -185,7 +183,7 @@ class Invoice {
     if (json['items'] != null) {
       items = <Items>[];
       json['items'].forEach((v) {
-        items!.add(new Items.fromJson(v));
+        items!.add(Items.fromJson(v));
       });
     }
     totalCost = json['totalCost'];

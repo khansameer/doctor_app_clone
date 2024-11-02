@@ -1,8 +1,8 @@
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_app/core/app_constants.dart';
-import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/provider/chat_provider.dart';
 
@@ -27,7 +27,7 @@ class ChatListWidget extends StatelessWidget {
                 : size.width * 0.4,
         height: size.height,
         decoration: const BoxDecoration(
-            color: colorBG,
+            color: AppColors.colorBG,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10), topRight: Radius.circular(10))),
         child: Consumer<ChatProvider>(
@@ -69,8 +69,9 @@ class ChatListWidget extends StatelessWidget {
                           margin: const EdgeInsets.symmetric(
                               vertical: four, horizontal: sixteen),
                           decoration: BoxDecoration(
-                            color:
-                                message.isSentByMe ? colorGreen : Colors.grey,
+                            color: message.isSentByMe
+                                ? AppColors.colorGreen
+                                : Colors.grey,
                             borderRadius: BorderRadius.circular(eight),
                           ),
                           child: CommonTextWidget(

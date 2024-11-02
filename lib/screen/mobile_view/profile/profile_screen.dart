@@ -1,7 +1,7 @@
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
-import 'package:doctor_app/core/common/common_mobile_app_scaffold_view.dart';
+
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
@@ -10,8 +10,6 @@ import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../main.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -31,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
         return Container(
           width: size.width,
           height: size.height,
-          color: isMobile ? colorBG : Colors.white,
+          color: isMobile ? AppColors.colorBG : Colors.white,
           //  color: colorGreen.withOpacity(0.10),
           child: ListView(
             children: [
@@ -199,7 +197,8 @@ class ProfileScreen extends StatelessWidget {
         margin: const EdgeInsets.all(0),
         decoration: commonBoxDecoration(
             color: Colors.white,
-            border: Border.all(color: Colors.grey.withOpacity(0.50), width: 1),
+            border: Border.all(
+                color: Colors.grey.withValues(alpha: 0.50), width: 1),
             borderRadius: BorderRadius.circular(8)),
         padding: const EdgeInsets.all(0),
         child: Column(
@@ -213,12 +212,12 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   const Icon(
                     Icons.check_circle_outline,
-                    color: colorText,
+                    color: AppColors.colorText,
                   ),
                   CommonTextWidget(
                     left: 5,
                     text: title ?? "Your profile is live on Practo!",
-                    textColor: colorText,
+                    textColor: AppColors.colorText,
                     fontSize: isMobile ? 12 : 14,
                     fontWeight: FontWeight.w700,
                   )
@@ -228,7 +227,7 @@ class ProfileScreen extends StatelessWidget {
             Container(
                 width: size.width,
                 height: isMobile ? null : size.height * 0.20,
-                color: Colors.grey.withOpacity(0.10),
+                color: Colors.grey.withValues(alpha: 0.10),
                 child: Padding(
                   padding: const EdgeInsets.all(0.0),
                   child: Center(
@@ -273,8 +272,9 @@ class ProfileScreen extends StatelessWidget {
   _profileView({required bool isMobile, required Size size}) {
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.withOpacity(0.50), width: 1),
-          color: isMobile ? Colors.white : colorBG,
+          border:
+              Border.all(color: Colors.grey.withValues(alpha: 0.50), width: 1),
+          color: isMobile ? Colors.white : AppColors.colorBG,
           borderRadius: BorderRadius.circular(8)),
       height: isMobile ? null : size.height * 0.28,
       padding: const EdgeInsets.all(20),
@@ -290,7 +290,7 @@ class ProfileScreen extends StatelessWidget {
                 width: 70,
                 height: 70,
                 decoration: commonBoxDecoration(
-                    border: Border.all(color: colorGreen, width: 1),
+                    border: Border.all(color: AppColors.colorGreen, width: 1),
                     shape: BoxShape.circle),
                 child: ClipOval(
                   child: setAssetImage(
@@ -301,7 +301,7 @@ class ProfileScreen extends StatelessWidget {
                 child: CommonTextWidget(
                   text: "Edit Profile",
                   textDecoration: TextDecoration.underline,
-                  textColor: colorText,
+                  textColor: AppColors.colorText,
                   fontWeight: FontWeight.w700,
                 ),
                 onTap: () {
@@ -367,8 +367,9 @@ class ProfileScreen extends StatelessWidget {
       height: isMobile ? null : size.height * 0.28,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.withOpacity(0.50), width: 1),
-          color: isMobile ? Colors.white : colorBG,
+          border:
+              Border.all(color: Colors.grey.withValues(alpha: 0.50), width: 1),
+          color: isMobile ? Colors.white : AppColors.colorBG,
           borderRadius: BorderRadius.circular(8)),
       padding: const EdgeInsets.all(0),
       child: Column(
@@ -398,7 +399,7 @@ class ProfileScreen extends StatelessWidget {
                   },
                   child: CommonTextWidget(
                     text: "Add Clinic",
-                    textColor: colorText,
+                    textColor: AppColors.colorText,
                     textDecoration: TextDecoration.underline,
                     fontWeight: FontWeight.w700,
                   ),

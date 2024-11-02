@@ -1,4 +1,4 @@
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
@@ -28,12 +28,12 @@ class ReachScreen extends StatelessWidget {
       // appBar: isMobile?commonAppBar():PreferredSize(preferredSize: Size.zero, child: Container()),
       child: Container(
         width: size.width,
-        color: isMobile ? colorGreen : Colors.white,
+        color: isMobile ? AppColors.colorGreen : Colors.white,
         height: size.height,
         child: Center(
           child: Container(
             decoration: commonBoxDecoration(
-                color: colorBG,
+                color: AppColors.colorBG,
                 borderRadius: BorderRadius.circular(isMobile ? 0 : 10)),
             width: isMobile
                 ? size.width
@@ -57,22 +57,23 @@ class ReachScreen extends StatelessWidget {
                 ),
                 CommonTextWidget(
                   text: "Practo Reach",
-                  textColor: colorText,
+                  textColor: AppColors.colorText,
                   fontSize: isMobile ? 20 : 23,
                 ),
                 CommonTextWidget(
                   top: 15,
                   text:
                       "Increase the visibility of your practice amongst\n millions of patients on Practo",
-                  textColor: colorText,
+                  textColor: AppColors.colorText,
                   fontSize: isMobile ? 13 : 16,
                   textAlign: TextAlign.center,
                   lineHeight: 1.5,
                 ),
                 CommonButtonWidget(
-                  colorButton: colorGreen,
-                  padding:
-                      isMobile ? EdgeInsets.all(10) : const EdgeInsets.all(22),
+                  colorButton: AppColors.colorGreen,
+                  padding: isMobile
+                      ? const EdgeInsets.all(10)
+                      : const EdgeInsets.all(22),
                   fontSize: isMobile ? 12 : 16,
                   colorText: Colors.white,
                   radius: 2,

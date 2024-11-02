@@ -1,4 +1,4 @@
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
@@ -37,7 +37,7 @@ class ConsultScreen extends StatelessWidget {
                   ))
             ]),
         child: Container(
-          color: isMobile ? colorBG : Colors.white,
+          color: isMobile ? AppColors.colorBG : Colors.white,
           width: size.width,
           height: size.height,
           child: Padding(
@@ -83,7 +83,7 @@ class ConsultScreen extends StatelessWidget {
                                       activeColor: Colors.white,
                                       inactiveTrackColor: Colors.white,
                                       inactiveThumbColor: Colors.grey,
-                                      activeTrackColor: colorGreen,
+                                      activeTrackColor: AppColors.colorGreen,
                                       value: provider.isOn,
                                       onChanged: (value) {
                                         provider.toggleSwitch();
@@ -147,7 +147,7 @@ class ConsultScreen extends StatelessWidget {
                                     ),
                                     const Icon(
                                       Icons.favorite,
-                                      color: colorAmber,
+                                      color: AppColors.colorAmber,
                                     )
                                   ],
                                 )
@@ -320,7 +320,7 @@ class ConsultScreen extends StatelessWidget {
                                       top: 8.0, bottom: 8),
                                   child: CommonTextWidget(
                                     text: "View All Answer",
-                                    textColor: colorAmber,
+                                    textColor: AppColors.colorAmber,
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ))
@@ -363,7 +363,8 @@ class ConsultScreen extends StatelessWidget {
                                             activeColor: Colors.white,
                                             inactiveTrackColor: Colors.white,
                                             inactiveThumbColor: Colors.grey,
-                                            activeTrackColor: colorGreen,
+                                            activeTrackColor:
+                                                AppColors.colorGreen,
                                             value: provider.isOn,
                                             onChanged: (value) {
                                               provider.toggleSwitch();
@@ -407,7 +408,7 @@ class ConsultScreen extends StatelessWidget {
                                           ),
                                           const Icon(
                                             Icons.favorite,
-                                            color: colorAmber,
+                                            color: AppColors.colorAmber,
                                           )
                                         ],
                                       )
@@ -648,7 +649,7 @@ class ConsultScreen extends StatelessWidget {
                                             top: 8.0, bottom: 8),
                                         child: CommonTextWidget(
                                           text: "View All Answer",
-                                          textColor: colorAmber,
+                                          textColor: AppColors.colorAmber,
                                           fontWeight: FontWeight.w700,
                                         ),
                                       ))
@@ -680,7 +681,8 @@ class ConsultScreen extends StatelessWidget {
       width: size.width,
       decoration: commonBoxDecoration(
           border: Border.all(
-              color: Colors.grey.withOpacity(0.50), width: isMobile ? 1 : 0)),
+              color: Colors.grey.withValues(alpha: 0.50),
+              width: isMobile ? 1 : 0)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -696,7 +698,7 @@ class ConsultScreen extends StatelessWidget {
             ),
           ),
           Container(
-            color: colorBG,
+            color: AppColors.colorBG,
             width: size.width,
             alignment: Alignment.center,
             height: size.height * 0.15,
@@ -717,19 +719,19 @@ class ConsultScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 isBthHide
-                    ? SizedBox.shrink()
+                    ? const SizedBox.shrink()
                     : Align(
                         alignment: Alignment.topRight,
                         child: commonInkWell(
                             child: CommonTextWidget(
                           text: "GO TO SETTINGS",
                           fontSize: 12,
-                          textColor: colorAmber,
+                          textColor: AppColors.colorAmber,
                           fontWeight: FontWeight.w700,
                         )),
                       ),
                 isBthHide
-                    ? SizedBox.shrink()
+                    ? const SizedBox.shrink()
                     : const SizedBox(
                         width: 50,
                       ),
@@ -739,7 +741,7 @@ class ConsultScreen extends StatelessWidget {
                       child: CommonTextWidget(
                     text: btnText ?? "GO TO SETTINGS",
                     fontSize: 12,
-                    textColor: colorAmber,
+                    textColor: AppColors.colorAmber,
                     fontWeight: FontWeight.w700,
                   )),
                 ),

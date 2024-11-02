@@ -1,5 +1,5 @@
 import 'package:doctor_app/core/app_constants.dart';
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -53,7 +53,7 @@ class CommonDropDownView extends StatelessWidget {
           children: [
             Expanded(
               child: CommonTextWidget(
-                text: hint ?? 'Select Item',
+                text: hint ?? 'Select',
                 fontSize: twelve,
                 left: horizontal != null ? 0 : 0,
                 textColor: hintColor ?? Colors.grey,
@@ -84,7 +84,7 @@ class CommonDropDownView extends StatelessWidget {
               BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: colorGreen.withOpacity(0.30),
+                  color: AppColors.colorGreen.withValues(alpha: 0.30),
                 ),
                 //color: Colors.redAccent,
               ),

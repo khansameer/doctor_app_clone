@@ -1,4 +1,4 @@
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
@@ -23,7 +23,7 @@ class ReportScreen extends StatelessWidget {
       ),
       // appBar: commonAppBar(title: "Report".toUpperCase(), actions: []),
       child: Container(
-        color: isMobile ? colorBG : Colors.white,
+        color: isMobile ? AppColors.colorBG : Colors.white,
         child: ListView(
           children: [
             isMobile
@@ -59,7 +59,7 @@ class ReportScreen extends StatelessWidget {
               decoration: commonBoxDecoration(
                   color: Colors.white,
                   border: Border.all(
-                      color: Colors.grey.withOpacity(0.50), width: 0)),
+                      color: Colors.grey.withValues(alpha: 0.50), width: 0)),
               margin: const EdgeInsets.only(left: 0, right: 0, top: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,7 +71,7 @@ class ReportScreen extends StatelessWidget {
                   CommonTextWidget(
                     text: "Change",
                     right: 10,
-                    textColor: colorAmber,
+                    textColor: AppColors.colorAmber,
                     fontWeight: FontWeight.w600,
                   )
                 ],
@@ -92,7 +92,8 @@ class ReportScreen extends StatelessWidget {
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       decoration: commonBoxDecoration(
           color: Colors.white,
-          border: Border.all(color: Colors.grey.withOpacity(0.50), width: 0)),
+          border:
+              Border.all(color: Colors.grey.withValues(alpha: 0.50), width: 0)),
       margin: EdgeInsets.only(left: 5, right: 5, top: top ?? 10),
       child: child,
     );
@@ -147,7 +148,8 @@ class ReportScreen extends StatelessWidget {
             minHeight: 6,
             borderRadius: BorderRadius.circular(8),
             backgroundColor: Colors.grey,
-            valueColor: const AlwaysStoppedAnimation<Color>(colorGreen),
+            valueColor:
+                const AlwaysStoppedAnimation<Color>(AppColors.colorGreen),
           ),
           const SizedBox(
             height: 15,
@@ -167,7 +169,7 @@ class ReportScreen extends StatelessWidget {
                     CommonTextWidget(
                       text: "$rupee 19,50,350.00",
                       fontWeight: FontWeight.w600,
-                      textColor: colorGreen,
+                      textColor: AppColors.colorGreen,
                       top: 10,
                     )
                   ],
@@ -218,8 +220,9 @@ class ReportScreen extends StatelessWidget {
             value: 0.2,
             minHeight: 6,
             borderRadius: BorderRadius.circular(8),
-            backgroundColor: colorAmber,
-            valueColor: const AlwaysStoppedAnimation<Color>(colorGreen),
+            backgroundColor: AppColors.colorAmber,
+            valueColor:
+                const AlwaysStoppedAnimation<Color>(AppColors.colorGreen),
           ),
           const SizedBox(
             height: 15,
@@ -240,7 +243,7 @@ class ReportScreen extends StatelessWidget {
                     CommonTextWidget(
                       text: "56",
                       fontWeight: FontWeight.w600,
-                      textColor: colorGreen,
+                      textColor: AppColors.colorGreen,
                       top: 10,
                     )
                   ],
@@ -258,7 +261,7 @@ class ReportScreen extends StatelessWidget {
                   CommonTextWidget(
                     text: "214",
                     fontWeight: FontWeight.w600,
-                    textColor: colorAmber,
+                    textColor: AppColors.colorAmber,
                     top: 10,
                   )
                 ],
@@ -293,7 +296,7 @@ class ReportScreen extends StatelessWidget {
             children: [
               CommonTextWidget(
                 text: "View Details",
-                textColor: colorAmber,
+                textColor: AppColors.colorAmber,
                 fontWeight: FontWeight.w700,
               ),
               const Icon(
@@ -328,9 +331,10 @@ class ReportScreen extends StatelessWidget {
           LinearProgressIndicator(
             value: 0.1,
             minHeight: 6,
-            backgroundColor: colorAmber,
+            backgroundColor: AppColors.colorAmber,
             borderRadius: BorderRadius.circular(8),
-            valueColor: const AlwaysStoppedAnimation<Color>(colorGreen),
+            valueColor:
+                const AlwaysStoppedAnimation<Color>(AppColors.colorGreen),
           ),
           const SizedBox(
             height: 15,
@@ -351,7 +355,7 @@ class ReportScreen extends StatelessWidget {
                     CommonTextWidget(
                       text: "63.85 MB",
                       fontWeight: FontWeight.w600,
-                      textColor: colorGreen,
+                      textColor: AppColors.colorGreen,
                       top: 10,
                     )
                   ],
@@ -369,7 +373,7 @@ class ReportScreen extends StatelessWidget {
                   CommonTextWidget(
                     text: "960.14 Mb",
                     fontWeight: FontWeight.w600,
-                    textColor: colorAmber,
+                    textColor: AppColors.colorAmber,
                     top: 10,
                   )
                 ],
@@ -404,7 +408,7 @@ class ReportScreen extends StatelessWidget {
             children: [
               CommonTextWidget(
                 text: "View Details",
-                textColor: colorAmber,
+                textColor: AppColors.colorAmber,
                 fontWeight: FontWeight.w700,
               ),
               const Icon(

@@ -1,4 +1,3 @@
-import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
@@ -13,7 +12,7 @@ class ProfileMenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
-    var isMobile = Responsive.isMobile(context);
+
     var isDesktop = Responsive.isDesktop(context);
 
     return Container(
@@ -70,7 +69,9 @@ class ProfileMenuScreen extends StatelessWidget {
           commonList(
             onTap: () {
               commonLogoutDialog(
-                  contextAd: context, isDesktop: isDesktop, isMobile: isDesktop);
+                  contextAd: context,
+                  isDesktop: isDesktop,
+                  isMobile: isDesktop);
             },
             icon: Icons.exit_to_app_outlined,
             title: "Logout",
@@ -86,7 +87,8 @@ class ProfileMenuScreen extends StatelessWidget {
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       decoration: commonBoxDecoration(
           color: Colors.white,
-          border: Border.all(color: Colors.grey.withOpacity(0.50), width: 0)),
+          border:
+              Border.all(color: Colors.grey.withValues(alpha: 0.50), width: 0)),
       margin: EdgeInsets.only(left: 0, right: 0, top: top ?? 0),
       child: ListTile(
         onTap: onTap,
@@ -101,8 +103,8 @@ class ProfileMenuScreen extends StatelessWidget {
         leading: Container(
           width: 45,
           height: 45,
-          decoration:
-              const BoxDecoration(color: colorBG, shape: BoxShape.circle),
+          decoration: const BoxDecoration(
+              color: AppColors.colorBG, shape: BoxShape.circle),
           child: Icon(
             icon ?? Icons.edit,
             size: 20,

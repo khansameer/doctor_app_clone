@@ -1,5 +1,6 @@
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/common/common_textfield.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
@@ -7,7 +8,6 @@ import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/common/common_textfield.dart';
 import 'chat/web_chat_screen.dart';
 
 class CommunicationScreen extends StatefulWidget {
@@ -30,7 +30,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.3), //color of shadow
+                    color: Colors.grey.withValues(alpha: 0.3), //color of shadow
                     spreadRadius: 2, //spread radius
                     blurRadius: 3, // blur radius
                     offset: const Offset(0, 2),
@@ -90,7 +90,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
             ),
           ),
         ),
-        Expanded(
+        const Expanded(
           flex: 5,
           child: WebChatScreen(
             communication: true,

@@ -1,14 +1,11 @@
-import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
-import 'package:doctor_app/core/common/common_text_widget.dart';
+
 import 'package:doctor_app/core/common/common_textfield.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:doctor_app/provider/patient_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../screen/patient_profile_page.dart';
 
 class AdminPatientView extends StatelessWidget {
   const AdminPatientView({super.key});

@@ -4,7 +4,7 @@ import '../app_constants.dart';
 import '../component/component.dart';
 
 class AppScaffold extends StatelessWidget {
-  AppScaffold(
+  const AppScaffold(
       {this.color,
       super.key,
       this.child,

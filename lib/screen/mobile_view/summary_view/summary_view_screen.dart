@@ -1,4 +1,4 @@
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
@@ -14,7 +14,7 @@ class SummaryViewScreen extends StatelessWidget {
     var isMobile = Responsive.isMobile(context);
     var isDesktop = Responsive.isDesktop(context);
     return Container(
-      color: colorGreen.withOpacity(0.10),
+      color: AppColors.colorGreen.withValues(alpha: 0.10),
       child: ListView(
         children: [
           isMobile
@@ -189,7 +189,7 @@ class SummaryViewScreen extends StatelessWidget {
                   : isDesktop
                       ? size.height * 0.20
                       : size.height * 0.16,
-              color: Colors.grey.withOpacity(0.10),
+              color: Colors.grey.withValues(alpha: 0.10),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Center(
@@ -237,7 +237,7 @@ class SummaryViewScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w800,
                                 text: "View All".toUpperCase(),
                                 fontSize: 12,
-                                textColor: colorAmber,
+                                textColor: AppColors.colorAmber,
                               )),
                             ),
                       hideButton
@@ -248,7 +248,7 @@ class SummaryViewScreen extends StatelessWidget {
                       commonInkWell(
                           child: CommonTextWidget(
                         fontWeight: FontWeight.w800,
-                        textColor: colorAmber,
+                        textColor: AppColors.colorAmber,
                         text: btnText ?? "Add Appointment".toUpperCase(),
                         fontSize: 12,
                       ))

@@ -1,4 +1,4 @@
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
@@ -21,7 +21,7 @@ class WeeklyEarningScreen extends StatelessWidget {
       ),
       child: Container(
         width: size.width,
-        color: isMobile ? colorBG : Colors.white,
+        color: isMobile ? AppColors.colorBG : Colors.white,
         height: size.height,
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -37,7 +37,7 @@ class WeeklyEarningScreen extends StatelessWidget {
                         ),
                         _bottomView(
                             size: size,
-                            colorLine: colorAmber,
+                            colorLine: AppColors.colorAmber,
                             isShowLastIndex: false,
                             totalText: "Total Instant Earning"),
                       ],
@@ -54,7 +54,7 @@ class WeeklyEarningScreen extends StatelessWidget {
                             Expanded(
                               child: _bottomView(
                                   size: size,
-                                  colorLine: colorAmber,
+                                  colorLine: AppColors.colorAmber,
                                   isShowLastIndex: false,
                                   totalText: "Total Instant Earning"),
                             )
@@ -78,7 +78,7 @@ class WeeklyEarningScreen extends StatelessWidget {
           dense: true,
           leading: Icon(
             Icons.arrow_back_ios,
-            color: Colors.black.withOpacity(0.60),
+            color: Colors.black.withValues(alpha: 0.60),
             size: 20,
           ),
           titleAlignment: ListTileTitleAlignment.center,
@@ -97,7 +97,7 @@ class WeeklyEarningScreen extends StatelessWidget {
             children: [
               CommonTextWidget(
                 text: "Total Earnings",
-                textColor: Colors.black.withOpacity(0.70),
+                textColor: Colors.black.withValues(alpha: 0.70),
               ),
               CommonTextWidget(
                 text: "$rupee 0.00",
@@ -117,7 +117,7 @@ class WeeklyEarningScreen extends StatelessWidget {
                   ),
                   _commonRow(
                     text: "Instant Earnings 0%",
-                    color: colorAmber,
+                    color: AppColors.colorAmber,
                   )
                 ],
               )
@@ -140,7 +140,7 @@ class WeeklyEarningScreen extends StatelessWidget {
         CommonTextWidget(
           text: text ?? "Prime Earnings 0%",
           left: 5,
-          textColor: Colors.black.withOpacity(0.70),
+          textColor: Colors.black.withValues(alpha: 0.70),
           fontSize: 12,
         )
       ],

@@ -1,15 +1,14 @@
 import 'package:doctor_app/core/app_constants.dart';
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
+
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
+import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/provider/model/dummy_model.dart';
-import 'package:doctor_app/screen/mobile_view/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../core/route/route.dart';
 
 class AppListView extends StatelessWidget {
   const AppListView({super.key, required this.onSelectedPage});
@@ -20,7 +19,7 @@ class AppListView extends StatelessWidget {
       var isMobile = Responsive.isMobile(context);
 
       return Container(
-        color: isMobile ? colorBG : Colors.white,
+        color: isMobile ? AppColors.colorBG : Colors.white,
         padding: const EdgeInsets.all(2),
         child: ListView(
           children: [
@@ -146,7 +145,7 @@ class AppListView extends StatelessWidget {
                     child: CommonTextWidget(
                       top: twenty,
                       fontSize: isMobile ? twelve : 16,
-                      textColor: colorText,
+                      textColor: AppColors.colorText,
                       fontWeight: FontWeight.w700,
                       textAlign: TextAlign.center,
                       text: list[index].date,

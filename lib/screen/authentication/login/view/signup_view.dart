@@ -296,7 +296,8 @@ class SignUpDesign extends StatelessWidget {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                                color: AppColors.primary.withOpacity(0.20),
+                                color:
+                                    AppColors.primary.withValues(alpha: 0.20),
                                 width: 1),
                           ),
                           items: provider.specializationsList
@@ -367,7 +368,8 @@ class SignUpDesign extends StatelessWidget {
                           top: thirtyFive,
                           bottom: 0,
                           radius: 8,
-                          padding: isMobile ? null : EdgeInsets.all(twenty),
+                          padding:
+                              isMobile ? null : const EdgeInsets.all(twenty),
                           height: isMobile ? null : 40,
 
                           //padding: isMobile ? null : EdgeInsets.all(20),

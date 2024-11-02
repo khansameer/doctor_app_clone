@@ -1,7 +1,6 @@
-import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
-import 'package:doctor_app/core/common/CustomAlertDialog.dart';
-import 'package:doctor_app/core/common/LegendItem.dart';
+import 'package:doctor_app/core/common/custom_alert_dialog.dart';
+import 'package:doctor_app/core/common/legend_item.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';

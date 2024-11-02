@@ -1,5 +1,5 @@
 import 'package:doctor_app/core/colors.dart';
-import 'package:doctor_app/core/common/CustomAlertDialog.dart';
+import 'package:doctor_app/core/common/custom_alert_dialog.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/common_textfield.dart';
@@ -7,10 +7,8 @@ import 'package:doctor_app/core/common/file_picker_helper.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/context_extension.dart';
 import 'package:doctor_app/core/route/route.dart';
-import 'package:doctor_app/provider/appointments_provider.dart';
 import 'package:doctor_app/provider/patient_provider.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/add_appointments_widget.dart';
-import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,8 +21,6 @@ class PatientsScreen extends StatefulWidget {
 }
 
 class _PatientsScreenState extends State<PatientsScreen> {
-  final TextEditingController _searchController = TextEditingController();
-
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -282,7 +278,7 @@ class _PatientsScreenState extends State<PatientsScreen> {
       children: [
         Icon(
           icon ?? Icons.female,
-          color: Colors.black.withOpacity(0.6),
+          color: Colors.black.withValues(alpha: 0.6),
         ),
         Flexible(
             child: CommonTextWidget(
@@ -290,7 +286,7 @@ class _PatientsScreenState extends State<PatientsScreen> {
           fontSize: 11,
           left: 5,
           fontWeight: FontWeight.w600,
-          textColor: Colors.black.withOpacity(0.6),
+          textColor: Colors.black.withValues(alpha: 0.6),
         )),
       ],
     );

@@ -1,4 +1,4 @@
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 
@@ -56,7 +56,7 @@ class ChatScreen extends StatelessWidget {
                 ))
           ]),
       child: Container(
-        color: isMobile ? colorBG : Colors.white,
+        color: isMobile ? AppColors.colorBG : Colors.white,
         padding: EdgeInsets.all(isMobile ? 0 : 20.0),
         child: const Column(
           children: [

@@ -1,5 +1,6 @@
 import 'package:doctor_app/core/app_constants.dart';
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
+
 import 'package:doctor_app/core/common/common_textfield.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
@@ -77,7 +78,7 @@ class ChatInputWidget extends StatelessWidget {
                 ),
                 Container(
                   decoration: const BoxDecoration(
-                      color: colorGreen, shape: BoxShape.circle),
+                      color: AppColors.colorGreen, shape: BoxShape.circle),
                   child: IconButton(
                     icon: const Icon(
                       Icons.send,

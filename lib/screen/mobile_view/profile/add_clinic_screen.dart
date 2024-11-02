@@ -1,4 +1,3 @@
-import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:flutter/material.dart';
 

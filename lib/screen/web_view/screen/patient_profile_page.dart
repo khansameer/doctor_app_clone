@@ -1,4 +1,4 @@
-import 'package:doctor_app/core/common/CustomAlertDialog.dart';
+import 'package:doctor_app/core/common/custom_alert_dialog.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/common_textfield.dart';
 import 'package:doctor_app/core/common/date_time_utils.dart';

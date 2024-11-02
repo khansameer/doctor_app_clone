@@ -1,5 +1,4 @@
 import 'package:doctor_app/core/app_constants.dart';
-import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_drop_down_view.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
@@ -13,6 +12,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../core/colors.dart';
 
 class GetEditAppointmentsDetailsWidget extends StatefulWidget {
   const GetEditAppointmentsDetailsWidget({super.key, this.appointmentsID});
@@ -273,7 +274,9 @@ class _GetEditAppointmentsDetailsWidgetState
                                   "isVirtual": true,
                                 };
 
-                                print('=====${body.toString()}');
+                                if (kDebugMode) {
+                                  print('=====${body.toString()}');
+                                }
                                 provider
                                     .updateAppointmentData(
                                   body: body,
@@ -290,7 +293,7 @@ class _GetEditAppointmentsDetailsWidgetState
                                   }
                                 });
                               },
-                              colorButton: colorGreen,
+                              colorButton: AppColors.colorGreen,
                               fontSize: 12,
                               text: "Save",
                             ),

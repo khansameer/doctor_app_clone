@@ -1,7 +1,6 @@
 import 'package:doctor_app/core/component/component.dart';
 import 'package:flutter/material.dart';
 
-
 class CalenderViewLeftScreen extends StatefulWidget {
   const CalenderViewLeftScreen({super.key});
 

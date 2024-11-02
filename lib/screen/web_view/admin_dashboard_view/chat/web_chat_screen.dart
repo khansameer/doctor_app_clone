@@ -1,14 +1,13 @@
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/component/component.dart';
+import 'package:doctor_app/core/image/image_path.dart';
+import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
-import 'package:doctor_app/screen/web_view/admin_dashboard_view/chat/revice_message_view.dart';
+import 'package:doctor_app/screen/web_view/admin_dashboard_view/chat/receiver_message_view.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/chat/sender_message_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../../core/component/component.dart';
-import '../../../../core/image/image_path.dart';
-import '../../../../core/responsive.dart';
 
 class WebChatScreen extends StatelessWidget {
   const WebChatScreen({super.key, required this.communication});
@@ -27,7 +26,7 @@ class WebChatScreen extends StatelessWidget {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.3), //color of shadow
+              color: Colors.grey.withValues(alpha: 0.3), //color of shadow
               spreadRadius: 2, //spread radius
               blurRadius: 3, // blur radius
               offset: const Offset(0, 2),
@@ -149,7 +148,7 @@ class WebChatScreen extends StatelessWidget {
                         chatMessage: chatModel.chatMessages[index],
                       );
                     } else {
-                      return ReviceMessageView(
+                      return ReceiverMessageView(
                         chatMessage: chatModel.chatMessages[index],
                       );
                     }

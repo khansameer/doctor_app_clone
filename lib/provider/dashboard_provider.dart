@@ -338,13 +338,13 @@ class DashboardProvider extends ChangeNotifier {
     DummyModel(
         icon:
             "https://img.freepik.com/free-vector/eye-logo-design-template_23-2150893414.jpg",
-        date: "Dadar Eye & Gynaec Centre",
+        date: "123 Main St, Springfield",
         content: "790 W. Chestnut Avenue, Monrovia, CA 91016",
         items: []),
     DummyModel(
         icon:
             "https://img.freepik.com/free-vector/eye-logo-design-template_23-2150893414.jpg",
-        date: "Dadar Eye & Gynaec Centre",
+        date: "123 Main St, Springfield",
         content: "790 W. Chestnut Avenue, Monrovia, CA 91016",
         items: []),
     DummyModel(
@@ -356,7 +356,7 @@ class DashboardProvider extends ChangeNotifier {
     DummyModel(
         icon:
             "https://img.freepik.com/free-vector/eye-logo-design-template_23-2150893414.jpg",
-        date: "Dadar Eye & Gynaec Centre",
+        date: "123 Main St, Springfield",
         content: "790 W. Chestnut Avenue, Monrovia, CA 91016",
         items: []),
   ];
@@ -415,22 +415,22 @@ class DashboardProvider extends ChangeNotifier {
 
   final List<Booking> _bookings = [
     Booking(
-        name: 'Nabajyoti Mandal',
+        name: 'Alice Johnson',
         date: '11\nOCT',
         status: 'CONFIRMED',
         price: 375.0),
     Booking(
-        name: 'Vijaylaxmi Das',
+        name: 'James Williams',
         date: '09\nOCT',
         status: 'CONFIRMED',
         price: 0.0),
     Booking(
-        name: 'Pranjali Vasudeo',
+        name: 'Sophia Brown',
         date: '09\nOCT',
         status: 'CONFIRMED',
         price: 375.0),
     Booking(
-        name: 'Siddharth Das',
+        name: 'Liam Jones',
         date: '08\nOCT',
         status: 'CANCELLED',
         price: 375.0,
@@ -447,11 +447,6 @@ class DashboardProvider extends ChangeNotifier {
     _selectedMenu = index;
     notifyListeners(); // Notify the listeners when the index is changed
   }
-
-/*  void setSelectedIndex(int index) {
-    _selectedIndex = index;
-    notifyListeners(); // Notify the listeners when the index is changed
-  }*/
 
   final List<DashboardModel> navigationItems = [
     DashboardModel(

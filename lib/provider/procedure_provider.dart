@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 import '../screen/web_view/screen/procedure/model/procedure_model.dart';
 import '../service/api_config.dart';
@@ -27,7 +28,9 @@ class ProcedureProvider extends ChangeNotifier {
       } else if (globalStatusCode == 401) {
         commonSessionError(context: context);
       }
-      print('======${response.toString()}');
+      if (kDebugMode) {
+        print('======${response.toString()}');
+      }
 
       _isLoading = false;
       notifyListeners();
@@ -50,8 +53,6 @@ class ProcedureProvider extends ChangeNotifier {
           url: '${ApiConfig.addProcedureCharges}/doctor/$userID');
       List<dynamic> body = jsonDecode(response);
 
-      print('=====z${jsonDecode(response)}');
-
       if (globalStatusCode == 200 || globalStatusCode == 201) {
         _procedureList =
             body.map((dynamic item) => ProcedureModel.fromJson(item)).toList();
@@ -71,13 +72,13 @@ class ProcedureProvider extends ChangeNotifier {
   }
 
   Future deleteProcedureCharges(
-      {required BuildContext context, required String ID}) async {
+      {required BuildContext context, required String id}) async {
     _isDelete = true;
     notifyListeners();
     try {
       //String userID = await getUserID();
       final response = await _service.callDeleteMethods(
-          url: '${ApiConfig.addProcedureCharges}/$ID');
+          url: '${ApiConfig.addProcedureCharges}/$id');
 
       print('===addProcedureCharges ==z${globalStatusCode}');
 

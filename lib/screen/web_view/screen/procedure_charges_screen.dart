@@ -2,12 +2,11 @@ import 'package:doctor_app/core/app_constants.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
-import 'package:doctor_app/provider/auth_provider.dart';
+import 'package:doctor_app/provider/procedure_provider.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../provider/procedure_provider.dart';
 
 class ProcedureChargesScreen extends StatefulWidget {
   const ProcedureChargesScreen({super.key});

@@ -1,4 +1,4 @@
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_drop_down_view.dart';
@@ -79,7 +79,7 @@ class EditProfileScreen extends StatelessWidget {
                                           top: 8,
                                           left: 10,
                                           fontWeight: FontWeight.w800,
-                                          textColor: colorText))
+                                          textColor: AppColors.colorText))
                                 ],
                               ),
                             ),
@@ -371,8 +371,8 @@ class EditProfileScreen extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(5),
-                border:
-                    Border.all(color: Colors.grey.withOpacity(0.40), width: 1)),
+                border: Border.all(
+                    color: Colors.grey.withValues(alpha: 0.40), width: 1)),
             size: size,
             items: items ?? ["Sa", "dddd", "dd"]),
       ],

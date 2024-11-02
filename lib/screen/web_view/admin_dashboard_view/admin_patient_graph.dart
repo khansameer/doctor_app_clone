@@ -1,6 +1,4 @@
-import 'package:doctor_app/core/color_utils.dart';
-import 'package:doctor_app/core/colors.dart';
-import 'package:doctor_app/core/common/LegendItem.dart';
+import 'package:doctor_app/core/common/legend_item.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +8,13 @@ class AdminPatientGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PatientsPaceChart();
+    return const PatientsPaceChart();
   }
 }
 
 class PatientsPaceChart extends StatelessWidget {
+  const PatientsPaceChart({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -77,7 +77,7 @@ class PatientsPaceChart extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           const Row(

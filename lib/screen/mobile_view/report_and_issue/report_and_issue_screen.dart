@@ -1,4 +1,4 @@
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
@@ -18,13 +18,13 @@ class ReportAndIssueScreen extends StatelessWidget {
         right: 0,
         appBar: commonAppBar(title: "Report and issue".toUpperCase()),
         child: Container(
-          color:colorBG,
+          color: AppColors.colorBG,
           child: ListView(
             children: [
               commonList(
-                fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w400,
                   title: "I have an issue with",
-                  color: colorGreen.withOpacity(0.05)),
+                  color: AppColors.colorGreen.withValues(alpha: 0.05)),
               commonList(title: "Ray"),
               commonList(title: "Reach"),
               commonList(title: "Consult"),
@@ -56,14 +56,15 @@ class ReportAndIssueScreen extends StatelessWidget {
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       decoration: commonBoxDecoration(
           color: color ?? Colors.white,
-          border: Border.all(color: Colors.grey.withOpacity(0.50), width: 0)),
+          border:
+              Border.all(color: Colors.grey.withValues(alpha: 0.50), width: 0)),
       margin: EdgeInsets.only(left: 0, right: 0, top: top ?? 0),
       child: ListTile(
         dense: true,
         titleAlignment: ListTileTitleAlignment.center,
         title: CommonTextWidget(
           text: title ?? "Sync Now",
-          fontWeight: fontWeight??FontWeight.w600,
+          fontWeight: fontWeight ?? FontWeight.w600,
         ),
         subtitle: subTitle,
       ),

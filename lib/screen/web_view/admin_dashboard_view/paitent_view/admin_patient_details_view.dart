@@ -1,5 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
@@ -20,7 +18,6 @@ class AdminPatientDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
-    var isMobile = Responsive.isMobile(context);
     var isDesktop = Responsive.isDesktop(context);
     return SizedBox(
       width: isDesktop ? size.width : size.width * 0.7,
@@ -112,8 +109,8 @@ class AdminPatientDetailsView extends StatelessWidget {
                           child: Column(
                             children: [
                               Container(
-                                color:
-                                AppColors.colorBgNew, // Customize the background color of the TabBar
+                                color: AppColors
+                                    .colorBgNew, // Customize the background color of the TabBar
                                 child: TabBar(
                                   labelStyle: commonTextStyle(
                                       fontSize: 13,

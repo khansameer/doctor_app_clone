@@ -1,4 +1,4 @@
-import 'package:doctor_app/core/common/CustomAlertDialog.dart';
+import 'package:doctor_app/core/common/custom_alert_dialog.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/provider/appointments_provider.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/add_appointments_widget.dart';
@@ -85,7 +85,7 @@ class _CalenderViewState extends State<CalenderView> {
         if (details.targetElement == CalendarElement.appointment) {
           Appointment tappedAppointment = details.appointments!.first;
           String? appointmentId = tappedAppointment.id as String?;
-          print('Appointment ID: $appointmentId');
+
           showDialog(
               barrierDismissible: false,
               context: context,

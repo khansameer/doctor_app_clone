@@ -1,9 +1,5 @@
-import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
-
-import 'package:doctor_app/core/responsive.dart';
-import 'package:doctor_app/provider/appointments_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/provider/patient_provider.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/paitent_view/admin_patient_view.dart';
@@ -71,7 +67,7 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
-    var isMobile = Responsive.isMobile(context);
+
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
       return SizedBox(
         width: size.width,
@@ -157,7 +153,7 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                     child: Container(
                       height: size.height,
                       decoration: const BoxDecoration(
-                        color: colorBG,
+                        color: AppColors.colorBG,
                         /*  border: Border.a(vertical: BorderSide(
                               color: Colors.red,width:1
                             ))*/
@@ -204,7 +200,7 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
                                     child: Container(
                                       color: isSelected
                                           ? AppColors.colorActive
-                                          : colorBG,
+                                          : AppColors.colorBG,
                                       padding: const EdgeInsets.all(10.0),
                                       child: CommonTextWidget(
                                           textColor:

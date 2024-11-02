@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/app_constants.dart';
+
 import 'package:doctor_app/core/colors.dart';
-import 'package:doctor_app/core/common/CustomAlertDialog.dart';
+import 'package:doctor_app/core/common/common_textfield.dart';
+import 'package:doctor_app/core/common/custom_alert_dialog.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/image/image_path.dart';
@@ -23,50 +25,12 @@ import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
 
-import '../app_constants.dart';
-import '../common/common_textfield.dart';
-
-commonResponsiveLayout(
-    {required Size size,
-    required Widget child,
-    required bool isMobile,
-    double? boxWidth,
-    required bool isTablet}) {
-  return Container(
-    width: size.width,
-    height: size.height,
-    decoration: const BoxDecoration(
-        image: DecorationImage(fit: BoxFit.cover, image: AssetImage(icBg))),
-    child: Container(
-      color: colorBG.withOpacity(0.60),
-      child: Center(
-        child: Container(
-          margin: EdgeInsets.all(isMobile ? 0 : 10),
-          decoration: commonBoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(isMobile ? 0 : 10)),
-          padding: isMobile
-              ? EdgeInsets.zero
-              : const EdgeInsets.only(left: 25, right: 25, bottom: 25, top: 0),
-          width: isMobile
-              ? size.width
-              : isTablet
-                  ? size.width * 0.6
-                  : size.width * 0.3,
-          height: isMobile ? size.height : null,
-          child: child,
-        ),
-      ),
-    ),
-  );
-}
-
 commonWithIconButton(
     {required VoidCallback onPressed, String? btnText, IconData? icon}) {
   return TextButton(
     style: TextButton.styleFrom(
       foregroundColor: Colors.transparent,
-      disabledForegroundColor: Colors.transparent.withOpacity(zero38),
+      disabledForegroundColor: Colors.transparent.withValues(alpha: zero38),
     ),
     onPressed: onPressed,
     child: Container(
@@ -105,7 +69,7 @@ commonButton(
             )
           : const CircleBorder(),
       foregroundColor: Colors.transparent,
-      disabledForegroundColor: Colors.transparent.withOpacity(zero38),
+      disabledForegroundColor: Colors.transparent.withValues(alpha: zero38),
     ),
     onPressed: onPressed,
     child: commonText(
@@ -128,7 +92,7 @@ commonBackRedirectButton({String? page, Color? color, VoidCallback? onTap}) {
           },
       icon: Icon(
         Icons.arrow_back_ios,
-        color: color ?? colorText,
+        color: color ?? AppColors.colorText,
       ));
 }
 
@@ -166,7 +130,9 @@ Future getAuthToken() async {
   String? token =
       await PreferenceHelper.getString(key: PreferenceHelper.authToken);
 
-  print('=================token${token}');
+  if (kDebugMode) {
+    print('=================token$token');
+  }
   return token;
 }
 
@@ -186,7 +152,9 @@ Future getUserID() async {
   String? userID =
       await PreferenceHelper.getString(key: PreferenceHelper.userID);
 
-  print('=================userID${userID}');
+  if (kDebugMode) {
+    print('=================userID$userID');
+  }
   return userID;
 }
 
@@ -262,7 +230,7 @@ commonTextFiledView({
 commonDivider() {
   return const Divider(
     thickness: 0.3,
-    color: colorGreen,
+    color: AppColors.colorGreen,
   );
 }
 
@@ -309,7 +277,7 @@ AppBar commonAppBar(
     PreferredSizeWidget? bottom}) {
   return AppBar(
     leadingWidth: leadingWidth,
-    backgroundColor: color ?? colorGreen,
+    backgroundColor: color ?? AppColors.colorGreen,
     centerTitle: centerTitle ?? true,
     bottom: bottom,
     titleSpacing: titleSpacing,
@@ -474,69 +442,21 @@ commonList({
     //  padding: const EdgeInsets.only(top: 8, bottom: 8),
     decoration: commonBoxDecoration(
         color: Colors.white,
-        border: Border.all(color: Colors.grey.withOpacity(0.50), width: 0)),
+        border:
+            Border.all(color: Colors.grey.withValues(alpha: 0.50), width: 0)),
     margin: EdgeInsets.only(left: 0, right: 0, top: top ?? 0),
     child: child,
   );
 }
-/*
-
-genderView({required AuthProviders provider}) {
-  return Column(
-    children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // Male Radio Button
-          Align(
-            alignment: Alignment.centerLeft,
-            child: CommonTextWidget(
-              text: gender,
-              fontWeight: FontWeight.w500,
-              fontSize: sixteen,
-            ),
-          ),
-          Radio<Gender>(
-            activeColor: colorGreen,
-            value: Gender.male,
-            groupValue: provider.selectedGender,
-            onChanged: (Gender? value) {
-              if (value != null) {
-                provider.selectGender(value);
-              }
-            },
-          ),
-          CommonTextWidget(text: "Male"),
-          // Female Radio Button
-          Radio<Gender>(
-            activeColor: colorGreen,
-            value: Gender.female,
-            groupValue: provider.selectedGender,
-            onChanged: (Gender? value) {
-              if (value != null) {
-                provider.selectGender(value);
-              }
-            },
-          ),
-          CommonTextWidget(text: female),
-          //CommonTextWidget(text: female),
-        ],
-      ),
-    ],
-  );
-}
-*/
 
 appBarView({required BuildContext context, String? title}) {
-  print('=================${title}');
   return commonAppBar(
       title: title,
       leading: const Icon(
         Icons.dashboard_rounded,
         color: Colors.white,
       ),
-      color: colorGreen,
+      color: AppColors.colorGreen,
       actions: [
         commonIcon(onTap: () {
           pushScreen(context: context, routeName: RouteName.settingScreen);
@@ -655,8 +575,8 @@ commonMenu(
     trailing: trailing,
     onExpansionChanged: onExpansionChanged,
     showTrailingIcon: showIcon ?? false,
-    collapsedIconColor: Colors.white.withOpacity(0.50),
-    iconColor: Colors.white.withOpacity(0.50),
+    collapsedIconColor: Colors.white.withValues(alpha: 0.50),
+    iconColor: Colors.white.withValues(alpha: 0.50),
     leading: leading ??
         Icon(
           Icons.menu,
@@ -665,7 +585,7 @@ commonMenu(
     title: CommonTextWidget(
         text: headerText ?? "Calender",
         fontSize: 13,
-        textColor: headerTextColor ?? Colors.white.withOpacity(0.50)),
+        textColor: headerTextColor ?? Colors.white.withValues(alpha: 0.50)),
     children: children ??
         [
           // Child expandable menu 1
@@ -673,29 +593,32 @@ commonMenu(
             showTrailingIcon: false,
             leading: Icon(
               Icons.inventory,
-              color: Colors.white.withOpacity(0.50),
+              color: Colors.white.withValues(alpha: 0.50),
             ),
             title: CommonTextWidget(
-                text: 'Inventory', textColor: Colors.white.withOpacity(0.50)),
+                text: 'Inventory',
+                textColor: Colors.white.withValues(alpha: 0.50)),
           ),
           // Child expandable menu 2
           ExpansionTile(
             showTrailingIcon: false,
             leading: Icon(
               Icons.expand_sharp,
-              color: Colors.white.withOpacity(0.50),
+              color: Colors.white.withValues(alpha: 0.50),
             ),
             title: CommonTextWidget(
-                text: 'Expenses', textColor: Colors.white.withOpacity(0.50)),
+                text: 'Expenses',
+                textColor: Colors.white.withValues(alpha: 0.50)),
           ),
           ExpansionTile(
             showTrailingIcon: false,
             leading: Icon(
               Icons.task,
-              color: Colors.white.withOpacity(0.50),
+              color: Colors.white.withValues(alpha: 0.50),
             ),
             title: CommonTextWidget(
-                text: 'Activities', textColor: Colors.white.withOpacity(0.50)),
+                text: 'Activities',
+                textColor: Colors.white.withValues(alpha: 0.50)),
           ),
         ],
   );
@@ -762,42 +685,6 @@ Widget buildPopupMenu({required ProcedureProvider provider, String? id}) {
   );
 }
 
-/*
-Future<List<PlatformFile>?> pickFiles() async {
-  List<PlatformFile>? _paths;
-
-  try {
-    if (kIsWeb) {
-      _paths = (await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowMultiple: false,
-        onFileLoading: (FilePickerStatus status) => print(status),
-        allowedExtensions: ['pdf'],
-      ))
-          ?.files;
-    } else {
-      var status = await Permission.manageExternalStorage.request();
-      var status1 = await Permission.storage.request();
-      if (status.isGranted || status1.isGranted) {
-        _paths = (await FilePicker.platform.pickFiles(
-          type: FileType.custom,
-          allowMultiple: false,
-          onFileLoading: (FilePickerStatus status) => print(status),
-          allowedExtensions: ['pdf'],
-        ))
-            ?.files;
-      } else if (status.isPermanentlyDenied) {
-        openAppSettings();
-      }
-    }
-  } on PlatformException catch (e) {
-    print('-PlatformException${e.toString()}');
-  } catch (e) {
-    print('-error${e.toString()}');
-  }
-
-  return _paths;
-}*/
 commonLogoutDialog(
     {required BuildContext contextAd,
     required bool isMobile,
@@ -810,11 +697,6 @@ commonLogoutDialog(
         var size = MediaQuery.sizeOf(contextAd);
         return CustomAlertDialog(
           content: SizedBox(
-            /*width: isMobile
-                ? width * zero9
-                : isDesktop
-                    ? width * 0.3
-                    : width * 0.19,*/
             width: width,
             child: Column(
               mainAxisSize: MainAxisSize.min,

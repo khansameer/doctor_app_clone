@@ -1,4 +1,3 @@
-import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
@@ -17,8 +16,6 @@ class DashboardPatientView extends StatelessWidget {
     var size = MediaQuery.sizeOf(context);
     var isDeskTop = Responsive.isDesktop(context);
     var isTablet = Responsive.isTablet(context);
-    //CarouselSliderController buttonCarouselController = CarouselSliderController();
-
     return Container(
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.all(20),
@@ -155,7 +152,8 @@ class DashboardPatientView extends StatelessWidget {
                                             /*color: AppColors.colorBgNew,*/
                                             shape: BoxShape.circle),
                                         height: 40,
-                                        duration: Duration(milliseconds: 200),
+                                        duration:
+                                            const Duration(milliseconds: 200),
                                         child: Center(
                                           child: Icon(
                                             size: 18,

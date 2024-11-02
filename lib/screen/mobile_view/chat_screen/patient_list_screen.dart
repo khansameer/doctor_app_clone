@@ -1,10 +1,10 @@
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/route/route.dart';
-import 'package:doctor_app/main.dart';
+
 import 'package:doctor_app/provider/chat_provider.dart';
-import 'package:doctor_app/provider/dashboard_provider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,8 +32,8 @@ class PatientListScreen extends StatelessWidget {
           leading: Container(
             width: 40,
             height: 40,
-            decoration:
-                commonBoxDecoration(shape: BoxShape.circle, color: colorGreen),
+            decoration: commonBoxDecoration(
+                shape: BoxShape.circle, color: AppColors.colorGreen),
             child: Center(
               child: CommonTextWidget(
                 text: patient.name[0],
@@ -48,12 +48,12 @@ class PatientListScreen extends StatelessWidget {
           ),
           subtitle: CommonTextWidget(
             text: 'Age: ${patient.age} | Condition: ${patient.condition}',
-            textColor: Colors.black.withOpacity(0.80),
+            textColor: Colors.black.withValues(alpha: 0.80),
           ),
         );
       },
       separatorBuilder: (BuildContext context, int index) {
-        return Divider(
+        return const Divider(
           thickness: 0.3,
         );
       },

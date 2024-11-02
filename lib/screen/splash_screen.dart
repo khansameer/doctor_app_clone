@@ -1,4 +1,5 @@
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/app_constants.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
@@ -39,13 +40,13 @@ class SplashScreenState extends State<SplashScreen> {
           child: Container(
             width: size.width,
             height: size.height,
-            color: colorBGWithOpacity,
+            color: AppColors.colorBGWithOpacity,
             child: Center(
               child: CommonTextWidget(
                 text: "",
                 fontWeight: FontWeight.w700,
-                fontSize: 30,
-                textColor: colorGreen,
+                fontSize: thirty,
+                textColor: AppColors.colorGreen,
               ),
             ),
           ),

@@ -35,10 +35,6 @@ class AuthProviders extends ChangeNotifier {
 
   bool get isConfirmPasswordVisible => _isConfirmPasswordVisible;
 
-  String _pin = '';
-
-  String get pin => _pin;
-
   final _tetFName = TextEditingController();
   final _tetLName = TextEditingController();
   final _tetEmail = TextEditingController();
@@ -200,7 +196,7 @@ class AuthProviders extends ChangeNotifier {
 
   List<SpecializationsModel> get specializationsList => _specializationsList;
 
-  List<SpecializationsModel> _selectedSpecializations = [];
+  final List<SpecializationsModel> _selectedSpecializations = [];
 
   List<SpecializationsModel> get selectedSpecializations =>
       _selectedSpecializations;

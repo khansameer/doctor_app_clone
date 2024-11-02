@@ -1,10 +1,6 @@
-import 'package:doctor_app/core/common/error_page.dart';
 import 'package:doctor_app/core/image/image_path.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import '../screen/web_view/admin_dashboard_view/paitent_view/admin_all_list_screen.dart';
-import '../screen/web_view/screen/patient_profile_page.dart';
 
 class Patient {
   final String name;
@@ -157,18 +153,6 @@ class AdminDashboardProvider with ChangeNotifier {
   String? _selectedGender;
   String _searchQuery = "";
   String? _selectedLetter;
-  /* List<Patient> get patients {
-    return _patients.where((patient) {
-      final matchesLetter =
-          _selectedLetter == null || patient.name.startsWith(_selectedLetter!);
-      final matchesGender =
-          _selectedGender == null || patient.gender == _selectedGender;
-      final matchesQuery =
-          patient.name.toLowerCase().contains(_searchQuery.toLowerCase());
-      return matchesLetter && matchesGender && matchesQuery;
-    }).toList();
-  }*/
-
   List<Patient> get patients {
     return _patients.where((patient) {
       final matchesLetter =
@@ -222,9 +206,6 @@ class AdminDashboardProvider with ChangeNotifier {
   Widget get currentPatientPage => _currentPatientPage;
   void setPatientDetailsPage(
       {required String value, required BuildContext context}) {
-    if (kDebugMode) {
-      print('==value====$value');
-    }
     if (value == "all") {
       _currentPatientPage = const AdminAllListScreen(
         title: "all",
@@ -947,39 +928,6 @@ class AdminDashboardProvider with ChangeNotifier {
   int _selectedUserIndex = 0;
 
   int get selectedUserIndex => _selectedUserIndex;
-  List<String> get messages => _chatMessages[_selectedUserIndex];
-
-  // Messages for each user
-  final List<List<String>> _chatMessages = [
-    ["Hello, how are you?", "I'm good!"],
-    ["Hi!", "Hey, what's up?"],
-    ["Good Morning!", "Good Morning!"],
-    ["Are you free?", "Yes, tell me!"],
-    ["Hello, how are you?", "I'm good!"],
-    ["Hi!", "Hey, what's up?"],
-    ["Good Morning!", "Good Morning!"],
-    ["Are you free?", "Yes, tell me!"],
-    ["Hello, how are you?", "I'm good!"],
-    ["Hi!", "Hey, what's up?"],
-    ["Good Morning!", "Good Morning!"],
-    ["Are you free?", "Yes, tell me!"],
-    ["Hello, how are you?", "I'm good!"],
-    ["Hi!", "Hey, what's up?"],
-    ["Good Morning!", "Good Morning!"],
-    ["Are you free?", "Yes, tell me!"],
-    ["Hello, how are you?", "I'm good!"],
-    ["Hi!", "Hey, what's up?"],
-    ["Good Morning!", "Good Morning!"],
-    ["Are you free?", "Yes, tell me!"],
-    ["Hello, how are you?", "I'm good!"],
-    ["Hi!", "Hey, what's up?"],
-    ["Good Morning!", "Good Morning!"],
-    ["Are you free?", "Yes, tell me!"],
-    ["Hello, how are you?", "I'm good!"],
-    ["Hi!", "Hey, what's up?"],
-    ["Good Morning!", "Good Morning!"],
-    ["Are you free?", "Yes, tell me!"],
-  ];
 
   void selectUser(int index) {
     _selectedUserIndex = index;
@@ -991,62 +939,9 @@ class AdminDashboardProvider with ChangeNotifier {
 
   void chatUserInfoValue(Patient data) {
     _chatUserInfo = data;
-    print('======${data.name}');
     notifyListeners();
   }
 
-  List<ChatUser> dummyChatUsers = [
-    ChatUser(
-        profile: icPatientUser1,
-        name: "Alice",
-        latestMessage: "Hey, how are you?",
-        messageCount: 15),
-    ChatUser(
-        profile: icPatientUser2,
-        name: "Bob",
-        latestMessage: "Let's meet tomorrow",
-        messageCount: 5),
-    ChatUser(
-        name: "Charlie",
-        profile: icPatientUser3,
-        latestMessage: "Can you send the file?",
-        messageCount: 8),
-    ChatUser(
-        name: "Diana",
-        profile: icPatientUser4,
-        latestMessage: "Thank you!",
-        messageCount: 12),
-    ChatUser(
-        name: "Edward",
-        profile: icPatientUser5,
-        latestMessage: "I'll check on that",
-        messageCount: 0),
-    ChatUser(
-        profile: icPatientUser6,
-        name: "Fiona",
-        latestMessage: "See you later!",
-        messageCount: 20),
-    ChatUser(
-        profile: icPatientUser7,
-        name: "George",
-        latestMessage: "Can we reschedule?",
-        messageCount: 4),
-    ChatUser(
-        profile: icPatientUser8,
-        name: "Hannah",
-        latestMessage: "Happy birthday!",
-        messageCount: 0),
-    ChatUser(
-        profile: icPatientUser9,
-        name: "Isaac",
-        latestMessage: "I'll be there in 10 mins",
-        messageCount: 7),
-    ChatUser(
-        profile: icPatientUser10,
-        name: "Julia",
-        latestMessage: "Got it, thanks!",
-        messageCount: 13),
-  ];
   List<ChatMessage> chatMessages = [
     ChatMessage(
         sender: "Alice",

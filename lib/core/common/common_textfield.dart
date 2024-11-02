@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:doctor_app/core/color_utils.dart';
-import 'package:flutter/material.dart';
-
 import '../app_constants.dart';
 
 //ignore: must_be_immutable
@@ -108,7 +105,7 @@ class CommonTextField extends StatelessWidget {
           bottom: bottom ?? zero),
       child: TextFormField(
         validator: validator,
-        cursorColor: colorBlack,
+        cursorColor: AppColors.colorBlack,
         readOnly: isReadOnly ?? false,
         maxLines: maxLines ?? 1,
         inputFormatters: inputFormatters ??
@@ -137,7 +134,7 @@ class CommonTextField extends StatelessWidget {
             suffixIcon: suffixIcon,
             hintStyle: GoogleFonts.inter(
               fontWeight: fontWeight ?? FontWeight.w400,
-              color: Colors.grey.withOpacity(zero080),
+              color: Colors.grey.withValues(alpha: zero080),
               fontSize: fontSize ?? fourteen,
             ),
             filled: isFill ?? true,
@@ -145,7 +142,7 @@ class CommonTextField extends StatelessWidget {
             isCollapsed: false,
             isDense: isDense ?? false,
             hintText: hint,
-            fillColor: colorFill ?? colorFillBg,
+            fillColor: colorFill ?? AppColors.colorFillBg,
             border: OutlineInputBorder(
                 gapPadding: ten,
                 borderSide: BorderSide(
@@ -156,7 +153,7 @@ class CommonTextField extends StatelessWidget {
                     BorderRadius.all(Radius.circular(radius ?? eight))),
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: AppColors.primary.withOpacity(0.20),
+                  color: AppColors.primary.withValues(alpha: 0.20),
                   width: 1,
                 ),
                 borderRadius:

@@ -1,4 +1,4 @@
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
@@ -23,7 +23,7 @@ class HealthFeedScreen extends StatelessWidget {
         child: Container(
           width: size.width,
           height: size.height,
-          color: isMobile ? colorBG : Colors.white,
+          color: isMobile ? AppColors.colorBG : Colors.white,
           child: ListView(
             children: [
               isMobile
@@ -46,7 +46,7 @@ class HealthFeedScreen extends StatelessWidget {
                         _topView(),
                         Container(
                           width: size.width,
-                          color: colorBG,
+                          color: AppColors.colorBG,
                           padding: const EdgeInsets.all(20),
                           child: CommonTextWidget(
                             textAlign: TextAlign.center,
@@ -76,11 +76,11 @@ class HealthFeedScreen extends StatelessWidget {
                                     height: isDesktop
                                         ? size.height * 0.15
                                         : size.height * 0.1,
-                                    color: colorBG,
+                                    color: AppColors.colorBG,
                                     fontSize: 30,
                                     decoration: commonBoxDecoration(
                                         borderRadius: BorderRadius.circular(8),
-                                        color: colorBG)),
+                                        color: AppColors.colorBG)),
                               ),
                               const SizedBox(
                                 width: 20,
@@ -90,11 +90,11 @@ class HealthFeedScreen extends StatelessWidget {
                                     height: isDesktop
                                         ? size.height * 0.15
                                         : size.height * 0.1,
-                                    color: colorBG,
+                                    color: AppColors.colorBG,
                                     fontSize: 30,
                                     decoration: commonBoxDecoration(
                                         borderRadius: BorderRadius.circular(8),
-                                        color: colorBG),
+                                        color: AppColors.colorBG),
                                     title: "Article Likes"),
                               ),
                               const SizedBox(
@@ -105,11 +105,11 @@ class HealthFeedScreen extends StatelessWidget {
                                     height: isDesktop
                                         ? size.height * 0.15
                                         : size.height * 0.1,
-                                    color: colorBG,
+                                    color: AppColors.colorBG,
                                     fontSize: 30,
                                     decoration: commonBoxDecoration(
                                         borderRadius: BorderRadius.circular(8),
-                                        color: colorBG),
+                                        color: AppColors.colorBG),
                                     title: "Profile Views (via Health Feed)"),
                               )
                             ],
@@ -188,21 +188,21 @@ class HealthFeedScreen extends StatelessWidget {
         Container(
             width: size.width,
             padding: const EdgeInsets.all(15.0),
-            color: Colors.grey.withOpacity(0.20),
+            color: Colors.grey.withValues(alpha: 0.20),
             child: CommonTextWidget(
               text: "YOUR STATS  ",
               fontWeight: FontWeight.w600,
               left: 5,
             )),
         commonView(width: size.width),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         /*  const Divider(
           thickness: 0.3,
         ),*/
         commonView(title: "Article Likes", width: size.width),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         /*const Divider(

@@ -1,12 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
-import 'package:doctor_app/core/common/CustomAlertDialog.dart';
+import 'package:doctor_app/core/common/custom_alert_dialog.dart';
 
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
-import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/provider/patient_provider.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/chat/web_chat_screen.dart';
@@ -252,7 +249,7 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
               ),
             ],
           ),
-          provider.isAdding ? showLoaderList() : SizedBox.shrink()
+          provider.isAdding ? showLoaderList() : const SizedBox.shrink()
         ],
       );
     });

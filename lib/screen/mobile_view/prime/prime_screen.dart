@@ -1,4 +1,4 @@
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
@@ -31,7 +31,7 @@ class PrimeScreen extends StatelessWidget {
             ))
           ]),
       child: Container(
-        color: isMobile ? colorBG : Colors.white,
+        color: isMobile ? AppColors.colorBG : Colors.white,
         child: Padding(
           padding: EdgeInsets.all(isMobile ? 10 : 20.0),
           child: ListView(
@@ -217,12 +217,12 @@ class PrimeScreen extends StatelessWidget {
       dense: true,
       trailing: Icon(
         Icons.more_vert,
-        color: Colors.black.withOpacity(0.80),
+        color: Colors.black.withValues(alpha: 0.80),
       ),
       title: CommonTextWidget(
         text: title ?? "Campaign Name",
         fontSize: fontSize,
-        textColor: Colors.black.withOpacity(0.80),
+        textColor: Colors.black.withValues(alpha: 0.80),
         marginBottom: 5,
       ),
       subtitle: Row(
@@ -263,7 +263,7 @@ class PrimeScreen extends StatelessWidget {
                 text: title ?? "Available\nBudget",
                 fontSize: isMobile ? 12 : 14,
                 left: 10,
-                textColor: Colors.black.withOpacity(0.80),
+                textColor: Colors.black.withValues(alpha: 0.80),
               )),
           Align(
               alignment: Alignment.bottomRight,
@@ -299,7 +299,7 @@ class BookingListScreen extends StatelessWidget {
                     onPressed: () {},
                     icon: const Icon(
                       Icons.filter_alt_sharp,
-                      color: colorAmber,
+                      color: AppColors.colorAmber,
                     ))),
             const Divider(
               thickness: 0.3,
@@ -318,7 +318,7 @@ class BookingListScreen extends StatelessWidget {
                     left: 10,
                     textAlign: TextAlign.center,
                     fontWeight: FontWeight.w600,
-                    textColor: Colors.black.withOpacity(0.50),
+                    textColor: Colors.black.withValues(alpha: 0.50),
                   ),
                   title: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -341,7 +341,7 @@ class BookingListScreen extends StatelessWidget {
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
                             textAlign: TextAlign.center,
-                            textColor: Colors.black.withOpacity(0.70),
+                            textColor: Colors.black.withValues(alpha: 0.70),
                           )),
                           Expanded(
                               flex: 1,
@@ -353,15 +353,15 @@ class BookingListScreen extends StatelessWidget {
                                     : null,
                                 fontWeight: FontWeight.w500,
                                 textAlign: TextAlign.center,
-                                textColor: Colors.black.withOpacity(0.70),
+                                textColor: Colors.black.withValues(alpha: 0.70),
                               )),
                         ],
                       ),
                       Container(
                           margin: const EdgeInsets.only(top: 5, left: 0),
                           color: booking.status == "CANCELLED"
-                              ? Colors.grey.withOpacity(0.10)
-                              : Colors.green.withOpacity(0.10),
+                              ? Colors.grey.withValues(alpha: 0.10)
+                              : Colors.green.withValues(alpha: 0.10),
                           padding: const EdgeInsets.all(5),
                           child: CommonTextWidget(
                             text: booking.status,

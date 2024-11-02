@@ -7,6 +7,8 @@ import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
+import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_dashboard_view.dart';
+import 'package:doctor_app/screen/web_view/admin_dashboard_view/communication_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/admin_calender_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/patient_new_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/setting/admin_setting_screen.dart';
@@ -14,9 +16,6 @@ import 'package:doctor_app/screen/web_view/screen/setting/admin_setting_screen.d
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../admin_dashboard_view/admin_dashboard_view.dart';
-import '../../admin_dashboard_view/communication_screen.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});

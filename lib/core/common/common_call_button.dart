@@ -1,3 +1,4 @@
+import 'package:doctor_app/core/app_constants.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:flutter/material.dart';
@@ -12,17 +13,17 @@ class CommonCallButton extends StatelessWidget {
       onExit: (_) => provider.setHover(false),
       child: AnimatedContainer(
         alignment: Alignment.topLeft,
-        width: 40,
-        height: 40,
+        width: forty,
+        height: forty,
         decoration: BoxDecoration(
             color:
                 provider.isHovered ? AppColors.colorBlue : AppColors.colorBgNew,
             /*color: AppColors.colorBgNew,*/
             shape: BoxShape.circle),
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
         child: Center(
           child: Icon(
-            size: 18,
+            size: eighteen,
             Icons.call_sharp,
             color: provider.isHovered ? Colors.white : Colors.grey,
           ),

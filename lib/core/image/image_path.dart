@@ -24,13 +24,13 @@ const String icMenuEarning = "$baseImagePath/ic_menu_earning.png";
 const String icMenuCalender = "$baseImagePath/ic_menu_calender.png";
 const String icMenuPatient = "$baseImagePath/ic_menu_patient.png";
 const String icMen = "$baseImagePath/ic_men.jpg";
-//const icDoctorWidget = '$baseImagePath/doctor.png';
+
 const icDoctorWidget = '$baseImagePath/dr-richard.webp';
 const String icDummyUsers = "$baseImagePath/ic_dummy_users.png";
 const String icLogoApps = "$baseImagePath/ic_app_logoss.png";
 const icError = '$baseImagePath/ic_error.png';
 const icPageError = '$baseImagePath/page_error.jpg';
-//const icBg1 = '$baseImagePath/ic_bg1.png';
+
 const icBg1 = '$baseImagePath/ic_bg3.png';
 const icBg2 = '$baseImagePath/ic_bg2.png';
 const icDummyUser = '$baseImagePath/ic_richard.png';

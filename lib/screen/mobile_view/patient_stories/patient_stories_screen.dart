@@ -1,4 +1,4 @@
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
@@ -24,12 +24,12 @@ class PatientStoriesScreen extends StatelessWidget {
       ),
       child: Container(
         width: size.width,
-        color: isMobile ? colorGreen : Colors.white,
+        color: isMobile ? AppColors.colorGreen : Colors.white,
         height: size.height,
         child: Center(
           child: Container(
             decoration: commonBoxDecoration(
-                color: colorBG,
+                color: AppColors.colorBG,
                 borderRadius: BorderRadius.circular(isMobile ? 0 : 10)),
             width: isMobile
                 ? size.width
@@ -55,25 +55,25 @@ class PatientStoriesScreen extends StatelessWidget {
                   ),
                   CommonTextWidget(
                     text: "Patient Stories",
-                    textColor: colorText,
+                    textColor: AppColors.colorText,
                     fontSize: isMobile ? 20 : 23,
                   ),
                   CommonTextWidget(
                     top: 15,
                     text:
                         "Know what your patients say about you\nand responds to them instantly",
-                    textColor: colorText,
+                    textColor: AppColors.colorText,
                     fontSize: isMobile ? 13 : 16,
                     textAlign: TextAlign.center,
                     lineHeight: 1.5,
                   ),
                   CommonButtonWidget(
-                    colorButton: colorGreen,
+                    colorButton: AppColors.colorGreen,
                     colorText: Colors.white,
                     radius: 2,
                     fontSize: isMobile ? 12 : 16,
                     padding: isMobile
-                        ? EdgeInsets.all(10)
+                        ? const EdgeInsets.all(10)
                         : const EdgeInsets.all(22),
                     fontWeight: FontWeight.w600,
                     top: 35,

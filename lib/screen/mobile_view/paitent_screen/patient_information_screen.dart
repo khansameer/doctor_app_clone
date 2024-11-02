@@ -1,4 +1,4 @@
-import 'package:doctor_app/core/color_utils.dart';
+import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
@@ -23,7 +23,7 @@ class PatientInformationScreen extends StatelessWidget {
             child: CommonTextWidget(
               text: 'EDIT',
               right: 16,
-              textColor: colorWhite,
+              textColor: AppColors.colorWhite,
               fontWeight: FontWeight.w700,
             ),
           )
@@ -41,12 +41,12 @@ class PatientInformationScreen extends StatelessWidget {
                     margin: const EdgeInsets.all(16),
                     decoration: commonBoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.grey.withOpacity(0.10),
+                      color: Colors.grey.withValues(alpha: 0.10),
                       border: Border.all(color: Colors.grey, width: 0.5),
                     ),
                     child: const Icon(
                       Icons.person,
-                      color: colorGray,
+                      color: AppColors.colorGray,
                       size: 36,
                     ),
                   ),

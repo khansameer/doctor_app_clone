@@ -1,5 +1,5 @@
 import 'package:doctor_app/core/app_constants.dart';
-import 'package:doctor_app/core/color_utils.dart';
+
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
@@ -64,7 +64,7 @@ class LoginView extends StatelessWidget {
                               image: DecorationImage(
                                   fit: BoxFit.cover, image: AssetImage(icBg1))),
                           child: Container(
-                            color: colorBG.withOpacity(0.60),
+                            color: AppColors.colorBG.withValues(alpha: 0.60),
                           ),
                         ),
                       )),

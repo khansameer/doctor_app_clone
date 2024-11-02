@@ -1,5 +1,4 @@
 import 'package:doctor_app/core/app_constants.dart';
-import 'package:doctor_app/core/color_utils.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -69,12 +68,12 @@ class CommonButtonWidget extends StatelessWidget {
         style: TextButton.styleFrom(
           //padding: EdgeInsets.zero,,
           foregroundColor: colorButton ?? AppColors.colorActive,
-          padding: padding ?? const EdgeInsets.all(15),
+          padding: padding ?? const EdgeInsets.all(fifteen),
           shape: RoundedRectangleBorder(
             side: BorderSide(
                 width: borderWidth ?? zero,
                 color: colorBorder ?? Colors.transparent),
-            borderRadius: BorderRadius.circular(radius ?? 12),
+            borderRadius: BorderRadius.circular(radius ?? eight),
           ),
           backgroundColor:
               colorButton ?? AppColors.colorActive, // Background Color
@@ -89,7 +88,7 @@ class CommonButtonWidget extends StatelessWidget {
                   ? icon ??
                       Container(
                           margin:
-                              const EdgeInsets.only(right: twenty, left: 10),
+                              const EdgeInsets.only(right: twenty, left: ten),
                           child: const Icon(
                             Icons.add,
                             color: Colors.white,
@@ -106,7 +105,8 @@ class CommonButtonWidget extends StatelessWidget {
               iconShowRight ?? false
                   ? iconRight ??
                       Container(
-                          margin: const EdgeInsets.only(right: 0, left: 00),
+                          margin:
+                              const EdgeInsets.only(right: zero, left: zero),
                           child: const Icon(
                             Icons.add,
                             color: Colors.white,
