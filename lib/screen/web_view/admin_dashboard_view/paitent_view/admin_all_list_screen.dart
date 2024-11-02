@@ -137,7 +137,9 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                                   top: 5,
                                   fontSize: 13,
                                 ),
-                                _viewButtonView(isMobile: isMobile)
+                                isMobile
+                                    ? _viewButtonView(isMobile: isMobile)
+                                    : SizedBox.shrink()
                               ],
                             ),
                           ),
