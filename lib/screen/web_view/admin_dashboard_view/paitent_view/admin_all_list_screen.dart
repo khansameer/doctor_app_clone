@@ -4,6 +4,7 @@ import 'package:doctor_app/core/common/custom_alert_dialog.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
+import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/provider/patient_provider.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/chat/web_chat_screen.dart';
@@ -43,13 +44,11 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
         context.read<PatientProvider>().clearFilter();
       } else if (widget.title == "all_male") {
         context.read<PatientProvider>().filterByGender("male");
-        //provider.filterBYGenders(gender: 'male');
       } else if (widget.title == "all_female") {
         context.read<PatientProvider>().filterByGender("female");
-        //provider.filterBYGenders(gender: 'male');
       }
     });
-
+    var isMobile = Responsive.isMobile(context);
     return Consumer<PatientProvider>(builder: (context, provider, child) {
       return Stack(
         children: [
@@ -60,46 +59,41 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                   Container(
                     padding: const EdgeInsets.all(10.0),
                     color: AppColors.colorBgNew,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: List.generate(26, (index) {
-                        final letter = String.fromCharCode(
-                            65 + index); // ASCII value of A is 65
-                        final isAvailable =
-                            provider.availableLetters?.contains(letter);
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: List.generate(26, (index) {
+                          final letter = String.fromCharCode(
+                              65 + index); // ASCII value of A is 65
+                          final isAvailable =
+                              provider.availableLetters?.contains(letter);
 
-                        return Expanded(
-                          child: GestureDetector(
+                          return GestureDetector(
                             onTap: isAvailable == true
                                 ? () => provider.selectLetter(letter)
                                 : null,
                             child: Container(
-                              margin: const EdgeInsets.all(3),
-                              //  padding: const EdgeInsets.all(0.0),
+                              margin: const EdgeInsets.symmetric(horizontal: 3),
+                              padding: const EdgeInsets.all(15.0),
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                  color: isAvailable == true
-                                      ? Colors.white
-                                      : null),
-
-                              child: Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: CommonTextWidget(
-                                  text: letter,
-                                  fontSize: 12,
-                                  textAlign: TextAlign.center,
-                                  textColor: isAvailable == true
-                                      ? AppColors.colorBlue
-                                      : AppColors.colorTextNew,
-                                  fontWeight: isAvailable == true
-                                      ? FontWeight.w600
-                                      : FontWeight.w600,
-                                ),
+                                borderRadius: BorderRadius.circular(6),
+                                color:
+                                    isAvailable == true ? Colors.white : null,
+                              ),
+                              child: CommonTextWidget(
+                                text: letter,
+                                fontSize: 12,
+                                textAlign: TextAlign.center,
+                                textColor: isAvailable == true
+                                    ? AppColors.colorBlue
+                                    : AppColors.colorTextNew,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                          ),
-                        );
-                      }),
+                          );
+                        }),
+                      ),
                     ),
                   ),
                   ListView.builder(
@@ -116,112 +110,9 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                           child: ListTile(
                             titleAlignment: ListTileTitleAlignment.threeLine,
                             contentPadding: EdgeInsets.zero,
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                /*Container(
-                                  margin: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8)),
-                                  child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 25.0, right: 25, top: 0, bottom: 0),
-                                      child: CommonTextWidget(
-                                        text: data.isActive == false
-                                            ? "InActive".toUpperCase()
-                                            : "Active".toUpperCase(),
-                                        textColor: data.isActive == false
-                                            ? Colors.red
-                                            : Colors.green,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                ),*/
-                                commonInkWell(
-                                  onTap: () {
-                                    //  chatModel.chatUserInfoValue(data);
-                                    showDialog(
-                                        barrierDismissible: false,
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return const CustomAlertDialog(
-                                            content: WebChatScreen(
-                                              communication: false,
-                                            ),
-                                          );
-                                        });
-                                  },
-                                  child: Container(
-                                    width: 50,
-                                    height: 50,
-                                    decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        shape: BoxShape.circle),
-                                    child: const Center(
-                                      child: Icon(
-                                        Icons.chat,
-                                        size: 20,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Flexible(
-                                  child: Container(
-                                    alignment: Alignment.topLeft,
-                                    width: 50,
-                                    decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        shape: BoxShape.circle),
-                                    height: 50,
-                                    child: const Center(
-                                      child: Icon(
-                                        size: 20,
-                                        Icons.call_sharp,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                commonInkWell(
-                                  onTap: () {
-                                    showDialog(
-                                        barrierDismissible: false,
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return const CustomAlertDialog(
-                                            content: AdminPatientDetailsView(),
-                                          );
-                                        });
-                                  },
-                                  child: Container(
-                                    margin: const EdgeInsets.all(5),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(8)),
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 20.0, right: 20),
-                                        child: CommonTextWidget(
-                                          text: "View Profile",
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            trailing: isMobile
+                                ? SizedBox.shrink()
+                                : _viewButtonView(isMobile: isMobile),
                             leading: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
                               child: setAssetImage(
@@ -237,10 +128,17 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                               fontWeight: FontWeight.w700,
                               fontSize: 15,
                             ),
-                            subtitle: CommonTextWidget(
-                              text: "28 years",
-                              top: 5,
-                              fontSize: 13,
+                            subtitle: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CommonTextWidget(
+                                  text: "28 years",
+                                  top: 5,
+                                  fontSize: 13,
+                                ),
+                                _viewButtonView(isMobile: isMobile)
+                              ],
                             ),
                           ),
                         );
@@ -253,5 +151,91 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
         ],
       );
     });
+  }
+
+  _viewButtonView({required bool isMobile}) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        commonInkWell(
+          onTap: () {
+            //  chatModel.chatUserInfoValue(data);
+            showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (BuildContext context) {
+                  return const CustomAlertDialog(
+                    content: WebChatScreen(
+                      communication: false,
+                    ),
+                  );
+                });
+          },
+          child: Container(
+            width: 50,
+            height: 50,
+            decoration: const BoxDecoration(
+                color: Colors.white, shape: BoxShape.circle),
+            child: const Center(
+              child: Icon(
+                Icons.chat,
+                size: 20,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Flexible(
+          child: Container(
+            alignment: Alignment.topLeft,
+            width: 50,
+            decoration: const BoxDecoration(
+                color: Colors.white, shape: BoxShape.circle),
+            height: 50,
+            child: const Center(
+              child: Icon(
+                size: 20,
+                Icons.call_sharp,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        commonInkWell(
+          onTap: () {
+            showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (BuildContext context) {
+                  return const CustomAlertDialog(
+                    content: AdminPatientDetailsView(),
+                  );
+                });
+          },
+          child: Container(
+            margin: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20),
+                child: isMobile
+                    ? Icon(Icons.remove_red_eye_outlined)
+                    : CommonTextWidget(
+                        text: "View Profile",
+                        fontWeight: FontWeight.w600,
+                      ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

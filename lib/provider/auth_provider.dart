@@ -86,8 +86,8 @@ class AuthProviders extends ChangeNotifier {
     notifyListeners();
   }
 
-  redirectToLogin({required BuildContext context}) {
-    Timer(const Duration(seconds: 3), () async {
+  redirectToLogin({required BuildContext context, int? seconds = 0}) {
+    Timer(Duration(seconds: seconds ?? 3), () async {
       if (await PreferenceHelper.getBool(key: PreferenceHelper.isLOGIN) ==
           true) {
         if (kIsWeb) {

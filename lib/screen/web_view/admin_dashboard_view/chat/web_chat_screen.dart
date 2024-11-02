@@ -17,11 +17,16 @@ class WebChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isDesktop = Responsive.isDesktop(context);
+    var isMobile = Responsive.isMobile(context);
 
     return Container(
-      width: isDesktop ? size.width * 0.8 : size.width * 0.9,
+      width: isDesktop
+          ? size.width * 0.8
+          : isMobile
+              ? size.width
+              : size.width * 0.9,
       height: size.height,
-      margin: EdgeInsets.all(communication ? 10 : 0),
+      //  margin: EdgeInsets.all(communication ? 10 : 0),
       decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -63,29 +68,33 @@ class WebChatScreen extends StatelessWidget {
                             : const SizedBox(
                                 width: 10,
                               ),
-                        commonProfileIcon(
-                            width: 45,
-                            height: 45,
-                            path: context
+                        isMobile
+                            ? SizedBox.shrink()
+                            : commonProfileIcon(
+                                width: 45,
+                                height: 45,
+                                path: context
+                                        .read<AdminDashboardProvider>()
+                                        .chatUserInfo
+                                        ?.profile ??
+                                    context
+                                        .read<AdminDashboardProvider>()
+                                        .patients[0]
+                                        .profile),
+                        Flexible(
+                          child: CommonTextWidget(
+                            text: context
                                     .read<AdminDashboardProvider>()
                                     .chatUserInfo
-                                    ?.profile ??
+                                    ?.name ??
                                 context
                                     .read<AdminDashboardProvider>()
                                     .patients[0]
-                                    .profile),
-                        CommonTextWidget(
-                          text: context
-                                  .read<AdminDashboardProvider>()
-                                  .chatUserInfo
-                                  ?.name ??
-                              context
-                                  .read<AdminDashboardProvider>()
-                                  .patients[0]
-                                  .name,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          left: 10,
+                                    .name,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            left: 10,
+                          ),
                         )
                       ],
                     )),
@@ -101,11 +110,13 @@ class WebChatScreen extends StatelessWidget {
                               color: AppColors.colorBgNew,
                               borderRadius: BorderRadius.circular(8)),
                           child: Center(
-                            child: CommonTextWidget(
-                              text: "Case History",
-                              textColor: AppColors.colorTextNew,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            child: isMobile
+                                ? Icon(Icons.history_edu_rounded)
+                                : CommonTextWidget(
+                                    text: "Case History",
+                                    textColor: AppColors.colorTextNew,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                           ),
                         ),
                         const SizedBox(

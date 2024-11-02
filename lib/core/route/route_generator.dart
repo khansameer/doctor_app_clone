@@ -1,4 +1,5 @@
 import 'package:doctor_app/core/route/route.dart';
+import 'package:doctor_app/provider/auth_provider.dart';
 import 'package:doctor_app/screen/web_view/screen/admin_dashboard/admin_dashboard.dart';
 
 import 'package:doctor_app/screen/authentication/forgot/forgot_password_opt_view.dart';
@@ -27,6 +28,7 @@ import 'package:doctor_app/screen/mobile_view/setting/setting_screen.dart';
 import 'package:doctor_app/screen/mobile_view/weekly_earning/weekly_earning_screen.dart';
 import 'package:doctor_app/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../screen/mobile_view/reach/reach_screen.dart';
 import '../../screen/mobile_view/report_and_issue/report_and_issue_screen.dart';
@@ -161,8 +163,31 @@ class RouteGenerator {
                 const RouteSettings(name: RouteName.procedureChargesScreen));
       default:
         return MaterialPageRoute(
-            builder: (_) =>
-                const Scaffold(body: SafeArea(child: Text('Route Error'))));
+            builder: (_) => const HandleBackErrorMessage());
     }
+  }
+}
+
+class HandleBackErrorMessage extends StatefulWidget {
+  const HandleBackErrorMessage({super.key});
+
+  @override
+  State<HandleBackErrorMessage> createState() => _HandleBackErrorMessageState();
+}
+
+class _HandleBackErrorMessageState extends State<HandleBackErrorMessage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context
+          .read<AuthProviders>()
+          .redirectToLogin(context: context, seconds: 1);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }

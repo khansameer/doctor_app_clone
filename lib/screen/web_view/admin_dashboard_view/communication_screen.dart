@@ -1,6 +1,7 @@
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/common_textfield.dart';
+import 'package:doctor_app/core/common/custom_alert_dialog.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
@@ -8,6 +9,7 @@ import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/responsive.dart';
 import 'chat/web_chat_screen.dart';
 
 class CommunicationScreen extends StatefulWidget {
@@ -21,6 +23,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
+    var isMobile = Responsive.isMobile(context);
     return Row(
       children: [
         Expanded(
@@ -38,7 +41,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                 ],
                 borderRadius: BorderRadius.circular(8)),
             height: size.height * 0.9,
-            margin: const EdgeInsets.all(10),
+            margin: EdgeInsets.all(isMobile ? 0 : 10),
             child: Padding(
               padding: const EdgeInsets.all(0.0),
               child: DefaultTabController(
@@ -82,7 +85,10 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                       ),
                       Expanded(
                         child: TabBarView(
-                          children: [_commonUserList(), _commonUserList()],
+                          children: [
+                            _commonUserList(isMobile: isMobile),
+                            _commonUserList(isMobile: isMobile)
+                          ],
                         ),
                       ),
                     ],
@@ -90,17 +96,19 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
             ),
           ),
         ),
-        const Expanded(
-          flex: 5,
-          child: WebChatScreen(
-            communication: true,
-          ),
-        ),
+        isMobile
+            ? SizedBox.shrink()
+            : Expanded(
+                flex: 5,
+                child: WebChatScreen(
+                  communication: true,
+                ),
+              ),
       ],
     );
   }
 
-  _commonUserList() {
+  _commonUserList({required bool isMobile}) {
     return Consumer<AdminDashboardProvider>(
       builder: (context, chatModel, child) {
         return Column(
@@ -176,8 +184,25 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                         textColor: AppColors.colorBlue,
                       ),
                       onTap: () {
-                        chatModel.chatUserInfoValue(data);
-                        chatModel.selectUser(index);
+                        if (isMobile) {
+                          showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const CustomAlertDialog(
+                                  insetPadding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 10),
+                                  content: WebChatScreen(
+                                    communication: false,
+                                  ),
+                                );
+                              });
+                          chatModel.chatUserInfoValue(data);
+                          chatModel.selectUser(index);
+                        } else {
+                          chatModel.chatUserInfoValue(data);
+                          chatModel.selectUser(index);
+                        }
                       },
                     ),
                   );
