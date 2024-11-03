@@ -12,6 +12,7 @@ import 'package:doctor_app/main.dart';
 
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/provider/procedure_provider.dart';
+import 'package:doctor_app/screen/web_view/admin_dashboard_view/patient_profile_dialog.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:doctor_app/shared_preferences/preference_helper.dart';
 
@@ -24,6 +25,27 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
+
+void showProfileDialog(BuildContext context) {
+  var size = MediaQuery.sizeOf(context);
+  showGeneralDialog(
+    context: context,
+    barrierLabel: "Barrier",
+    barrierDismissible: true,
+    barrierColor: Colors.black.withValues(alpha: 0.6),
+    transitionDuration: const Duration(milliseconds: 800),
+    pageBuilder: (_, __, ___) {
+      return Center(
+        child: SizedBox(
+          width: size.width * 0.3,
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: const PatientProfileDialog()),
+        ),
+      );
+    },
+  );
+}
 
 commonWithIconButton(
     {required VoidCallback onPressed, String? btnText, IconData? icon}) {
@@ -237,6 +259,7 @@ commonDivider() {
 Widget commonInkWell({
   Widget? child,
   VoidCallback? onTap,
+  void Function(bool)? onHover,
   void Function(PointerEnterEvent)? onEnter,
   void Function(PointerExitEvent)? onExit,
 }) {
@@ -244,6 +267,7 @@ Widget commonInkWell({
     onEnter: onEnter,
     onExit: onExit,
     child: InkWell(
+      onHover: onHover,
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
       onTap: onTap,
@@ -317,12 +341,24 @@ pushNamedAndRemoveUntil(
 
 commonProfileIcon({double? width, double? height, String? path}) {
   return ClipRRect(
-    borderRadius: BorderRadius.circular(8),
+    borderRadius: BorderRadius.circular(100),
     child: setAssetImage(
       width: width ?? 60,
       height: height ?? 60,
       fit: BoxFit.cover,
       image: path ?? icPatientUser4,
+    ) /*commonImageNetworkWidget(path: provider.patients[index].photo)*/,
+  );
+}
+
+commonProfileNetUrl({double? width, double? height, String? path}) {
+  return ClipRRect(
+    borderRadius: BorderRadius.circular(100),
+    child: CachedNetworkImage(
+      width: width ?? 60,
+      height: height ?? 60,
+      fit: BoxFit.cover,
+      imageUrl: path ?? '',
     ) /*commonImageNetworkWidget(path: provider.patients[index].photo)*/,
   );
 }

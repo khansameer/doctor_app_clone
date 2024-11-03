@@ -16,6 +16,7 @@ class CommonDropDownView extends StatelessWidget {
     this.hintColor,
     this.padding,
     this.height,
+    this.borerColor,
     required this.items,
     this.selectedValue,
   });
@@ -23,6 +24,7 @@ class CommonDropDownView extends StatelessWidget {
   final String? hint;
   final BoxDecoration? decoration;
   final Color? hintColor;
+  final Color? borerColor;
   final String? selectedValue;
   final double? height;
   final EdgeInsetsGeometry? padding;
@@ -84,7 +86,8 @@ class CommonDropDownView extends StatelessWidget {
               BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: AppColors.colorGreen.withValues(alpha: 0.30),
+                  color: borerColor ??
+                      AppColors.colorGreen.withValues(alpha: 0.30),
                 ),
                 //color: Colors.redAccent,
               ),

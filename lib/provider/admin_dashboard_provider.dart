@@ -26,6 +26,33 @@ class Patient {
 }
 
 class AdminDashboardProvider with ChangeNotifier {
+  int? _hoveredChat;
+
+  int? get hoveredChat => _hoveredChat;
+
+  void setHoveredChat(int? index) {
+    _hoveredChat = index;
+    notifyListeners();
+  }
+
+  int? _hoveredVideoCall;
+
+  int? get hoveredVideoCall => _hoveredVideoCall;
+
+  void setHoveredVideoCall(int? index) {
+    _hoveredVideoCall = index;
+    notifyListeners();
+  }
+
+  int? _hoveredEdit;
+
+  int? get hoveredEdit => _hoveredEdit;
+
+  void setHoveredEdit(int? index) {
+    _hoveredEdit = index;
+    notifyListeners();
+  }
+
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
 

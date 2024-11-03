@@ -4,8 +4,11 @@ import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
+import 'package:doctor_app/provider/report_provier.dart';
+import 'package:doctor_app/screen/web_view/admin_dashboard_view/patient_profile_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class AdminUpComingAppointmentsView extends StatelessWidget {
   const AdminUpComingAppointmentsView({super.key, required this.provider});
@@ -14,6 +17,7 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
+
     return Container(
       height: size.height,
       margin: const EdgeInsets.all(20),
@@ -45,124 +49,235 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: provider.patients.length,
                 itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              flex: 9,
-                              child: Row(
+                  return Container(
+                    decoration: BoxDecoration(
+                        /* color: provider.hoveredIndex == index
+                            ? AppColors.colorBgNew.withValues(alpha: 0.7)
+                            : Colors.transparent,*/
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                flex: 9,
+                                child: Row(
+                                  children: [
+                                    commonInkWell(
+                                      onEnter: (event) {
+                                        showProfileDialog(context);
+                                        context.read<ReportProvider>().setName =
+                                            provider.patients[index].name
+                                                .toString();
+                                        context
+                                                .read<ReportProvider>()
+                                                .setImage =
+                                            provider.patients[index].profile
+                                                .toString();
+                                      },
+                                      child: commonProfileIcon(
+                                          width: 40,
+                                          height: 40,
+                                          path: provider
+                                                  .patients[index].profile ??
+                                              icDummyUser),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Flexible(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          commonInkWell(
+                                            onEnter: (event) {
+                                              showProfileDialog(context);
+                                              context
+                                                      .read<ReportProvider>()
+                                                      .setName =
+                                                  provider.patients[index].name
+                                                      .toString();
+                                              context
+                                                      .read<ReportProvider>()
+                                                      .setImage =
+                                                  provider
+                                                      .patients[index].profile
+                                                      .toString();
+                                            },
+                                            child: CommonTextWidget(
+                                              fontWeight: FontWeight.w600,
+                                              text:
+                                                  provider.patients[index].name,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                          CommonTextWidget(
+                                            text: provider
+                                                .patients[index].description,
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 10,
+                                            top: 5,
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: setAssetImage(
-                                      width: 60,
-                                      height: 60,
-                                      fit: BoxFit.cover,
-                                      image: provider.patients[index].profile ??
-                                          icDummyUser,
-                                    ) /*commonImageNetworkWidget(path: provider.patients[index].photo)*/,
+                                  MouseRegion(
+                                    onEnter: (_) {
+                                      provider.setHoveredChat(index);
+                                    },
+                                    onExit: (_) {
+                                      provider.setHoveredChat(null);
+                                    },
+                                    child: AnimatedContainer(
+                                      duration:
+                                          const Duration(milliseconds: 200),
+                                      alignment: Alignment.topLeft,
+                                      width: 35,
+                                      decoration: BoxDecoration(
+                                          color: provider.hoveredChat == index
+                                              ? AppColors.primary
+                                              : AppColors.colorBgNew,
+                                          shape: BoxShape.circle),
+                                      height: 35,
+                                      child: Center(
+                                        child: Icon(
+                                          size: 15,
+                                          Icons.message,
+                                          color: provider.hoveredChat == index
+                                              ? Colors.white
+                                              : Colors.grey,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                   const SizedBox(
                                     width: 10,
                                   ),
-                                  Flexible(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        CommonTextWidget(
-                                          text: provider.patients[index].name,
-                                          fontSize: 12,
+                                  MouseRegion(
+                                    onEnter: (_) {
+                                      provider.setHoveredVideoCall(index);
+                                    },
+                                    onExit: (_) {
+                                      provider.setHoveredVideoCall(null);
+                                    },
+                                    child: AnimatedContainer(
+                                      duration:
+                                          const Duration(milliseconds: 200),
+                                      alignment: Alignment.topLeft,
+                                      width: 35,
+                                      decoration: BoxDecoration(
+                                          color:
+                                              provider.hoveredVideoCall == index
+                                                  ? AppColors.primary
+                                                  : AppColors.colorBgNew,
+                                          shape: BoxShape.circle),
+                                      height: 35,
+                                      child: Center(
+                                        child: Icon(
+                                          size: 15,
+                                          Icons.videocam,
+                                          color:
+                                              provider.hoveredVideoCall == index
+                                                  ? Colors.white
+                                                  : Colors.grey,
                                         ),
-                                        CommonTextWidget(
-                                          text: provider
-                                              .patients[index].description,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 14,
-                                          top: 5,
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                                child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Flexible(
-                                  child: Container(
-                                    alignment: Alignment.topLeft,
-                                    width: 40,
-                                    decoration: const BoxDecoration(
-                                        color: AppColors.colorBgNew,
-                                        shape: BoxShape.circle),
-                                    height: 40,
-                                    child: const Center(
-                                      child: Icon(
-                                        size: 18,
-                                        Icons.call_sharp,
-                                        color: Colors.grey,
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ))
-                          ],
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  MouseRegion(
+                                    onEnter: (_) {
+                                      provider.setHoveredEdit(index);
+                                    },
+                                    onExit: (_) {
+                                      provider.setHoveredEdit(null);
+                                    },
+                                    child: AnimatedContainer(
+                                      duration:
+                                          const Duration(milliseconds: 200),
+                                      alignment: Alignment.topLeft,
+                                      width: 35,
+                                      decoration: BoxDecoration(
+                                          color: provider.hoveredEdit == index
+                                              ? AppColors.primary
+                                              : AppColors.colorBgNew,
+                                          shape: BoxShape.circle),
+                                      height: 35,
+                                      child: Center(
+                                        child: Icon(
+                                          size: 15,
+                                          Icons.edit,
+                                          color: provider.hoveredEdit == index
+                                              ? Colors.white
+                                              : Colors.grey,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      // / const Divider(thickness: 0.3,),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.access_time,
-                                  color: AppColors.colorTextNew,
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                CommonTextWidget(
-                                  text: provider.patients[index].time,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                )
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 50,
-                            ),
-                            /* Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                CommonTextWidget(
-                                  text: '\$${provider.patients[index].price}',
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                )
-                              ],
-                            )*/
-                          ],
-                        ),
-                      )
-                    ],
+                        // / const Divider(thickness: 0.3,),
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.access_time,
+                                    color: AppColors.colorTextNew,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  CommonTextWidget(
+                                    text: provider.patients[index].time,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                width: 50,
+                              ),
+                              /* Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  CommonTextWidget(
+                                    text: '\$${provider.patients[index].price}',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  )
+                                ],
+                              )*/
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {

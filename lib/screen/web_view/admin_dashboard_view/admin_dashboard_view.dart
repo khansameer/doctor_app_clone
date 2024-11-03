@@ -31,6 +31,7 @@ class AdminDashboardView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
+              flex: 6,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -45,9 +46,10 @@ class AdminDashboardView extends StatelessWidget {
               ),
             ),
             Expanded(
+                flex: 3,
                 child: AdminUpComingAppointmentsView(
-              provider: provider,
-            ))
+                  provider: provider,
+                ))
           ],
         ),
       ],

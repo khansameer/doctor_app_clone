@@ -1,3 +1,4 @@
+import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:flutter/material.dart';
 
@@ -15,11 +16,13 @@ class ErrorPage extends StatelessWidget {
       width: size.width,
       padding: const EdgeInsets.all(16),
       height: size.height,
-      child: Image.asset(
-          width: twoHundred,
-          height: twoHundred,
-          fit: BoxFit.scaleDown,
-          icPageError),
+      child: Center(
+        child: CommonTextWidget(
+          fontWeight: FontWeight.w700,
+          fontSize: 16,
+          text: "Data not found",
+        ),
+      ),
     );
   }
 }

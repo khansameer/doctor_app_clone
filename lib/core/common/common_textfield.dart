@@ -153,7 +153,8 @@ class CommonTextField extends StatelessWidget {
                     BorderRadius.all(Radius.circular(radius ?? eight))),
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: AppColors.primary.withValues(alpha: 0.20),
+                  color:
+                      borderColor ?? AppColors.primary.withValues(alpha: 0.20),
                   width: 1,
                 ),
                 borderRadius:

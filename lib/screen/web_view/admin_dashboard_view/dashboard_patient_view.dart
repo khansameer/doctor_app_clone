@@ -4,7 +4,9 @@ import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
+import 'package:doctor_app/provider/report_provier.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DashboardPatientView extends StatelessWidget {
   const DashboardPatientView({super.key, required this.provider});
@@ -17,7 +19,7 @@ class DashboardPatientView extends StatelessWidget {
     var isDeskTop = Responsive.isDesktop(context);
     var isTablet = Responsive.isTablet(context);
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(0),
       margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(8)),
@@ -27,6 +29,34 @@ class DashboardPatientView extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: CommonTextWidget(
+              left: 5,
+              text: "appointments".toUpperCase(),
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          const Divider(
+            thickness: 0.3,
+          ),
+          commonView(),
+          const Divider(
+            thickness: 0.3,
+          ),
+          commonView(
+              title: "No of upcoming appointments".toUpperCase(),
+              value: "40",
+              colorText: Colors.white,
+              bgColor: AppColors.primary),
+          const Divider(
+            thickness: 0.3,
+          ),
+          commonView(
+              title: "No of missed appointments".toUpperCase(),
+              value: "5",
+              colorText: Colors.white,
+              bgColor: Colors.red.withValues(alpha: 0.7)),
+          /* Padding(
             padding: const EdgeInsets.all(0.0),
             child: Row(
               children: [
@@ -96,16 +126,25 @@ class DashboardPatientView extends StatelessWidget {
                                 flex: 9,
                                 child: Row(
                                   children: [
-                                    ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: setAssetImage(
-                                          width: 50,
-                                          height: 50,
-                                          fit: BoxFit.scaleDown,
-                                          image: provider
+                                    commonInkWell(
+                                      onEnter: (event) {
+                                        showProfileDialog(context);
+                                        context.read<ReportProvider>().setName =
+                                            provider.patients[index].name
+                                                .toString();
+                                        context
+                                                .read<ReportProvider>()
+                                                .setImage =
+                                            provider.patients[index].profile
+                                                .toString();
+                                      },
+                                      child: commonProfileIcon(
+                                          width: 40,
+                                          height: 40,
+                                          path: provider
                                                   .patients[index].profile ??
-                                              icDummyUsers,
-                                        )),
+                                              icDummyUsers),
+                                    ),
                                     const SizedBox(
                                       width: 10,
                                     ),
@@ -115,15 +154,30 @@ class DashboardPatientView extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        CommonTextWidget(
-                                          text: provider.patients[index].name,
-                                          fontSize: 12,
+                                        commonInkWell(
+                                          onEnter: (event) {
+                                            showProfileDialog(context);
+                                            context
+                                                    .read<ReportProvider>()
+                                                    .setName =
+                                                provider.patients[index].name
+                                                    .toString();
+                                            context
+                                                    .read<ReportProvider>()
+                                                    .setImage =
+                                                provider.patients[index].profile
+                                                    .toString();
+                                          },
+                                          child: CommonTextWidget(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w700,
+                                            text: provider.patients[index].name,
+                                          ),
                                         ),
                                         CommonTextWidget(
                                           text: provider
                                               .patients[index].description,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 14,
+                                          fontSize: 11,
                                           top: 5,
                                         ),
                                       ],
@@ -149,7 +203,7 @@ class DashboardPatientView extends StatelessWidget {
                                             color: provider.isHovered
                                                 ? AppColors.colorBlue
                                                 : AppColors.colorBgNew,
-                                            /*color: AppColors.colorBgNew,*/
+                                            */ /*color: AppColors.colorBgNew,*/ /*
                                             shape: BoxShape.circle),
                                         height: 40,
                                         duration:
@@ -212,7 +266,39 @@ class DashboardPatientView extends StatelessWidget {
                     ],
                   );
                 }),
+          ),*/
+        ],
+      ),
+    );
+  }
+
+  commonView({String? title, String? value, Color? bgColor, Color? colorText}) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CommonTextWidget(
+            fontWeight: FontWeight.w400,
+            fontSize: 12,
+            left: 10,
+            text: title ?? "No of completed appointment".toUpperCase(),
           ),
+          Container(
+            width: 40,
+            height: 40,
+            margin: EdgeInsets.only(right: 10),
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, color: bgColor ?? AppColors.colorBgNew),
+            child: Center(
+              child: CommonTextWidget(
+                text: value ?? "30",
+                fontSize: 13,
+                textColor: colorText,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          )
         ],
       ),
     );

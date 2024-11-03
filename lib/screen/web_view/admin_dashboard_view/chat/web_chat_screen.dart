@@ -70,17 +70,18 @@ class WebChatScreen extends StatelessWidget {
                               ),
                         isMobile
                             ? SizedBox.shrink()
-                            : commonProfileIcon(
-                                width: 45,
-                                height: 45,
-                                path: context
-                                        .read<AdminDashboardProvider>()
-                                        .chatUserInfo
-                                        ?.profile ??
-                                    context
-                                        .read<AdminDashboardProvider>()
-                                        .patients[0]
-                                        .profile),
+                            : commonInkWell(
+                                child: commonProfileIcon(
+                                    width: 40,
+                                    height: 40,
+                                    path: context
+                                            .read<AdminDashboardProvider>()
+                                            .chatUserInfo
+                                            ?.profile ??
+                                        context
+                                            .read<AdminDashboardProvider>()
+                                            .patients[0]
+                                            .profile)),
                         Flexible(
                           child: CommonTextWidget(
                             text: context

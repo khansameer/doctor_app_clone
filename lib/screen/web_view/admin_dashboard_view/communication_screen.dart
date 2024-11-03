@@ -5,6 +5,7 @@ import 'package:doctor_app/core/common/custom_alert_dialog.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
+import 'package:doctor_app/provider/report_provier.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -40,12 +41,15 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                   )
                 ],
                 borderRadius: BorderRadius.circular(8)),
-            height: size.height * 0.9,
-            margin: EdgeInsets.all(isMobile ? 0 : 10),
+            height: size.height,
+            //margin: EdgeInsets.all(isMobile ? 0 : 10),
+            margin: const EdgeInsets.only(left: 10, right: 10),
             child: Padding(
               padding: const EdgeInsets.all(0.0),
-              child: DefaultTabController(
-                  length: 2,
+              child: _commonUserList(
+                  isMobile:
+                      isMobile) /*DefaultTabController(
+                  length: 1,
                   child: Column(
                     children: [
                       Container(
@@ -78,7 +82,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
 
                             tabs: const [
                               Tab(text: 'Patients'),
-                              Tab(text: 'Doctors'),
+                              // Tab(text: 'Doctors'),
                             ],
                           ),
                         ),
@@ -92,13 +96,14 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                         ),
                       ),
                     ],
-                  )),
+                  ))*/
+              ,
             ),
           ),
         ),
         isMobile
-            ? SizedBox.shrink()
-            : Expanded(
+            ? const SizedBox.shrink()
+            : const Expanded(
                 flex: 5,
                 child: WebChatScreen(
                   communication: true,
@@ -150,20 +155,24 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                       leading: Stack(
                         clipBehavior: Clip.none,
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: setAssetImage(
-                              width: 40,
-                              height: 40,
-                              fit: BoxFit.cover,
-                              image: data.profile ?? icDummyUsers,
-                            ),
+                          commonInkWell(
+                            onEnter: (event) {
+                              showProfileDialog(context);
+                              context.read<ReportProvider>().setName =
+                                  data.name.toString();
+                              context.read<ReportProvider>().setImage =
+                                  data.profile.toString();
+                            },
+                            child: commonProfileIcon(
+                                width: 40,
+                                height: 40,
+                                path: data.profile ?? icDummyUsers),
                           ),
                           data.messageCount == 0
                               ? const SizedBox.shrink()
                               : Positioned(
                                   right: -5,
-                                  top: -3,
+                                  top: 2,
                                   child: Container(
                                     width: 10,
                                     decoration: const BoxDecoration(
@@ -173,10 +182,24 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                                   ))
                         ],
                       ),
-                      title: CommonTextWidget(
-                        text: data.name,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
+                      title: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          commonInkWell(
+                            onEnter: (event) {
+                              showProfileDialog(context);
+                              context.read<ReportProvider>().setName =
+                                  data.name.toString();
+                              context.read<ReportProvider>().setImage =
+                                  data.profile.toString();
+                            },
+                            child: CommonTextWidget(
+                              text: data.name,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          )
+                        ],
                       ),
                       subtitle: CommonTextWidget(
                         text: data.latestMessage,

@@ -7,6 +7,7 @@ import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/provider/patient_provider.dart';
+import 'package:doctor_app/provider/report_provier.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/chat/web_chat_screen.dart';
 
 import 'package:flutter/material.dart';
@@ -108,25 +109,40 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                           margin: const EdgeInsets.all(10),
                           padding: const EdgeInsets.all(15),
                           child: ListTile(
-                            titleAlignment: ListTileTitleAlignment.threeLine,
+                            titleAlignment: ListTileTitleAlignment.titleHeight,
                             contentPadding: EdgeInsets.zero,
                             trailing: isMobile
-                                ? SizedBox.shrink()
+                                ? const SizedBox.shrink()
                                 : _viewButtonView(isMobile: isMobile),
-                            leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: setAssetImage(
-                                width: 50,
-                                height: 50,
-                                fit: BoxFit.cover,
-                                image: icDummyUser,
-                              ) /*commonImageNetworkWidget(path: provider.patients[index].photo)*/,
-                            ),
-                            title: CommonTextWidget(
-                              text:
-                                  '${data?.firstName.toString()} ${data?.lastName.toString()}(${data?.gender.toString().toUpperCase()[0]})',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 15,
+                            leading: commonInkWell(
+                                onEnter: (event) {
+                                  showProfileDialog(context);
+                                  context.read<ReportProvider>().setName =
+                                      '${data?.firstName.toString()} ${data?.lastName.toString()}';
+                                  context.read<ReportProvider>().setImage =
+                                      icPatientUser4;
+                                },
+                                child:
+                                    commonProfileIcon(width: 40, height: 40)),
+                            title: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                commonInkWell(
+                                  onEnter: (event) {
+                                    showProfileDialog(context);
+                                    context.read<ReportProvider>().setName =
+                                        '${data?.firstName.toString()} ${data?.lastName.toString()}';
+                                    context.read<ReportProvider>().setImage =
+                                        icPatientUser4;
+                                  },
+                                  child: CommonTextWidget(
+                                    text:
+                                        '${data?.firstName.toString()} ${data?.lastName.toString()}(${data?.gender.toString().toUpperCase()[0]})',
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 15,
+                                  ),
+                                )
+                              ],
                             ),
                             subtitle: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -139,7 +155,7 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                                 ),
                                 isMobile
                                     ? _viewButtonView(isMobile: isMobile)
-                                    : SizedBox.shrink()
+                                    : const SizedBox.shrink()
                               ],
                             ),
                           ),
