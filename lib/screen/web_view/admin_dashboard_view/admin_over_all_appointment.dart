@@ -20,13 +20,13 @@ class AdminOverAllAppointment extends StatelessWidget {
       85,
     ];
     final List<String> listLabel = [
-      '8:00',
-      '8:30',
-      "9:00",
-      "9:30",
-      "10:00",
-      "10:30",
-      "11:00"
+      'Mon',
+      'Tue',
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat",
+      "Sun"
     ];
 
     final PageController pageController = PageController();

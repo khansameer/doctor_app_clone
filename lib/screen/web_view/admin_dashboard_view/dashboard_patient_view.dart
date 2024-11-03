@@ -29,6 +29,16 @@ class DashboardPatientView extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
+            padding: const EdgeInsets.all(15.0),
+            child:CommonTextWidget(
+                left: 5,
+                text: "Oct 1 - Oct 30".toUpperCase(),
+                textColor: Colors.green.shade300,
+                fontWeight: FontWeight.w800,
+                textAlign: TextAlign.right,
+              ),
+          ),
+          Padding(
             padding: const EdgeInsets.all(10.0),
             child: CommonTextWidget(
               left: 5,
@@ -36,6 +46,7 @@ class DashboardPatientView extends StatelessWidget {
               fontWeight: FontWeight.w800,
             ),
           ),
+          
           const Divider(
             thickness: 0.3,
           ),
