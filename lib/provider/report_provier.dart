@@ -194,4 +194,17 @@ class ReportProvider with ChangeNotifier {
       "Treatments & Product": "Braces, Mouth Guard"
     },
   ];
+
+  List<String> topMedicalCallCenters = [
+    "HealthFirst Call Center",
+    "MediCare Support Services",
+    "CareLine Medical Assistance",
+    "LifeCall Emergency Services",
+    "24/7 Health Help Line",
+    "Prime Medical Call Support",
+    "MedConnect Solutions",
+    "WellCare Helpline",
+    "VitalAssist Contact Center",
+    "HealthLink Patient Support"
+  ];
 }

@@ -166,6 +166,7 @@ class AuthProviders extends ChangeNotifier {
           url: isLogin ? ApiConfig.login : ApiConfig.registerUser, body: body);
       _loginModel = LoginModel.fromJson(json.decode(response));
 
+      print('===${globalStatusCode}');
       if (globalStatusCode == 200) {
         if (_loginModel?.token != null && _loginModel?.userId != null) {
           await PreferenceHelper.setString(

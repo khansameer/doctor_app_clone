@@ -9,6 +9,7 @@ import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_dashboard_view.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/communication_screen.dart';
+import 'package:doctor_app/screen/web_view/admin_dashboard_view/feedback/admin_feedback_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/admin_calender_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/patient_new_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/setting/admin_setting_screen.dart';
@@ -74,7 +75,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
       color: AppColors.colorBgNew,
       padding: const EdgeInsets.all(sixteen),
       child: const Center(
-        child: ErrorPage(),
+        child: AdminFeedbackScreen(),
       ),
     ),
     Container(

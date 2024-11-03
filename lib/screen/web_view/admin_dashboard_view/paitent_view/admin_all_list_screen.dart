@@ -5,6 +5,7 @@ import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
+import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/provider/patient_provider.dart';
 import 'package:doctor_app/provider/report_provier.dart';
@@ -113,7 +114,8 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                             contentPadding: EdgeInsets.zero,
                             trailing: isMobile
                                 ? const SizedBox.shrink()
-                                : _viewButtonView(isMobile: isMobile),
+                                : _viewButtonView(
+                                    isMobile: isMobile, index: index),
                             leading: commonInkWell(
                                 onEnter: (event) {
                                   showProfileDialog(context);
@@ -154,7 +156,8 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                                   fontSize: 13,
                                 ),
                                 isMobile
-                                    ? _viewButtonView(isMobile: isMobile)
+                                    ? _viewButtonView(
+                                        isMobile: isMobile, index: index)
                                     : const SizedBox.shrink()
                               ],
                             ),
@@ -171,7 +174,7 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
     });
   }
 
-  _viewButtonView({required bool isMobile}) {
+  _viewButtonView({required bool isMobile, required int index}) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -189,38 +192,74 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                   );
                 });
           },
-          child: Container(
-            width: 50,
-            height: 50,
-            decoration: const BoxDecoration(
-                color: Colors.white, shape: BoxShape.circle),
-            child: const Center(
-              child: Icon(
-                Icons.chat,
-                size: 20,
-                color: Colors.grey,
+          child: Consumer<AdminDashboardProvider>(
+              builder: (context, provider, child) {
+            return MouseRegion(
+              onEnter: (_) {
+                provider.setHoveredChat(index);
+              },
+              onExit: (_) {
+                provider.setHoveredChat(null);
+              },
+              child: AnimatedContainer(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                    color: provider.hoveredChat == index
+                        ? AppColors.primary
+                        : AppColors.colorBgNew,
+                    shape: BoxShape.circle),
+                /* decoration: const BoxDecoration(
+                      color: Colors.white, shape: BoxShape.circle),*/
+                duration: const Duration(milliseconds: 200),
+                child: Center(
+                  child: Icon(
+                    Icons.chat,
+                    size: 20,
+                    color: provider.hoveredChat == index
+                        ? Colors.white
+                        : Colors.grey,
+                  ),
+                ),
               ),
-            ),
-          ),
+            );
+          }),
         ),
         const SizedBox(
           width: 10,
         ),
         Flexible(
-          child: Container(
-            alignment: Alignment.topLeft,
-            width: 50,
-            decoration: const BoxDecoration(
-                color: Colors.white, shape: BoxShape.circle),
-            height: 50,
-            child: const Center(
-              child: Icon(
-                size: 20,
-                Icons.call_sharp,
-                color: Colors.grey,
+          child: Consumer<AdminDashboardProvider>(
+              builder: (context, provider, child) {
+            return MouseRegion(
+              onEnter: (_) {
+                provider.setHoveredVideoCall(index);
+              },
+              onExit: (_) {
+                provider.setHoveredVideoCall(null);
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                alignment: Alignment.topLeft,
+                width: 50,
+                decoration: BoxDecoration(
+                    color: provider.hoveredVideoCall == index
+                        ? AppColors.primary
+                        : AppColors.colorBgNew,
+                    shape: BoxShape.circle),
+                height: 50,
+                child: Center(
+                  child: Icon(
+                    size: 20,
+                    Icons.call_sharp,
+                    color: provider.hoveredVideoCall == index
+                        ? Colors.white
+                        : Colors.grey,
+                  ),
+                ),
               ),
-            ),
-          ),
+            );
+          }),
         ),
         const SizedBox(
           width: 10,
@@ -236,22 +275,40 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                   );
                 });
           },
-          child: Container(
-            margin: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(8)),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20.0, right: 20),
-                child: isMobile
-                    ? Icon(Icons.remove_red_eye_outlined)
-                    : CommonTextWidget(
-                        text: "View Profile",
-                        fontWeight: FontWeight.w600,
-                      ),
+          child: Consumer<AdminDashboardProvider>(
+              builder: (context, provider, child) {
+            return MouseRegion(
+              onEnter: (_) {
+                provider.setHoveredEdit(index);
+              },
+              onExit: (_) {
+                provider.setHoveredEdit(null);
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                margin: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    color: provider.hoveredEdit == index
+                        ? AppColors.primary
+                        : AppColors.colorBgNew,
+                    borderRadius: BorderRadius.circular(8)),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0, right: 20),
+                    child: isMobile
+                        ? Icon(Icons.remove_red_eye_outlined)
+                        : CommonTextWidget(
+                            textColor: provider.hoveredEdit == index
+                                ? Colors.white
+                                : null,
+                            text: "View Profile",
+                            fontWeight: FontWeight.w600,
+                          ),
+                  ),
+                ),
               ),
-            ),
-          ),
+            );
+          }),
         ),
       ],
     );
