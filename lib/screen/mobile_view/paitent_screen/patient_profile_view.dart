@@ -13,7 +13,7 @@ class PatientProfileView extends StatelessWidget {
           color: Colors.white,
           border: Border(
             bottom: BorderSide(
-              color: Colors.grey.withValues(alpha: 0.40),
+              color: Colors.grey.withOpacity( 0.40),
               width: 0.5,
             ),
           ),
@@ -22,7 +22,7 @@ class PatientProfileView extends StatelessWidget {
           contentPadding: const EdgeInsets.only(left: 20, right: 10),
           title: CommonTextWidget(
             text: 'Primary Mobile',
-            textColor: Colors.grey.withValues(alpha: 0.8),
+            textColor: Colors.grey.withOpacity( 0.8),
             fontWeight: FontWeight.w400,
             fontSize: 14,
           ),

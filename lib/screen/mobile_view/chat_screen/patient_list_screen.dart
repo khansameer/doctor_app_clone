@@ -48,7 +48,7 @@ class PatientListScreen extends StatelessWidget {
           ),
           subtitle: CommonTextWidget(
             text: 'Age: ${patient.age} | Condition: ${patient.condition}',
-            textColor: Colors.black.withValues(alpha: 0.80),
+            textColor: Colors.black.withOpacity( 0.80),
           ),
         );
       },

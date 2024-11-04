@@ -151,7 +151,7 @@ class _AdminSettingScreenState extends State<AdminSettingScreen> {
                                         child: Container(
                                           color: isSelected
                                               ? AppColors.primary
-                                                  .withValues(alpha: 0.50)
+                                                  .withOpacity( 0.50)
                                               : AppColors.colorBG,
                                           padding: const EdgeInsets.all(10.0),
                                           child: CommonTextWidget(

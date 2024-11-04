@@ -297,7 +297,7 @@ class SignUpDesign extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
                                 color:
-                                    AppColors.primary.withValues(alpha: 0.20),
+                                    AppColors.primary.withOpacity( 0.20),
                                 width: 1),
                           ),
                           items: provider.specializationsList

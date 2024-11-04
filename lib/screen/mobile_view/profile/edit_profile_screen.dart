@@ -372,7 +372,7 @@ class EditProfileScreen extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(5),
                 border: Border.all(
-                    color: Colors.grey.withValues(alpha: 0.40), width: 1)),
+                    color: Colors.grey.withOpacity( 0.40), width: 1)),
             size: size,
             items: items ?? ["Sa", "dddd", "dd"]),
       ],

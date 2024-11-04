@@ -64,7 +64,7 @@ class LoginView extends StatelessWidget {
                               image: DecorationImage(
                                   fit: BoxFit.cover, image: AssetImage(icBg1))),
                           child: Container(
-                            color: AppColors.colorBG.withValues(alpha: 0.60),
+                            color: AppColors.colorBG.withOpacity( 0.60),
                           ),
                         ),
                       )),

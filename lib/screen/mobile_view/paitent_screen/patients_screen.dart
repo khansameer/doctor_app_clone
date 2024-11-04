@@ -278,7 +278,7 @@ class _PatientsScreenState extends State<PatientsScreen> {
       children: [
         Icon(
           icon ?? Icons.female,
-          color: Colors.black.withValues(alpha: 0.6),
+          color: Colors.black.withOpacity( 0.6),
         ),
         Flexible(
             child: CommonTextWidget(
@@ -286,7 +286,7 @@ class _PatientsScreenState extends State<PatientsScreen> {
           fontSize: 11,
           left: 5,
           fontWeight: FontWeight.w600,
-          textColor: Colors.black.withValues(alpha: 0.6),
+          textColor: Colors.black.withOpacity( 0.6),
         )),
       ],
     );

@@ -681,7 +681,7 @@ class ConsultScreen extends StatelessWidget {
       width: size.width,
       decoration: commonBoxDecoration(
           border: Border.all(
-              color: Colors.grey.withValues(alpha: 0.50),
+              color: Colors.grey.withOpacity( 0.50),
               width: isMobile ? 1 : 0)),
       child: Column(
         mainAxisSize: MainAxisSize.min,

@@ -134,7 +134,7 @@ class CommonTextField extends StatelessWidget {
             suffixIcon: suffixIcon,
             hintStyle: GoogleFonts.inter(
               fontWeight: fontWeight ?? FontWeight.w400,
-              color: Colors.grey.withValues(alpha: zero080),
+              color: Colors.grey.withOpacity( zero080),
               fontSize: fontSize ?? fourteen,
             ),
             filled: isFill ?? true,
@@ -154,7 +154,7 @@ class CommonTextField extends StatelessWidget {
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color:
-                      borderColor ?? AppColors.primary.withValues(alpha: 0.20),
+                      borderColor ?? AppColors.primary.withOpacity( 0.20),
                   width: 1,
                 ),
                 borderRadius:

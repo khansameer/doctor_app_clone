@@ -146,7 +146,7 @@ class ForgotPasswordOtpView extends StatelessWidget {
                   disabledBorderWidth: 1,
                   inactiveBorderWidth: 1,
                   activeColor: AppColors.primary,
-                  inactiveColor: AppColors.primary.withValues(alpha: 0.40),
+                  inactiveColor: AppColors.primary.withOpacity( 0.40),
                   activeFillColor: Colors.white,
                 ),
                 animationDuration: const Duration(milliseconds: 300),

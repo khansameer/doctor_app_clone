@@ -2,7 +2,6 @@ import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
-import 'package:doctor_app/provider/patient_provider.dart';
 import 'package:doctor_app/provider/report_provier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,9 +20,15 @@ class PatientProfileDialog extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                _commonIcon(),
+
+                // _commonIcon(),
+            //    _commonIcon(),
                 _commonIcon(icon: Icons.edit),
-                _commonIcon(icon: Icons.circle),
+                _commonIcon(
+
+                    icon: Icons.close,onTap: (){
+                  Navigator.of(context).pop();
+                }),
               ],
             ),
             Row(
@@ -102,17 +107,17 @@ class PatientProfileDialog extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   Expanded(
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.settings_outlined,
                           color: Colors.grey,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Expanded(
@@ -164,7 +169,7 @@ class PatientProfileDialog extends StatelessWidget {
                         colorButton: Colors.white,
                         colorBorder: Colors.black,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                     ],
@@ -178,12 +183,12 @@ class PatientProfileDialog extends StatelessWidget {
     );
   }
 
-  _commonIcon({IconData? icon}) {
+  _commonIcon({IconData? icon,VoidCallback? onTap,Color ?color}) {
     return IconButton(
-        onPressed: () {},
+        onPressed:onTap,
         icon: Icon(
           icon ?? Icons.copy_outlined,
-          color: Colors.grey,
+          color: color??Colors.grey,
         ));
   }
 

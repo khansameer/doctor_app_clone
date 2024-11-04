@@ -41,7 +41,7 @@ class PatientInformationScreen extends StatelessWidget {
                     margin: const EdgeInsets.all(16),
                     decoration: commonBoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.grey.withValues(alpha: 0.10),
+                      color: Colors.grey.withOpacity( 0.10),
                       border: Border.all(color: Colors.grey, width: 0.5),
                     ),
                     child: const Icon(

@@ -1,8 +1,6 @@
 import 'package:doctor_app/core/common/common_text_widget.dart';
-import 'package:doctor_app/core/image/image_path.dart';
 import 'package:flutter/material.dart';
 
-import '../app_constants.dart';
 
 class ErrorPage extends StatelessWidget {
   const ErrorPage({super.key});

@@ -13,7 +13,6 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import 'add_appointments_widget.dart';
-import 'calender_view_left_screen.dart';
 
 class AdminCalenderScreen extends StatefulWidget {
   const AdminCalenderScreen({super.key});

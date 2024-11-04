@@ -80,7 +80,7 @@ class ProcedureProvider extends ChangeNotifier {
       final response = await _service.callDeleteMethods(
           url: '${ApiConfig.addProcedureCharges}/$id');
 
-      print('===addProcedureCharges ==z${globalStatusCode}');
+      print('===addProcedureCharges ==z$globalStatusCode');
 
       if (globalStatusCode == 200 || globalStatusCode == 201) {
         getProcedureCharges(context: context);

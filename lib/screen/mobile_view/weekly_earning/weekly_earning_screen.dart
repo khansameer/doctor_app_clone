@@ -78,7 +78,7 @@ class WeeklyEarningScreen extends StatelessWidget {
           dense: true,
           leading: Icon(
             Icons.arrow_back_ios,
-            color: Colors.black.withValues(alpha: 0.60),
+            color: Colors.black.withOpacity( 0.60),
             size: 20,
           ),
           titleAlignment: ListTileTitleAlignment.center,
@@ -97,7 +97,7 @@ class WeeklyEarningScreen extends StatelessWidget {
             children: [
               CommonTextWidget(
                 text: "Total Earnings",
-                textColor: Colors.black.withValues(alpha: 0.70),
+                textColor: Colors.black.withOpacity( 0.70),
               ),
               CommonTextWidget(
                 text: "$rupee 0.00",
@@ -140,7 +140,7 @@ class WeeklyEarningScreen extends StatelessWidget {
         CommonTextWidget(
           text: text ?? "Prime Earnings 0%",
           left: 5,
-          textColor: Colors.black.withValues(alpha: 0.70),
+          textColor: Colors.black.withOpacity( 0.70),
           fontSize: 12,
         )
       ],

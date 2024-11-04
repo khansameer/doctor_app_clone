@@ -50,7 +50,7 @@ class ChartingView extends StatelessWidget {
                 text: entry.key,
                 fontSize: 15,
                 fontWeight: FontWeight.w400,
-                textColor: Colors.black.withValues(alpha: 0.8),
+                textColor: Colors.black.withOpacity( 0.8),
               ),
               children: entry.value.map((item) {
                 return Container(
@@ -58,7 +58,7 @@ class ChartingView extends StatelessWidget {
                     color: Colors.white,
                     border: Border(
                       bottom: BorderSide(
-                        color: Colors.grey.withValues(alpha: 0.40),
+                        color: Colors.grey.withOpacity( 0.40),
                         width: 0.5,
                       ),
                     ),

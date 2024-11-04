@@ -53,6 +53,16 @@ class AdminDashboardProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  int? _hoveredProfile;
+
+  int? get hoveredProfile => _hoveredProfile;
+
+  void setHoveredProfile(int? index) {
+    _hoveredProfile = index;
+    notifyListeners();
+  }
+
+
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
 

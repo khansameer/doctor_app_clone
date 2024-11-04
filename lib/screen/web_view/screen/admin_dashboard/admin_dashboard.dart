@@ -94,11 +94,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
     var size = MediaQuery.sizeOf(context);
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
       return Scaffold(
-        /*  drawer: Drawer(
-          child: AdminDrawerMenu(
-            selectedPageNotifier: _selectedPageNotifier,
+          drawer: Drawer(
+          child: Container(
+
+          child: commonMenu(size: size,isMobile: isMobile,isDesktop: isDesktop),
           ),
-        ),*/
+        ),
         backgroundColor: Colors.white,
         appBar: AppBar(
           surfaceTintColor: Colors.transparent,
@@ -206,150 +207,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
           children: [
             isMobile
                 ? const SizedBox.shrink()
-                : SideMenu(
-                    controller: _sideMenuController,
-                    style: SideMenuStyle(
-                      openSideMenuWidth: isMobile ? 0 : 210,
-                      itemHeight: 48,
-                      itemBorderRadius: BorderRadius.circular(4),
-                      itemOuterPadding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
-                      itemInnerSpacing: 8,
-
-                      //      hoverColor: AppColors.primary.withValues(alpha: 0.1),
-                      displayMode: SideMenuDisplayMode.open,
-                      // showHamburger: isMobile ? true : false,
-
-                      unselectedTitleTextStyle: commonTextStyle(
-                          color: AppColors.colorMenuUnSelectedText,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500),
-
-                      selectedColor: AppColors.colorBgNew,
-                      selectedTitleTextStyle: commonTextStyle(
-                          color: AppColors.primary,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600),
-                      selectedIconColor: AppColors.primary,
-                      decoration: BoxDecoration(
-                        color: AppColors.colorBgNew,
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 10.0,
-                          ),
-                        ],
-                        border:
-                            Border.all(color: AppColors.colorBgNew, width: 1),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(0)),
-                      ),
-                    ),
-                    items: [
-                      SideMenuItem(
-                        title: 'Dashboard',
-                        onTap: (index, _) {
-                          setState(() {
-                            _selectedPage = 0;
-
-                            _sideMenuController.changePage(index);
-                          });
-                          //// Navigate to Calendar page
-                        },
-                        icon: const Icon(Icons.dashboard),
-                        tooltipContent: "This is a tooltip for Dashboard item",
-                      ),
-                      SideMenuItem(
-                        title: 'Appointment',
-                        onTap: (index, _) {
-                          setState(() {
-                            _selectedPage = 1;
-
-                            _sideMenuController.changePage(index);
-                          });
-                        },
-                        icon: const Icon(Icons.calendar_month_sharp),
-                        tooltipContent: "This is a tooltip for Dashboard item",
-                      ),
-                      commonMenuDivider(),
-                      SideMenuItem(
-                        title: 'Patients',
-                        onTap: (index, _) {
-                          setState(() {
-                            _selectedPage = 2;
-
-                            _sideMenuController.changePage(index);
-                          });
-                          //sideMenu.changePage(index);
-                        },
-                        icon: const Icon(Icons.person),
-                      ),
-                      commonMenuDivider(),
-                      SideMenuItem(
-                        title: 'Communications',
-                        onTap: (index, _) {
-                          setState(() {
-                            _selectedPage = 3;
-
-                            _sideMenuController.changePage(index);
-                          });
-                          // sideMenu.changePage(index);
-                        },
-                        icon: const Icon(Icons.cell_tower),
-                      ),
-                      commonMenuDivider(),
-                      SideMenuItem(
-                        title: 'Reports',
-                        onTap: (index, _) {
-                          setState(() {
-                            _selectedPage = 4;
-
-                            _sideMenuController.changePage(index);
-                          });
-                          //sideMenu.changePage(index);
-                        },
-                        icon: const Icon(Icons.auto_graph),
-                      ),
-                      commonMenuDivider(),
-                      SideMenuItem(
-                        title: 'Settings',
-                        onTap: (index, _) {
-                          setState(() {
-                            _selectedPage = 5;
-
-                            _sideMenuController.changePage(index);
-                          });
-                        },
-                        icon: const Icon(Icons.settings_outlined),
-                      ),
-                      commonMenuDivider(),
-                      SideMenuItem(
-                        title: 'Feedback',
-                        onTap: (index, _) {
-                          setState(() {
-                            _selectedPage = 6;
-
-                            _sideMenuController.changePage(index);
-                          });
-                        },
-                        icon: const Icon(Icons.thumb_up_alt_outlined),
-                      ),
-                      commonMenuDivider(),
-                      SideMenuItem(
-                        onTap: (index, _) {
-                          commonLogoutDialog(
-                              width: isMobile
-                                  ? size.width * zero9
-                                  : size.width * 0.3,
-                              contextAd: context,
-                              isDesktop: isDesktop,
-                              isMobile: isMobile);
-                        },
-                        title: 'Logout',
-                        icon: const Icon(Icons.exit_to_app),
-                      ),
-                    ],
-                  ),
+                :commonMenu(size: size,isMobile: isMobile,isDesktop: isDesktop),
             const VerticalDivider(
               color: AppColors.colorBgNew,
               width: 2,
@@ -357,85 +215,35 @@ class _AdminDashboardState extends State<AdminDashboard> {
             Expanded(
               child: _pages[_selectedPage],
             ),
-            /* Expanded(
-              child: ValueListenableBuilder<int>(
-                valueListenable: _selectedPageNotifier,
-                builder: (context, selectedPage, child) {
-                  return _pages[selectedPage];
-                },
-              ),
-            ),*/
+
           ],
         ),
       );
     });
   }
 
-  commonMenuDivider({Color? colorLine}) {
-    return SideMenuItem(
-      builder: (context, displayMode) {
-        return Divider(
-          height: 0,
-          color: colorLine ?? AppColors.colorBgNew,
-          // color: Colors.white,
-          endIndent: 8,
-          indent: 0,
-          thickness: 0.5,
-        );
-      },
-    );
-  }
-}
-
-class AdminDrawerMenu extends StatefulWidget {
-  const AdminDrawerMenu({super.key, required this.selectedPageNotifier});
-  final ValueNotifier<int> selectedPageNotifier;
-
-  @override
-  State<AdminDrawerMenu> createState() => _AdminDrawerMenuState();
-}
-
-class _AdminDrawerMenuState extends State<AdminDrawerMenu> {
-  final SideMenuController _sideMenuController = SideMenuController();
-
-  /* @override
-  void dispose() {
-    _sideMenuController.dispose();
-    super.dispose();
-  }*/
-
-  @override
-  void initState() {
-    super.initState();
-    _sideMenuController.changePage(0);
-    widget.selectedPageNotifier.value = 0;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var isMobile = Responsive.isMobile(context);
-    var isDesktop = Responsive.isDesktop(context);
-    var size = MediaQuery.sizeOf(context);
-    return SideMenu(
-      title: isMobile
-          ? const Center(
-              child: ImageIcon(
-                  size: 100,
-                  color: AppColors.colorActive,
-                  AssetImage(
-                    icLogoApps,
-                  )),
-            )
-          : const SizedBox.shrink(),
+  commonMenu({required bool isMobile,required Size size,required bool isDesktop}){
+   return SideMenu(
       controller: _sideMenuController,
+     title: isMobile
+         ?Center(
+           child: const ImageIcon(
+           size: 100,
+           color: AppColors.colorActive,
+           AssetImage(
+             icLogoApps,
+           )),
+         ):null,
       style: SideMenuStyle(
+
         openSideMenuWidth: isMobile ? 0 : 210,
         itemHeight: 48,
         itemBorderRadius: BorderRadius.circular(4),
-        itemOuterPadding:
-            const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        itemOuterPadding: const EdgeInsets.symmetric(
+            horizontal: 8, vertical: 4),
         itemInnerSpacing: 8,
 
+        //      hoverColor: AppColors.primary.withValues(alpha: 0.1),
         displayMode: SideMenuDisplayMode.open,
         // showHamburger: isMobile ? true : false,
 
@@ -458,37 +266,35 @@ class _AdminDrawerMenuState extends State<AdminDrawerMenu> {
               blurRadius: 10.0,
             ),
           ],
-          border: Border.all(color: AppColors.colorBgNew, width: 1),
-          borderRadius: const BorderRadius.all(Radius.circular(0)),
+          border:
+          Border.all(color: AppColors.colorBgNew, width: 1),
+          borderRadius:
+          const BorderRadius.all(Radius.circular(0)),
         ),
-        // backgroundColor: Colors.grey[200]
       ),
       items: [
-        commonMenuDivider(colorLine: Colors.grey.withValues(alpha: 0.5)),
         SideMenuItem(
           title: 'Dashboard',
           onTap: (index, _) {
             setState(() {
-              widget.selectedPageNotifier.value = 0;
+              _selectedPage = 0;
+
               _sideMenuController.changePage(index);
-              if (isMobile) {
-                Navigator.of(context).pop();
-              }
+              isMobile?voidHidMenu():null;
             });
             //// Navigate to Calendar page
           },
-          icon: const Icon(Icons.calendar_month_sharp),
+          icon: const Icon(Icons.dashboard),
           tooltipContent: "This is a tooltip for Dashboard item",
         ),
         SideMenuItem(
           title: 'Appointment',
           onTap: (index, _) {
             setState(() {
-              widget.selectedPageNotifier.value = 1;
+              _selectedPage = 1;
+
               _sideMenuController.changePage(index);
-              if (isMobile) {
-                Navigator.of(context).pop();
-              }
+              isMobile?voidHidMenu():null;
             });
           },
           icon: const Icon(Icons.calendar_month_sharp),
@@ -499,11 +305,10 @@ class _AdminDrawerMenuState extends State<AdminDrawerMenu> {
           title: 'Patients',
           onTap: (index, _) {
             setState(() {
-              widget.selectedPageNotifier.value = 2;
+              _selectedPage = 2;
+
               _sideMenuController.changePage(index);
-              if (isMobile) {
-                Navigator.of(context).pop();
-              }
+              isMobile?voidHidMenu():null;
             });
             //sideMenu.changePage(index);
           },
@@ -514,11 +319,10 @@ class _AdminDrawerMenuState extends State<AdminDrawerMenu> {
           title: 'Communications',
           onTap: (index, _) {
             setState(() {
-              widget.selectedPageNotifier.value = 3;
+              _selectedPage = 3;
+
               _sideMenuController.changePage(index);
-              if (isMobile) {
-                Navigator.of(context).pop();
-              }
+              isMobile?voidHidMenu():null;
             });
             // sideMenu.changePage(index);
           },
@@ -529,11 +333,10 @@ class _AdminDrawerMenuState extends State<AdminDrawerMenu> {
           title: 'Reports',
           onTap: (index, _) {
             setState(() {
-              widget.selectedPageNotifier.value = 4;
+              _selectedPage = 4;
+
               _sideMenuController.changePage(index);
-              if (isMobile) {
-                Navigator.of(context).pop();
-              }
+              isMobile?voidHidMenu():null;
             });
             //sideMenu.changePage(index);
           },
@@ -544,11 +347,10 @@ class _AdminDrawerMenuState extends State<AdminDrawerMenu> {
           title: 'Settings',
           onTap: (index, _) {
             setState(() {
-              widget.selectedPageNotifier.value = 5;
+              _selectedPage = 5;
+
               _sideMenuController.changePage(index);
-              if (isMobile) {
-                Navigator.of(context).pop();
-              }
+              isMobile?voidHidMenu():null;
             });
           },
           icon: const Icon(Icons.settings_outlined),
@@ -558,11 +360,10 @@ class _AdminDrawerMenuState extends State<AdminDrawerMenu> {
           title: 'Feedback',
           onTap: (index, _) {
             setState(() {
-              widget.selectedPageNotifier.value = 6;
+              _selectedPage = 6;
+
               _sideMenuController.changePage(index);
-              if (isMobile) {
-                Navigator.of(context).pop();
-              }
+              isMobile?voidHidMenu():null;
             });
           },
           icon: const Icon(Icons.thumb_up_alt_outlined),
@@ -570,8 +371,11 @@ class _AdminDrawerMenuState extends State<AdminDrawerMenu> {
         commonMenuDivider(),
         SideMenuItem(
           onTap: (index, _) {
+            isMobile?voidHidMenu():null;
             commonLogoutDialog(
-                width: isMobile ? size.width * zero9 : size.width * 0.3,
+                width: isMobile
+                    ? size.width * zero9
+                    : size.width * 0.3,
                 contextAd: context,
                 isDesktop: isDesktop,
                 isMobile: isMobile);
@@ -583,6 +387,9 @@ class _AdminDrawerMenuState extends State<AdminDrawerMenu> {
     );
   }
 
+  voidHidMenu(){
+    Navigator.of(context).pop();
+  }
   commonMenuDivider({Color? colorLine}) {
     return SideMenuItem(
       builder: (context, displayMode) {
@@ -598,3 +405,4 @@ class _AdminDrawerMenuState extends State<AdminDrawerMenu> {
     );
   }
 }
+

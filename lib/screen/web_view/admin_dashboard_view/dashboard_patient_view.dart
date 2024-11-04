@@ -1,12 +1,8 @@
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
-import 'package:doctor_app/core/component/component.dart';
-import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
-import 'package:doctor_app/provider/report_provier.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class DashboardPatientView extends StatelessWidget {
   const DashboardPatientView({super.key, required this.provider});
@@ -14,10 +10,7 @@ class DashboardPatientView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PageController pageControllerPatientView = PageController();
-    var size = MediaQuery.sizeOf(context);
-    var isDeskTop = Responsive.isDesktop(context);
-    var isTablet = Responsive.isTablet(context);
+
     return Container(
       padding: const EdgeInsets.all(0),
       margin: const EdgeInsets.all(20),
@@ -66,7 +59,7 @@ class DashboardPatientView extends StatelessWidget {
               title: "No of missed appointments".toUpperCase(),
               value: "5",
               colorText: Colors.white,
-              bgColor: Colors.red.withValues(alpha: 0.7)),
+              bgColor: Colors.red.withOpacity( 0.7)),
           /* Padding(
             padding: const EdgeInsets.all(0.0),
             child: Row(
@@ -298,7 +291,7 @@ class DashboardPatientView extends StatelessWidget {
           Container(
             width: 40,
             height: 40,
-            margin: EdgeInsets.only(right: 10),
+            margin: const EdgeInsets.only(right: 10),
             decoration: BoxDecoration(
                 shape: BoxShape.circle, color: bgColor ?? AppColors.colorBgNew),
             child: Center(

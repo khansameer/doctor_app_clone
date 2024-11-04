@@ -88,7 +88,7 @@ class ProfileMenuScreen extends StatelessWidget {
       decoration: commonBoxDecoration(
           color: Colors.white,
           border:
-              Border.all(color: Colors.grey.withValues(alpha: 0.50), width: 0)),
+              Border.all(color: Colors.grey.withOpacity( 0.50), width: 0)),
       margin: EdgeInsets.only(left: 0, right: 0, top: top ?? 0),
       child: ListTile(
         onTap: onTap,

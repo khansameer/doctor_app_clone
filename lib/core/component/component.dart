@@ -32,12 +32,13 @@ void showProfileDialog(BuildContext context) {
     context: context,
     barrierLabel: "Barrier",
     barrierDismissible: true,
-    barrierColor: Colors.black.withValues(alpha: 0.6),
+    barrierColor: Colors.black.withOpacity( 0.6),
     transitionDuration: const Duration(milliseconds: 800),
     pageBuilder: (_, __, ___) {
       return Center(
         child: SizedBox(
-          width: size.width * 0.3,
+          width: size.width * 0.2,
+
           child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: const PatientProfileDialog()),
@@ -52,7 +53,7 @@ commonWithIconButton(
   return TextButton(
     style: TextButton.styleFrom(
       foregroundColor: Colors.transparent,
-      disabledForegroundColor: Colors.transparent.withValues(alpha: zero38),
+      disabledForegroundColor: Colors.transparent.withOpacity( zero38),
     ),
     onPressed: onPressed,
     child: Container(
@@ -91,7 +92,7 @@ commonButton(
             )
           : const CircleBorder(),
       foregroundColor: Colors.transparent,
-      disabledForegroundColor: Colors.transparent.withValues(alpha: zero38),
+      disabledForegroundColor: Colors.transparent.withOpacity( zero38),
     ),
     onPressed: onPressed,
     child: commonText(
@@ -479,7 +480,7 @@ commonList({
     decoration: commonBoxDecoration(
         color: Colors.white,
         border:
-            Border.all(color: Colors.grey.withValues(alpha: 0.50), width: 0)),
+            Border.all(color: Colors.grey.withOpacity( 0.50), width: 0)),
     margin: EdgeInsets.only(left: 0, right: 0, top: top ?? 0),
     child: child,
   );
@@ -611,8 +612,8 @@ commonMenu(
     trailing: trailing,
     onExpansionChanged: onExpansionChanged,
     showTrailingIcon: showIcon ?? false,
-    collapsedIconColor: Colors.white.withValues(alpha: 0.50),
-    iconColor: Colors.white.withValues(alpha: 0.50),
+    collapsedIconColor: Colors.white.withOpacity( 0.50),
+    iconColor: Colors.white.withOpacity( 0.50),
     leading: leading ??
         Icon(
           Icons.menu,
@@ -621,7 +622,7 @@ commonMenu(
     title: CommonTextWidget(
         text: headerText ?? "Calender",
         fontSize: 13,
-        textColor: headerTextColor ?? Colors.white.withValues(alpha: 0.50)),
+        textColor: headerTextColor ?? Colors.white.withOpacity( 0.50)),
     children: children ??
         [
           // Child expandable menu 1
@@ -629,32 +630,32 @@ commonMenu(
             showTrailingIcon: false,
             leading: Icon(
               Icons.inventory,
-              color: Colors.white.withValues(alpha: 0.50),
+              color: Colors.white.withOpacity( 0.50),
             ),
             title: CommonTextWidget(
                 text: 'Inventory',
-                textColor: Colors.white.withValues(alpha: 0.50)),
+                textColor: Colors.white.withOpacity( 0.50)),
           ),
           // Child expandable menu 2
           ExpansionTile(
             showTrailingIcon: false,
             leading: Icon(
               Icons.expand_sharp,
-              color: Colors.white.withValues(alpha: 0.50),
+              color: Colors.white.withOpacity( 0.50),
             ),
             title: CommonTextWidget(
                 text: 'Expenses',
-                textColor: Colors.white.withValues(alpha: 0.50)),
+                textColor: Colors.white.withOpacity(0.50)),
           ),
           ExpansionTile(
             showTrailingIcon: false,
             leading: Icon(
               Icons.task,
-              color: Colors.white.withValues(alpha: 0.50),
+              color: Colors.white.withOpacity( 0.50),
             ),
             title: CommonTextWidget(
                 text: 'Activities',
-                textColor: Colors.white.withValues(alpha: 0.50)),
+                textColor: Colors.white.withOpacity( 0.50)),
           ),
         ],
   );

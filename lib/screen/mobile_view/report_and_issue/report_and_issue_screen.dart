@@ -24,7 +24,7 @@ class ReportAndIssueScreen extends StatelessWidget {
               commonList(
                   fontWeight: FontWeight.w400,
                   title: "I have an issue with",
-                  color: AppColors.colorGreen.withValues(alpha: 0.05)),
+                  color: AppColors.colorGreen.withOpacity( 0.05)),
               commonList(title: "Ray"),
               commonList(title: "Reach"),
               commonList(title: "Consult"),
@@ -57,7 +57,7 @@ class ReportAndIssueScreen extends StatelessWidget {
       decoration: commonBoxDecoration(
           color: color ?? Colors.white,
           border:
-              Border.all(color: Colors.grey.withValues(alpha: 0.50), width: 0)),
+              Border.all(color: Colors.grey.withOpacity( 0.50), width: 0)),
       margin: EdgeInsets.only(left: 0, right: 0, top: top ?? 0),
       child: ListTile(
         dense: true,

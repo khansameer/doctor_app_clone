@@ -107,7 +107,7 @@ class _InvoiceScreenState extends State<ProcedureScreen> {
                           text: "Add Procedure",
                         ),
                       ),
-                provider.procedureList == null || provider.procedureList.isEmpty
+                provider.procedureList.isEmpty
                     ? const Text("")
                     : Theme(
                         data: Theme.of(context).copyWith(

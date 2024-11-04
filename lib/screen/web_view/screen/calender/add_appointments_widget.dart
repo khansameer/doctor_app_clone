@@ -173,7 +173,7 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                               enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: AppColors.primary
-                                        .withValues(alpha: 0.20),
+                                        .withOpacity( 0.20),
                                     width: 1,
                                   ),
                                   borderRadius: const BorderRadius.all(
