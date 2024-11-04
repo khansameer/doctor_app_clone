@@ -97,7 +97,10 @@ class AdminOverAllAppointment extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(20),
       child: BarChart(
+        swapAnimationDuration: Duration(milliseconds: 1000), // Optional
+        swapAnimationCurve: Curves.linear, // Optional
         BarChartData(
+
           borderData: FlBorderData(
             show: false,
             border: Border.all(color: Colors.grey),

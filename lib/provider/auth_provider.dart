@@ -88,7 +88,24 @@ class AuthProviders extends ChangeNotifier {
 
   redirectToLogin({required BuildContext context, int? seconds = 0}) {
     Timer(Duration(seconds: seconds ?? 3), () async {
-      if (await PreferenceHelper.getBool(key: PreferenceHelper.isLOGIN) ==
+      final currentContext = context;
+      bool isLoggedIn = PreferenceHelper.getBool(key: PreferenceHelper.isLOGIN) ?? false;
+
+      if (isLoggedIn) {
+        if (kIsWeb) {
+          pushNamedAndRemoveUntil(
+              context: currentContext, routeName: RouteName.adminDashboardScreen);
+        } else {
+          pushNamedAndRemoveUntil(
+              context: currentContext, routeName: RouteName.dashboardScreen);
+        }
+      }
+      else
+        {
+          Navigator.pushNamedAndRemoveUntil(
+              currentContext, RouteName.loginScreen, (route) => false);
+        }
+     /* if (await PreferenceHelper.getBool(key: PreferenceHelper.isLOGIN) ==
           true) {
         if (kIsWeb) {
           pushNamedAndRemoveUntil(
@@ -100,7 +117,7 @@ class AuthProviders extends ChangeNotifier {
       } else {
         Navigator.pushNamedAndRemoveUntil(
             context, RouteName.loginScreen, (route) => false);
-      }
+      }*/
     });
   }
 
