@@ -120,7 +120,7 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                                     isMobile: isMobile, index: index),
                             leading: commonInkWell(
                                 onEnter: (event) {
-                                  showProfileDialog(context);
+                                 // showProfileDialog(context);
                                   context.read<ReportProvider>().setName =
                                       '${data?.firstName.toString()} ${data?.lastName.toString()}';
                                   context.read<ReportProvider>().setImage =
@@ -133,7 +133,7 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                               children: [
                                 commonInkWell(
                                   onEnter: (event) {
-                                    showProfileDialog(context);
+                                   // showProfileDialog(context);
                                     context.read<ReportProvider>().setName =
                                         '${data?.firstName.toString()} ${data?.lastName.toString()}';
                                     context.read<ReportProvider>().setImage =
