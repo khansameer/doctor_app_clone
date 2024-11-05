@@ -68,7 +68,7 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
             endTime: dateTime.add(const Duration(hours: 1)),
             // Assuming 1 hour duration
             subject: appointment.patientName.toString(),
-            color: Colors.blue, // Set a color for the appointment
+            color: AppColors.colorGreen, // Set a color for the appointment
           );
         } else {
           return Appointment(
@@ -226,7 +226,7 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
           child: ToggleButtons(
             borderRadius: BorderRadius.circular(8),
             fillColor: AppColors.colorBgNew,
-            selectedColor: AppColors.colorText,
+            selectedColor: AppColors.colorActive,
             color: const Color.fromRGBO(250, 251, 253, 1),
             textStyle: commonTextStyle(fontWeight: FontWeight.w600),
             borderColor: AppColors.colorBgNew,
@@ -266,7 +266,7 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                     horizontal: isMobile ? 35 : 50.0, vertical: 5),
                 child: commonText(
                   fontWeight: FontWeight.w400,
-                  color: AppColors.colorBlue,
+                  color: AppColors.colorGreen,
                   text: 'Day',
                 ),
               ),
@@ -275,7 +275,7 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                     horizontal: isMobile ? 35 : 50.0, vertical: 5),
                 child: commonText(
                   fontWeight: FontWeight.w400,
-                  color: AppColors.colorBlue,
+                  color: AppColors.colorGreen,
                   text: 'Week',
                 ),
               ),
@@ -284,7 +284,7 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                 horizontal: isMobile ? 35 : 50.0, vertical: 5),
                               child: commonText(
               fontWeight: FontWeight.w400,
-              color: AppColors.colorBlue,
+              color: AppColors.colorGreen,
               text: 'Month',
                               ),
                             )

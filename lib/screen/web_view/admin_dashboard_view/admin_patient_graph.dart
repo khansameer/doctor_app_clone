@@ -27,11 +27,23 @@ class PatientsPaceChart extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CommonTextWidget(
+          Row(children: [ 
+            CommonTextWidget(
             text: "Patients Treated".toUpperCase(),
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
+          Padding(padding: const EdgeInsets.fromLTRB(680,0,0,0),
+          child:CommonTextWidget(
+            text: "Oct 1 - Oct 30".toUpperCase(),
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
+            textColor: Colors.green.shade300,
+            textAlign: TextAlign.right,
+          ),)
+          
+          ],),
+         
           const SizedBox(height: 20),
           SizedBox(
             height: 200,
