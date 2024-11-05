@@ -75,135 +75,140 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
               startTime: DateTime.now(), endTime: DateTime.now());
         }
       }).toList();
-      return Stack(
-        children: [
-          ListView(
-            shrinkWrap: true,
-            children: [
-              CommonTextWidget(
-                letterSpacing: 1,
-                text: "Your Appointments",
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10)),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    isMobile
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CommonTextWidget(
-                                  left: 10,
-                                  text: "Daily appointments scheduler",
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              SizedBox(
-                                width: size.width,
-                                child: _toggleView(isMobile: isMobile),
-                              )
-                            ],
-                          )
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CommonTextWidget(
-                                  left: 10,
-                                  text: "Daily appointments scheduler",
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              _toggleView(isMobile: isMobile)
-                            ],
-                          ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 7,
-                          child: SizedBox(
-                              height: size.height * 0.7,
-                              child: commonSfCalendar(calendarAppointments)),
-                        ),
-                      ],
-                    ),
-                    const Divider(
-                      thickness: 0.3,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: isMobile
-                          ? const Wrap(
-                              spacing:
-                                  10.0, // Adds space between items horizontally
-                              runSpacing:
-                                  10.0, // Adds space between lines vertically
+      return Container(
+        height: size.height,
+        width: size.width,
+        color: AppColors.colorBgNew,
+        child: Stack(
+          children: [
+            ListView(
+              shrinkWrap: true,
+              children: [
+                CommonTextWidget(
+                  letterSpacing: 1,
+                  text: "Your Appointments",
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      isMobile
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                LegendItem(
-                                    color: Colors.red, text: "Emergency"),
-                                LegendItem(
-                                    color: AppColors.colorBlue,
-                                    text: "Consultation"),
-                                LegendItem(
-                                    color: AppColors.colorLineChart2,
-                                    text: "Examination"),
-                                LegendItem(
-                                    color: AppColors.colorSurgery,
-                                    text: "Routine checkup"),
-                                LegendItem(
-                                    color: AppColors.colorDrawerLight,
-                                    text: "Sick visit"),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CommonTextWidget(
+                                    left: 10,
+                                    text: "Daily appointments scheduler",
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: size.width,
+                                  child: _toggleView(isMobile: isMobile),
+                                )
                               ],
                             )
-                          : const Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                LegendItem(
-                                    color: Colors.red, text: "Emergency"),
-                                SizedBox(width: 10),
-                                LegendItem(
-                                    color: AppColors.colorBlue,
-                                    text: "Consultation"),
-                                SizedBox(width: 10),
-                                LegendItem(
-                                    color: AppColors.colorLineChart2,
-                                    text: "Examination"),
-                                SizedBox(width: 10),
-                                LegendItem(
-                                    color: AppColors.colorSurgery,
-                                    text: "Routine checkup"),
-                                SizedBox(width: 10),
-                                LegendItem(
-                                    color: AppColors.colorDrawerLight,
-                                    text: "Sick visit"),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CommonTextWidget(
+                                    left: 10,
+                                    text: "Daily appointments scheduler",
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                _toggleView(isMobile: isMobile)
                               ],
                             ),
-                    ),
-                  ],
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 7,
+                            child: SizedBox(
+                                height: size.height * 0.7,
+                                child: commonSfCalendar(calendarAppointments)),
+                          ),
+                        ],
+                      ),
+                      const Divider(
+                        thickness: 0.3,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: isMobile
+                            ? const Wrap(
+                                spacing:
+                                    10.0, // Adds space between items horizontally
+                                runSpacing:
+                                    10.0, // Adds space between lines vertically
+                                children: [
+                                  LegendItem(
+                                      color: Colors.red, text: "Emergency"),
+                                  LegendItem(
+                                      color: AppColors.colorBlue,
+                                      text: "Consultation"),
+                                  LegendItem(
+                                      color: AppColors.colorLineChart2,
+                                      text: "Examination"),
+                                  LegendItem(
+                                      color: AppColors.colorSurgery,
+                                      text: "Routine checkup"),
+                                  LegendItem(
+                                      color: AppColors.colorDrawerLight,
+                                      text: "Sick visit"),
+                                ],
+                              )
+                            : const Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  LegendItem(
+                                      color: Colors.red, text: "Emergency"),
+                                  SizedBox(width: 10),
+                                  LegendItem(
+                                      color: AppColors.colorBlue,
+                                      text: "Consultation"),
+                                  SizedBox(width: 10),
+                                  LegendItem(
+                                      color: AppColors.colorLineChart2,
+                                      text: "Examination"),
+                                  SizedBox(width: 10),
+                                  LegendItem(
+                                      color: AppColors.colorSurgery,
+                                      text: "Routine checkup"),
+                                  SizedBox(width: 10),
+                                  LegendItem(
+                                      color: AppColors.colorDrawerLight,
+                                      text: "Sick visit"),
+                                ],
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          provider.isFetching ? showLoaderList() : const SizedBox.shrink()
-        ],
+              ],
+            ),
+            provider.isFetching ? showLoaderList() : const SizedBox.shrink()
+          ],
+        ),
       );
     });
   }
@@ -256,38 +261,33 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
             },
             isSelected: isSelected,
             children: [
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: isMobile ? 35 : 50.0, vertical: 5),
-                  child: commonText(
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.colorBlue,
-                    text: 'Day',
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: isMobile ? 35 : 50.0, vertical: 5),
-                  child: commonText(
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.colorBlue,
-                    text: 'Week',
-                  ),
-                ),
-              ),
-              Expanded(
-                  child: Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: isMobile ? 35 : 50.0, vertical: 5),
                 child: commonText(
                   fontWeight: FontWeight.w400,
                   color: AppColors.colorBlue,
-                  text: 'Month',
+                  text: 'Day',
                 ),
-              ))
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: isMobile ? 35 : 50.0, vertical: 5),
+                child: commonText(
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.colorBlue,
+                  text: 'Week',
+                ),
+              ),
+              Padding(
+                              padding: EdgeInsets.symmetric(
+                horizontal: isMobile ? 35 : 50.0, vertical: 5),
+                              child: commonText(
+              fontWeight: FontWeight.w400,
+              color: AppColors.colorBlue,
+              text: 'Month',
+                              ),
+                            )
             ],
           ),
         ),
@@ -302,7 +302,7 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
       onTap: (CalendarTapDetails details) {
         if (details.appointments != null && details.appointments!.isNotEmpty) {
           Appointment tappedAppointment = details.appointments!.first;
-          String? appointmentId = tappedAppointment.id as String?;
+          String? appointmentId = '${tappedAppointment.id }';
           if (kDebugMode) {
             print('Appointment ID: $appointmentId');
           }

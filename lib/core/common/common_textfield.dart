@@ -47,7 +47,7 @@ class CommonTextField extends StatelessWidget {
   Color? colorBg;
   EdgeInsetsGeometry? margin;
   String? Function(String?)? validator;
-
+  FocusNode? focusNode;
   CommonTextField({
     super.key,
     this.hint,
@@ -90,6 +90,7 @@ class CommonTextField extends StatelessWidget {
     this.isHideBorder,
     this.margin,
     this.padding,
+    this.focusNode
   });
 
   @override
@@ -98,12 +99,14 @@ class CommonTextField extends StatelessWidget {
       padding: EdgeInsets.all(padding ?? zero),
       width: width ?? MediaQuery.sizeOf(context).width,
       height: height,
+
       margin: EdgeInsets.only(
           left: left ?? zero,
           right: right ?? zero,
           top: top ?? zero,
           bottom: bottom ?? zero),
       child: TextFormField(
+        focusNode: focusNode,
         validator: validator,
         cursorColor: AppColors.colorBlack,
         readOnly: isReadOnly ?? false,

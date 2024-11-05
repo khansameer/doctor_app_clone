@@ -89,7 +89,7 @@ class AuthProviders extends ChangeNotifier {
   redirectToLogin({required BuildContext context, int? seconds = 0}) {
     Timer(Duration(seconds: seconds ?? 3), () async {
       final currentContext = context;
-      bool isLoggedIn = PreferenceHelper.getBool(key: PreferenceHelper.isLOGIN) ?? false;
+   /*   bool isLoggedIn = PreferenceHelper.getBool(key: PreferenceHelper.isLOGIN) ?? false;
 
       if (isLoggedIn) {
         if (kIsWeb) {
@@ -104,8 +104,8 @@ class AuthProviders extends ChangeNotifier {
         {
           Navigator.pushNamedAndRemoveUntil(
               currentContext, RouteName.loginScreen, (route) => false);
-        }
-     /* if (await PreferenceHelper.getBool(key: PreferenceHelper.isLOGIN) ==
+        }*/
+      if (await PreferenceHelper.getBool(key: PreferenceHelper.isLOGIN) ==
           true) {
         if (kIsWeb) {
           pushNamedAndRemoveUntil(
@@ -117,7 +117,7 @@ class AuthProviders extends ChangeNotifier {
       } else {
         Navigator.pushNamedAndRemoveUntil(
             context, RouteName.loginScreen, (route) => false);
-      }*/
+      }
     });
   }
 
@@ -199,7 +199,7 @@ class AuthProviders extends ChangeNotifier {
               key: PreferenceHelper.isLOGIN, value: true);
         }
       } else if (globalStatusCode == 401) {
-        commonSessionError(context: context);
+        commonSessionError(context: context,isAuth: true);
       } else {}
     } catch (e) {
       // _registerModel = RegisterModel(message: 'server_error'.tr());
@@ -244,7 +244,7 @@ class AuthProviders extends ChangeNotifier {
             .map((dynamic item) => SpecializationsModel.fromJson(item))
             .toList();
       } else if (globalStatusCode == 401) {
-        commonSessionError(context: context);
+        commonSessionError(context: context,isAuth: true);
       } else {
         _specializationsList = [];
       }
@@ -293,7 +293,7 @@ class AuthProviders extends ChangeNotifier {
       if (globalStatusCode == 200 || globalStatusCode == 201) {
         if (_signupModel?.doctor?.sId != null) {}
       } else if (globalStatusCode == 401) {
-        commonSessionError(context: context);
+        commonSessionError(context: context,isAuth: true);
       } else {
         showCommonDialog(
             context: context,

@@ -212,9 +212,11 @@ commonTextFiledView({
   double? height,
   Widget? suffixIcon,
   VoidCallback? onTap,
+  TextInputAction? textInputAction,
   double? textFontSize,
   double? fontSize,
   TextInputType? keyboardType,
+FocusNode? focusNode,
   TextEditingController? controller,
   int? maxLines,
 }) {
@@ -231,7 +233,9 @@ commonTextFiledView({
       ),
       CommonTextField(
         hint: hint,
+        focusNode: focusNode,
         onTap: onTap,
+        textInputAction: textInputAction,
         height: height,
         isReadOnly: isReadOnly,
         colorFill: Colors.white,
@@ -268,6 +272,9 @@ Widget commonInkWell({
     onEnter: onEnter,
     onExit: onExit,
     child: InkWell(
+      focusNode: FocusNode(
+        skipTraversal: true
+      ),
       onHover: onHover,
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
@@ -410,16 +417,22 @@ void showCommonDialog(
           ));
 }
 
-commonSessionError({required BuildContext context}) {
+commonSessionError({required BuildContext context,bool isAuth=false}) {
   showCommonDialog(
     context: context,
     title: "Error",
     content: errorMessage ?? '',
     btnPositive: "Close",
     onPressPositive: () {
-      PreferenceHelper.clear();
-      pushNamedAndRemoveUntil(
-          context: context, routeName: RouteName.loginScreen);
+      if(!isAuth){
+        PreferenceHelper.clear();
+        pushNamedAndRemoveUntil(
+            context: context, routeName: RouteName.loginScreen);
+      }else
+        {
+          Navigator.of(context).pop();
+        }
+
     },
     isMessage: true,
   );
