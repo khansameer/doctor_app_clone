@@ -168,13 +168,13 @@ class AdminWebReport extends StatelessWidget {
                               text: item['Invoice Number'],
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
-                              textColor: AppColors.colorBlue,
+                              textColor: AppColors.colorGreen,
                             )),
                             DataCell(CommonTextWidget(
                               text: item['Patient'],
                               fontWeight: FontWeight.w600,
                               fontSize: 12,
-                              textColor: AppColors.colorBlue,
+                              textColor: AppColors.colorGreen,
                             )),
                             DataCell(CommonTextWidget(
                                 fontWeight: FontWeight.w600,

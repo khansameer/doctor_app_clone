@@ -90,7 +90,7 @@ class AdminDashboardProvider with ChangeNotifier {
       isActive: false,
       price: "19.15",
       messageCount: 0,
-      latestMessage: "See you later!",
+      latestMessage: "Great!",
       name: 'Corey Aguilar',
       gender: 'male',
       description: 'Shortness of breath',

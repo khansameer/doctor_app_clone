@@ -65,7 +65,7 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
             startTime: dateTime,
             id: appointment.sId,
             notes: appointment.reason,
-            endTime: dateTime.add(const Duration(hours: 1)),
+            endTime: dateTime.add(const Duration(hours: 1 )),
             // Assuming 1 hour duration
             subject: appointment.patientName.toString(),
             color: AppColors.colorGreen, // Set a color for the appointment

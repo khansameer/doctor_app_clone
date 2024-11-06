@@ -129,7 +129,7 @@ class TabView extends StatelessWidget {
           child: commonText(
             text: 'All',
             fontWeight: FontWeight.w400,
-            color: AppColors.colorBlue,
+            color: AppColors.colorGreen,
           ),
         ),
         Padding(
@@ -137,14 +137,14 @@ class TabView extends StatelessWidget {
           child: commonText(
               text: 'Men',
               fontWeight: FontWeight.w400,
-              color: AppColors.colorBlue),
+              color: AppColors.colorGreen),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: isMobile ? 30 : 24.0),
           child: commonText(
               text: 'Women',
               fontWeight: FontWeight.w400,
-              color: AppColors.colorBlue),
+              color: AppColors.colorGreen),
         ),
       ],
     );

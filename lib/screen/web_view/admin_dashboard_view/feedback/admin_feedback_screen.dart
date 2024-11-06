@@ -57,7 +57,7 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                     child: CommonTextWidget(
                       letterSpacing: 1,
                       top: 15,
-                      text: "Which Doctor's feedback do you wish to view",
+                      text: "Patient's feedback",
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                     ),
@@ -73,7 +73,7 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                         Padding(
                           padding: const EdgeInsets.only(left: 15.0, top: 10),
                           child: CommonTextWidget(
-                            text: "Me",
+                            text: "Corey Augilar",
                           ),
                         ),
                         Container(
@@ -104,7 +104,7 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                                     fontWeight: FontWeight.w700,
                                   ),
                                   CommonTextWidget(
-                                    text: "(377 Votes)",
+                                    text: "4 star",
                                     left: 2,
                                     fontSize: 12,
                                     textColor: Colors.grey,
@@ -134,51 +134,51 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                               ),
                             ),
                             leading: commonProfileIcon(
-                                width: 40, path: icDummyUser, height: 40),
+                                width: 40, path: icPatientUser1, height: 40),
                           ),
                         ),
                         const SizedBox(
                           height: 40,
                         ),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15.0, top: 0),
-                              child: CommonTextWidget(
-                                text: "Other from",
-                                textColor: Colors.grey,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: SizedBox(
-                                width: size.width,
-                                child: Consumer<ReportProvider>(
-                                    builder: (context, provider, child) {
-                                      return CommonDropDownView(
-                                          hint: "All Center",
-                                          height: 35,
-                                          horizontal: 10,
-                                          onChanged: (value) {
-                                            provider.setSelectData = value.toString();
-                                          },
-                                          selectedValue: provider.selectedValue,
-                                          borerColor: Colors.grey,
-                                          size: size,
-                                          items: provider.topMedicalCallCenters);
-                                    }),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisSize: MainAxisSize.min,
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                        //   children: [
+                        //     Padding(
+                        //       padding: const EdgeInsets.only(left: 15.0, top: 0),
+                        //       child: CommonTextWidget(
+                        //         text: "Other from",
+                        //         textColor: Colors.grey,
+                        //       ),
+                        //     ),
+                        //     const SizedBox(
+                        //       width: 10,
+                        //     ),
+                        //     Expanded(
+                        //       child: SizedBox(
+                        //         width: size.width,
+                        //         child: Consumer<ReportProvider>(
+                        //             builder: (context, provider, child) {
+                        //               return CommonDropDownView(
+                        //                   hint: "All Center",
+                        //                   height: 35,
+                        //                   horizontal: 10,
+                        //                   onChanged: (value) {
+                        //                     provider.setSelectData = value.toString();
+                        //                   },
+                        //                   selectedValue: provider.selectedValue,
+                        //                   borerColor: Colors.grey,
+                        //                   size: size,
+                        //                   items: provider.topMedicalCallCenters);
+                        //             }),
+                        //       ),
+                        //     ),
+                        //     const SizedBox(
+                        //       width: 10,
+                        //     ),
+                        //   ],
+                        // ),
                         Container(
                           padding: const EdgeInsets.all(20),
                           margin: const EdgeInsets.all(10),
@@ -391,7 +391,7 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                   child: CommonTextWidget(
                     letterSpacing: 1,
                     top: 0,
-                    text: "Which Doctor's feedback do you wish to view",
+                    text: "Patient's Feedback",
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                   ),
@@ -407,7 +407,7 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                       Padding(
                         padding: const EdgeInsets.only(left: 15.0, top: 10),
                         child: CommonTextWidget(
-                          text: "Me",
+                          text: "",
                         ),
                       ),
                       Container(
@@ -419,7 +419,7 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                         child: ListTile(
                           title: CommonTextWidget(
                             fontWeight: FontWeight.w600,
-                            text: context.read<DashboardProvider>().name,
+                            text: 'Corey Aguilar',
                           ),
                           subtitle: Padding(
                             padding: const EdgeInsets.only(top: 8.0),
@@ -427,18 +427,31 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 const Icon(
-                                  Icons.thumb_up,
+                                  Icons.star,
+                                  size: 15,
+                                  color: Colors.green,
+                                  fill: 1.0,
+                                  grade: 1.0,
+                                  weight: 1.0,
+                                  
+                                ),
+                                Icon(
+                                  Icons.star,
+                                  size: 15,
+                                  color: Colors.green,
+                                ),
+                                Icon(
+                                  Icons.star,
+                                  size: 15,
+                                  color: Colors.green,
+                                ),
+                                Icon(
+                                  Icons.star,
                                   size: 15,
                                   color: Colors.green,
                                 ),
                                 CommonTextWidget(
-                                  text: "99%",
-                                  left: 5,
-                                  textColor: Colors.green,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                                CommonTextWidget(
-                                  text: "(377 Votes)",
+                                  text: "4 star",
                                   left: 2,
                                   fontSize: 12,
                                   textColor: Colors.grey,
@@ -458,7 +471,7 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                                   color: Colors.black,
                                 ),
                                 CommonTextWidget(
-                                  text: "72 feedback",
+                                  text: "Overall Richard did a great job. The process was smooth and I was kept well informed about what to expect. So far the healing has also gone well and I am mostly back to normal",
                                   left: 2,
                                   fontSize: 13,
                                   textColor: Colors.black,
@@ -468,46 +481,12 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                             ),
                           ),
                           leading: commonProfileIcon(
-                              width: 40, path: icDummyUser, height: 40),
+                              width: 40, path: icPatientUser1, height: 40),
                         ),
                       ),
                       const SizedBox(
                         height: 40,
                       ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15.0, top: 0),
-                            child: CommonTextWidget(
-                              text: "Other from",
-                              textColor: Colors.grey,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            width: size.width * 0.14,
-                            child: Consumer<ReportProvider>(
-                                builder: (context, provider, child) {
-                              return CommonDropDownView(
-                                  hint: "All Center",
-                                  height: 35,
-                                  horizontal: 10,
-                                  onChanged: (value) {
-                                    provider.setSelectData = value.toString();
-                                  },
-                                  selectedValue: provider.selectedValue,
-                                  borerColor: Colors.grey,
-                                  size: size,
-                                  items: provider.topMedicalCallCenters);
-                            }),
-                          ),
-                        ],
-                      ),
                       Container(
                         padding: const EdgeInsets.all(20),
                         margin: const EdgeInsets.all(10),
@@ -517,7 +496,7 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                         child: ListTile(
                           title: CommonTextWidget(
                             fontWeight: FontWeight.w600,
-                            text: "Emily Davis",
+                            text: 'Samantha Lee',
                           ),
                           subtitle: Padding(
                             padding: const EdgeInsets.only(top: 8.0),
@@ -525,18 +504,26 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 const Icon(
-                                  Icons.thumb_up,
+                                  Icons.star,
+                                  size: 15,
+                                  color: Colors.green,
+                                  fill: 1.0,
+                                  grade: 1.0,
+                                  weight: 1.0,
+                                  
+                                ),
+                                Icon(
+                                  Icons.star,
+                                  size: 15,
+                                  color: Colors.green,
+                                ),
+                                Icon(
+                                  Icons.star_half_sharp,
                                   size: 15,
                                   color: Colors.green,
                                 ),
                                 CommonTextWidget(
-                                  text: "80%",
-                                  left: 5,
-                                  textColor: Colors.green,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                                CommonTextWidget(
-                                  text: "(180 Votes)",
+                                  text: "3.5 star",
                                   left: 2,
                                   fontSize: 12,
                                   textColor: Colors.grey,
@@ -556,7 +543,7 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                                   color: Colors.black,
                                 ),
                                 CommonTextWidget(
-                                  text: "28 feedback",
+                                  text: "Dr Richard was wonderful to deal with. He was polite, friendly and professional and I felt extremely safe and assured under his care.",
                                   left: 2,
                                   fontSize: 13,
                                   textColor: Colors.black,
@@ -566,9 +553,107 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                             ),
                           ),
                           leading: commonProfileIcon(
-                              width: 40, path: icPatientUser8, height: 40),
+                              width: 40, path: icPatientUser2, height: 40),
                         ),
                       ),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      // Row(
+                      //   mainAxisSize: MainAxisSize.min,
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   crossAxisAlignment: CrossAxisAlignment.center,
+                      //   children: [
+                      //     Padding(
+                      //       padding: const EdgeInsets.only(left: 15.0, top: 0),
+                      //       child: CommonTextWidget(
+                      //         text: "Other from",
+                      //         textColor: Colors.grey,
+                      //       ),
+                      //     ),
+                      //     const SizedBox(
+                      //       width: 10,
+                      //     ),
+                      //     SizedBox(
+                      //       width: size.width * 0.14,
+                      //       child: Consumer<ReportProvider>(
+                      //           builder: (context, provider, child) {
+                      //         return CommonDropDownView(
+                      //             hint: "All Center",
+                      //             height: 35,
+                      //             horizontal: 10,
+                      //             onChanged: (value) {
+                      //               provider.setSelectData = value.toString();
+                      //             },
+                      //             selectedValue: provider.selectedValue,
+                      //             borerColor: Colors.grey,
+                      //             size: size,
+                      //             items: provider.topMedicalCallCenters);
+                      //       }),
+                      //     ),
+                      //   ],
+                      // ),
+                      // Container(
+                      //   padding: const EdgeInsets.all(20),
+                      //   margin: const EdgeInsets.all(10),
+                      //   decoration: BoxDecoration(
+                      //       color: AppColors.colorBgNew.withOpacity(0.4),
+                      //       borderRadius: BorderRadius.circular(8)),
+                      //   child: ListTile(
+                      //     title: CommonTextWidget(
+                      //       fontWeight: FontWeight.w600,
+                      //       text: "Emily Davis",
+                      //     ),
+                      //     subtitle: Padding(
+                      //       padding: const EdgeInsets.only(top: 8.0),
+                      //       child: Row(
+                      //         mainAxisSize: MainAxisSize.min,
+                      //         children: [
+                      //           const Icon(
+                      //             Icons.thumb_up,
+                      //             size: 15,
+                      //             color: Colors.green,
+                      //           ),
+                      //           CommonTextWidget(
+                      //             text: "80%",
+                      //             left: 5,
+                      //             textColor: Colors.green,
+                      //             fontWeight: FontWeight.w700,
+                      //           ),
+                      //           CommonTextWidget(
+                      //             text: "(180 Votes)",
+                      //             left: 2,
+                      //             fontSize: 12,
+                      //             textColor: Colors.grey,
+                      //             fontWeight: FontWeight.w400,
+                      //           )
+                      //         ],
+                      //       ),
+                      //     ),
+                      //     trailing: Padding(
+                      //       padding: const EdgeInsets.only(top: 8.0),
+                      //       child: Row(
+                      //         mainAxisSize: MainAxisSize.min,
+                      //         children: [
+                      //           const Icon(
+                      //             Icons.message_rounded,
+                      //             size: 18,
+                      //             color: Colors.black,
+                      //           ),
+                      //           CommonTextWidget(
+                      //             text: "28 feedback",
+                      //             left: 2,
+                      //             fontSize: 13,
+                      //             textColor: Colors.black,
+                      //             fontWeight: FontWeight.w500,
+                      //           )
+                      //         ],
+                      //       ),
+                      //     ),
+                      //     leading: commonProfileIcon(
+                      //         width: 40, path: icPatientUser8, height: 40),
+                      //   ),
+                      // ),
                     ],
                   ),
                 )
@@ -576,128 +661,128 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
             ),
           )),
           SizedBox(width: 15,),
-          Expanded(
-              child: Container(
-              padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8)
-                ),
-                height: size.height,
-                child: ListView(
-                  children: [
-                   Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: CommonTextWidget(
-                        letterSpacing: 1,
-                        top: 0,
-                        text: "Feedback",
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0,right: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CommonTextWidget(
-                            letterSpacing: 1,
-                            top: 14,
-                           text:  'Rate the product based on the following aspects:',
-                            fontSize: 16, fontWeight: FontWeight.w500,
-                          ),
-                          CommonTextWidget(
-                            letterSpacing: 1,
-                            top: 5,
-                            text:  '(Poor) 1--2--3--4--5 (Excellent)',
-                            fontSize: 16, fontWeight: FontWeight.w500,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    _buildRatingRow("Product feature", 0),
-                    _buildRatingRow("Product design", 1),
-                    _buildRatingRow("Product quality", 2),
-                    _buildRatingRow("Product usefulness", 3),
-                    _buildRatingRow("Product uniqueness", 4),
-                    SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0,right: 10),
-                      child: CommonTextWidget(
-                        letterSpacing: 1,
-                        top: 14,
-                        text:  'What was your initial impression of the product?',
-                        fontSize: 16, fontWeight: FontWeight.w500,
-                      ),
-                    ),
+          // Expanded(
+          //     child: Container(
+          //     padding: EdgeInsets.all(10),
+          //       decoration: BoxDecoration(
+          //           color: Colors.white,
+          //           borderRadius: BorderRadius.circular(8)
+          //       ),
+          //       height: size.height,
+          //       child: ListView(
+          //         children: [
+          //          Padding(
+          //             padding: const EdgeInsets.all(10.0),
+          //             child: CommonTextWidget(
+          //               letterSpacing: 1,
+          //               top: 0,
+          //               text: "Feedback",
+          //               fontSize: 20,
+          //               fontWeight: FontWeight.w700,
+          //             ),
+          //           ),
+          //           Padding(
+          //             padding: const EdgeInsets.only(left: 10.0,right: 10),
+          //             child: Column(
+          //               mainAxisAlignment: MainAxisAlignment.start,
+          //               crossAxisAlignment: CrossAxisAlignment.start,
+          //               children: [
+          //                 CommonTextWidget(
+          //                   letterSpacing: 1,
+          //                   top: 14,
+          //                  text:  'Rate the product based on the following aspects:',
+          //                   fontSize: 16, fontWeight: FontWeight.w500,
+          //                 ),
+          //                 CommonTextWidget(
+          //                   letterSpacing: 1,
+          //                   top: 5,
+          //                   text:  '(Poor) 1--2--3--4--5 (Excellent)',
+          //                   fontSize: 16, fontWeight: FontWeight.w500,
+          //                 ),
+          //               ],
+          //             ),
+          //           ),
+          //           SizedBox(height: 10),
+          //           _buildRatingRow("Product feature", 0),
+          //           _buildRatingRow("Product design", 1),
+          //           _buildRatingRow("Product quality", 2),
+          //           _buildRatingRow("Product usefulness", 3),
+          //           _buildRatingRow("Product uniqueness", 4),
+          //           SizedBox(height: 20),
+          //           Padding(
+          //             padding: const EdgeInsets.only(left: 10.0,right: 10),
+          //             child: CommonTextWidget(
+          //               letterSpacing: 1,
+          //               top: 14,
+          //               text:  'What was your initial impression of the product?',
+          //               fontSize: 16, fontWeight: FontWeight.w500,
+          //             ),
+          //           ),
 
-                    _buildRadioGroup(
-                      options: ["Unsatisfactory", "Poor", "Fair", "Good", "Excellent"],
-                      groupValue: initialImpression,
-                      onChanged: (value) => setState(() => initialImpression = value),
-                    ),
-                    SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0,right: 10),
-                      child: CommonTextWidget(
-                        letterSpacing: 1,
-                        top: 14,
-                        text:  "How long have you had the product?",
-                        fontSize: 16, fontWeight: FontWeight.w500,
-                      ),
-                    ),
+          //           _buildRadioGroup(
+          //             options: ["Unsatisfactory", "Poor", "Fair", "Good", "Excellent"],
+          //             groupValue: initialImpression,
+          //             onChanged: (value) => setState(() => initialImpression = value),
+          //           ),
+          //           SizedBox(height: 20),
+          //           Padding(
+          //             padding: const EdgeInsets.only(left: 10.0,right: 10),
+          //             child: CommonTextWidget(
+          //               letterSpacing: 1,
+          //               top: 14,
+          //               text:  "How long have you had the product?",
+          //               fontSize: 16, fontWeight: FontWeight.w500,
+          //             ),
+          //           ),
 
-                    _buildRadioGroup(
-                      options: [
-                        "Less than a week",
-                        "A week to a month",
-                        "A month to half a year",
-                        "Half a year to a year",
-                        "Over a year"
-                      ],
-                      groupValue: productDuration,
-                      onChanged: (value) => setState(() => productDuration = value),
-                    ),
-                    SizedBox(height: 20),
+          //           _buildRadioGroup(
+          //             options: [
+          //               "Less than a week",
+          //               "A week to a month",
+          //               "A month to half a year",
+          //               "Half a year to a year",
+          //               "Over a year"
+          //             ],
+          //             groupValue: productDuration,
+          //             onChanged: (value) => setState(() => productDuration = value),
+          //           ),
+          //           SizedBox(height: 20),
 
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0,right: 10),
-                      child: CommonTextWidget(
-                        letterSpacing: 1,
-                        top: 14,
-                        text:  "Message",
-                        fontSize: 16, fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: CommonTextField(
-                        colorFill: Colors.white,
-                        inputTypes: TextInputType.text,
-                        borderColor: Colors.grey,
-                        maxLines: 3,
-                      ),
-                    ),
+          //           Padding(
+          //             padding: const EdgeInsets.only(left: 10.0,right: 10),
+          //             child: CommonTextWidget(
+          //               letterSpacing: 1,
+          //               top: 14,
+          //               text:  "Message",
+          //               fontSize: 16, fontWeight: FontWeight.w500,
+          //             ),
+          //           ),
+          //           Padding(
+          //             padding: const EdgeInsets.all(10.0),
+          //             child: CommonTextField(
+          //               colorFill: Colors.white,
+          //               inputTypes: TextInputType.text,
+          //               borderColor: Colors.grey,
+          //               maxLines: 3,
+          //             ),
+          //           ),
 
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0,right: 10),
-                          child: CommonButtonWidget(
-                            text: "Send",
-                            padding: EdgeInsets.only(left: 40,right: 40,top: 20,bottom: 20),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ))
+          //           Row(
+          //             mainAxisSize: MainAxisSize.min,
+          //             mainAxisAlignment: MainAxisAlignment.end,
+          //             children: [
+          //               Padding(
+          //                 padding: const EdgeInsets.only(left: 10.0,right: 10),
+          //                 child: CommonButtonWidget(
+          //                   text: "Send",
+          //                   padding: EdgeInsets.only(left: 40,right: 40,top: 20,bottom: 20),
+          //                 ),
+          //               ),
+          //             ],
+          //           )
+          //         ],
+          //       ),
+          //     ))
         ],
       )
       ,
