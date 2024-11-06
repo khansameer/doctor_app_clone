@@ -467,7 +467,58 @@ class DashboardProvider extends ChangeNotifier {
     ),
   ];
 
+
+
+  final List<DummyModel> feedbackList = [
+    DummyModel(
+      title: "Corey Aguilar",
+        rating: "4 star",
+        icon: icPatientUser1,
+        ratingValue: 4,
+
+        content: "Overall Richard did a great job. The process was smooth and I was kept well informed about what to expect. So far the healing has also gone well and I am mostly back to normal",
+        items: []),
+    DummyModel(
+        title: "Samantha Lee",
+        rating: "3.5 star",
+        ratingValue: 4.5,
+        icon: icPatientUser2,
+        content: "Dr Richard was wonderful to deal with. He was polite, friendly and professional and I felt extremely safe and assured under his care.",
+        items: []),
+    DummyModel(
+        title: "Sarah Miller",
+        rating: "2.5 star",
+        ratingValue: 3.5,
+        icon: icPatientUser3,
+        content: "Dr. Richard provides excellent care and attention to detail.",
+        items: []),
+
+    DummyModel(
+        title: "George Harris",
+        rating: "2.5 star",
+        ratingValue: 2.5,
+        icon: icPatientUser4,
+        content: "Dr. Richard is Professional and patient-focused.",
+        items: []),
+
+    DummyModel(
+        title: "Chris Wilson",
+        rating: "5 star",
+        ratingValue: 5,
+        icon: icPatientUser5,
+        content: "Dr. Richard is a wonderful doctor with a caring approach.",
+        items: []),
+    DummyModel(
+        title: "Michael Brown",
+        rating: "4 star",
+        ratingValue: 4,
+        icon: icPatientUser6,
+        content: "Dr. Richard is friendly and very helpful.",
+        items: []),
+  ];
   //
+
+
 }
 
 class Booking {

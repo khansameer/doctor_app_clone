@@ -10,6 +10,7 @@ import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/provider/report_provier.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
 class AdminFeedbackScreen extends StatefulWidget {
@@ -410,84 +411,95 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                           text: "",
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        margin: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: AppColors.colorBgNew.withOpacity(0.4),
-                            borderRadius: BorderRadius.circular(8)),
-                        child: ListTile(
-                          title: CommonTextWidget(
-                            fontWeight: FontWeight.w600,
-                            text: 'Corey Aguilar',
-                          ),
-                          subtitle: Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(
-                                  Icons.star,
-                                  size: 15,
-                                  color: Colors.green,
-                                  fill: 1.0,
-                                  grade: 1.0,
-                                  weight: 1.0,
-                                  
+                      Consumer<DashboardProvider>(
+                        builder: (context,provider,child) {
+                          return ListView.builder(
+                            itemCount: provider.feedbackList.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context,index){
+                            return  Container(
+                              padding: const EdgeInsets.all(20),
+                              margin: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: AppColors.colorBgNew.withOpacity(0.4),
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: ListTile(
+                                titleAlignment: ListTileTitleAlignment.top,
+                                title: CommonTextWidget(
+                                  fontWeight: FontWeight.w600,
+                                  text: provider.feedbackList[index].title,
                                 ),
-                                Icon(
-                                  Icons.star,
-                                  size: 15,
-                                  color: Colors.green,
+
+                                subtitle: Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          RatingBar.builder(
+                                            itemSize: 15,
+                                            initialRating: provider.feedbackList[index].ratingValue??0.0,
+                                            minRating: 1,
+                                            direction: Axis.horizontal,
+                                            allowHalfRating: true,
+                                            itemCount: 5,
+                                            itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                                            itemBuilder: (context, _) => Icon(
+                                              Icons.star,
+                                              color:Colors.green,
+                                            ),
+                                            onRatingUpdate: (rating) {
+                                              print(rating);
+                                            },
+                                          ),
+                                          CommonTextWidget(
+                                            text: "${provider.feedbackList[index].rating}",
+                                            left: 4,
+                                            fontSize: 12,
+                                            textColor: Colors.grey,
+                                            fontWeight: FontWeight.w400,
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(height: 5,),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 8.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const Icon(
+                                              Icons.message_rounded,
+                                              size: 18,
+                                              color: Colors.black,
+                                            ),
+                                            CommonTextWidget(
+                                              text: "${provider.feedbackList[index].content}",
+                                              left: 2,
+                                              fontSize: 13,
+                                              textColor: Colors.black,
+                                              fontWeight: FontWeight.w500,
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                                Icon(
-                                  Icons.star,
-                                  size: 15,
-                                  color: Colors.green,
-                                ),
-                                Icon(
-                                  Icons.star,
-                                  size: 15,
-                                  color: Colors.green,
-                                ),
-                                CommonTextWidget(
-                                  text: "4 star",
-                                  left: 2,
-                                  fontSize: 12,
-                                  textColor: Colors.grey,
-                                  fontWeight: FontWeight.w400,
-                                )
-                              ],
-                            ),
-                          ),
-                          trailing: Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(
-                                  Icons.message_rounded,
-                                  size: 18,
-                                  color: Colors.black,
-                                ),
-                                CommonTextWidget(
-                                  text: "Overall Richard did a great job. The process was smooth and I was kept well informed about what to expect. So far the healing has also gone well and I am mostly back to normal",
-                                  left: 2,
-                                  fontSize: 13,
-                                  textColor: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                )
-                              ],
-                            ),
-                          ),
-                          leading: commonProfileIcon(
-                              width: 40, path: icPatientUser1, height: 40),
-                        ),
+
+                                leading: commonProfileIcon(
+                                    width: 40, path: provider.feedbackList[index].icon, height: 40),
+                              ),
+                            );
+                          });
+                        }
                       ),
                       const SizedBox(
                         height: 40,
                       ),
-                      Container(
+                     /* Container(
                         padding: const EdgeInsets.all(20),
                         margin: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
@@ -558,7 +570,7 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                       ),
                       const SizedBox(
                         height: 40,
-                      ),
+                      ),*/
                       // Row(
                       //   mainAxisSize: MainAxisSize.min,
                       //   mainAxisAlignment: MainAxisAlignment.center,

@@ -1,5 +1,5 @@
-import 'package:doctor_app/core/common/legend_item.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/common/legend_item.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -27,23 +27,26 @@ class PatientsPaceChart extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(children: [ 
-            CommonTextWidget(
-            text: "Patients Treated".toUpperCase(),
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CommonTextWidget(
+                text: "Patients Treated".toUpperCase(),
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(680, 0, 0, 0),
+                child: CommonTextWidget(
+                  text: "Oct 1 - Oct 30".toUpperCase(),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  textColor: Colors.green.shade300,
+                  textAlign: TextAlign.right,
+                ),
+              )
+            ],
           ),
-          Padding(padding: const EdgeInsets.fromLTRB(680,0,0,0),
-          child:CommonTextWidget(
-            text: "Oct 1 - Oct 30".toUpperCase(),
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-            textColor: Colors.green.shade300,
-            textAlign: TextAlign.right,
-          ),)
-          
-          ],),
-         
           const SizedBox(height: 20),
           SizedBox(
             height: 200,
