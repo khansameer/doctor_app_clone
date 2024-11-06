@@ -68,8 +68,9 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     commonInkWell(
-                                      onEnter: (event) {
-                                        showProfileDialog(context);
+                                    /*onEnter: (event) {
+                                        provider.setHoveredProfile(index);
+                                        *//*showProfileDialog(context);
                                         context.read<ReportProvider>().setName =
                                             provider.patients[index].name
                                                 .toString();
@@ -77,13 +78,16 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
                                                 .read<ReportProvider>()
                                                 .setImage =
                                             provider.patients[index].profile
-                                                .toString();
+                                                .toString();*//*
                                       },
-                                      child: commonProfileIcon(
+                                      onExit: (_){
+                                        provider.setHoveredProfile(null);
+                                      },*/
+                                      child:commonProfileIcon(
                                           width: 40,
                                           height: 40,
                                           path: provider
-                                                  .patients[index].profile ??
+                                              .patients[index].profile ??
                                               icDummyUser),
                                     ),
                                     const SizedBox(
@@ -98,7 +102,7 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
                                         children: [
                                           commonInkWell(
                                             onEnter: (event) {
-                                              showProfileDialog(context);
+                                            //  showProfileDialog(context);
                                               context
                                                       .read<ReportProvider>()
                                                       .setName =
@@ -203,7 +207,62 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
                                   const SizedBox(
                                     width: 10,
                                   ),
-                                  MouseRegion(
+                                  Builder(
+                                    builder: (context) {
+                                      return commonInkWell(
+                                        onTap: () {
+                                          context.read<ReportProvider>().setName =
+                                              provider.patients[index].name
+                                                  .toString();
+                                          context
+                                              .read<ReportProvider>()
+                                              .setImage =
+                                              provider.patients[index].profile
+                                                  .toString();
+                                          showPopoverMenu(
+                                              width: size.width*0.1,
+                                              context: context,child:PatientProfileDialog() , size: size);
+                                       //   showProfileDialog(context);
+                                        },
+                                        child: Consumer<AdminDashboardProvider>(
+                                            builder: (context, provider, child) {
+                                              return MouseRegion(
+                                                onEnter: (_) {
+                                                  provider.setHoveredEdit(index);
+                                                },
+                                                onExit: (_) {
+                                                  provider.setHoveredEdit(null);
+                                                },
+
+                                                child: AnimatedContainer(
+                                                  height: 35,
+                                                  duration: const Duration(milliseconds: 200),
+                                                  margin: const EdgeInsets.all(5),
+                                                  decoration: BoxDecoration(
+                                                      color: provider.hoveredEdit == index
+                                                          ? AppColors.primary
+                                                          : AppColors.colorBgNew,
+                                                      borderRadius: BorderRadius.circular(8)),
+                                                  child: Center(
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.only(left: 10.0, right: 10),
+                                                      child:  CommonTextWidget(
+                                                        fontSize: 12,
+                                                        textColor: provider.hoveredEdit == index
+                                                            ? Colors.white
+                                                            : null,
+                                                        text: "View Profile",
+                                                        fontWeight: FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            }),
+                                      );
+                                    }
+                                  ),
+                                 /* MouseRegion(
                                     onEnter: (_) {
                                       provider.setHoveredEdit(index);
                                     },
@@ -231,7 +290,7 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                  ),
+                                  ),*/
                                 ],
                               )
                             ],

@@ -17,18 +17,19 @@ class _AdminSettingScreenState extends State<AdminSettingScreen> {
     {
       'title': '',
       'items': [
-        'Procedure Catalog',
+        // 'Procedure Catalog',
         'Clinic Address',
         'Notification',
         'Consent Forms',
         'Billing',
-        'EMR',
+        // 'EMR',
         'Prescriptions',
         'Calendar',
         'Communications',
         'Contacts',
-        'Email PDF Settings',
-        'Medical History'
+        // 'Email PDF Settings',
+        // 'Medical History'
+        'My Profile',
       ]
     },
   ];
@@ -150,8 +151,7 @@ class _AdminSettingScreenState extends State<AdminSettingScreen> {
                                         },
                                         child: Container(
                                           color: isSelected
-                                              ? AppColors.primary
-                                                  .withValues(alpha: 0.50)
+                                              ? AppColors.colorGreen
                                               : AppColors.colorBG,
                                           padding: const EdgeInsets.all(10.0),
                                           child: CommonTextWidget(

@@ -87,7 +87,7 @@ class CommonDropDownView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
                   color: borerColor ??
-                      AppColors.colorGreen.withValues(alpha: 0.30),
+                      AppColors.colorGreen.withOpacity( 0.30),
                 ),
                 //color: Colors.redAccent,
               ),

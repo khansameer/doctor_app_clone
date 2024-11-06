@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
             indicatorSize: TabBarIndicatorSize.tab,
             tabAlignment: TabAlignment.fill,
             labelStyle: commonTextStyle(fontSize: isMobile ? 14 : 16),
-            unselectedLabelColor: Colors.white.withValues(alpha: 0.80),
+            unselectedLabelColor: Colors.white.withOpacity( 0.80),
             indicatorColor: Colors.white,
             dividerColor: Colors.white,
             labelColor: Colors.white,

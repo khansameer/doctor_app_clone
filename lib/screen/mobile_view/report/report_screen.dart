@@ -59,7 +59,7 @@ class ReportScreen extends StatelessWidget {
               decoration: commonBoxDecoration(
                   color: Colors.white,
                   border: Border.all(
-                      color: Colors.grey.withValues(alpha: 0.50), width: 0)),
+                      color: Colors.grey.withOpacity(0.50), width: 0)),
               margin: const EdgeInsets.only(left: 0, right: 0, top: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,7 +93,7 @@ class ReportScreen extends StatelessWidget {
       decoration: commonBoxDecoration(
           color: Colors.white,
           border:
-              Border.all(color: Colors.grey.withValues(alpha: 0.50), width: 0)),
+              Border.all(color: Colors.grey.withOpacity( 0.50), width: 0)),
       margin: EdgeInsets.only(left: 5, right: 5, top: top ?? 10),
       child: child,
     );

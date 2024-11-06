@@ -13,4 +13,5 @@ class ApiConfig {
   static const getDoctorAppointments = '$baseUrl/appointments/doctor';
   static const getPatientDetails = '$baseUrl/doctors';
   static const createAppointment = '$baseUrl/appointments';
+  static const getUserDetailsBYID = '$baseUrl/users/edit';
 }

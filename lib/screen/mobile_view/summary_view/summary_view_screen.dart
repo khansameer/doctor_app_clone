@@ -14,7 +14,7 @@ class SummaryViewScreen extends StatelessWidget {
     var isMobile = Responsive.isMobile(context);
     var isDesktop = Responsive.isDesktop(context);
     return Container(
-      color: AppColors.colorGreen.withValues(alpha: 0.10),
+      color: AppColors.colorGreen.withOpacity( 0.10),
       child: ListView(
         children: [
           isMobile
@@ -189,7 +189,7 @@ class SummaryViewScreen extends StatelessWidget {
                   : isDesktop
                       ? size.height * 0.20
                       : size.height * 0.16,
-              color: Colors.grey.withValues(alpha: 0.10),
+              color: Colors.grey.withOpacity( 0.10),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Center(

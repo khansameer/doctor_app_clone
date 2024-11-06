@@ -188,7 +188,7 @@ class HealthFeedScreen extends StatelessWidget {
         Container(
             width: size.width,
             padding: const EdgeInsets.all(15.0),
-            color: Colors.grey.withValues(alpha: 0.20),
+            color: Colors.grey.withOpacity( 0.20),
             child: CommonTextWidget(
               text: "YOUR STATS  ",
               fontWeight: FontWeight.w600,

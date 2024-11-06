@@ -12,6 +12,7 @@ import 'package:doctor_app/provider/patient_provider.dart';
 import 'package:doctor_app/screen/web_view/model/patient_details_model.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/add_appointments_widget.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
+import 'package:file_picker/file_picker.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -335,7 +336,7 @@ class MyData extends DataTableSource {
                 );
               });
         } else if (value == 'upload') {
-          String? filePath = await FilePickerHelper.pickFile();
+          FilePickerResult? filePath = await FilePickerHelper.pickFile();
           if (filePath != null) {
             // Handle the selected file path
             if (kDebugMode) {

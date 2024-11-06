@@ -40,7 +40,7 @@ class ApiService {
     required String url,
     String? key,
   }) async {
-    print('callDeleteMethods  ${url}');
+    print('callDeleteMethods  $url');
     var response = await callDeleteMethod(url: url, );
 
     return response;

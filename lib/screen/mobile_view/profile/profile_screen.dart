@@ -198,7 +198,7 @@ class ProfileScreen extends StatelessWidget {
         decoration: commonBoxDecoration(
             color: Colors.white,
             border: Border.all(
-                color: Colors.grey.withValues(alpha: 0.50), width: 1),
+                color: Colors.grey.withOpacity( 0.50), width: 1),
             borderRadius: BorderRadius.circular(8)),
         padding: const EdgeInsets.all(0),
         child: Column(
@@ -227,7 +227,7 @@ class ProfileScreen extends StatelessWidget {
             Container(
                 width: size.width,
                 height: isMobile ? null : size.height * 0.20,
-                color: Colors.grey.withValues(alpha: 0.10),
+                color: Colors.grey.withOpacity(0.10),
                 child: Padding(
                   padding: const EdgeInsets.all(0.0),
                   child: Center(
@@ -273,7 +273,7 @@ class ProfileScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           border:
-              Border.all(color: Colors.grey.withValues(alpha: 0.50), width: 1),
+              Border.all(color: Colors.grey.withOpacity( 0.50), width: 1),
           color: isMobile ? Colors.white : AppColors.colorBG,
           borderRadius: BorderRadius.circular(8)),
       height: isMobile ? null : size.height * 0.28,
@@ -368,7 +368,7 @@ class ProfileScreen extends StatelessWidget {
       clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: BoxDecoration(
           border:
-              Border.all(color: Colors.grey.withValues(alpha: 0.50), width: 1),
+              Border.all(color: Colors.grey.withOpacity( 0.50), width: 1),
           color: isMobile ? Colors.white : AppColors.colorBG,
           borderRadius: BorderRadius.circular(8)),
       padding: const EdgeInsets.all(0),

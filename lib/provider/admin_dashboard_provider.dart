@@ -53,6 +53,16 @@ class AdminDashboardProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  int? _hoveredProfile;
+
+  int? get hoveredProfile => _hoveredProfile;
+
+  void setHoveredProfile(int? index) {
+    _hoveredProfile = index;
+    notifyListeners();
+  }
+
+
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
 
@@ -80,11 +90,11 @@ class AdminDashboardProvider with ChangeNotifier {
       isActive: false,
       price: "19.15",
       messageCount: 0,
-      latestMessage: "See you later!",
+      latestMessage: "Great!",
       name: 'Corey Aguilar',
       gender: 'male',
-      description: 'Kidney function test',
-      time: '9:30',
+      description: 'Shortness of breath',
+      time: '9:30 AM',
       profile: icPatientUser1,
     ),
     Patient(
@@ -92,8 +102,8 @@ class AdminDashboardProvider with ChangeNotifier {
       name: 'Samantha Lee',
       gender: 'male',
       messageCount: 10,
-      description: 'Cardiovascular assessment',
-      time: '10:00',
+      description: 'Chest pain',
+      time: '10:30 AM',
       profile: icPatientUser2,
     ),
     Patient(
@@ -102,7 +112,7 @@ class AdminDashboardProvider with ChangeNotifier {
       name: 'Michael Smith',
       gender: 'male',
       description: 'Routine check-up',
-      time: '10:30',
+      time: '11:30 PM',
       messageCount: 12,
       profile: icPatientUser3,
     ),
@@ -111,8 +121,8 @@ class AdminDashboardProvider with ChangeNotifier {
       name: 'Linda Johnson',
       gender: 'female',
       messageCount: 8,
-      description: 'Blood pressure monitoring',
-      time: '11:00',
+      description: 'Fatigue',
+      time: '01:00 PM',
       profile: icPatientUser4,
     ),
     Patient(
@@ -121,8 +131,8 @@ class AdminDashboardProvider with ChangeNotifier {
       name: 'James Williams',
       gender: 'female',
       messageCount: 11,
-      description: 'Diabetes check',
-      time: '11:30',
+      description: 'Swelling',
+      time: '2:30 PM',
       profile: icPatientUser5,
     ),
     Patient(
@@ -130,8 +140,8 @@ class AdminDashboardProvider with ChangeNotifier {
         name: 'Patricia Brown',
         gender: 'female',
         messageCount: 23,
-        description: 'Cholesterol screening',
-        time: '12:00',
+        description: 'Nausea',
+        time: '3:00 PM',
         profile: icPatientUser6),
     Patient(
         price: "50.15",
@@ -139,8 +149,8 @@ class AdminDashboardProvider with ChangeNotifier {
         name: 'Robert Jones',
         gender: 'male',
         messageCount: 18,
-        description: 'Annual physical',
-        time: '12:30',
+        description: 'Heartburn',
+        time: '4:30 PM',
         profile: icPatientUser7),
     Patient(
         price: "78.15",
@@ -148,7 +158,7 @@ class AdminDashboardProvider with ChangeNotifier {
         gender: 'male',
         messageCount: 12,
         description: 'Follow-up visit',
-        time: '1:00',
+        time: '5:30 PM',
         profile: icPatientUser8),
     Patient(
         price: "90.15",
@@ -156,24 +166,24 @@ class AdminDashboardProvider with ChangeNotifier {
         messageCount: 12,
         name: 'David Martinez',
         gender: 'male',
-        description: 'Orthopedic consultation',
-        time: '1:30',
+        description: 'Irregular Hearbeat',
+        time: '6:30 PM',
         profile: icPatientUser9),
     Patient(
         price: "25.15",
         name: 'Sarah Robinson',
         messageCount: 1,
         gender: 'male',
-        description: 'Pediatric check-up',
-        time: '2:00',
+        description: 'Follow-up visit',
+        time: '7:30 PM',
         profile: icPatientUser10),
     Patient(
         price: "29.90",
         name: 'Thomas Clark',
         messageCount: 5,
         gender: 'male',
-        description: 'Dental cleaning',
-        time: '2:30',
+        description: 'Follow-up visit',
+        time: '8:30 PM',
         profile: icPatientUser11),
   ];
 

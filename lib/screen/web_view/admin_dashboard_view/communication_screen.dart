@@ -34,7 +34,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.3), //color of shadow
+                    color: Colors.grey.withOpacity(0.3), //color of shadow
                     spreadRadius: 2, //spread radius
                     blurRadius: 3, // blur radius
                     offset: const Offset(0, 2),
@@ -157,7 +157,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                         children: [
                           commonInkWell(
                             onEnter: (event) {
-                              showProfileDialog(context);
+                             // showProfileDialog(context);
                               context.read<ReportProvider>().setName =
                                   data.name.toString();
                               context.read<ReportProvider>().setImage =
@@ -187,7 +187,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                         children: [
                           commonInkWell(
                             onEnter: (event) {
-                              showProfileDialog(context);
+                           //   showProfileDialog(context);
                               context.read<ReportProvider>().setName =
                                   data.name.toString();
                               context.read<ReportProvider>().setImage =
@@ -204,7 +204,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                       subtitle: CommonTextWidget(
                         text: data.latestMessage,
                         fontSize: 11,
-                        textColor: AppColors.colorBlue,
+                        textColor: AppColors.colorGreen,
                       ),
                       onTap: () {
                         if (isMobile) {

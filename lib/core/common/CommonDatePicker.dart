@@ -50,7 +50,7 @@ class _CommonDatePickerState extends State<CommonDatePicker> {
         selectedDate != null
             ? '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}'
             : 'Select a date',
-        style: TextStyle(color: Colors.blue),
+        style: const TextStyle(color: Colors.blue),
       ),
     );
   }

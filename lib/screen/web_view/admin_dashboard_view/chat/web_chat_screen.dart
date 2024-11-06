@@ -31,7 +31,7 @@ class WebChatScreen extends StatelessWidget {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withValues(alpha: 0.3), //color of shadow
+              color: Colors.grey.withOpacity( 0.3), //color of shadow
               spreadRadius: 2, //spread radius
               blurRadius: 3, // blur radius
               offset: const Offset(0, 2),
@@ -69,7 +69,7 @@ class WebChatScreen extends StatelessWidget {
                                 width: 10,
                               ),
                         isMobile
-                            ? SizedBox.shrink()
+                            ? const SizedBox.shrink()
                             : commonInkWell(
                                 child: commonProfileIcon(
                                     width: 40,
@@ -112,7 +112,7 @@ class WebChatScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8)),
                           child: Center(
                             child: isMobile
-                                ? Icon(Icons.history_edu_rounded)
+                                ? const Icon(Icons.history_edu_rounded)
                                 : CommonTextWidget(
                                     text: "Case History",
                                     textColor: AppColors.colorTextNew,

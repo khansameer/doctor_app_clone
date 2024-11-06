@@ -19,6 +19,7 @@ import 'package:doctor_app/screen/mobile_view/profile/profile_screen.dart';
 import 'package:doctor_app/screen/mobile_view/reach/reach_screen.dart';
 import 'package:doctor_app/screen/mobile_view/report/report_screen.dart';
 import 'package:doctor_app/screen/mobile_view/weekly_earning/weekly_earning_screen.dart';
+import 'package:doctor_app/screen/web_view/admin_dashboard_view/notification/admin_notification_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/admin_calender_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/patient_profile_page.dart';
 import 'package:flutter/foundation.dart';
@@ -26,6 +27,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../screen/authentication/model/login_model.dart';
 import '../screen/web_view/screen/procedure/procedure_screen.dart';
 
 class DashboardProvider extends ChangeNotifier {
@@ -53,6 +55,16 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+
+
+  int? _hoverNotification;
+
+  int? get hoverNotification => _hoverNotification;
+
+  void setHoverNotification(int? index) {
+    _hoverNotification = index;
+    notifyListeners();
+  }
   String? _name;
 
   String? get name => _name;
@@ -60,6 +72,9 @@ class DashboardProvider extends ChangeNotifier {
   String? _email;
 
   String? get email => _email;
+  String? _profileImage;
+
+  String? get profileImage => _profileImage;
   void setIndex(int index) {
     _selectedIndex = index;
     notifyListeners();
@@ -82,6 +97,11 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+
+
+  getUserProfile() async {
+    _profileImage = await getUserPhoto();
+  }
   getEmail() async {
     _email = await getDoctorEmail();
     notifyListeners();
@@ -150,11 +170,25 @@ class DashboardProvider extends ChangeNotifier {
   Widget get currentAdminSettingPage => _currentAdminSettingPage;
 
   set setAdminSettingPagePage(String value) {
-    if (value == "Procedure Catalog") {
-      _currentAdminSettingPage = const ProcedureScreen();
-    } else if (value == "Clinic Address") {
+    // if (value == "Procedure Catalog") {
+    //   _currentAdminSettingPage = const ProcedureScreen();
+    // } else 
+    if (value == "Clinic Address") {
       _currentAdminSettingPage = const ErrorPage();
-    } else {
+    }
+   else if(value=="Notification".trim()){
+      _currentAdminSettingPage = Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: const AdminNotificationScreen(),
+      );
+    }
+    else   if(value=="My Profile"){
+      _currentAdminSettingPage = Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: const EditProfileScreen(),
+      );
+    }
+    else {
       _currentAdminSettingPage = const ErrorPage();
     }
     notifyListeners(); // Notify listeners to rebuild
@@ -466,7 +500,79 @@ class DashboardProvider extends ChangeNotifier {
     ),
   ];
 
+
+
+  final List<DummyModel> feedbackList = [
+    DummyModel(
+      title: "Corey Aguilar",
+        rating: "4 star",
+        icon: icPatientUser1,
+        ratingValue: 4,
+
+        content: "Overall Richard did a great job. The process was smooth and I was kept well informed about what to expect. So far the healing has also gone well and I am mostly back to normal",
+        items: []),
+    DummyModel(
+        title: "Samantha Lee",
+        rating: "3.5 star",
+        ratingValue: 4.5,
+        icon: icPatientUser2,
+        content: "Dr Richard was wonderful to deal with. He was polite, friendly and professional and I felt extremely safe and assured under his care.",
+        items: []),
+    DummyModel(
+        title: "Sarah Miller",
+        rating: "2.5 star",
+        ratingValue: 3.5,
+        icon: icPatientUser3,
+        content: "Dr. Richard provides excellent care and attention to detail.",
+        items: []),
+
+    DummyModel(
+        title: "George Harris",
+        rating: "2.5 star",
+        ratingValue: 2.5,
+        icon: icPatientUser4,
+        content: "Dr. Richard is Professional and patient-focused.",
+        items: []),
+
+    DummyModel(
+        title: "Chris Wilson",
+        rating: "5 star",
+        ratingValue: 5,
+        icon: icPatientUser5,
+        content: "Dr. Richard is a wonderful doctor with a caring approach.",
+        items: []),
+    DummyModel(
+        title: "Michael Brown",
+        rating: "4 star",
+        ratingValue: 4,
+        icon: icPatientUser6,
+        content: "Dr. Richard is friendly and very helpful.",
+        items: []),
+  ];
   //
+
+  List<String> doctorNotifications = [
+    "Patient John Doe has checked in for the appointment.",
+    "New lab results available for patient Jane Smith.",
+    "Reminder: Annual review for patient Alice Johnson due tomorrow.",
+    "Urgent: Patient Michael Brown needs immediate attention.",
+    "Follow-up needed for patient Emily White on recent test results.",
+    "Prescription renewal request received from patient David Green.",
+    "Dr. appointment scheduled with patient Sophia Lewis for 10 AM.",
+    "Patient Emma Clark has updated medical history in their profile.",
+    "Reminder: Weekly review meeting at 4 PM today.",
+    "Patient Lucas Harris has a high-priority message for you.",
+    "New feedback received from patient Isabella Robinson.",
+    "Insurance documents pending approval for patient Liam Walker.",
+    "Appointment canceled by patient Olivia Hall.",
+    "Patient Mia Allen's health report is now available for review.",
+    "Emergency contact update for patient Ethan Young.",
+    "New referral received from Dr. Noah King for patient Ava Wright.",
+    "Monthly health summary for patient Chloe Scott is ready.",
+    "Pending approval for patient Benjamin Adams' test results.",
+    "Scheduled surgery for patient Ella Turner confirmed for next week.",
+    "Request for second opinion on patient Matthew Mitchell's diagnosis."
+  ];
 }
 
 class Booking {

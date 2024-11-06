@@ -14,7 +14,7 @@ class ClientNoteScreen extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(0),
-          color: Colors.grey.withValues(alpha: 0.20),
+          color: Colors.grey.withOpacity( 0.20),
           child: Column(
             children: [
               Padding(

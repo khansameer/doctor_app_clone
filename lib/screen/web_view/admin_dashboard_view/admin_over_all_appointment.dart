@@ -20,13 +20,13 @@ class AdminOverAllAppointment extends StatelessWidget {
       85,
     ];
     final List<String> listLabel = [
-      '8:00',
-      '8:30',
-      "9:00",
-      "9:30",
-      "10:00",
-      "10:30",
-      "11:00"
+      'Mon',
+      'Tue',
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat",
+      "Sun"
     ];
 
     final PageController pageController = PageController();
@@ -97,7 +97,10 @@ class AdminOverAllAppointment extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(20),
       child: BarChart(
+        swapAnimationDuration: Duration(milliseconds: 1000), // Optional
+        swapAnimationCurve: Curves.linear, // Optional
         BarChartData(
+
           borderData: FlBorderData(
             show: false,
             border: Border.all(color: Colors.grey),
@@ -157,7 +160,7 @@ class AdminOverAllAppointment extends StatelessWidget {
                       bottomRight: Radius.circular(8),
                       bottomLeft: Radius.circular(8)),
                   toY: barValues[index],
-                  color: Colors.grey,
+                  color: Colors.green.shade300,
                 ),
               ],
             );

@@ -13,6 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/component/component.dart';
 import '../core/route/route.dart';
@@ -88,6 +89,8 @@ class AuthProviders extends ChangeNotifier {
 
   redirectToLogin({required BuildContext context, int? seconds = 0}) {
     Timer(Duration(seconds: seconds ?? 3), () async {
+
+
       if (await PreferenceHelper.getBool(key: PreferenceHelper.isLOGIN) ==
           true) {
         if (kIsWeb) {
@@ -166,14 +169,13 @@ class AuthProviders extends ChangeNotifier {
           url: isLogin ? ApiConfig.login : ApiConfig.registerUser, body: body);
       _loginModel = LoginModel.fromJson(json.decode(response));
 
-      print('===${globalStatusCode}');
+      print('===$globalStatusCode');
       if (globalStatusCode == 200) {
         if (_loginModel?.token != null && _loginModel?.userId != null) {
-          await PreferenceHelper.setString(
-              key: PreferenceHelper.name,
-              value: "${_loginModel?.firstName} ${_loginModel?.lastName}");
-          await PreferenceHelper.setString(
-              key: PreferenceHelper.email, value: '${_loginModel?.email}');
+
+          await PreferenceHelper.setString(key: PreferenceHelper.name, value: "${_loginModel?.user?.firstName} ${_loginModel?.user?.lastName}");
+          await PreferenceHelper.setString(key: PreferenceHelper.email, value: '${_loginModel?.user?.email}');
+          await PreferenceHelper.setString(key: PreferenceHelper.userPhoto, value: '${_loginModel?.user?.profile?.profilePicture}');
           await PreferenceHelper.setString(
               key: PreferenceHelper.authToken, value: '${_loginModel?.token}');
           await PreferenceHelper.setString(
@@ -182,13 +184,18 @@ class AuthProviders extends ChangeNotifier {
               key: PreferenceHelper.isLOGIN, value: true);
         }
       } else if (globalStatusCode == 401) {
-        commonSessionError(context: context);
+        commonSessionError(context: context,isAuth: true);
       } else {}
     } catch (e) {
       // _registerModel = RegisterModel(message: 'server_error'.tr());
     }
     _isFetching = false;
     notifyListeners();
+  }
+
+  Future<void> saveUserData(Map<String, dynamic> data) async {
+  //  final prefs = await SharedPreferences.getInstance();
+
   }
 
   //==============================================================Get specializations List==================================================
@@ -227,7 +234,7 @@ class AuthProviders extends ChangeNotifier {
             .map((dynamic item) => SpecializationsModel.fromJson(item))
             .toList();
       } else if (globalStatusCode == 401) {
-        commonSessionError(context: context);
+        commonSessionError(context: context,isAuth: true);
       } else {
         _specializationsList = [];
       }
@@ -276,7 +283,7 @@ class AuthProviders extends ChangeNotifier {
       if (globalStatusCode == 200 || globalStatusCode == 201) {
         if (_signupModel?.doctor?.sId != null) {}
       } else if (globalStatusCode == 401) {
-        commonSessionError(context: context);
+        commonSessionError(context: context,isAuth: true);
       } else {
         showCommonDialog(
             context: context,
@@ -297,5 +304,80 @@ class AuthProviders extends ChangeNotifier {
     }
     _isAdding = false;
     notifyListeners();
+  }
+
+  List<Address> addresses = [
+    Address(
+      address: '',
+      city: '',
+      state: '',
+      zipCode: '',
+    )
+  ];
+
+  // Add a new empty address
+  void addAddress() {
+    addresses.add(Address(
+      address: '',
+      city: '',
+      state: '',
+      zipCode: '',
+    ));
+    notifyListeners();
+  }
+
+  // Update address field
+  void updateAddress(int index, String field, String value) {
+    switch (field) {
+      case 'address':
+        addresses[index].address = value;
+        break;
+      case 'city':
+        addresses[index].city = value;
+        break;
+      case 'state':
+        addresses[index].state = value;
+        break;
+      case 'zipCode':
+        addresses[index].zipCode = value;
+        break;
+    }
+    notifyListeners();
+  }
+
+  // Remove address
+  void removeAddress(int index) {
+    addresses.removeAt(index);
+    notifyListeners();
+  }
+
+  // Generate a random id for address
+
+  // Get list of addresses in JSON format
+  List<Map<String, dynamic>> getAddressesInJson() {
+    return addresses.map((address) => address.toJson()).toList();
+  }
+
+}
+class Address {
+  String address;
+  String city;
+  String state;
+  String zipCode;
+
+  Address({
+    required this.address,
+    required this.city,
+    required this.state,
+    required this.zipCode,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'address': address,
+      'city': city,
+      'state': state,
+      'zipCode': zipCode,
+    };
   }
 }

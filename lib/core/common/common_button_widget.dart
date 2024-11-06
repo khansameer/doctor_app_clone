@@ -29,6 +29,7 @@ class CommonButtonWidget extends StatelessWidget {
   Widget? icon;
   Widget? iconRight;
   String? fontFamily;
+  FocusNode? focusNode;
   CommonButtonWidget(
       {super.key,
       this.text,
@@ -51,6 +52,7 @@ class CommonButtonWidget extends StatelessWidget {
       this.icon,
       this.iconRight,
       this.textLeft,
+        this.focusNode,
       this.fontFamily,
       this.height});
 
@@ -65,9 +67,11 @@ class CommonButtonWidget extends StatelessWidget {
           bottom: bottom ?? zero,
           right: right ?? zero),
       child: TextButton(
+        focusNode: focusNode,
         style: TextButton.styleFrom(
+
           //padding: EdgeInsets.zero,,
-          foregroundColor: colorButton ?? AppColors.colorActive,
+         foregroundColor: colorButton ?? AppColors.colorActive,
           padding: padding ?? const EdgeInsets.all(fifteen),
           shape: RoundedRectangleBorder(
             side: BorderSide(
@@ -75,8 +79,8 @@ class CommonButtonWidget extends StatelessWidget {
                 color: colorBorder ?? Colors.transparent),
             borderRadius: BorderRadius.circular(radius ?? eight),
           ),
-          backgroundColor:
-              colorButton ?? AppColors.colorActive, // Background Color
+         backgroundColor:
+              colorButton ?? AppColors.colorActive,// Background Color
         ),
         onPressed: onPressed,
         child: Center(

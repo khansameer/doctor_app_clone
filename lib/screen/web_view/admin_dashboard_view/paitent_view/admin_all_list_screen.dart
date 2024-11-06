@@ -51,6 +51,7 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
       }
     });
     var isMobile = Responsive.isMobile(context);
+    var size=MediaQuery.sizeOf(context);
     return Consumer<PatientProvider>(builder: (context, provider, child) {
       return Stack(
         children: [
@@ -59,6 +60,7 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
               Column(
                 children: [
                   Container(
+                    width: size.width,
                     padding: const EdgeInsets.all(10.0),
                     color: AppColors.colorBgNew,
                     child: SingleChildScrollView(
@@ -118,7 +120,7 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                                     isMobile: isMobile, index: index),
                             leading: commonInkWell(
                                 onEnter: (event) {
-                                  showProfileDialog(context);
+                                 // showProfileDialog(context);
                                   context.read<ReportProvider>().setName =
                                       '${data?.firstName.toString()} ${data?.lastName.toString()}';
                                   context.read<ReportProvider>().setImage =
@@ -131,7 +133,7 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                               children: [
                                 commonInkWell(
                                   onEnter: (event) {
-                                    showProfileDialog(context);
+                                   // showProfileDialog(context);
                                     context.read<ReportProvider>().setName =
                                         '${data?.firstName.toString()} ${data?.lastName.toString()}';
                                     context.read<ReportProvider>().setImage =
@@ -296,7 +298,7 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20.0, right: 20),
                     child: isMobile
-                        ? Icon(Icons.remove_red_eye_outlined)
+                        ? const Icon(Icons.remove_red_eye_outlined)
                         : CommonTextWidget(
                             textColor: provider.hoveredEdit == index
                                 ? Colors.white

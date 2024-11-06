@@ -198,7 +198,7 @@ class AppointmentsProvider extends ChangeNotifier {
       // Check if dateTime is on the same day as today
       return dateTime.isAtSameMomentAs(today) ||
           (dateTime.isAfter(today) &&
-              dateTime.isBefore(today.add(Duration(days: 1))));
+              dateTime.isBefore(today.add(const Duration(days: 1))));
     }).toList();
 
     notifyListeners();

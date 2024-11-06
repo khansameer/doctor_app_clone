@@ -64,7 +64,7 @@ class LoginView extends StatelessWidget {
                               image: DecorationImage(
                                   fit: BoxFit.cover, image: AssetImage(icBg1))),
                           child: Container(
-                            color: AppColors.colorBG.withValues(alpha: 0.60),
+                            color: AppColors.colorBG.withOpacity( 0.60),
                           ),
                         ),
                       )),
@@ -73,9 +73,28 @@ class LoginView extends StatelessWidget {
   }
 }
 
-class MobileView extends StatelessWidget {
+class MobileView extends StatefulWidget {
   const MobileView({super.key, required this.formLoginKey});
   final GlobalKey<FormState> formLoginKey;
+
+  @override
+  State<MobileView> createState() => _MobileViewState();
+}
+
+class _MobileViewState extends State<MobileView> {
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
+  final FocusNode _buttonFocusNode = FocusNode();
+  var tetEmail=TextEditingController();
+  var tetPassword=TextEditingController();
+  @override
+  void dispose() {
+    _passwordFocusNode.dispose();
+    _buttonFocusNode.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var provider = context.read<AuthProviders>();
@@ -112,6 +131,7 @@ class MobileView extends StatelessWidget {
                   ),
                   CommonTextWidget(
                     width: size.width,
+
                     textAlign: isMobile ? TextAlign.start : TextAlign.start,
                     text: "Login to your Juno Health Pro Account",
                     textStyle: GoogleFonts.inter(
@@ -122,10 +142,12 @@ class MobileView extends StatelessWidget {
                   ),
                   commonTextFiledView(
                     topText: 30,
+                    focusNode: _emailFocusNode,
                     radius: 8,
+                    textInputAction: TextInputAction.next,
                     title: yourEmail,
                     keyboardType: TextInputType.emailAddress,
-                    controller: provider.tetEmail,
+                    controller: tetEmail,
                     validator: (value) {
                       if (value.toString().trim().isEmpty) {
                         return emptyEmail;
@@ -139,8 +161,10 @@ class MobileView extends StatelessWidget {
                   ),
                   commonTextFiledView(
                       radius: 8,
+                      focusNode: _passwordFocusNode,
+                      textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.visiblePassword,
-                      controller: provider.tetPassword,
+                      controller: tetPassword,
                       obscureText: !provider.isPasswordVisible,
                       validator: (value) {
                         if (value.toString().trim().isEmpty) {
@@ -151,7 +175,12 @@ class MobileView extends StatelessWidget {
                       },
                       title: password,
                       suffixIcon: IconButton(
-                        onPressed: provider.togglePasswordVisibility,
+                        autofocus: false,
+                        focusNode: FocusNode(skipTraversal: true),
+                        onPressed: (){
+                          FocusScope.of(context).unfocus();
+                          provider.togglePasswordVisibility();
+                        },
                         icon: Icon(
                           color: Colors.grey,
                           provider.isPasswordVisible
@@ -177,41 +206,19 @@ class MobileView extends StatelessWidget {
                       ),
                     ),
                   ),
+
                   CommonButtonWidget(
                     top: twenty,
                     radius: 8,
+                    focusNode: _buttonFocusNode,
                     padding: isMobile
                         ? const EdgeInsets.all(13)
                         : const EdgeInsets.all(20),
                     onPressed: () {
                       final isValid =
-                          formLoginKey.currentState?.validate() ?? false;
+                          widget.formLoginKey.currentState?.validate() ?? false;
                       if (isValid) {
-                        Map<String, dynamic> body = {
-                          "email": provider.tetEmail.text,
-                          "password": provider.tetPassword.text,
-                          "role": "doctor",
-                        };
-
-                        provider
-                            .callLoginApi(
-                                context: context, body: body, isLogin: true)
-                            .then((value) {
-                          if (provider.loginModel?.token != null) {
-                            if (kIsWeb) {
-                              pushNamedAndRemoveUntil(
-                                  context: context,
-                                  routeName: RouteName.adminDashboardScreen);
-                            } else {
-                              pushNamedAndRemoveUntil(
-                                  context: context,
-                                  routeName: RouteName.dashboardScreen);
-                            }
-
-                            formLoginKey.currentState?.save();
-                            provider.resetFields();
-                          }
-                        });
+                        onButtonLogin(provider: provider);
                       }
                     },
                     text: continueBtn,
@@ -281,5 +288,34 @@ class MobileView extends StatelessWidget {
         ),
       ],
     );
+  }
+  
+  onButtonLogin({required AuthProviders provider}){
+    Map<String, dynamic> body = {
+      "email": tetEmail.text,
+      "password": tetPassword.text,
+      "role": "doctor",
+    };
+
+    provider
+        .callLoginApi(
+
+        context: context, body: body, isLogin: true)
+        .then((value) {
+      if (provider.loginModel?.token != null) {
+        if (kIsWeb) {
+          pushNamedAndRemoveUntil(
+              context: context,
+              routeName: RouteName.adminDashboardScreen);
+        } else {
+          pushNamedAndRemoveUntil(
+              context: context,
+              routeName: RouteName.dashboardScreen);
+        }
+
+        widget.formLoginKey.currentState?.save();
+        provider.resetFields();
+      }
+    });
   }
 }

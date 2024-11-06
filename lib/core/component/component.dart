@@ -1,21 +1,23 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctor_app/core/app_constants.dart';
-
 import 'package:doctor_app/core/colors.dart';
-import 'package:doctor_app/core/common/common_textfield.dart';
-import 'package:doctor_app/core/common/custom_alert_dialog.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/common/common_textfield.dart';
+import 'package:doctor_app/core/common/custom_alert_dialog.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/main.dart';
-
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/provider/procedure_provider.dart';
+import 'package:doctor_app/screen/authentication/model/login_model.dart';
+import 'package:doctor_app/screen/mobile_view/profile/model/user_details_model.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/patient_profile_dialog.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
+import 'package:doctor_app/service/network_repository.dart';
 import 'package:doctor_app/shared_preferences/preference_helper.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -23,8 +25,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-
+import 'package:popover/popover.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void showProfileDialog(BuildContext context) {
   var size = MediaQuery.sizeOf(context);
@@ -32,12 +35,12 @@ void showProfileDialog(BuildContext context) {
     context: context,
     barrierLabel: "Barrier",
     barrierDismissible: true,
-    barrierColor: Colors.black.withValues(alpha: 0.6),
+    barrierColor: Colors.black.withOpacity(0.6),
     transitionDuration: const Duration(milliseconds: 800),
     pageBuilder: (_, __, ___) {
       return Center(
         child: SizedBox(
-          width: size.width * 0.3,
+          width: size.width * 0.2,
           child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: const PatientProfileDialog()),
@@ -52,7 +55,7 @@ commonWithIconButton(
   return TextButton(
     style: TextButton.styleFrom(
       foregroundColor: Colors.transparent,
-      disabledForegroundColor: Colors.transparent.withValues(alpha: zero38),
+      disabledForegroundColor: Colors.transparent.withOpacity(zero38),
     ),
     onPressed: onPressed,
     child: Container(
@@ -91,7 +94,7 @@ commonButton(
             )
           : const CircleBorder(),
       foregroundColor: Colors.transparent,
-      disabledForegroundColor: Colors.transparent.withValues(alpha: zero38),
+      disabledForegroundColor: Colors.transparent.withOpacity(zero38),
     ),
     onPressed: onPressed,
     child: commonText(
@@ -164,6 +167,13 @@ Future getName() async {
   return name;
 }
 
+
+Future getUserPhoto() async {
+  String? photo = await PreferenceHelper.getString(key: PreferenceHelper.userPhoto);
+
+  return photo;
+}
+
 Future getDoctorEmail() async {
   String? email = await PreferenceHelper.getString(key: PreferenceHelper.email);
 
@@ -211,11 +221,14 @@ commonTextFiledView({
   double? height,
   Widget? suffixIcon,
   VoidCallback? onTap,
+  TextInputAction? textInputAction,
   double? textFontSize,
   double? fontSize,
   TextInputType? keyboardType,
+  FocusNode? focusNode,
   TextEditingController? controller,
   int? maxLines,
+  Color? borderColor,
 }) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
@@ -229,8 +242,11 @@ commonTextFiledView({
         textColor: Colors.black,
       ),
       CommonTextField(
+        borderColor: borderColor,
         hint: hint,
+        focusNode: focusNode,
         onTap: onTap,
+        textInputAction: textInputAction,
         height: height,
         isReadOnly: isReadOnly,
         colorFill: Colors.white,
@@ -267,6 +283,7 @@ Widget commonInkWell({
     onEnter: onEnter,
     onExit: onExit,
     child: InkWell(
+      focusNode: FocusNode(skipTraversal: true),
       onHover: onHover,
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
@@ -409,16 +426,20 @@ void showCommonDialog(
           ));
 }
 
-commonSessionError({required BuildContext context}) {
+commonSessionError({required BuildContext context, bool isAuth = false}) {
   showCommonDialog(
     context: context,
     title: "Error",
     content: errorMessage ?? '',
     btnPositive: "Close",
     onPressPositive: () {
-      PreferenceHelper.clear();
-      pushNamedAndRemoveUntil(
-          context: context, routeName: RouteName.loginScreen);
+      if (!isAuth) {
+        PreferenceHelper.clear();
+        pushNamedAndRemoveUntil(
+            context: context, routeName: RouteName.loginScreen);
+      } else {
+        Navigator.of(context).pop();
+      }
     },
     isMessage: true,
   );
@@ -461,7 +482,7 @@ Widget commonImageNetworkWidget(
         width: width,
         height: height,
         placeholder: (context, url) => showLoaderList(),
-        errorWidget: (context, url, error) => Image.asset(icLoginLogo),
+        errorWidget: (context, url, error) => Image.asset(icDummyUser),
         color: iconColor,
         fit: boxFit ?? BoxFit.cover,
       ),
@@ -478,8 +499,7 @@ commonList({
     //  padding: const EdgeInsets.only(top: 8, bottom: 8),
     decoration: commonBoxDecoration(
         color: Colors.white,
-        border:
-            Border.all(color: Colors.grey.withValues(alpha: 0.50), width: 0)),
+        border: Border.all(color: Colors.grey.withOpacity(0.50), width: 0)),
     margin: EdgeInsets.only(left: 0, right: 0, top: top ?? 0),
     child: child,
   );
@@ -611,8 +631,8 @@ commonMenu(
     trailing: trailing,
     onExpansionChanged: onExpansionChanged,
     showTrailingIcon: showIcon ?? false,
-    collapsedIconColor: Colors.white.withValues(alpha: 0.50),
-    iconColor: Colors.white.withValues(alpha: 0.50),
+    collapsedIconColor: Colors.white.withOpacity(0.50),
+    iconColor: Colors.white.withOpacity(0.50),
     leading: leading ??
         Icon(
           Icons.menu,
@@ -621,7 +641,7 @@ commonMenu(
     title: CommonTextWidget(
         text: headerText ?? "Calender",
         fontSize: 13,
-        textColor: headerTextColor ?? Colors.white.withValues(alpha: 0.50)),
+        textColor: headerTextColor ?? Colors.white.withOpacity(0.50)),
     children: children ??
         [
           // Child expandable menu 1
@@ -629,32 +649,29 @@ commonMenu(
             showTrailingIcon: false,
             leading: Icon(
               Icons.inventory,
-              color: Colors.white.withValues(alpha: 0.50),
+              color: Colors.white.withOpacity(0.50),
             ),
             title: CommonTextWidget(
-                text: 'Inventory',
-                textColor: Colors.white.withValues(alpha: 0.50)),
+                text: 'Inventory', textColor: Colors.white.withOpacity(0.50)),
           ),
           // Child expandable menu 2
           ExpansionTile(
             showTrailingIcon: false,
             leading: Icon(
               Icons.expand_sharp,
-              color: Colors.white.withValues(alpha: 0.50),
+              color: Colors.white.withOpacity(0.50),
             ),
             title: CommonTextWidget(
-                text: 'Expenses',
-                textColor: Colors.white.withValues(alpha: 0.50)),
+                text: 'Expenses', textColor: Colors.white.withOpacity(0.50)),
           ),
           ExpansionTile(
             showTrailingIcon: false,
             leading: Icon(
               Icons.task,
-              color: Colors.white.withValues(alpha: 0.50),
+              color: Colors.white.withOpacity(0.50),
             ),
             title: CommonTextWidget(
-                text: 'Activities',
-                textColor: Colors.white.withValues(alpha: 0.50)),
+                text: 'Activities', textColor: Colors.white.withOpacity(0.50)),
           ),
         ],
   );
@@ -816,4 +833,33 @@ commonLogoutDialog(
           ),
         );
       });
+}
+
+showPopoverMenu(
+    {required BuildContext context,
+    required Size size,
+    Color? colorBg,
+    required Widget child,
+    double? width,
+    double? height}) {
+  showPopover(
+    barrierColor: Colors.transparent,
+    context: context,
+
+    transition: PopoverTransition.scale,
+    backgroundColor: colorBg ?? AppColors.colorBgNew,
+    bodyBuilder: (context) {
+      return Container(
+        // color: colorBg??Colors.white,
+
+        child: child,
+      );
+    },
+    onPop: () => print('Popover was popped!'),
+    direction: PopoverDirection.bottom,
+    width: width ?? size.width * 0.15,
+   // height: height ?? size.height * 0.4,
+    arrowHeight: 15,
+    arrowWidth: 30,
+  );
 }

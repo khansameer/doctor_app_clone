@@ -9,6 +9,7 @@ import 'package:doctor_app/core/context_extension.dart';
 import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/provider/patient_provider.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/add_appointments_widget.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -170,7 +171,7 @@ class _PatientsScreenState extends State<PatientsScreen> {
                 );
               });
         } else if (value == 'upload') {
-          String? filePath = await FilePickerHelper.pickFile();
+          FilePickerResult? filePath = await FilePickerHelper.pickFile();
           if (filePath != null) {
             // Handle the selected file path
             if (kDebugMode) {
@@ -278,7 +279,7 @@ class _PatientsScreenState extends State<PatientsScreen> {
       children: [
         Icon(
           icon ?? Icons.female,
-          color: Colors.black.withValues(alpha: 0.6),
+          color: Colors.black.withOpacity( 0.6),
         ),
         Flexible(
             child: CommonTextWidget(
@@ -286,7 +287,7 @@ class _PatientsScreenState extends State<PatientsScreen> {
           fontSize: 11,
           left: 5,
           fontWeight: FontWeight.w600,
-          textColor: Colors.black.withValues(alpha: 0.6),
+          textColor: Colors.black.withOpacity( 0.6),
         )),
       ],
     );
