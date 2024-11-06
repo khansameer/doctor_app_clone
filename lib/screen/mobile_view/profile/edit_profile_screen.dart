@@ -7,8 +7,13 @@ import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/profile_provider.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../core/common/commonprofile_view.dart';
+import '../../../core/common/file_picker_helper.dart';
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});
@@ -18,6 +23,7 @@ class EditProfileScreen extends StatelessWidget {
     var size = MediaQuery.sizeOf(context);
 
     var isMobile = Responsive.isMobile(context);
+    var isTablet = Responsive.isTablet(context);
     return AppScaffold(
       appBar: isMobile
           ? commonAppBar(title: "Edit Profile".toUpperCase())
@@ -25,17 +31,17 @@ class EditProfileScreen extends StatelessWidget {
       child: SafeArea(
         child: SizedBox(
           width: size.width,
-          child: _mobileView(size: size, isMobile: isMobile),
+          child: _mobileView(size: size, isMobile: isMobile,isTablet: isTablet),
         ),
       ),
     );
   }
 
-  _mobileView({required Size size, required bool isMobile}) {
+  _mobileView({required Size size, required bool isMobile,required bool isTablet}) {
     return Consumer<ProfileProvider>(builder: (context, provider, child) {
       return Container(
         color: Colors.white,
-        padding: EdgeInsets.all(isMobile ? 15 : 25.0),
+        padding: EdgeInsets.all(isMobile ? 15 : 20.0),
         child: ListView(
           children: [
             Column(
@@ -51,17 +57,26 @@ class EditProfileScreen extends StatelessWidget {
                       children: [
                         CommonTextWidget(
                           text: "Profile photo",
-                          fontSize: 12,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         Row(
                           children: [
-                            SizedBox(
+                          /* provider.pickedFile!=null?Image.memory(provider.pickedFile?.files.first.bytes??Uint8List(0)): commonProfileIcon(
                               width: 90,
                               height: 90,
-                              child: setAssetImage(image: icDummyUsers),
+                              path: icDummyUser,
+                            ),*/
+                            CommonProfileView(
+                              width: 90,
+                              filePickerResult: provider.pickedFile,
+
+                              height: 90,
+
                             ),
                             Flexible(
                               child: Column(
@@ -74,6 +89,10 @@ class EditProfileScreen extends StatelessWidget {
                                     fontSize: 12,
                                   ),
                                   commonInkWell(
+                                    onTap: () async {
+                                      provider.pickFiles(context: context);
+
+                                    },
                                       child: CommonTextWidget(
                                           text: "Add Photo",
                                           top: 8,
@@ -194,10 +213,10 @@ class EditProfileScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                const Divider(
+              /*  const Divider(
                   thickness: 0.3,
-                ),
-                Column(
+                ),*/
+               /* Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -276,8 +295,8 @@ class EditProfileScreen extends StatelessWidget {
                       ],
                     )
                   ],
-                ),
-                const SizedBox(
+                ),*/
+               /* const SizedBox(
                   height: 20,
                 ),
                 const Divider(
@@ -289,8 +308,8 @@ class EditProfileScreen extends StatelessWidget {
                 ),
                 const SizedBox(
                   height: 20,
-                ),
-                Row(
+                ),*/
+             /*   Row(
                   children: [
                     Expanded(
                         child: commonTextFiled(
@@ -314,7 +333,7 @@ class EditProfileScreen extends StatelessWidget {
                 ),
                 const SizedBox(
                   height: 20,
-                ),
+                ),*/
                 Align(
                   alignment: Alignment.topRight,
                   child: CommonButtonWidget(
@@ -339,6 +358,7 @@ class EditProfileScreen extends StatelessWidget {
     return commonTextFiledView(
       textFontSize: 12,
       height: 40,
+      borderColor: Colors.grey.withOpacity( 0.40),
       radius: 5,
       width: width ?? size.width * 0.1,
       topTextField: 5,

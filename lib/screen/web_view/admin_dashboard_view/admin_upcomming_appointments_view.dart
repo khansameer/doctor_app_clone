@@ -67,7 +67,7 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     commonInkWell(
-                                    /*  onEnter: (event) {
+                                    /*onEnter: (event) {
                                         provider.setHoveredProfile(index);
                                         *//*showProfileDialog(context);
                                         context.read<ReportProvider>().setName =

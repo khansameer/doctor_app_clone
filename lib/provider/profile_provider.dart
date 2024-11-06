@@ -1,6 +1,68 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:doctor_app/core/common/file_picker_helper.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 class ProfileProvider extends ChangeNotifier{
+
+  FilePickerResult? _pickedFile;
+
+  FilePickerResult? get pickedFile => _pickedFile;
+  String? _imagePath;
+  Uint8List? _imageBytes;
+  Future<void> pickFiles({required BuildContext context}) async {
+  //  final result = await FilePicker.platform.pickFiles(allowMultiple: true);
+    final result = await FilePickerHelper.pickFile( allowedExtensions: ['jpg', 'png']);
+    if (result != null) {
+      _pickedFile = result;
+      setFilePath=result;
+      Uint8List? fileBytes = result.files.single.bytes;
+     // cropImage(sourcePath: _pickedFile?.files.single.path??'',context: context);
+      print('================_pickedFile${fileBytes}');
+      notifyListeners();
+
+    }
+  }
+
+  cropImage({required String sourcePath, required BuildContext context}) async {
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: sourcePath,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Cropper',
+          toolbarColor: Colors.deepOrange,
+          toolbarWidgetColor: Colors.white,
+          aspectRatioPresets: [
+            CropAspectRatioPreset.original,
+            CropAspectRatioPreset.square,
+          //  CropAspectRatioPresetCustom(),
+          ],
+        ),
+        IOSUiSettings(
+          title: 'Cropper',
+          aspectRatioPresets: [
+            CropAspectRatioPreset.original,
+            CropAspectRatioPreset.square,
+          //  CropAspectRatioPresetCustom(), // IMPORTANT: iOS supports only one custom aspect ratio in preset list
+          ],
+        ),
+        WebUiSettings(
+          context: context,
+        ),
+      ],
+    );
+
+  }
+  set setFilePath(FilePickerResult path) {
+    _pickedFile = path;
+    print('================_pickedFile${_pickedFile?.files.length}');
+    notifyListeners();
+  }
+
   String? _selectedGender;
 
   String? get selectedGender => _selectedGender;

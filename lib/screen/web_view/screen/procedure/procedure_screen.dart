@@ -28,7 +28,7 @@ class _InvoiceScreenState extends State<ProcedureScreen> {
           .read<ProcedureProvider>()
           .getProcedureCharges(context: context)
           .then((value) {
-        setState(() {});
+
       });
     });
   }

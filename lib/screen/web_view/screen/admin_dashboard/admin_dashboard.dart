@@ -1,6 +1,5 @@
 import 'package:doctor_app/core/app_constants.dart';
 import 'package:doctor_app/core/colors.dart';
-
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/error_page.dart';
 import 'package:doctor_app/core/component/component.dart';
@@ -10,15 +9,16 @@ import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_dashboard_view.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/communication_screen.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/feedback/admin_feedback_screen.dart';
+import 'package:doctor_app/screen/web_view/admin_dashboard_view/notification/admin_notification_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/admin_calender_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/patient_new_screen.dart';
+import 'package:doctor_app/screen/web_view/screen/report/admin_web_report.dart';
 import 'package:doctor_app/screen/web_view/screen/setting/admin_setting_screen.dart';
 
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../report/admin_web_report.dart';
+import 'package:provider/provider.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -113,6 +113,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
           elevation: 0,
           toolbarHeight: 86,
           actions: [
+
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,22 +127,48 @@ class _AdminDashboardState extends State<AdminDashboard> {
               width: 10,
             ),
             Stack(
+
               clipBehavior: Clip.none,
               children: [
-                Container(
-                  width: thirtyFive,
-                  height: thirtyFive,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: commonBoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white,
+                MouseRegion(
+                  onEnter: (_) {
+                    provider.setHoverNotification(0);
+                  },
+                  onExit: (_) {
+                    provider.setHoverNotification(null);
+                  },
+
+                  child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      width: thirtyFive,
+                      height: thirtyFive,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: commonBoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: provider.hoverNotification == 0
+                            ? AppColors.primary
+                            : Colors.white,
+                        // color: Colors.white,
+                      ),
+                      child:  Builder(
+                        builder: (context) {
+                          return IconButton(
+                            hoverColor: Colors.transparent,
+                            onPressed: (){
+
+                              showPopoverMenu(
+                                  colorBg: AppColors.colorBgNew,
+                                  context: context, size: size, child: AdminNotificationScreen());
+                            },
+                            icon: Icon(Icons.notifications_none,
+                            color:provider.hoverNotification == 0?Colors.white: AppColors.colorTextNew,
+                            size: 18,),
+                          );
+                        }
+                      ),
+                    ),
                   ),
-                  child: const Icon(
-                    Icons.notifications_none,
-                    color: AppColors.colorTextNew,
-                    size: 18,
-                  ),
-                ),
+
                 Positioned(
                     right: 0,
                     top: -5,
@@ -389,7 +416,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
             commonLogoutDialog(
                 width: isMobile
                     ? size.width * zero9
-                    : size.width * 0.3,
+                    : size.width * 0.2,
                 contextAd: context,
                 isDesktop: isDesktop,
                 isMobile: isMobile);

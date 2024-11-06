@@ -19,6 +19,7 @@ import 'package:doctor_app/screen/mobile_view/profile/profile_screen.dart';
 import 'package:doctor_app/screen/mobile_view/reach/reach_screen.dart';
 import 'package:doctor_app/screen/mobile_view/report/report_screen.dart';
 import 'package:doctor_app/screen/mobile_view/weekly_earning/weekly_earning_screen.dart';
+import 'package:doctor_app/screen/web_view/admin_dashboard_view/notification/admin_notification_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/admin_calender_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/patient_profile_page.dart';
 import 'package:flutter/foundation.dart';
@@ -53,6 +54,16 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+
+
+  int? _hoverNotification;
+
+  int? get hoverNotification => _hoverNotification;
+
+  void setHoverNotification(int? index) {
+    _hoverNotification = index;
+    notifyListeners();
+  }
   String? _name;
 
   String? get name => _name;
@@ -155,7 +166,20 @@ class DashboardProvider extends ChangeNotifier {
     // } else 
     if (value == "Clinic Address") {
       _currentAdminSettingPage = const ErrorPage();
-    } else {
+    }
+   else if(value=="Notification".trim()){
+      _currentAdminSettingPage = Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: const AdminNotificationScreen(),
+      );
+    }
+    else   if(value=="My Profile"){
+      _currentAdminSettingPage = Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: const EditProfileScreen(),
+      );
+    }
+    else {
       _currentAdminSettingPage = const ErrorPage();
     }
     notifyListeners(); // Notify listeners to rebuild
@@ -518,7 +542,28 @@ class DashboardProvider extends ChangeNotifier {
   ];
   //
 
-
+  List<String> doctorNotifications = [
+    "Patient John Doe has checked in for the appointment.",
+    "New lab results available for patient Jane Smith.",
+    "Reminder: Annual review for patient Alice Johnson due tomorrow.",
+    "Urgent: Patient Michael Brown needs immediate attention.",
+    "Follow-up needed for patient Emily White on recent test results.",
+    "Prescription renewal request received from patient David Green.",
+    "Dr. appointment scheduled with patient Sophia Lewis for 10 AM.",
+    "Patient Emma Clark has updated medical history in their profile.",
+    "Reminder: Weekly review meeting at 4 PM today.",
+    "Patient Lucas Harris has a high-priority message for you.",
+    "New feedback received from patient Isabella Robinson.",
+    "Insurance documents pending approval for patient Liam Walker.",
+    "Appointment canceled by patient Olivia Hall.",
+    "Patient Mia Allen's health report is now available for review.",
+    "Emergency contact update for patient Ethan Young.",
+    "New referral received from Dr. Noah King for patient Ava Wright.",
+    "Monthly health summary for patient Chloe Scott is ready.",
+    "Pending approval for patient Benjamin Adams' test results.",
+    "Scheduled surgery for patient Ella Turner confirmed for next week.",
+    "Request for second opinion on patient Matthew Mitchell's diagnosis."
+  ];
 }
 
 class Booking {

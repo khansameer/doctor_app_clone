@@ -4,7 +4,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 class FilePickerHelper {
   // This method checks for permissions and opens the file picker
-  static Future<String?> pickFile() async {
+  static Future<FilePickerResult?> pickFile({List<String>? allowedExtensions}) async {
     // Check if the platform is Android or iOS
     if (!kIsWeb) {
       // Check if not web
@@ -25,15 +25,21 @@ class FilePickerHelper {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
       type: FileType.custom,
-      allowedExtensions: ['jpg', 'pdf', 'doc'],
+      allowedExtensions:allowedExtensions?? ['jpg', 'pdf', 'doc'],
     );
     // Check if the user picked a file
     if (result != null) {
+
+      if(kIsWeb){
+
+        return result;
+       // result?.files.first.bytes
+      }
       if (kDebugMode) {
         print('');
       }
       // Return the path of the selected file
-      return result.files.single.path;
+      return result;
     }
 
     // Return null if no file was picked
