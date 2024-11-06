@@ -123,7 +123,7 @@ class PatientProfileDialog extends StatelessWidget {
                         Expanded(
                           child: RichText(
                             text: TextSpan(
-                              text: 'In-Clinic Appointment ',
+                              text: 'Video Consultation ',
                               style: commonTextStyle(
                                   fontWeight: FontWeight.w700, fontSize: 12),
                               children: <TextSpan>[
@@ -133,7 +133,7 @@ class PatientProfileDialog extends StatelessWidget {
                                         fontSize: 12,
                                         fontWeight: FontWeight.w400)),
                                 TextSpan(
-                                    text: 'Dr.Emily Davis',
+                                    text: 'Dr. Richard Stevens',
                                     style: commonTextStyle(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 12)),

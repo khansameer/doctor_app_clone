@@ -113,6 +113,18 @@ class _AdminDashboardState extends State<AdminDashboard> {
           elevation: 0,
           toolbarHeight: 86,
           actions: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [CommonTextWidget(
+                    text: "Timezone: EST",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                    textColor: Colors.blueGrey.shade400),],
+            ),
+            const SizedBox(
+              width: 10,
+            ),
             Stack(
               clipBehavior: Clip.none,
               children: [
@@ -145,6 +157,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
             const SizedBox(
               width: 10,
             ),
+            
             SizedBox(
               width: thirtyFive,
               height: thirtyFive,
@@ -157,8 +170,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                
                 CommonTextWidget(
-                    text: provider.name ?? "",
+                    text: "Richard Stevens",
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
                     textColor: AppColors.colorText),

@@ -168,13 +168,13 @@ class AdminWebReport extends StatelessWidget {
                               text: item['Invoice Number'],
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
-                              textColor: AppColors.colorBlue,
+                              textColor: AppColors.colorGreen,
                             )),
                             DataCell(CommonTextWidget(
                               text: item['Patient'],
                               fontWeight: FontWeight.w600,
                               fontSize: 12,
-                              textColor: AppColors.colorBlue,
+                              textColor: AppColors.colorGreen,
                             )),
                             DataCell(CommonTextWidget(
                                 fontWeight: FontWeight.w600,
@@ -257,7 +257,7 @@ class AdminWebReport extends StatelessWidget {
                     CommonTextField(
                       width: size.width * 0.10,
                       height: 40,
-                      isReadOnly: true,
+                      isReadOnly: false,
                       suffixIcon: IconButton(
                           onPressed: () {},
                           icon: const Icon(
@@ -268,6 +268,8 @@ class AdminWebReport extends StatelessWidget {
                       radius: 8,
                       borderColor: Colors.grey.withOpacity(0.4),
                       colorFill: Colors.white,
+                      hint: "2024-10-01",
+                      colorHint: Colors.black,
                     ),
                     CommonTextWidget(
                       right: 10,
@@ -278,7 +280,7 @@ class AdminWebReport extends StatelessWidget {
                     ),
                     CommonTextField(
                       height: 40,
-                      isReadOnly: true,
+                      isReadOnly: false,
                       width: size.width * 0.10,
                       radius: 8,
                       suffixIcon: IconButton(
@@ -290,12 +292,14 @@ class AdminWebReport extends StatelessWidget {
                           )),
                       borderColor: Colors.grey.withOpacity(0.4),
                       colorFill: Colors.white,
+                      hint: "2024-10-31",
+                      colorHint: Colors.black,
                     ),
                     const SizedBox(
                       width: 10,
                     ),
                     CommonButtonWidget(
-                      text: "Mail",
+                      text: "Export",
                       colorText: AppColors.colorTextNew,
                       height: 40,
                       fontSize: 13,

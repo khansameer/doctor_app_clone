@@ -160,7 +160,7 @@ class AdminOverAllAppointment extends StatelessWidget {
                       bottomRight: Radius.circular(8),
                       bottomLeft: Radius.circular(8)),
                   toY: barValues[index],
-                  color: Colors.grey,
+                  color: Colors.green.shade300,
                 ),
               ],
             );

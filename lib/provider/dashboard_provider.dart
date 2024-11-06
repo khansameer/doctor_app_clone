@@ -150,9 +150,10 @@ class DashboardProvider extends ChangeNotifier {
   Widget get currentAdminSettingPage => _currentAdminSettingPage;
 
   set setAdminSettingPagePage(String value) {
-    if (value == "Procedure Catalog") {
-      _currentAdminSettingPage = const ProcedureScreen();
-    } else if (value == "Clinic Address") {
+    // if (value == "Procedure Catalog") {
+    //   _currentAdminSettingPage = const ProcedureScreen();
+    // } else 
+    if (value == "Clinic Address") {
       _currentAdminSettingPage = const ErrorPage();
     } else {
       _currentAdminSettingPage = const ErrorPage();

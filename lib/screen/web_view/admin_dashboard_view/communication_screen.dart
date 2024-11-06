@@ -204,7 +204,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                       subtitle: CommonTextWidget(
                         text: data.latestMessage,
                         fontSize: 11,
-                        textColor: AppColors.colorBlue,
+                        textColor: AppColors.colorGreen,
                       ),
                       onTap: () {
                         if (isMobile) {

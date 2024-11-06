@@ -21,17 +21,7 @@ class DashboardPatientView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child:CommonTextWidget(
-                left: 5,
-                text: "Oct 1 - Oct 30".toUpperCase(),
-                textColor: Colors.green.shade300,
-                fontWeight: FontWeight.w800,
-                textAlign: TextAlign.right,
-              ),
-          ),
-          Padding(
+          Row(children: [Padding(
             padding: const EdgeInsets.all(10.0),
             child: CommonTextWidget(
               left: 5,
@@ -39,27 +29,50 @@ class DashboardPatientView extends StatelessWidget {
               fontWeight: FontWeight.w800,
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(695,0,0,0),
+            child:CommonTextWidget(
+                left: 5,
+                text: "Oct 1 - Oct 30".toUpperCase(),
+                textColor: Colors.green.shade300,
+                fontWeight: FontWeight.w800,
+                textAlign: TextAlign.right,
+              ),
+          ),],),
           
           const Divider(
             thickness: 0.3,
           ),
           commonView(),
-          const Divider(
-            thickness: 0.3,
-          ),
-          commonView(
-              title: "No of upcoming appointments".toUpperCase(),
-              value: "40",
-              colorText: Colors.white,
-              bgColor: AppColors.primary),
-          const Divider(
-            thickness: 0.3,
-          ),
-          commonView(
-              title: "No of missed appointments".toUpperCase(),
-              value: "5",
-              colorText: Colors.white,
-              bgColor: Colors.red.withOpacity( 0.7)),
+          
+          Row(
+            children: [
+              Expanded(
+                child: commonView(
+                  title: "No of completed appointments".toUpperCase(),
+                  value: "50",
+                  colorText: Colors.black,
+                  bgColor: AppColors.colorBgNew,
+                ),
+              ),
+              Expanded(
+                child: commonView(
+                  title: "No of upcoming appointments".toUpperCase(),
+                  value: "40",
+                  colorText: AppColors.primary,
+                  bgColor: AppColors.colorBgNew,
+                ),
+              ),
+              Expanded(
+                child: commonView(
+                  title: "No of missed appointments".toUpperCase(),
+                  value: "5",
+                  colorText: Colors.red.shade600,
+                  bgColor: AppColors.colorBgNew,
+                ),
+              ),
+            ],
+          )
           /* Padding(
             padding: const EdgeInsets.all(0.0),
             child: Row(
@@ -277,34 +290,39 @@ class DashboardPatientView extends StatelessWidget {
   }
 
   commonView({String? title, String? value, Color? bgColor, Color? colorText}) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          CommonTextWidget(
-            fontWeight: FontWeight.w400,
-            fontSize: 12,
-            left: 10,
-            text: title ?? "No of completed appointment".toUpperCase(),
-          ),
-          Container(
-            width: 40,
-            height: 40,
-            margin: const EdgeInsets.only(right: 10),
-            decoration: BoxDecoration(
-                shape: BoxShape.circle, color: bgColor ?? AppColors.colorBgNew),
-            child: Center(
-              child: CommonTextWidget(
-                text: value ?? "30",
-                fontSize: 13,
-                textColor: colorText,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          )
-        ],
-      ),
-    );
+    return Container(
+    margin: const EdgeInsets.all(8.0),
+    padding: const EdgeInsets.all(16.0),
+    decoration: BoxDecoration(
+      color: bgColor ?? AppColors.colorBgNew,
+      borderRadius: BorderRadius.circular(10),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.2),
+          spreadRadius: 1,
+          blurRadius: 3,
+          offset: const Offset(0, 2),
+        ),
+      ],
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CommonTextWidget(
+          fontWeight: FontWeight.w400,
+          fontSize: 12,
+          text: title ?? "",
+        ),
+        const SizedBox(height: 8),
+        CommonTextWidget(
+          text: value ?? "",
+          fontSize: 24,
+          textColor: colorText ?? Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+      ],
+    ),
+  );
   }
 }
