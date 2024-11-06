@@ -171,13 +171,16 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
                 Positioned(
                     right: 0,
-                    top: -5,
+                    top: -8,
                     child: Container(
-                      width: 12,
+                      width: 18,
                       decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           color: Color.fromARGB(255, 244, 147, 43)),
-                      height: 12,
+                      height: 18,
+                      child: Center(
+                        child: CommonTextWidget(text: '${provider.doctorNotifications.length}',fontSize: 8,textColor: Colors.white,fontWeight: FontWeight.w700,),
+                      ),
                     )),
               ],
             ),

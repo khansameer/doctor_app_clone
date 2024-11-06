@@ -5,6 +5,7 @@ import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:doctor_app/provider/report_provier.dart';
+import 'package:doctor_app/screen/web_view/admin_dashboard_view/patient_profile_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -206,53 +207,60 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
                                   const SizedBox(
                                     width: 10,
                                   ),
-                                  commonInkWell(
-                                    onTap: () {
-                                      context.read<ReportProvider>().setName =
-                                          provider.patients[index].name
-                                              .toString();
-                                      context
-                                          .read<ReportProvider>()
-                                          .setImage =
-                                          provider.patients[index].profile
-                                              .toString();
-                                      showProfileDialog(context);
-                                    },
-                                    child: Consumer<AdminDashboardProvider>(
-                                        builder: (context, provider, child) {
-                                          return MouseRegion(
-                                            onEnter: (_) {
-                                              provider.setHoveredEdit(index);
-                                            },
-                                            onExit: (_) {
-                                              provider.setHoveredEdit(null);
-                                            },
+                                  Builder(
+                                    builder: (context) {
+                                      return commonInkWell(
+                                        onTap: () {
+                                          context.read<ReportProvider>().setName =
+                                              provider.patients[index].name
+                                                  .toString();
+                                          context
+                                              .read<ReportProvider>()
+                                              .setImage =
+                                              provider.patients[index].profile
+                                                  .toString();
+                                          showPopoverMenu(
+                                              width: size.width*0.1,
+                                              context: context,child:PatientProfileDialog() , size: size);
+                                       //   showProfileDialog(context);
+                                        },
+                                        child: Consumer<AdminDashboardProvider>(
+                                            builder: (context, provider, child) {
+                                              return MouseRegion(
+                                                onEnter: (_) {
+                                                  provider.setHoveredEdit(index);
+                                                },
+                                                onExit: (_) {
+                                                  provider.setHoveredEdit(null);
+                                                },
 
-                                            child: AnimatedContainer(
-                                              height: 35,
-                                              duration: const Duration(milliseconds: 200),
-                                              margin: const EdgeInsets.all(5),
-                                              decoration: BoxDecoration(
-                                                  color: provider.hoveredEdit == index
-                                                      ? AppColors.primary
-                                                      : AppColors.colorBgNew,
-                                                  borderRadius: BorderRadius.circular(8)),
-                                              child: Center(
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(left: 10.0, right: 10),
-                                                  child:  CommonTextWidget(
-                                                    fontSize: 12,
-                                                    textColor: provider.hoveredEdit == index
-                                                        ? Colors.white
-                                                        : null,
-                                                    text: "View Profile",
-                                                    fontWeight: FontWeight.w600,
+                                                child: AnimatedContainer(
+                                                  height: 35,
+                                                  duration: const Duration(milliseconds: 200),
+                                                  margin: const EdgeInsets.all(5),
+                                                  decoration: BoxDecoration(
+                                                      color: provider.hoveredEdit == index
+                                                          ? AppColors.primary
+                                                          : AppColors.colorBgNew,
+                                                      borderRadius: BorderRadius.circular(8)),
+                                                  child: Center(
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.only(left: 10.0, right: 10),
+                                                      child:  CommonTextWidget(
+                                                        fontSize: 12,
+                                                        textColor: provider.hoveredEdit == index
+                                                            ? Colors.white
+                                                            : null,
+                                                        text: "View Profile",
+                                                        fontWeight: FontWeight.w600,
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ),
-                                          );
-                                        }),
+                                              );
+                                            }),
+                                      );
+                                    }
                                   ),
                                  /* MouseRegion(
                                     onEnter: (_) {

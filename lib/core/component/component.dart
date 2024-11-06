@@ -832,6 +832,8 @@ showPopoverMenu(
   showPopover(
     barrierColor: Colors.transparent,
     context: context,
+
+    transition: PopoverTransition.scale,
     backgroundColor: colorBg ?? AppColors.colorBgNew,
     bodyBuilder: (context) {
       return Container(
@@ -842,8 +844,8 @@ showPopoverMenu(
     },
     onPop: () => print('Popover was popped!'),
     direction: PopoverDirection.bottom,
-    width: width ?? size.width * 0.1,
-    height: height ?? size.height * 0.4,
+    width: width ?? size.width * 0.15,
+   // height: height ?? size.height * 0.4,
     arrowHeight: 15,
     arrowWidth: 30,
   );

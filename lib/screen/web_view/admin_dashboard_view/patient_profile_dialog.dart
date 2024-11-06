@@ -12,7 +12,7 @@ class PatientProfileDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: AppColors.colorBgNew,
       child: SizedBox(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -68,13 +68,13 @@ class PatientProfileDialog extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                       textColor: Colors.grey,
                     ),
-                    CommonTextWidget(
+                    /*CommonTextWidget(
                       text: "Show balance",
                       fontSize: 12,
                       top: 5,
                       fontWeight: FontWeight.w600,
                       textColor: AppColors.primary,
-                    )
+                    )*/
                   ],
                 )
               ],
@@ -103,77 +103,74 @@ class PatientProfileDialog extends StatelessWidget {
             ),
             const Divider(),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const SizedBox(
                     width: 5,
                   ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.settings_outlined,
-                          color: Colors.grey,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: RichText(
-                            text: TextSpan(
-                              text: 'Video Consultation ',
-                              style: commonTextStyle(
-                                  fontWeight: FontWeight.w700, fontSize: 12),
-                              children: <TextSpan>[
-                                TextSpan(
-                                    text: 'with ',
-                                    style: commonTextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400)),
-                                TextSpan(
-                                    text: 'Dr. Richard Stevens',
-                                    style: commonTextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 12)),
-                                TextSpan(
-                                    text: ' at',
-                                    style: commonTextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400)),
-                                TextSpan(
-                                    text: ' 9:45',
-                                    style: commonTextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600)),
-                                TextSpan(
-                                    text: ' for 15 min',
-                                    style: commonTextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400)),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                      child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                  Row(
                     children: [
-                      CommonButtonWidget(
-                        text: "No Show",
-                        colorText: AppColors.colorTextNew,
-                        colorButton: Colors.white,
-                        colorBorder: Colors.black,
+                      const Icon(
+                        Icons.settings_outlined,
+                        color: Colors.grey,
                       ),
                       const SizedBox(
                         width: 10,
                       ),
+                      Expanded(
+                        child: RichText(
+                          text: TextSpan(
+                            text: 'Video Consultation ',
+                            style: commonTextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 12),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: 'with ',
+                                  style: commonTextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400)),
+                              TextSpan(
+                                  text: 'Dr. Richard Stevens',
+                                  style: commonTextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12)),
+                              TextSpan(
+                                  text: ' at',
+                                  style: commonTextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400)),
+                              TextSpan(
+                                  text: ' 9:45',
+                                  style: commonTextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600)),
+                              TextSpan(
+                                  text: ' for 15 min',
+                                  style: commonTextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400)),
+                            ],
+                          ),
+                        ),
+                      )
                     ],
-                  ))
+                  ),
+                  Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                  CommonButtonWidget(
+                    text: "No Show",
+                    top: 20,
+                    fontSize: 12,
+                    borderWidth: 0.5,
+                    colorText: AppColors.colorTextNew,
+                    colorButton: Colors.transparent,
+                    colorBorder: Colors.black,
+                  ),
+                                 ],
+                                    )
                 ],
               ),
             )
