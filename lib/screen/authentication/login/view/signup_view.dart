@@ -447,6 +447,9 @@ class SignUpDesign extends StatelessWidget {
                                     content: "Please pick select gender",
                                     isMessage: true);
                               } else {
+
+                                List<Map<String, dynamic>> addressesJson =
+                                provider.getAddressesInJson();
                                 Map<String, dynamic> body = {
                                   "firstName": provider.tetFName.text,
                                   "lastName": provider.tetLName.text,
