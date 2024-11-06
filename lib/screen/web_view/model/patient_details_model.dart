@@ -40,7 +40,7 @@ class Patients {
   String? phoneNumber;
   String? dateOfBirth;
   String? gender;
-
+  Profile? profile;
   Patients(
       {this.sId,
       this.firstName,
@@ -48,7 +48,8 @@ class Patients {
       this.email,
       this.phoneNumber,
       this.dateOfBirth,
-      this.gender});
+      this.gender,
+      this.profile});
 
   Patients.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -58,6 +59,8 @@ class Patients {
     phoneNumber = json['phoneNumber'];
     dateOfBirth = json['dateOfBirth'];
     gender = json['gender'];
+    profile =
+        json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -69,6 +72,25 @@ class Patients {
     data['phoneNumber'] = phoneNumber;
     data['dateOfBirth'] = dateOfBirth;
     data['gender'] = gender;
+    if (profile != null) {
+      data['profile'] = profile!.toJson();
+    }
+    return data;
+  }
+}
+
+class Profile {
+  String? profilePicture;
+
+  Profile({this.profilePicture});
+
+  Profile.fromJson(Map<String, dynamic> json) {
+    profilePicture = json['profilePicture'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['profilePicture'] = profilePicture;
     return data;
   }
 }

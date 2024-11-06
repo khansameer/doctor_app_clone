@@ -55,8 +55,6 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-
   int? _hoverNotification;
 
   int? get hoverNotification => _hoverNotification;
@@ -65,6 +63,7 @@ class DashboardProvider extends ChangeNotifier {
     _hoverNotification = index;
     notifyListeners();
   }
+
   String? _name;
 
   String? get name => _name;
@@ -97,11 +96,10 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-
   getUserProfile() async {
     _profileImage = await getUserPhoto();
   }
+
   getEmail() async {
     _email = await getDoctorEmail();
     notifyListeners();
@@ -172,23 +170,22 @@ class DashboardProvider extends ChangeNotifier {
   set setAdminSettingPagePage(String value) {
     // if (value == "Procedure Catalog") {
     //   _currentAdminSettingPage = const ProcedureScreen();
-    // } else 
+    // } else
     if (value == "Clinic Address") {
       _currentAdminSettingPage = const ErrorPage();
-    }
-   else if(value=="Notification".trim()){
+    } else if (value == "Notification".trim()) {
       _currentAdminSettingPage = Padding(
         padding: const EdgeInsets.all(8.0),
-        child: const AdminNotificationScreen(),
+        child: const AdminNotificationScreen(
+          isDialog: false,
+        ),
       );
-    }
-    else   if(value=="My Profile"){
+    } else if (value == "My Profile") {
       _currentAdminSettingPage = Padding(
         padding: const EdgeInsets.all(8.0),
         child: const EditProfileScreen(),
       );
-    }
-    else {
+    } else {
       _currentAdminSettingPage = const ErrorPage();
     }
     notifyListeners(); // Notify listeners to rebuild
@@ -500,23 +497,22 @@ class DashboardProvider extends ChangeNotifier {
     ),
   ];
 
-
-
   final List<DummyModel> feedbackList = [
     DummyModel(
-      title: "Corey Aguilar",
+        title: "Corey Aguilar",
         rating: "4 star",
         icon: icPatientUser1,
         ratingValue: 4,
-
-        content: "Overall Richard did a great job. The process was smooth and I was kept well informed about what to expect. So far the healing has also gone well and I am mostly back to normal",
+        content:
+            "Overall Richard did a great job. The process was smooth and I was kept well informed about what to expect. So far the healing has also gone well and I am mostly back to normal",
         items: []),
     DummyModel(
         title: "Samantha Lee",
         rating: "3.5 star",
         ratingValue: 4.5,
         icon: icPatientUser2,
-        content: "Dr Richard was wonderful to deal with. He was polite, friendly and professional and I felt extremely safe and assured under his care.",
+        content:
+            "Dr Richard was wonderful to deal with. He was polite, friendly and professional and I felt extremely safe and assured under his care.",
         items: []),
     DummyModel(
         title: "Sarah Miller",
@@ -525,7 +521,6 @@ class DashboardProvider extends ChangeNotifier {
         icon: icPatientUser3,
         content: "Dr. Richard provides excellent care and attention to detail.",
         items: []),
-
     DummyModel(
         title: "George Harris",
         rating: "2.5 star",
@@ -533,7 +528,6 @@ class DashboardProvider extends ChangeNotifier {
         icon: icPatientUser4,
         content: "Dr. Richard is Professional and patient-focused.",
         items: []),
-
     DummyModel(
         title: "Chris Wilson",
         rating: "5 star",

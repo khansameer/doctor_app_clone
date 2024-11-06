@@ -51,7 +51,7 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
       }
     });
     var isMobile = Responsive.isMobile(context);
-    var size=MediaQuery.sizeOf(context);
+    var size = MediaQuery.sizeOf(context);
     return Consumer<PatientProvider>(builder: (context, provider, child) {
       return Stack(
         children: [
@@ -120,20 +120,27 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                                     isMobile: isMobile, index: index),
                             leading: commonInkWell(
                                 onEnter: (event) {
-                                 // showProfileDialog(context);
+                                  // showProfileDialog(context);
                                   context.read<ReportProvider>().setName =
                                       '${data?.firstName.toString()} ${data?.lastName.toString()}';
                                   context.read<ReportProvider>().setImage =
                                       icPatientUser4;
                                 },
-                                child:
-                                    commonProfileIcon(width: 40, height: 40)),
+                                child: SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: commonImageNetworkWidget(
+                                      width: 40,
+                                      height: 40,
+                                      path:
+                                          '${data?.profile?.profilePicture.toString()}'),
+                                )),
                             title: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 commonInkWell(
                                   onEnter: (event) {
-                                   // showProfileDialog(context);
+                                    // showProfileDialog(context);
                                     context.read<ReportProvider>().setName =
                                         '${data?.firstName.toString()} ${data?.lastName.toString()}';
                                     context.read<ReportProvider>().setImage =

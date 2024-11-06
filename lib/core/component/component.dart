@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctor_app/core/app_constants.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
@@ -22,7 +21,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:popover/popover.dart';
@@ -373,11 +372,11 @@ commonProfileIcon({double? width, double? height, String? path}) {
 commonProfileNetUrl({double? width, double? height, String? path}) {
   return ClipRRect(
     borderRadius: BorderRadius.circular(100),
-    child: CachedNetworkImage(
+    child: commonImageNetworkWidget(
       width: width ?? 60,
       height: height ?? 60,
-      fit: BoxFit.cover,
-      imageUrl: path ?? '',
+      //fit: BoxFit.cover,
+      path: path ?? '',
     ) /*commonImageNetworkWidget(path: provider.patients[index].photo)*/,
   );
 }
@@ -471,22 +470,30 @@ Widget commonImageNetworkWidget(
     Color? iconColor,
     BoxFit? boxFit}) {
   return Center(
-    child: ClipOval(
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(100),
       clipBehavior: isCircle == false ? Clip.none : Clip.antiAliasWithSaveLayer,
-      child: CachedNetworkImage(
-        cacheManager: CacheManager(Config(
-          "fluttercampus",
-          stalePeriod: const Duration(days: 7),
-
-//one week cache period
-        )),
-        imageUrl: path ?? '',
+      child: Image.network(
+        path ?? '',
         width: width,
         height: height,
-        placeholder: (context, url) => showLoaderList(),
-        errorWidget: (context, url, error) => Image.asset(icDummyUser),
+        loadingBuilder: (BuildContext context, Widget child,
+            ImageChunkEvent? loadingProgress) {
+          if (loadingProgress == null) return child;
+          return Center(
+            child: showLoaderList(),
+          );
+        },
+        errorBuilder:
+            (BuildContext context, Object exception, StackTrace? stackTrace) {
+          return Image.asset(
+            icUserErrorImage,
+            width: width,
+            height: height,
+          );
+        },
         color: iconColor,
-        fit: boxFit ?? BoxFit.cover,
+        fit: boxFit ?? BoxFit.fill,
       ),
     ),
   );

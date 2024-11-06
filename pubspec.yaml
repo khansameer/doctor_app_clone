@@ -36,10 +36,11 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   google_fonts: ^6.2.1
+  #flutter_cors: ^1.5.0
   provider: ^6.1.2
   pin_code_fields: ^8.0.1
-  cached_network_image: ^3.4.1
-  flutter_cache_manager: ^3.4.1
+  #cached_network_image: ^3.4.1
+  #flutter_cache_manager: ^3.4.1
   table_calendar: ^3.1.2
   dropdown_button2: ^2.3.9
   shared_preferences: ^2.3.2
