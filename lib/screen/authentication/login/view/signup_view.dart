@@ -35,6 +35,7 @@ class _SignupViewState extends State<SignupView> {
     });
   }
 
+  //var tetExperience = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
@@ -77,9 +78,19 @@ class _SignupViewState extends State<SignupView> {
   }
 }
 
-class SignUpDesign extends StatelessWidget {
+class SignUpDesign extends StatefulWidget {
   const SignUpDesign({super.key});
 
+  @override
+  State<SignUpDesign> createState() => _SignUpDesignState();
+}
+
+class _SignUpDesignState extends State<SignUpDesign> {
+  var tetLicenseNo = TextEditingController();
+  var tetDegree = TextEditingController();
+  var tetYear = TextEditingController();
+  var tetInstitution = TextEditingController();
+  var tetExperience = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
@@ -191,10 +202,10 @@ class SignUpDesign extends StatelessWidget {
                               if (value.toString().trim().isEmpty) {
                                 return emptyPhone;
                               }
-                              if (!Validation.validateUSMobile(
+                              /* if (!Validation.validateUSMobile(
                                   value.toString())) {
                                 return phoneError;
-                              }
+                              }*/
                               return null;
                             },
                             topText: fifteen,
@@ -244,11 +255,11 @@ class SignUpDesign extends StatelessWidget {
                         commonTextFiledView(
                             title: "License Number",
                             keyboardType: TextInputType.number,
-                          //  controller: provider.tetPhoneNO,
-
+                            controller: tetLicenseNo,
                             topText: fifteen,
                             topTextField: ten),
                         commonTextFiledView(
+                            controller: tetDegree,
                             title: "Qualification Degree",
                             keyboardType: TextInputType.number,
                             //  controller: provider.tetPhoneNO,
@@ -257,6 +268,7 @@ class SignUpDesign extends StatelessWidget {
                             topTextField: ten),
                         commonTextFiledView(
                             title: "Qualification Year",
+                            controller: tetYear,
                             keyboardType: TextInputType.number,
                             //  controller: provider.tetPhoneNO,
 
@@ -264,6 +276,7 @@ class SignUpDesign extends StatelessWidget {
                             topTextField: ten),
                         commonTextFiledView(
                             title: "Institution",
+                            controller: tetInstitution,
                             keyboardType: TextInputType.number,
                             //  controller: provider.tetPhoneNO,
 
@@ -272,6 +285,7 @@ class SignUpDesign extends StatelessWidget {
 
                         commonTextFiledView(
                             title: "Experience",
+                            controller: tetExperience,
                             keyboardType: TextInputType.number,
                             //  controller: provider.tetPhoneNO,
 
@@ -317,8 +331,7 @@ class SignUpDesign extends StatelessWidget {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                                color:
-                                    AppColors.primary.withOpacity( 0.20),
+                                color: AppColors.primary.withOpacity(0.20),
                                 width: 1),
                           ),
                           items: provider.specializationsList
@@ -386,6 +399,9 @@ class SignUpDesign extends StatelessWidget {
                             topText: fifteen,
                             topTextField: ten),
 
+                        SizedBox(
+                          height: 15,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -394,7 +410,7 @@ class SignUpDesign extends StatelessWidget {
                               alignment: Alignment.topLeft,
                               child: commonText(
                                 fontSize: twenty,
-                                text: "clinicAddress",
+                                text: "Clinic Address",
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
@@ -447,9 +463,8 @@ class SignUpDesign extends StatelessWidget {
                                     content: "Please pick select gender",
                                     isMessage: true);
                               } else {
-
                                 List<Map<String, dynamic>> addressesJson =
-                                provider.getAddressesInJson();
+                                    provider.getAddressesInJson();
                                 Map<String, dynamic> body = {
                                   "firstName": provider.tetFName.text,
                                   "lastName": provider.tetLName.text,
@@ -458,11 +473,22 @@ class SignUpDesign extends StatelessWidget {
                                   "dateOfBirth": provider.formattedDate,
                                   "phoneNumber": provider.tetPhoneNO.text,
                                   "role": "doctor",
+                                  "licenseNumber": tetLicenseNo.text,
+                                  "profile": {
+                                    "qualification": {
+                                      "degree": tetDegree.text,
+                                      "year": tetYear.text,
+                                      "institution": tetInstitution.text
+                                    },
+                                    "experience": int.parse(tetExperience.text)
+                                  },
+                                  "clinicAddresses": addressesJson,
                                   "gender": provider.selectedGender,
                                   "specializations": provider.selectedItems,
                                   // "clinicAddresses": addressesJson
                                 };
 
+                                print('========bosu====${body.toString()}');
                                 provider
                                     .signupAPI(body: body, context: context)
                                     .then((value) {
@@ -519,6 +545,7 @@ class SignUpDesign extends StatelessWidget {
     );
   }
 }
+
 class AddressInputField extends StatelessWidget {
   final int index;
 
@@ -533,10 +560,12 @@ class AddressInputField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CommonTextField(
-            top: ten,
-          //  keyboardType: TextInputType.streetAddress,
-            hint:  "fullAddress",
+          commonTextFiledView(
+            topText: ten,
+            topTextField: 10,
+            title: "Full Address",
+            //  keyboardType: TextInputType.streetAddress,
+            hint: "",
             maxLines: 1,
 
             //   decoration: InputDecoration(labelText: 'Address'),
@@ -544,24 +573,30 @@ class AddressInputField extends StatelessWidget {
               addressProvider.updateAddress(index, 'address', value);
             },
           ),
-          CommonTextField(
-            top: ten,
+          commonTextFiledView(
+            title: "City",
+            topText: ten,
+            topTextField: 10,
             //text: city,
             onChange: (value) {
               addressProvider.updateAddress(index, 'city', value);
             },
           ),
-          CommonTextField(
-            hint: "state",
-            top: ten,
-            // decoration: InputDecoration(labelText: 'State'),
+          commonTextFiledView(
+            hint: "",
+            title: "State",
+            topText: ten,
+            topTextField: 10,
             onChange: (value) {
               addressProvider.updateAddress(index, 'state', value);
             },
           ),
-          CommonTextField(
-         //   text: zipCode,
-            top: ten,
+          commonTextFiledView(
+            //   text: zipCode,
+            topText: ten,
+            title: "Zip Code",
+            topTextField: 10,
+
             //keyboardType: TextInputType.number,
             // decoration: InputDecoration(labelText: 'Zip Code'),
             onChange: (value) {

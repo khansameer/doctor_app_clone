@@ -167,9 +167,9 @@ Future getName() async {
   return name;
 }
 
-
 Future getUserPhoto() async {
-  String? photo = await PreferenceHelper.getString(key: PreferenceHelper.userPhoto);
+  String? photo =
+      await PreferenceHelper.getString(key: PreferenceHelper.userPhoto);
 
   return photo;
 }
@@ -218,6 +218,7 @@ commonTextFiledView({
   bool? isReadOnly,
   double? width,
   double? radius,
+  void Function(dynamic)? onChange,
   double? height,
   Widget? suffixIcon,
   VoidCallback? onTap,
@@ -246,6 +247,7 @@ commonTextFiledView({
         hint: hint,
         focusNode: focusNode,
         onTap: onTap,
+        onChange: onChange,
         textInputAction: textInputAction,
         height: height,
         isReadOnly: isReadOnly,
@@ -858,7 +860,7 @@ showPopoverMenu(
     onPop: () => print('Popover was popped!'),
     direction: PopoverDirection.bottom,
     width: width ?? size.width * 0.15,
-   // height: height ?? size.height * 0.4,
+    // height: height ?? size.height * 0.4,
     arrowHeight: 15,
     arrowWidth: 30,
   );
