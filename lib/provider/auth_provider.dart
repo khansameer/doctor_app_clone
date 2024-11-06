@@ -305,4 +305,79 @@ class AuthProviders extends ChangeNotifier {
     _isAdding = false;
     notifyListeners();
   }
+
+  List<Address> addresses = [
+    Address(
+      address: '',
+      city: '',
+      state: '',
+      zipCode: '',
+    )
+  ];
+
+  // Add a new empty address
+  void addAddress() {
+    addresses.add(Address(
+      address: '',
+      city: '',
+      state: '',
+      zipCode: '',
+    ));
+    notifyListeners();
+  }
+
+  // Update address field
+  void updateAddress(int index, String field, String value) {
+    switch (field) {
+      case 'address':
+        addresses[index].address = value;
+        break;
+      case 'city':
+        addresses[index].city = value;
+        break;
+      case 'state':
+        addresses[index].state = value;
+        break;
+      case 'zipCode':
+        addresses[index].zipCode = value;
+        break;
+    }
+    notifyListeners();
+  }
+
+  // Remove address
+  void removeAddress(int index) {
+    addresses.removeAt(index);
+    notifyListeners();
+  }
+
+  // Generate a random id for address
+
+  // Get list of addresses in JSON format
+  List<Map<String, dynamic>> getAddressesInJson() {
+    return addresses.map((address) => address.toJson()).toList();
+  }
+
+}
+class Address {
+  String address;
+  String city;
+  String state;
+  String zipCode;
+
+  Address({
+    required this.address,
+    required this.city,
+    required this.state,
+    required this.zipCode,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'address': address,
+      'city': city,
+      'state': state,
+      'zipCode': zipCode,
+    };
+  }
 }

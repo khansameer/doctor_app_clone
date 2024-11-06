@@ -3,6 +3,7 @@ import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_drop_down_view.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/common/common_textfield.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
@@ -228,6 +229,7 @@ class SignUpDesign extends StatelessWidget {
                         const SizedBox(
                           height: ten,
                         ),
+
                         CommonDropDownView(
                           hint: "Select Gender",
                           horizontal: 5,
@@ -239,23 +241,42 @@ class SignUpDesign extends StatelessWidget {
                           selectedValue: provider.selectedGender,
                           size: size,
                         ),
-                        /*  commonTextFiledView(
-                                        title: "Date of Birth",
-                                        isReadOnly: true,
-                                        suffixIcon: IconButton(
-                                            onPressed: () async {
-                                              selectDate(context);
-                                            },
-                                            icon: const Icon(
-                                              Icons.date_range,
-                                              color: Colors.grey,
-                                            )),
-                                        controller: provider.tetDob,
-                                        onTap: () {
-                                          selectDate(context);
-                                        },
-                                        topText: fifteen,
-                                        topTextField: ten),*/
+                        commonTextFiledView(
+                            title: "License Number",
+                            keyboardType: TextInputType.number,
+                          //  controller: provider.tetPhoneNO,
+
+                            topText: fifteen,
+                            topTextField: ten),
+                        commonTextFiledView(
+                            title: "Qualification Degree",
+                            keyboardType: TextInputType.number,
+                            //  controller: provider.tetPhoneNO,
+
+                            topText: fifteen,
+                            topTextField: ten),
+                        commonTextFiledView(
+                            title: "Qualification Year",
+                            keyboardType: TextInputType.number,
+                            //  controller: provider.tetPhoneNO,
+
+                            topText: fifteen,
+                            topTextField: ten),
+                        commonTextFiledView(
+                            title: "Institution",
+                            keyboardType: TextInputType.number,
+                            //  controller: provider.tetPhoneNO,
+
+                            topText: fifteen,
+                            topTextField: ten),
+
+                        commonTextFiledView(
+                            title: "Experience",
+                            keyboardType: TextInputType.number,
+                            //  controller: provider.tetPhoneNO,
+
+                            topText: fifteen,
+                            topTextField: ten),
                         Align(
                           alignment: Alignment.centerLeft,
                           child: CommonTextWidget(
@@ -364,6 +385,36 @@ class SignUpDesign extends StatelessWidget {
                             ),
                             topText: fifteen,
                             topTextField: ten),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: commonText(
+                                fontSize: twenty,
+                                text: "clinicAddress",
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                            IconButton(
+                                onPressed: () {
+                                  provider.addAddress();
+                                },
+                                icon: const Icon(
+                                  Icons.add_circle,
+                                  color: Colors.green,
+                                ))
+                          ],
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: provider.addresses.length,
+                          itemBuilder: (context, index) {
+                            return AddressInputField(index: index);
+                          },
+                        ),
                         CommonButtonWidget(
                           top: thirtyFive,
                           bottom: 0,
@@ -462,6 +513,72 @@ class SignUpDesign extends StatelessWidget {
           ),
         );
       }),
+    );
+  }
+}
+class AddressInputField extends StatelessWidget {
+  final int index;
+
+  const AddressInputField({super.key, required this.index});
+
+  @override
+  Widget build(BuildContext context) {
+    var addressProvider = Provider.of<AuthProviders>(context, listen: false);
+
+    return Padding(
+      padding: const EdgeInsets.all(eight),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CommonTextField(
+            top: ten,
+          //  keyboardType: TextInputType.streetAddress,
+            hint:  "fullAddress",
+            maxLines: 1,
+
+            //   decoration: InputDecoration(labelText: 'Address'),
+            onChange: (value) {
+              addressProvider.updateAddress(index, 'address', value);
+            },
+          ),
+          CommonTextField(
+            top: ten,
+            //text: city,
+            onChange: (value) {
+              addressProvider.updateAddress(index, 'city', value);
+            },
+          ),
+          CommonTextField(
+            hint: "state",
+            top: ten,
+            // decoration: InputDecoration(labelText: 'State'),
+            onChange: (value) {
+              addressProvider.updateAddress(index, 'state', value);
+            },
+          ),
+          CommonTextField(
+         //   text: zipCode,
+            top: ten,
+            //keyboardType: TextInputType.number,
+            // decoration: InputDecoration(labelText: 'Zip Code'),
+            onChange: (value) {
+              addressProvider.updateAddress(index, 'zipCode', value);
+            },
+          ),
+          if (index >
+              0) // Only show the delete button for dynamically added addresses
+            Align(
+              alignment: Alignment.centerRight,
+              child: IconButton(
+                icon: const Icon(Icons.delete, color: Colors.red),
+                onPressed: () {
+                  addressProvider.removeAddress(index);
+                },
+              ),
+            ),
+          //Divider(),
+        ],
+      ),
     );
   }
 }
