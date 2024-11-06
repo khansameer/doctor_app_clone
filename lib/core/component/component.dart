@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctor_app/core/app_constants.dart';
 import 'package:doctor_app/core/colors.dart';
@@ -10,8 +12,11 @@ import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/main.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/provider/procedure_provider.dart';
+import 'package:doctor_app/screen/authentication/model/login_model.dart';
+import 'package:doctor_app/screen/mobile_view/profile/model/user_details_model.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/patient_profile_dialog.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
+import 'package:doctor_app/service/network_repository.dart';
 import 'package:doctor_app/shared_preferences/preference_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -22,6 +27,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:popover/popover.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void showProfileDialog(BuildContext context) {
   var size = MediaQuery.sizeOf(context);
@@ -159,6 +165,13 @@ Future getName() async {
   String? name = await PreferenceHelper.getString(key: PreferenceHelper.name);
 
   return name;
+}
+
+
+Future getUserPhoto() async {
+  String? photo = await PreferenceHelper.getString(key: PreferenceHelper.userPhoto);
+
+  return photo;
 }
 
 Future getDoctorEmail() async {
@@ -469,7 +482,7 @@ Widget commonImageNetworkWidget(
         width: width,
         height: height,
         placeholder: (context, url) => showLoaderList(),
-        errorWidget: (context, url, error) => Image.asset(icLoginLogo),
+        errorWidget: (context, url, error) => Image.asset(icDummyUser),
         color: iconColor,
         fit: boxFit ?? BoxFit.cover,
       ),

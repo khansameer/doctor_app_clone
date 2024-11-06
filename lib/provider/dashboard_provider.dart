@@ -27,6 +27,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../screen/authentication/model/login_model.dart';
 import '../screen/web_view/screen/procedure/procedure_screen.dart';
 
 class DashboardProvider extends ChangeNotifier {
@@ -71,6 +72,9 @@ class DashboardProvider extends ChangeNotifier {
   String? _email;
 
   String? get email => _email;
+  String? _profileImage;
+
+  String? get profileImage => _profileImage;
   void setIndex(int index) {
     _selectedIndex = index;
     notifyListeners();
@@ -93,6 +97,11 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+
+
+  getUserProfile() async {
+    _profileImage = await getUserPhoto();
+  }
   getEmail() async {
     _email = await getDoctorEmail();
     notifyListeners();

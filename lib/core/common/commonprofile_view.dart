@@ -93,14 +93,7 @@ class CustomProfileWidgetState extends State<CommonProfileView> {
           child: CachedNetworkImage(
         alignment: Alignment.center,
         placeholder: (context, url) => showLoaderList(),
-        errorWidget: (context, url, error) => ClipRRect(
-            borderRadius: BorderRadius.circular(100),
-            child: Image.asset(
-          icDummyUser,
-          width: widget.width,
-          height: widget.height,
-          fit: BoxFit.scaleDown,
-        )),
+        errorWidget: (context, url, error) => Container(),
         imageUrl: widget.urlImage ?? '',
         fit: BoxFit.fitHeight,
         imageBuilder: (context, imageProvider) => Container(
@@ -117,7 +110,7 @@ class CustomProfileWidgetState extends State<CommonProfileView> {
       return ClipRRect(
           borderRadius: BorderRadius.circular(100),
           child: Image.asset(
-        icMen,
+        icDummyUser,
         width: widget.width,
         height: widget.height,
         fit: BoxFit.cover,

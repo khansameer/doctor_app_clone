@@ -13,6 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/component/component.dart';
 import '../core/route/route.dart';
@@ -88,23 +89,8 @@ class AuthProviders extends ChangeNotifier {
 
   redirectToLogin({required BuildContext context, int? seconds = 0}) {
     Timer(Duration(seconds: seconds ?? 3), () async {
-      final currentContext = context;
-   /*   bool isLoggedIn = PreferenceHelper.getBool(key: PreferenceHelper.isLOGIN) ?? false;
 
-      if (isLoggedIn) {
-        if (kIsWeb) {
-          pushNamedAndRemoveUntil(
-              context: currentContext, routeName: RouteName.adminDashboardScreen);
-        } else {
-          pushNamedAndRemoveUntil(
-              context: currentContext, routeName: RouteName.dashboardScreen);
-        }
-      }
-      else
-        {
-          Navigator.pushNamedAndRemoveUntil(
-              currentContext, RouteName.loginScreen, (route) => false);
-        }*/
+
       if (await PreferenceHelper.getBool(key: PreferenceHelper.isLOGIN) ==
           true) {
         if (kIsWeb) {
@@ -186,11 +172,10 @@ class AuthProviders extends ChangeNotifier {
       print('===$globalStatusCode');
       if (globalStatusCode == 200) {
         if (_loginModel?.token != null && _loginModel?.userId != null) {
-          await PreferenceHelper.setString(
-              key: PreferenceHelper.name,
-              value: "${_loginModel?.firstName} ${_loginModel?.lastName}");
-          await PreferenceHelper.setString(
-              key: PreferenceHelper.email, value: '${_loginModel?.email}');
+
+          await PreferenceHelper.setString(key: PreferenceHelper.name, value: "${_loginModel?.user?.firstName} ${_loginModel?.user?.lastName}");
+          await PreferenceHelper.setString(key: PreferenceHelper.email, value: '${_loginModel?.user?.email}');
+          await PreferenceHelper.setString(key: PreferenceHelper.userPhoto, value: '${_loginModel?.user?.profile?.profilePicture}');
           await PreferenceHelper.setString(
               key: PreferenceHelper.authToken, value: '${_loginModel?.token}');
           await PreferenceHelper.setString(
@@ -206,6 +191,11 @@ class AuthProviders extends ChangeNotifier {
     }
     _isFetching = false;
     notifyListeners();
+  }
+
+  Future<void> saveUserData(Map<String, dynamic> data) async {
+  //  final prefs = await SharedPreferences.getInstance();
+
   }
 
   //==============================================================Get specializations List==================================================

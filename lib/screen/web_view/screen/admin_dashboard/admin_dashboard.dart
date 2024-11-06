@@ -6,6 +6,7 @@ import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
+import 'package:doctor_app/screen/authentication/model/login_model.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_dashboard_view.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/communication_screen.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/feedback/admin_feedback_screen.dart';
@@ -30,11 +31,13 @@ class AdminDashboard extends StatefulWidget {
 class _AdminDashboardState extends State<AdminDashboard> {
   final SideMenuController _sideMenuController = SideMenuController();
   int _selectedPage = 0;
-
+  LoginModel ?loginModel;
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<DashboardProvider>().getUserName();
+      context.read<DashboardProvider>().getUserProfile();
+
     });
 
     super.initState();
@@ -191,7 +194,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
             SizedBox(
               width: thirtyFive,
               height: thirtyFive,
-              child: commonProfileIcon(path: icDummyUser),
+              child: commonImageNetworkWidget(path: provider.profileImage),
             ),
             const SizedBox(
               width: 10,
@@ -202,7 +205,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
               children: [
                 
                 CommonTextWidget(
-                    text: "Richard Stevens",
+                    text: provider.name,
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
                     textColor: AppColors.colorText),

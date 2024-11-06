@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceHelper {
   static const String name = "name";
+  static const String userPhoto = "userPhoto";
   static const String authToken = "token";
   static const String userData = "userData";
   static const String userID = "userID";

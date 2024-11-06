@@ -1,23 +1,14 @@
-class LoginModel {
-  String? message;
-  String? token;
-  String? userId;
+class UserDetailsModel {
   User? user;
 
-  LoginModel({this.message, this.token, this.userId, this.user});
+  UserDetailsModel({this.user});
 
-  LoginModel.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
-    token = json['token'];
-    userId = json['userId'];
+  UserDetailsModel.fromJson(Map<String, dynamic> json) {
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['message'] = message;
-    data['token'] = token;
-    data['userId'] = userId;
     if (user != null) {
       data['user'] = user!.toJson();
     }
