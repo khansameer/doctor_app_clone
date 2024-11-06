@@ -3,6 +3,7 @@ import 'package:doctor_app/core/common/app_scaffold.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_drop_down_view.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/common/date_time_utils.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/context_extension.dart';
 import 'package:doctor_app/core/responsive.dart';
@@ -13,6 +14,7 @@ import 'package:doctor_app/provider/profile_provider.dart';
 import 'package:doctor_app/screen/authentication/model/login_model.dart';
 import 'package:doctor_app/screen/web_view/screen/patient_profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/common/commonprofile_view.dart';
@@ -49,34 +51,35 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       });
     }
   }
-  UserDetailsModel ?userDetailsModel;
+
+  UserDetailsModel? userDetailsModel;
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      var provider= context.read<ProfileProvider>();
-      provider.getUserDetails(context: context).then((value){
-        if(provider.userDetailsModel?.user?.sId!=null){
-          var data=provider.userDetailsModel?.user;
-          tetFName.text='${data?.firstName.toString()}';
-          tetLName.text='${data?.lastName.toString()}';
-          tetEmail.text='${data?.email.toString()}';
-          tetPhoneNO.text='${data?.phoneNumber.toString()}';
-          tetDOB.text='${data?.dateOfBirth.toString()}';
-          if (provider.itemGenderList.contains(data?.gender.toString().toCapitalize())) {
+      var provider = context.read<ProfileProvider>();
+      provider.getUserDetails(context: context).then((value) {
+        if (provider.userDetailsModel?.user?.sId != null) {
+          var data = provider.userDetailsModel?.user;
+          tetFName.text = '${data?.firstName.toString()}';
+          tetLName.text = '${data?.lastName.toString()}';
+          tetEmail.text = '${data?.email.toString()}';
+          tetPhoneNO.text = '${data?.phoneNumber.toString()}';
+
+          tetDOB.text = DateTimeUtils.formatDate(
+              '${data?.dateOfBirth.toString()}',
+              format: "yyyy-MM-dd");
+          if (provider.itemGenderList
+              .contains(data?.gender.toString().toCapitalize())) {
             provider.setGenderValue = data!.gender.toString().toCapitalize();
           }
-      //    Provider.of<ProfileProvider>(context, listen: false).setGenderValue='${data?.dateOfBirth.toString().toCapitalize()}';
-        //  provider.setGenderValue='${data?.gender.toString()}';
-
+          //    Provider.of<ProfileProvider>(context, listen: false).setGenderValue='${data?.dateOfBirth.toString().toCapitalize()}';
+          //  provider.setGenderValue='${data?.gender.toString()}';
         }
       });
-
-
     });
 
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -101,8 +104,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   _mobileView(
       {required Size size, required bool isMobile, required bool isTablet}) {
     final formProfile = GlobalKey<FormState>();
-    var provider=context.read<ProfileProvider>();
-    return  Form(
+    var provider = context.read<ProfileProvider>();
+    return Form(
       key: formProfile,
       child: Stack(
         children: [
@@ -119,52 +122,60 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       children: [
                         Expanded(
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CommonTextWidget(
+                              text: "Profile photo",
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
                               children: [
-                                CommonTextWidget(
-                                  text: "Profile photo",
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
+                                CommonProfileView(
+                                  width: 90,
+                                  urlImage: context
+                                      .watch<ProfileProvider>()
+                                      .userDetailsModel
+                                      ?.user
+                                      ?.profile
+                                      ?.profilePicture /*'${provider.userDetailsModel?.user?.profile?.profilePicture.toString()}*/,
+                                  filePickerResult: provider.pickedFile,
+                                  height: 90,
                                 ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  children: [
-                                    CommonProfileView(
-                                      width: 90,
-                                      urlImage: context.watch<ProfileProvider>().userDetailsModel?.user?.profile?.profilePicture/*'${provider.userDetailsModel?.user?.profile?.profilePicture.toString()}*/,
-                                      filePickerResult: provider.pickedFile,
-                                      height: 90,
-                                    ),
-                                    Flexible(
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          CommonTextWidget(
-                                            text: "Pick a photo from your\ncomputer",
-                                            left: 10,
-                                            fontSize: 12,
-                                          ),
-                                          commonInkWell(
-                                              onTap: () async {
-                                                provider.pickFiles(context: context);
-                                              },
-                                              child: CommonTextWidget(
-                                                  text: "Add Photo",
-                                                  top: 8,
-                                                  left: 10,
-                                                  fontWeight: FontWeight.w800,
-                                                  textColor: AppColors.colorText))
-                                        ],
+                                Flexible(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      CommonTextWidget(
+                                        text:
+                                            "Pick a photo from your\ncomputer",
+                                        left: 10,
+                                        fontSize: 12,
                                       ),
-                                    ),
-                                  ],
-                                )
+                                      commonInkWell(
+                                          onTap: () async {
+                                            provider.pickFiles(
+                                                context: context);
+                                          },
+                                          child: CommonTextWidget(
+                                              text: "Add Photo",
+                                              top: 8,
+                                              left: 10,
+                                              fontWeight: FontWeight.w800,
+                                              textColor: AppColors.colorText))
+                                    ],
+                                  ),
+                                ),
                               ],
-                            )),
+                            )
+                          ],
+                        )),
 
                         //  const Expanded(child: Column())
                       ],
@@ -180,40 +191,40 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       children: [
                         Expanded(
                             child: commonTextFiled(
-                              title: "First Name",
-                              validator: (value) {
-                                if (value.toString().trim().isEmpty) {
-                                  return "Please enter First Name";
-                                }
+                          title: "First Name",
+                          validator: (value) {
+                            if (value.toString().trim().isEmpty) {
+                              return "Please enter First Name";
+                            }
 
-                                return null;
-                              },
-                              controller: tetFName,
-                              keyboardType: TextInputType.name,
-                              textInputAction: TextInputAction.next,
-                              width: size.width,
-                              size: size,
-                            )),
+                            return null;
+                          },
+                          controller: tetFName,
+                          keyboardType: TextInputType.name,
+                          textInputAction: TextInputAction.next,
+                          width: size.width,
+                          size: size,
+                        )),
                         const SizedBox(
                           width: 20,
                         ),
                         Expanded(
                             child: commonTextFiled(
-                              //   title: "Name",
-                              title: "Last Name",
-                              controller: tetLName,
-                              validator: (value) {
-                                if (value.toString().trim().isEmpty) {
-                                  return "Please enter Last Name";
-                                }
+                          //   title: "Name",
+                          title: "Last Name",
+                          controller: tetLName,
+                          validator: (value) {
+                            if (value.toString().trim().isEmpty) {
+                              return "Please enter Last Name";
+                            }
 
-                                return null;
-                              },
-                              keyboardType: TextInputType.name,
-                              textInputAction: TextInputAction.next,
-                              width: size.width,
-                              size: size,
-                            )),
+                            return null;
+                          },
+                          keyboardType: TextInputType.name,
+                          textInputAction: TextInputAction.next,
+                          width: size.width,
+                          size: size,
+                        )),
                       ],
                     ),
                     const SizedBox(
@@ -223,21 +234,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       children: [
                         Expanded(
                             child: commonTextFiled(
-                              title: "Email Address",
-                              size: size,
-                              controller: tetEmail,
-                              keyboardType: TextInputType.emailAddress,
-                              textInputAction: TextInputAction.next,
-                              isReadOnly: true,
-                              width: size.width,
-                            )),
+                          title: "Email Address",
+                          size: size,
+                          controller: tetEmail,
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
+                          isReadOnly: true,
+                          width: size.width,
+                        )),
                         const SizedBox(
                           width: 20,
                         ),
                         Expanded(
                             child: commonTextFiled(
-                              title: "Phone Number",
-                             /* validator: (value) {
+                          title: "Phone Number",
+                          /* validator: (value) {
                                 if (value.toString().trim().isEmpty) {
                                   return emptyPhone;
                                 }
@@ -246,12 +257,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 }
                                 return null;
                               },*/
-                              controller: tetPhoneNO,
-                              keyboardType: TextInputType.phone,
-                              textInputAction: TextInputAction.next,
-                              width: size.width,
-                              size: size,
-                            )),
+                          controller: tetPhoneNO,
+                          keyboardType: TextInputType.phone,
+                          textInputAction: TextInputAction.next,
+                          width: size.width,
+                          size: size,
+                        )),
                       ],
                     ),
                     const SizedBox(
@@ -261,36 +272,36 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       children: [
                         Expanded(
                             child: commonTextFiled(
-                              title: "Date of birth",
-                              width: size.width,
-                              controller: tetDOB,
-                              isReadOnly: true,
-                              suffixIcon: IconButton(
-                                  onPressed: () async {
-                                    selectDate(context);
-                                  },
-                                  icon: const Icon(
-                                    Icons.date_range,
-                                    color: Colors.grey,
-                                  )),
-                              size: size,
-                              // value:'1976-02-29',
-                            )),
+                          title: "Date of birth",
+                          width: size.width,
+                          controller: tetDOB,
+                          isReadOnly: true,
+                          suffixIcon: IconButton(
+                              onPressed: () async {
+                                selectDate(context);
+                              },
+                              icon: const Icon(
+                                Icons.date_range,
+                                color: Colors.grey,
+                              )),
+                          size: size,
+                          // value:'1976-02-29',
+                        )),
                         const SizedBox(
                           width: 20,
                         ),
                         Expanded(
                             child: commonDropDown(
-                              size: size,
-                              hint: "Select Gender",
-                              items: provider.itemGenderList,
-                              onChanged: (String? value) {
-                                provider.setGenderValue = value ?? '';
-                              },
+                          size: size,
+                          hint: "Select Gender",
+                          items: provider.itemGenderList,
+                          onChanged: (String? value) {
+                            provider.setGenderValue = value ?? '';
+                          },
 
-                              selectedValue: provider.selectedGender ?? 'Male',
-                              // selectedValue: provider.selectedGender,
-                            ))
+                          selectedValue: provider.selectedGender ?? 'Male',
+                          // selectedValue: provider.selectedGender,
+                        ))
                       ],
                     ),
                     const SizedBox(
@@ -487,7 +498,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   '=============================b${body.toString()}');
 
                               provider.uploadProfile(
-                                  frontImage: null, context: context, body: body);
+                                  frontImage: null,
+                                  context: context,
+                                  body: body);
                             }
                           } else {
                             formProfile.currentState?.save();

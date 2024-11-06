@@ -1,6 +1,7 @@
 import 'package:doctor_app/core/app_constants.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/common/custom_alert_dialog.dart';
 import 'package:doctor_app/core/common/error_page.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
@@ -31,13 +32,12 @@ class AdminDashboard extends StatefulWidget {
 class _AdminDashboardState extends State<AdminDashboard> {
   final SideMenuController _sideMenuController = SideMenuController();
   int _selectedPage = 0;
-  LoginModel ?loginModel;
+  LoginModel? loginModel;
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<DashboardProvider>().getUserName();
       context.read<DashboardProvider>().getUserProfile();
-
     });
 
     super.initState();
@@ -97,10 +97,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
     var size = MediaQuery.sizeOf(context);
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
       return Scaffold(
-          drawer: Drawer(
+        drawer: Drawer(
           child: Container(
-
-          child: commonMenu(size: size,isMobile: isMobile,isDesktop: isDesktop),
+            child: commonMenu(
+                size: size, isMobile: isMobile, isDesktop: isDesktop),
           ),
         ),
         backgroundColor: Colors.white,
@@ -116,21 +116,21 @@ class _AdminDashboardState extends State<AdminDashboard> {
           elevation: 0,
           toolbarHeight: 86,
           actions: [
-
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [CommonTextWidget(
+              children: [
+                CommonTextWidget(
                     text: "Timezone: EST",
                     fontWeight: FontWeight.w600,
                     fontSize: 14,
-                    textColor: Colors.blueGrey.shade400),],
+                    textColor: Colors.blueGrey.shade400),
+              ],
             ),
             const SizedBox(
               width: 10,
             ),
             Stack(
-
               clipBehavior: Clip.none,
               children: [
                 MouseRegion(
@@ -140,38 +140,42 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   onExit: (_) {
                     provider.setHoverNotification(null);
                   },
-
                   child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      width: thirtyFive,
-                      height: thirtyFive,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: commonBoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
+                    duration: const Duration(milliseconds: 200),
+                    width: thirtyFive,
+                    height: thirtyFive,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: commonBoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: provider.hoverNotification == 0
+                          ? AppColors.primary
+                          : Colors.white,
+                      // color: Colors.white,
+                    ),
+                    child: IconButton(
+                      hoverColor: Colors.transparent,
+                      onPressed: () {
+                        showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CustomAlertDialog(
+                                content: AdminNotificationScreen(
+                                  isDialog: true,
+                                ),
+                              );
+                            });
+                      },
+                      icon: Icon(
+                        Icons.notifications_none,
                         color: provider.hoverNotification == 0
-                            ? AppColors.primary
-                            : Colors.white,
-                        // color: Colors.white,
-                      ),
-                      child:  Builder(
-                        builder: (context) {
-                          return IconButton(
-                            hoverColor: Colors.transparent,
-                            onPressed: (){
-
-                              showPopoverMenu(
-                                  colorBg: AppColors.colorBgNew,
-                                  context: context, size: size, child: AdminNotificationScreen());
-                            },
-                            icon: Icon(Icons.notifications_none,
-                            color:provider.hoverNotification == 0?Colors.white: AppColors.colorTextNew,
-                            size: 18,),
-                          );
-                        }
+                            ? Colors.white
+                            : AppColors.colorTextNew,
+                        size: 18,
                       ),
                     ),
                   ),
-
+                ),
                 Positioned(
                     right: 0,
                     top: -8,
@@ -182,7 +186,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
                           color: Color.fromARGB(255, 244, 147, 43)),
                       height: 18,
                       child: Center(
-                        child: CommonTextWidget(text: '${provider.doctorNotifications.length}',fontSize: 8,textColor: Colors.white,fontWeight: FontWeight.w700,),
+                        child: CommonTextWidget(
+                          text: '${provider.doctorNotifications.length}',
+                          fontSize: 8,
+                          textColor: Colors.white,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     )),
               ],
@@ -190,7 +199,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
             const SizedBox(
               width: 10,
             ),
-            
             SizedBox(
               width: thirtyFive,
               height: thirtyFive,
@@ -203,7 +211,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
                 CommonTextWidget(
                     text: provider.name,
                     fontWeight: FontWeight.w600,
@@ -254,7 +261,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
           children: [
             isMobile
                 ? const SizedBox.shrink()
-                :commonMenu(size: size,isMobile: isMobile,isDesktop: isDesktop),
+                : commonMenu(
+                    size: size, isMobile: isMobile, isDesktop: isDesktop),
             const VerticalDivider(
               color: AppColors.colorBgNew,
               width: 2,
@@ -262,32 +270,32 @@ class _AdminDashboardState extends State<AdminDashboard> {
             Expanded(
               child: _pages[_selectedPage],
             ),
-
           ],
         ),
       );
     });
   }
 
-  commonMenu({required bool isMobile,required Size size,required bool isDesktop}){
-   return SideMenu(
+  commonMenu(
+      {required bool isMobile, required Size size, required bool isDesktop}) {
+    return SideMenu(
       controller: _sideMenuController,
-     title: isMobile
-         ?Center(
-           child: const ImageIcon(
-           size: 100,
-           color: AppColors.colorActive,
-           AssetImage(
-             icLogoApps,
-           )),
-         ):null,
+      title: isMobile
+          ? Center(
+              child: const ImageIcon(
+                  size: 100,
+                  color: AppColors.colorActive,
+                  AssetImage(
+                    icLogoApps,
+                  )),
+            )
+          : null,
       style: SideMenuStyle(
-
         openSideMenuWidth: isMobile ? 0 : 210,
         itemHeight: 48,
         itemBorderRadius: BorderRadius.circular(4),
-        itemOuterPadding: const EdgeInsets.symmetric(
-            horizontal: 8, vertical: 4),
+        itemOuterPadding:
+            const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         itemInnerSpacing: 8,
 
         //      hoverColor: AppColors.primary.withValues(alpha: 0.1),
@@ -313,10 +321,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
               blurRadius: 10.0,
             ),
           ],
-          border:
-          Border.all(color: AppColors.colorBgNew, width: 1),
-          borderRadius:
-          const BorderRadius.all(Radius.circular(0)),
+          border: Border.all(color: AppColors.colorBgNew, width: 1),
+          borderRadius: const BorderRadius.all(Radius.circular(0)),
         ),
       ),
       items: [
@@ -327,7 +333,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
               _selectedPage = 0;
 
               _sideMenuController.changePage(index);
-              isMobile?voidHidMenu():null;
+              isMobile ? voidHidMenu() : null;
             });
             //// Navigate to Calendar page
           },
@@ -341,7 +347,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
               _selectedPage = 1;
 
               _sideMenuController.changePage(index);
-              isMobile?voidHidMenu():null;
+              isMobile ? voidHidMenu() : null;
             });
           },
           icon: const Icon(Icons.calendar_month_sharp),
@@ -355,7 +361,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
               _selectedPage = 2;
 
               _sideMenuController.changePage(index);
-              isMobile?voidHidMenu():null;
+              isMobile ? voidHidMenu() : null;
             });
             //sideMenu.changePage(index);
           },
@@ -369,7 +375,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
               _selectedPage = 3;
 
               _sideMenuController.changePage(index);
-              isMobile?voidHidMenu():null;
+              isMobile ? voidHidMenu() : null;
             });
             // sideMenu.changePage(index);
           },
@@ -383,7 +389,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
               _selectedPage = 4;
 
               _sideMenuController.changePage(index);
-              isMobile?voidHidMenu():null;
+              isMobile ? voidHidMenu() : null;
             });
             //sideMenu.changePage(index);
           },
@@ -397,7 +403,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
               _selectedPage = 5;
 
               _sideMenuController.changePage(index);
-              isMobile?voidHidMenu():null;
+              isMobile ? voidHidMenu() : null;
             });
           },
           icon: const Icon(Icons.settings_outlined),
@@ -410,7 +416,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
               _selectedPage = 6;
 
               _sideMenuController.changePage(index);
-              isMobile?voidHidMenu():null;
+              isMobile ? voidHidMenu() : null;
             });
           },
           icon: const Icon(Icons.thumb_up_alt_outlined),
@@ -418,11 +424,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
         commonMenuDivider(),
         SideMenuItem(
           onTap: (index, _) {
-            isMobile?voidHidMenu():null;
+            isMobile ? voidHidMenu() : null;
             commonLogoutDialog(
-                width: isMobile
-                    ? size.width * zero9
-                    : size.width * 0.2,
+                width: isMobile ? size.width * zero9 : size.width * 0.2,
                 contextAd: context,
                 isDesktop: isDesktop,
                 isMobile: isMobile);
@@ -434,9 +438,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
     );
   }
 
-  voidHidMenu(){
+  voidHidMenu() {
     Navigator.of(context).pop();
   }
+
   commonMenuDivider({Color? colorLine}) {
     return SideMenuItem(
       builder: (context, displayMode) {
@@ -452,4 +457,3 @@ class _AdminDashboardState extends State<AdminDashboard> {
     );
   }
 }
-

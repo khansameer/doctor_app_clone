@@ -30,13 +30,15 @@ class PatientsPaceChart extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CommonTextWidget(
-                text: "Patients Treated".toUpperCase(),
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+              Flexible(
+                child: CommonTextWidget(
+                  text: "Patients Treated".toUpperCase(),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(680, 0, 0, 0),
+                padding: const EdgeInsets.all(0),
                 child: CommonTextWidget(
                   text: "Oct 1 - Oct 30".toUpperCase(),
                   fontWeight: FontWeight.bold,

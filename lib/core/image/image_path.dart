@@ -46,3 +46,4 @@ const icPatientUser8 = '$baseImagePath/ic_profile_five.png';
 const icPatientUser9 = '$baseImagePath/patient_m_profile6.png';
 const icPatientUser10 = '$baseImagePath/patient_m_profile7.jpg';
 const icPatientUser11 = '$baseImagePath/patient_m_profile8.jpg';
+const icUserErrorImage = '$baseImagePath/ic_user_error.png';
