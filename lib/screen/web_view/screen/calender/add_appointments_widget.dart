@@ -154,10 +154,6 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                           searchInputDecoration: SearchInputDecoration(
                               labelStyle: commonTextStyle(fontSize: 14),
                               hintText: "Search Patient Name",
-                              suffixIcon: const Icon(
-                                Icons.keyboard_arrow_down_sharp,
-                                color: Colors.grey,
-                              ),
                               hintStyle: commonTextStyle(
                                   color: Colors.grey,
                                   fontSize: 14,

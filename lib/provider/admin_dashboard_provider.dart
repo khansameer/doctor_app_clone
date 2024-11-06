@@ -103,7 +103,7 @@ class AdminDashboardProvider with ChangeNotifier {
       gender: 'male',
       messageCount: 10,
       description: 'Chest pain',
-      time: '10:00 AM',
+      time: '10:30 AM',
       profile: icPatientUser2,
     ),
     Patient(
@@ -112,7 +112,7 @@ class AdminDashboardProvider with ChangeNotifier {
       name: 'Michael Smith',
       gender: 'male',
       description: 'Routine check-up',
-      time: '10:30 PM',
+      time: '11:30 PM',
       messageCount: 12,
       profile: icPatientUser3,
     ),
@@ -122,7 +122,7 @@ class AdminDashboardProvider with ChangeNotifier {
       gender: 'female',
       messageCount: 8,
       description: 'Fatigue',
-      time: '11:00 AM',
+      time: '01:00 PM',
       profile: icPatientUser4,
     ),
     Patient(
@@ -132,7 +132,7 @@ class AdminDashboardProvider with ChangeNotifier {
       gender: 'female',
       messageCount: 11,
       description: 'Swelling',
-      time: '11:30 AM',
+      time: '2:30 PM',
       profile: icPatientUser5,
     ),
     Patient(
@@ -141,7 +141,7 @@ class AdminDashboardProvider with ChangeNotifier {
         gender: 'female',
         messageCount: 23,
         description: 'Nausea',
-        time: '12:00 PM',
+        time: '3:00 PM',
         profile: icPatientUser6),
     Patient(
         price: "50.15",
@@ -150,7 +150,7 @@ class AdminDashboardProvider with ChangeNotifier {
         gender: 'male',
         messageCount: 18,
         description: 'Heartburn',
-        time: '12:30 PM',
+        time: '4:30 PM',
         profile: icPatientUser7),
     Patient(
         price: "78.15",
@@ -158,7 +158,7 @@ class AdminDashboardProvider with ChangeNotifier {
         gender: 'male',
         messageCount: 12,
         description: 'Follow-up visit',
-        time: '1:00 PM',
+        time: '5:30 PM',
         profile: icPatientUser8),
     Patient(
         price: "90.15",
@@ -167,7 +167,7 @@ class AdminDashboardProvider with ChangeNotifier {
         name: 'David Martinez',
         gender: 'male',
         description: 'Irregular Hearbeat',
-        time: '1:30 PM',
+        time: '6:30 PM',
         profile: icPatientUser9),
     Patient(
         price: "25.15",
@@ -175,7 +175,7 @@ class AdminDashboardProvider with ChangeNotifier {
         messageCount: 1,
         gender: 'male',
         description: 'Follow-up visit',
-        time: '2:00 PM',
+        time: '7:30 PM',
         profile: icPatientUser10),
     Patient(
         price: "29.90",
@@ -183,7 +183,7 @@ class AdminDashboardProvider with ChangeNotifier {
         messageCount: 5,
         gender: 'male',
         description: 'Follow-up visit',
-        time: '2:30 PM',
+        time: '8:30 PM',
         profile: icPatientUser11),
   ];
 
