@@ -3,9 +3,8 @@ import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/custom_alert_dialog.dart';
 import 'package:doctor_app/core/component/component.dart';
-import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/provider/prescription_provider.dart';
-import 'package:doctor_app/screen/web_view/admin_dashboard_view/my_address/add_my_address_screen.dart';
+
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/prescription/add_prescription_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
