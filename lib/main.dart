@@ -16,6 +16,8 @@ import 'package:doctor_app/shared_preferences/preference_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'provider/address_provider.dart';
+import 'provider/prescription_provider.dart';
 import 'provider/profile_provider.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -32,6 +34,8 @@ List<SingleChildWidget> providers = [
       create: (_) => AdminDashboardProvider()),
   ChangeNotifierProvider<PatientProvider>(create: (_) => PatientProvider()),
   ChangeNotifierProvider<ReportProvider>(create: (_) => ReportProvider()),
+  ChangeNotifierProvider<AddressProvider>(create: (_) => AddressProvider()),
+  ChangeNotifierProvider<PrescriptionProvider>(create: (_) => PrescriptionProvider()),
 ];
 
 void main() async {

@@ -125,8 +125,9 @@ String formatDate({required DateTime date, String? formatDate}) {
 }
 
 setAssetImage(
-    {required String image, double? width, double? height, BoxFit? fit}) {
+    {required String image, double? width, double? height, BoxFit? fit,Color ?color}) {
   return Image.asset(
+    color: color,
     image,
     width: width,
     height: height,

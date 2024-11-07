@@ -32,7 +32,7 @@ class AdminDashboard extends StatefulWidget {
 class _AdminDashboardState extends State<AdminDashboard> {
   final SideMenuController _sideMenuController = SideMenuController();
   int _selectedPage = 0;
-  LoginModel? loginModel;
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
