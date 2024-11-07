@@ -26,7 +26,7 @@ class _AdminSettingScreenState extends State<AdminSettingScreen> {
         'Prescriptions',
         'Calendar',
         'Communications',
-        'Contacts',
+          'Contacts',
         // 'Email PDF Settings',
         // 'Medical History'
         'My Profile',
