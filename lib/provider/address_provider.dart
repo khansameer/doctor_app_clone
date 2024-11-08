@@ -1,4 +1,11 @@
+import 'dart:convert';
+
+import 'package:doctor_app/service/api_config.dart';
+import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../core/component/component.dart';
+import '../service/api_services.dart';
 class Address {
   String address1;
   String address2;
@@ -46,6 +53,38 @@ class Address {
 }
 
 class AddressProvider with ChangeNotifier{
+  final _service = ApiService();
+  bool _isFetching = false;
+  bool _isAdding = false;
+  bool get isAdding => _isAdding;
+  bool get isFetching => _isFetching;
+
+
+  Future getAddress({required BuildContext context}) async {
+    String userId = await getUserID();
+
+    _isFetching = true;
+    notifyListeners();
+    try {
+      final response = await _service.callGetMethod(
+          url: '${ApiConfig.getDoctor}/$userId/edit');
+
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+        print(json.decode(response));
+        /*  _patientDetailsModel =
+            PatientDetailsModel.fromJson(json.decode(response));
+        _filteredPatients = _patientDetailsModel?.patients;*/
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
+      }
+
+      _isFetching = false;
+      notifyListeners();
+    } catch (e) {
+      _isFetching = false;
+      notifyListeners();
+    }
+  }
 
 
   // List of 20 dummy addresses
@@ -66,7 +105,7 @@ class AddressProvider with ChangeNotifier{
       city: 'Los Angeles',
       state: 'CA',
       country: 'USA',
-      zipcode: '90001',
+        zipcode: '90001',
     ),
     Address(
       address1: '91011 Pine Rd',

@@ -3,7 +3,6 @@ import 'package:videosdk/videosdk.dart';
 
 class ParticipantTile extends StatefulWidget {
   final Participant participant;
-
   const ParticipantTile({super.key, required this.participant});
 
   @override
@@ -23,20 +22,23 @@ class _ParticipantTileState extends State<ParticipantTile> {
         }
       });
     });
-
     _initStreamListeners();
     super.initState();
   }
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   _initStreamListeners() {
-    //Event called when participants audio, video or screensahre gets started
     widget.participant.on(Events.streamEnabled, (Stream stream) {
       if (stream.kind == 'video') {
         setState(() => videoStream = stream);
       }
     });
 
-    //Event called when participants audio, video or screenshare gets stopped
     widget.participant.on(Events.streamDisabled, (Stream stream) {
       if (stream.kind == 'video') {
         setState(() => videoStream = null);
@@ -50,18 +52,18 @@ class _ParticipantTileState extends State<ParticipantTile> {
       padding: const EdgeInsets.all(8.0),
       child: videoStream != null
           ? RTCVideoView(
-              videoStream?.renderer as RTCVideoRenderer,
-              objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
-            )
+        videoStream?.renderer as RTCVideoRenderer,
+        objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+      )
           : Container(
-              color: Colors.grey.shade800,
-              child: const Center(
-                child: Icon(
-                  Icons.person,
-                  size: 100,
-                ),
-              ),
-            ),
+        color: Colors.grey.shade800,
+        child: const Center(
+          child: Icon(
+            Icons.person,
+            size: 100,
+          ),
+        ),
+      ),
     );
   }
 }

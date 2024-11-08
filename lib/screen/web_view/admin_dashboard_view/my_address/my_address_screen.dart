@@ -22,6 +22,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<DashboardProvider>().getUserName();
+      context.read<AddressProvider>().getAddress(context: context);
 
     });
 
