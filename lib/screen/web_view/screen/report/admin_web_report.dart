@@ -15,6 +15,7 @@ class AdminWebReport extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
+    var isTablet = Responsive.isTablet(context);
 
     return Consumer<ReportProvider>(builder: (context, provider, child) {
       return SizedBox(
@@ -39,7 +40,7 @@ class AdminWebReport extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _topView(size: size, provider: provider, isMobile: isMobile),
+                  _topView(size: size, provider: provider, isMobile: isMobile,isTablet:isTablet),
                   const SizedBox(
                     height: 20,
                   ),
@@ -197,7 +198,10 @@ class AdminWebReport extends StatelessWidget {
   _topView(
       {required Size size,
       required ReportProvider provider,
-      required bool isMobile}) {
+      required bool isMobile,
+      required bool isTablet,
+
+      }) {
     return isMobile
         ? Column(
             children: [
@@ -243,7 +247,7 @@ class AdminWebReport extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: 4,
+                flex: isTablet?6:4,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [

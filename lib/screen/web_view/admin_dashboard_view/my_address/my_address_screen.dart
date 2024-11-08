@@ -4,6 +4,7 @@ import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/custom_alert_dialog.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
+import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/address_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/my_address/add_my_address_screen.dart';
@@ -31,6 +32,8 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
+    var isTablet = Responsive.isTablet(context);
+    var isMobile = Responsive.isMobile(context);
     return SafeArea(
       child: Container(
         padding: EdgeInsets.all(0),
@@ -116,7 +119,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                             shrinkWrap: true,
                             itemCount: provider.dummyAddresses.length, // Example: number of items
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
+                              crossAxisCount: isTablet?1:isMobile?1:3,
                               crossAxisSpacing: 30,
                               mainAxisSpacing: 30,
                               childAspectRatio: 3, // Adjust based on height requirements

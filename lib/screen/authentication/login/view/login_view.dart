@@ -58,6 +58,7 @@ class LoginView extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(0.0),
                         child: Container(
+                          
                           width: size.width,
                           height: size.height,
                           decoration: const BoxDecoration(
@@ -100,193 +101,196 @@ class _MobileViewState extends State<MobileView> {
     var provider = context.read<AuthProviders>();
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              margin: EdgeInsets.only(
-                  left: isMobile ? size.width * 0.05 : size.width * 0.1,
-                  right: isMobile ? size.width * 0.05 : size.width * 0.1),
-              padding: EdgeInsets.all(isMobile ? 0 : 70.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: isMobile ? size.height * 0.05 : 0,
-                  ),
-                  Container(
-                    alignment: isMobile ? Alignment.center : Alignment.topLeft,
-                    child: setAssetImage(
-                        image: icLogoApps,
-                        width: 120,
-                        height: 120,
-                        fit: BoxFit.scaleDown),
-                  ),
-                  CommonTextWidget(
-                    width: size.width,
-
-                    textAlign: isMobile ? TextAlign.start : TextAlign.start,
-                    text: "Login to your Juno Health Pro Account",
-                    textStyle: GoogleFonts.inter(
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                      fontSize: 18,
+    var isTablet = Responsive.isTablet(context);
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(
+                    left: isMobile ? size.width * 0.05 : isTablet? size.width * 0.05:size.width * 0.1,
+                    right: isMobile ? size.width * 0.05 : isTablet? size.width * 0.05:size.width * 0.1),
+                padding: EdgeInsets.all(isMobile ? 0 : 70.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: isMobile ? size.height * 0.05 : 0,
                     ),
-                  ),
-                  commonTextFiledView(
-                    topText: 30,
-                    focusNode: _emailFocusNode,
-                    radius: 8,
-                    textInputAction: TextInputAction.next,
-                    title: yourEmail,
-                    keyboardType: TextInputType.emailAddress,
-                    controller: tetEmail,
-                    validator: (value) {
-                      if (value.toString().trim().isEmpty) {
-                        return emptyEmail;
-                      }
-                      if (!Validation.validateEmail(value.toString())) {
-                        return emailValidationMsg;
-                      }
-                      return null;
-                    },
-                    topTextField: ten,
-                  ),
-                  commonTextFiledView(
+                    Container(
+                      alignment: isMobile ? Alignment.center : Alignment.topLeft,
+                      child: setAssetImage(
+                          image: icLogoApps,
+                          width: 120,
+                          height: 120,
+                          fit: BoxFit.scaleDown),
+                    ),
+                    CommonTextWidget(
+                      width: size.width,
+      
+                      textAlign: isMobile ? TextAlign.start : TextAlign.start,
+                      text: "Login to your Juno Health Pro Account",
+                      textStyle: GoogleFonts.inter(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                        fontSize: 18,
+                      ),
+                    ),
+                    commonTextFiledView(
+                      topText: 30,
+                      focusNode: _emailFocusNode,
                       radius: 8,
-                      focusNode: _passwordFocusNode,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.visiblePassword,
-                      controller: tetPassword,
-                      obscureText: !provider.isPasswordVisible,
+                      textInputAction: TextInputAction.next,
+                      title: yourEmail,
+                      keyboardType: TextInputType.emailAddress,
+                      controller: tetEmail,
                       validator: (value) {
                         if (value.toString().trim().isEmpty) {
-                          return emptyPassword;
+                          return emptyEmail;
                         }
-
+                        if (!Validation.validateEmail(value.toString())) {
+                          return emailValidationMsg;
+                        }
                         return null;
                       },
-                      title: password,
-                      suffixIcon: IconButton(
-                        autofocus: false,
-                        focusNode: FocusNode(skipTraversal: true),
-                        onPressed: (){
-                          FocusScope.of(context).unfocus();
-                          provider.togglePasswordVisibility();
+                      topTextField: ten,
+                    ),
+                    commonTextFiledView(
+                        radius: 8,
+                        focusNode: _passwordFocusNode,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.visiblePassword,
+                        controller: tetPassword,
+                        obscureText: !provider.isPasswordVisible,
+                        validator: (value) {
+                          if (value.toString().trim().isEmpty) {
+                            return emptyPassword;
+                          }
+      
+                          return null;
                         },
-                        icon: Icon(
-                          color: Colors.grey,
-                          provider.isPasswordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
+                        title: password,
+                        suffixIcon: IconButton(
+                          autofocus: false,
+                          focusNode: FocusNode(skipTraversal: true),
+                          onPressed: (){
+                            FocusScope.of(context).unfocus();
+                            provider.togglePasswordVisibility();
+                          },
+                          icon: Icon(
+                            color: Colors.grey,
+                            provider.isPasswordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                        ),
+                        topText: fifteen,
+                        topTextField: ten),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: commonInkWell(
+                        onTap: () {
+                          pushScreen(
+                              context: context,
+                              routeName: RouteName.forgotPasswordScreen);
+                        },
+                        child: CommonTextWidget(
+                          top: ten,
+                          fontWeight: FontWeight.w600,
+                          textColor: AppColors.colorActive,
+                          text: forgotPassword,
                         ),
                       ),
-                      topText: fifteen,
-                      topTextField: ten),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: commonInkWell(
-                      onTap: () {
-                        pushScreen(
-                            context: context,
-                            routeName: RouteName.forgotPasswordScreen);
+                    ),
+      
+                    CommonButtonWidget(
+                      top: twenty,
+                      radius: 8,
+                      focusNode: _buttonFocusNode,
+                      padding: isMobile
+                          ? const EdgeInsets.all(13)
+                          : isTablet ?null:const EdgeInsets.all(20),
+                      onPressed: () {
+                        final isValid =
+                            widget.formLoginKey.currentState?.validate() ?? false;
+                        if (isValid) {
+                          onButtonLogin(provider: provider);
+                        }
                       },
-                      child: CommonTextWidget(
-                        top: ten,
-                        fontWeight: FontWeight.w600,
-                        textColor: AppColors.colorActive,
-                        text: forgotPassword,
-                      ),
+                      text: continueBtn,
                     ),
-                  ),
-
-                  CommonButtonWidget(
-                    top: twenty,
-                    radius: 8,
-                    focusNode: _buttonFocusNode,
-                    padding: isMobile
-                        ? const EdgeInsets.all(13)
-                        : const EdgeInsets.all(20),
-                    onPressed: () {
-                      final isValid =
-                          widget.formLoginKey.currentState?.validate() ?? false;
-                      if (isValid) {
-                        onButtonLogin(provider: provider);
-                      }
-                    },
-                    text: continueBtn,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                        top: isMobile ? size.height * 0.03 : 20,
-                        left: isMobile ? size.width * zero01 : 10,
-                        right: isMobile ? size.width * zero01 : 10),
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Expanded(
-                            child: commonDivider(),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: eight),
-                            child: CommonTextWidget(
-                              text: or,
-                              left: ten,
-                              right: ten,
-                              textColor: Colors.grey,
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: isMobile ? size.height * 0.03 : 20,
+                          left: isMobile ? size.width * zero01 : 10,
+                          right: isMobile ? size.width * zero01 : 10),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Expanded(
+                              child: commonDivider(),
                             ),
-                          ),
-                          Expanded(
-                            child: commonDivider(),
-                          ),
-                        ],
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: eight),
+                              child: CommonTextWidget(
+                                text: or,
+                                left: ten,
+                                right: ten,
+                                textColor: Colors.grey,
+                              ),
+                            ),
+                            Expanded(
+                              child: commonDivider(),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: isMobile ? 10 : 20,
-                  ),
-                  Center(
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'Don’t have an account? ',
-                        style: DefaultTextStyle.of(context).style,
-                        children: <TextSpan>[
-                          TextSpan(
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  pushScreen(
-                                      context: context,
-                                      routeName: RouteName.signUPScreen);
-                                },
-                              text: 'Sign Up',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ],
+                    SizedBox(
+                      height: isMobile ? 10 : 20,
+                    ),
+                    Center(
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'Don’t have an account? ',
+                          style: DefaultTextStyle.of(context).style,
+                          children: <TextSpan>[
+                            TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    pushScreen(
+                                        context: context,
+                                        routeName: RouteName.signUPScreen);
+                                  },
+                                text: 'Sign Up',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            context.watch<AuthProviders>().isFetching
-                ? showLoaderList()
-                : const SizedBox.shrink()
-          ],
-        ),
-      ],
+              context.watch<AuthProviders>().isFetching
+                  ? showLoaderList()
+                  : const SizedBox.shrink()
+            ],
+          ),
+        ],
+      ),
     );
   }
   

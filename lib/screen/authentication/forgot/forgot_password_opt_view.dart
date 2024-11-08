@@ -22,6 +22,7 @@ class ForgotPasswordOptView extends StatelessWidget {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
 
+
     return Scaffold(
       appBar: commonAppBar(color: Colors.white, iconColor: Colors.black),
       backgroundColor: Colors.white,
@@ -62,10 +63,11 @@ class ForgotPasswordOtpView extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
+    var isTablet = Responsive.isTablet(context);
     return Container(
       margin: EdgeInsets.only(
-          left: isMobile ? size.width * 0.05 : size.width * 0.1,
-          right: isMobile ? size.width * 0.05 : size.width * 0.1),
+          left: isMobile ? size.width * 0.05 : isTablet?size.width * 0.05:size.width * 0.1,
+          right: isMobile ? size.width * 0.05 : isTablet?size.width * 0.05:size.width * 0.1),
       padding: EdgeInsets.all(isMobile ? 0 : 70.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -182,7 +184,7 @@ class ForgotPasswordOtpView extends StatelessWidget {
             // right: isMobile ? null : 50,
             top: isMobile ? size.height * 0.04 : 20,
             text: verifyCode,
-            padding: isMobile ? null : const EdgeInsets.all(20),
+            padding: isMobile ? null :isTablet?null: const EdgeInsets.all(20),
             onPressed: () {
               if (kIsWeb) {
                 pushNamedAndRemoveUntil(

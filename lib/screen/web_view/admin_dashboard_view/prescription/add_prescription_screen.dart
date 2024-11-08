@@ -45,6 +45,7 @@ class _AddMyAddressScreenState extends State<AddPrescriptionScreen> {
   Widget build(BuildContext context) {
     var isMobile = Responsive.isMobile(context);
     var isDesktop = Responsive.isDesktop(context);
+    var isTablet = Responsive.isTablet(context);
 
     var width = MediaQuery.of(context).size.width;
 
@@ -55,7 +56,7 @@ class _AddMyAddressScreenState extends State<AddPrescriptionScreen> {
           ? width * zero9
           : isDesktop
           ? width * 0.3
-          : width * 0.19,
+          :  isTablet?width * 0.3:width * 0.19,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

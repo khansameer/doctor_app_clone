@@ -123,6 +123,8 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
                                             ),
                                           ),
                                           CommonTextWidget(
+                                            softWrap: true,
+                                            overflow: TextOverflow.ellipsis,
                                             text: provider
                                                 .patients[index].description,
                                             fontWeight: FontWeight.w400,

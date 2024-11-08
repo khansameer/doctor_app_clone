@@ -323,6 +323,7 @@ AppBar commonAppBar(
     backgroundColor: color ?? AppColors.colorGreen,
     centerTitle: centerTitle ?? true,
     bottom: bottom,
+    surfaceTintColor: Colors.transparent,
     titleSpacing: titleSpacing,
     toolbarHeight: toolbarHeight,
     leading: leading,
