@@ -35,7 +35,7 @@ class PatientProvider with ChangeNotifier {
       final response = await _service.callGetMethod(
           url: '${ApiConfig.getPatientDetails}/$userId/patients');
 
-      if (globalStatusCode == 200 || globalStatusCode == 200) {
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
         _patientDetailsModel =
             PatientDetailsModel.fromJson(json.decode(response));
         _filteredPatients = _patientDetailsModel?.patients;

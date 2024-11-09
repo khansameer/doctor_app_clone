@@ -58,10 +58,11 @@ class ForgotPasswordView extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
+    var isTablet = Responsive.isTablet(context);
     return Container(
       margin: EdgeInsets.only(
-          left: isMobile ? size.width * 0.05 : size.width * 0.1,
-          right: isMobile ? size.width * 0.05 : size.width * 0.1),
+          left: isMobile ? size.width * 0.05 : isTablet? size.width * 0.05:size.width * 0.1,
+          right: isMobile ? size.width * 0.05 :isTablet? size.width * 0.05: size.width * 0.1),
       padding: EdgeInsets.all(isMobile ? 0 : 70.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -105,7 +106,7 @@ class ForgotPasswordView extends StatelessWidget {
               topText: size.height * 0.03,
               topTextField: ten),
           CommonButtonWidget(
-            padding: isMobile ? null : const EdgeInsets.all(twenty),
+            padding: isMobile ? null : isTablet ?null: const EdgeInsets.all(twenty),
             onPressed: () {
               pushScreen(
                   context: context, routeName: RouteName.forgotPasswordOptView);

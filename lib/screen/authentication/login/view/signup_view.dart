@@ -111,6 +111,7 @@ class _SignUpDesignState extends State<SignUpDesign> {
     }
 
     var isMobile = Responsive.isMobile(context);
+    var isTablet = Responsive.isTablet(context);
     final formSignKey = GlobalKey<FormState>();
     return SingleChildScrollView(
       child: Consumer<AuthProviders>(builder: (context, provider, child) {
@@ -125,8 +126,8 @@ class _SignUpDesignState extends State<SignUpDesign> {
                   Container(
                     color: Colors.white,
                     margin: EdgeInsets.only(
-                        left: isMobile ? size.width * 0.05 : size.width * 0.1,
-                        right: isMobile ? size.width * 0.05 : size.width * 0.1),
+                        left: isMobile ? size.width * 0.05 : isTablet? size.width * 0.05:size.width * 0.1,
+                        right: isMobile ? size.width * 0.05 : isTablet? size.width * 0.05:size.width * 0.1),
                     padding: EdgeInsets.all(isMobile ? 0 : 70.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,

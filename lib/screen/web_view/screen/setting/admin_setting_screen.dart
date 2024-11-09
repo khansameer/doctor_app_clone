@@ -26,7 +26,7 @@ class _AdminSettingScreenState extends State<AdminSettingScreen> {
         'Prescriptions',
         'Calendar',
         'Communications',
-        'Contacts',
+          'Contacts',
         // 'Email PDF Settings',
         // 'Medical History'
         'My Profile',
@@ -53,6 +53,7 @@ class _AdminSettingScreenState extends State<AdminSettingScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
+    var isTablet = Responsive.isTablet(context);
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
       return Container(
         color: Colors.white,
@@ -66,7 +67,7 @@ class _AdminSettingScreenState extends State<AdminSettingScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                    flex: isMobile ? 3 : 1,
+                    flex: isMobile ? 3 :isTablet?3:1,
                     child: Container(
                       padding: EdgeInsets.zero,
                       height: size.height,

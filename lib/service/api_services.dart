@@ -32,6 +32,7 @@ class ApiService {
     required String url,
     String? key,
   }) async {
+    print('====url$url');
     var response = await callGETMethod(url: url, key: key);
     return response;
   }

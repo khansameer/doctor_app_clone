@@ -18,12 +18,13 @@ class AdminDashboardView extends StatelessWidget {
           color: AppColors.colorBgNew, borderRadius: BorderRadius.circular(10)),
       child:
           Consumer<AdminDashboardProvider>(builder: (context, provider, child) {
-        return isMobile ? _mobile(provider) : _webView(provider);
+        return isMobile ? _mobile(provider) : _webView(provider,context);
       }),
     );
   }
 
-  _webView(AdminDashboardProvider provider) {
+  _webView(AdminDashboardProvider provider,BuildContext context) {
+    var isTablet=Responsive.isTablet(context);
     return ListView(
       children: [
         Row(
@@ -46,7 +47,7 @@ class AdminDashboardView extends StatelessWidget {
               ),
             ),
             Expanded(
-                flex: 3,
+                flex: isTablet?4:3,
                 child: AdminUpComingAppointmentsView(
                   provider: provider,
                 ))

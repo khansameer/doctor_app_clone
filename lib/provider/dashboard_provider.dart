@@ -19,6 +19,7 @@ import 'package:doctor_app/screen/mobile_view/profile/profile_screen.dart';
 import 'package:doctor_app/screen/mobile_view/reach/reach_screen.dart';
 import 'package:doctor_app/screen/mobile_view/report/report_screen.dart';
 import 'package:doctor_app/screen/mobile_view/weekly_earning/weekly_earning_screen.dart';
+import 'package:doctor_app/screen/web_view/admin_dashboard_view/my_address/my_address_screen.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/notification/admin_notification_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/admin_calender_screen.dart';
 import 'package:doctor_app/screen/web_view/screen/patient_profile_page.dart';
@@ -28,6 +29,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../screen/authentication/model/login_model.dart';
+import '../screen/web_view/admin_dashboard_view/notification/notification_setting_screen.dart';
+import '../screen/web_view/admin_dashboard_view/prescription/setting_prescription_screen.dart';
 import '../screen/web_view/screen/procedure/procedure_screen.dart';
 
 class DashboardProvider extends ChangeNotifier {
@@ -164,23 +167,37 @@ class DashboardProvider extends ChangeNotifier {
   }
 
   //for admin setting page
-  Widget _currentAdminSettingPage = const ProcedureScreen(); // Default page
+  Widget _currentAdminSettingPage = const MyAddressScreen(); // Default page
   Widget get currentAdminSettingPage => _currentAdminSettingPage;
 
   set setAdminSettingPagePage(String value) {
     // if (value == "Procedure Catalog") {
     //   _currentAdminSettingPage = const ProcedureScreen();
     // } else
-    if (value == "Clinic Address") {
-      _currentAdminSettingPage = const ErrorPage();
-    } else if (value == "Notification".trim()) {
+  if (value == "Notification".trim()) {
       _currentAdminSettingPage = Padding(
         padding: const EdgeInsets.all(8.0),
-        child: const AdminNotificationScreen(
-          isDialog: false,
+        child: const NotificationSettingScreen(
+
         ),
       );
-    } else if (value == "My Profile") {
+    }
+
+    else if(value=="Clinic Address".trim()){
+      _currentAdminSettingPage = Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: const MyAddressScreen(),
+      );
+    }
+  else if(value=="Prescriptions".trim()){
+    _currentAdminSettingPage = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: const SettingPrescriptionScreen(),
+    );
+  }
+
+
+    else if (value == "My Profile") {
       _currentAdminSettingPage = Padding(
         padding: const EdgeInsets.all(8.0),
         child: const EditProfileScreen(),

@@ -458,6 +458,7 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                                           CommonTextWidget(
                                             text: "${provider.feedbackList[index].rating}",
                                             left: 4,
+                                            overflow: TextOverflow.ellipsis,
                                             fontSize: 12,
                                             textColor: Colors.grey,
                                             fontWeight: FontWeight.w400,
@@ -475,12 +476,15 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                                               size: 18,
                                               color: Colors.black,
                                             ),
-                                            CommonTextWidget(
-                                              text: "${provider.feedbackList[index].content}",
-                                              left: 2,
-                                              fontSize: 13,
-                                              textColor: Colors.black,
-                                              fontWeight: FontWeight.w500,
+                                            Flexible(
+                                              child: CommonTextWidget(
+                                                text: "${provider.feedbackList[index].content}",
+                                                left: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                fontSize: 13,
+                                                textColor: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             )
                                           ],
                                         ),

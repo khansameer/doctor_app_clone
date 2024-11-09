@@ -25,10 +25,11 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
+    var isTablet=Responsive.isTablet(context);
     return Row(
       children: [
         Expanded(
-          flex: 2,
+          flex: isTablet?3:2,
           child: Container(
             decoration: BoxDecoration(
                 color: Colors.white,
