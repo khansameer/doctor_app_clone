@@ -27,6 +27,29 @@ class AppointmentsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  String? _selectAPTName;
+  String? get selectAPTName => _selectAPTName;
+
+  void setAptName(String? data) {
+    _selectAPTName = data;
+    notifyListeners();
+  }
+
+  String? _selectGender;
+  String? get selectGender => _selectGender;
+
+  void setGenderValue(String? data) {
+    _selectGender = data;
+    notifyListeners();
+  }
+
+  List<String> appointmentType = [
+    "Routine Checkup",
+    "Emergency",
+    "Consultation",
+    "Sick Visit",
+    "Examination",
+  ];
   String? _selectedID;
 
   String? get selectedID => _selectedID;

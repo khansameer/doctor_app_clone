@@ -7,7 +7,8 @@ class NotificationSettingScreen extends StatefulWidget {
   const NotificationSettingScreen({super.key});
 
   @override
-  State<NotificationSettingScreen> createState() => _NotificationSettingScreenState();
+  State<NotificationSettingScreen> createState() =>
+      _NotificationSettingScreenState();
 }
 
 class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
@@ -43,47 +44,59 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return ListView(
       children: [
-        commonView(
-          title: "Notification Settings",
-          desc: "Customize how you receive important updates, reminders, and alerts about your patients and appointments.",
-          switchValue: _switchValueNotification,
-          onSwitchChanged: (value) => _onSwitchChanged('notification', value),
+        Column(
+          children: [
+            commonView(
+              title: "Notification Settings",
+              desc:
+                  "Customize how you receive important updates, reminders, and alerts about your patients and appointments.",
+              switchValue: _switchValueNotification,
+              onSwitchChanged: (value) =>
+                  _onSwitchChanged('notification', value),
+            ),
+            commonView(
+              title: "Appointment Reminders",
+              desc:
+                  "Get reminders for upcoming appointments, cancellations, or schedule changes to stay on top of your day",
+              switchValue: _switchValueAppointment,
+              onSwitchChanged: (value) =>
+                  _onSwitchChanged('appointment', value),
+            ),
+            commonView(
+              title: "Patient Updates",
+              desc:
+                  "Receive notifications when there are updates or changes in your patients' records, test results, or status",
+              switchValue: _switchValuePatient,
+              onSwitchChanged: (value) => _onSwitchChanged('patient', value),
+            ),
+            commonView(
+              title: "Emergency Alerts",
+              desc:
+                  "Enable alerts for critical patient cases or emergency situations requiring your immediate attention.",
+              switchValue: _switchValuEmergency,
+              onSwitchChanged: (value) => _onSwitchChanged('emergency', value),
+            ),
+            commonView(
+              title: "General Reminders",
+              desc:
+                  "Set up alerts for daily tasks, follow-up calls, and routine checks to ensure nothing is overlooked",
+              switchValue: _switchValuGeneral,
+              onSwitchChanged: (value) => _onSwitchChanged('general', value),
+            ),
+            commonView(
+              title: "Message Notifications",
+              desc:
+                  "Receive instant notifications when a new message or patient inquiry is received, ensuring timely responses",
+              switchValue: _switchValuMessage,
+              onSwitchChanged: (value) => _onSwitchChanged('message', value),
+            ),
+          ],
         ),
-        commonView(
-          title: "Appointment Reminders",
-          desc: "Get reminders for upcoming appointments, cancellations, or schedule changes to stay on top of your day",
-          switchValue: _switchValueAppointment,
-          onSwitchChanged: (value) => _onSwitchChanged('appointment', value),
-        ),
-        commonView(
-          title: "Patient Updates",
-          desc: "Receive notifications when there are updates or changes in your patients' records, test results, or status",
-          switchValue: _switchValuePatient,
-          onSwitchChanged: (value) => _onSwitchChanged('patient', value),
-        ),
-        commonView(
-          title: "Emergency Alerts",
-          desc: "Enable alerts for critical patient cases or emergency situations requiring your immediate attention.",
-          switchValue: _switchValuEmergency,
-          onSwitchChanged: (value) => _onSwitchChanged('emergency', value),
-        ),
-        commonView(
-          title: "General Reminders",
-          desc: "Set up alerts for daily tasks, follow-up calls, and routine checks to ensure nothing is overlooked",
-          switchValue: _switchValuGeneral,
-          onSwitchChanged: (value) => _onSwitchChanged('general', value),
-        ),
-        commonView(
-          title: "Message Notifications",
-          desc: "Receive instant notifications when a new message or patient inquiry is received, ensuring timely responses",
-          switchValue: _switchValuMessage,
-          onSwitchChanged: (value) => _onSwitchChanged('message', value),
-        ),
-
       ],
     );
   }
@@ -110,7 +123,11 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
             shape: BoxShape.circle,
           ),
           child: Center(
-            child: Icon(Icons.notifications_none,color:AppColors.colorTextNew,size: 20,),
+            child: Icon(
+              Icons.notifications_none,
+              color: AppColors.colorTextNew,
+              size: 20,
+            ),
           ),
         ),
         title: CommonTextWidget(

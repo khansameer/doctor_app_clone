@@ -40,7 +40,7 @@ class GetAppointmentsDetailsModel {
     doctorName = json['doctorName'];
     dateTime = json['dateTime'];
     status = json['status'];
-    reason = json['reason'];
+    reason = json['description'];
     duration = json['duration'];
     prescription = json['prescription'] != null
         ? Prescription.fromJson(json['prescription'])
@@ -73,7 +73,7 @@ class GetAppointmentsDetailsModel {
     data['doctorName'] = doctorName;
     data['dateTime'] = dateTime;
     data['status'] = status;
-    data['reason'] = reason;
+    data['description'] = reason;
     data['duration'] = duration;
     if (prescription != null) {
       data['prescription'] = prescription!.toJson();
