@@ -197,7 +197,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                                                       content:
                                                           AddMyAddressScreen(
                                                         isEdit: true,
-                                                        address: data,
+                                                        //address: data,
                                                       ),
                                                     );
                                                   },
