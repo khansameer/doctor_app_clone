@@ -11,11 +11,9 @@ import 'package:doctor_app/core/route/route.dart';
 import 'package:doctor_app/main.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/provider/procedure_provider.dart';
-import 'package:doctor_app/screen/authentication/model/login_model.dart';
-import 'package:doctor_app/screen/mobile_view/profile/model/user_details_model.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/patient_profile_dialog.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
-import 'package:doctor_app/service/network_repository.dart';
+
 import 'package:doctor_app/shared_preferences/preference_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -24,7 +22,6 @@ import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:popover/popover.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -888,33 +885,4 @@ commonLogoutDialog(
           ),
         );
       });
-}
-
-showPopoverMenu(
-    {required BuildContext context,
-    required Size size,
-    Color? colorBg,
-    required Widget child,
-    double? width,
-    double? height}) {
-  showPopover(
-    barrierColor: Colors.transparent,
-    context: context,
-
-    transition: PopoverTransition.scale,
-    backgroundColor: colorBg ?? AppColors.colorBgNew,
-    bodyBuilder: (context) {
-      return Container(
-        // color: colorBg??Colors.white,
-
-        child: child,
-      );
-    },
-    onPop: () => print('Popover was popped!'),
-    direction: PopoverDirection.bottom,
-    width: width ?? size.width * 0.15,
-    // height: height ?? size.height * 0.4,
-    arrowHeight: 15,
-    arrowWidth: 30,
-  );
 }

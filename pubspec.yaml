@@ -52,7 +52,7 @@ dependencies:
   searchfield: ^1.1.7
   permission_handler: ^11.3.1
   flutter_rating_bar: ^4.0.1
-  popover: ^0.3.1
+  #popover: ^0.3.1
   image_cropper: ^8.0.2
   image_picker: ^1.1.2
   videosdk: any
