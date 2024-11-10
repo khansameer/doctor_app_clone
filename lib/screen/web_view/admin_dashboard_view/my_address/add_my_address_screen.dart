@@ -4,15 +4,21 @@ import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/address_provider.dart';
+import 'package:doctor_app/provider/auth_provider.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/app_constants.dart';
+import '../../../../provider/profile_provider.dart';
 
 class AddMyAddressScreen extends StatefulWidget {
-  const AddMyAddressScreen({super.key, required this.isEdit, this.address});
+  const AddMyAddressScreen({
+    super.key,
+    required this.isEdit,
+  });
   final bool isEdit;
-  final Address? address;
+  //final Address? address;
 
   @override
   State<AddMyAddressScreen> createState() => _AddMyAddressScreenState();
@@ -30,15 +36,23 @@ class _AddMyAddressScreenState extends State<AddMyAddressScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.isEdit) {
-      tetLine1.text = '${widget.address?.address1.toString()}';
-      tetLine2.text = '${widget.address?.address2.toString()}';
-      tetPhone.text = '${widget.address?.phoneNumber.toString()}';
-      tetCity.text = '${widget.address?.city.toString()}';
-      tetState.text = '${widget.address?.state.toString()}';
-      tetZipCode.text = '${widget.address?.zipcode.toString()}';
-      tetCountry.text = '${widget.address?.country.toString()}';
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var provider = context.read<ProfileProvider>();
+      provider.getUserDetails(context: context).then((value) {
+        if (provider.userDetailsModel?.user?.sId != null) {
+          var data = provider.userDetailsModel?.user;
+        }
+        /*if (widget.isEdit) {
+          tetLine1.text = '${widget.address?.address1.toString()}';
+          tetLine2.text = '${widget.address?.address2.toString()}';
+          tetPhone.text = '${widget.address?.phoneNumber.toString()}';
+          tetCity.text = '${widget.address?.city.toString()}';
+          tetState.text = '${widget.address?.state.toString()}';
+          tetZipCode.text = '${widget.address?.zipcode.toString()}';
+          tetCountry.text = '${widget.address?.country.toString()}';
+        }*/
+      });
+    });
   }
 
   @override
@@ -57,7 +71,7 @@ class _AddMyAddressScreenState extends State<AddMyAddressScreen> {
               : isTablet
                   ? width * 0.3
                   : width * 0.19,
-      child: ListView(
+      child: Stack(
         children: [
           Column(
             mainAxisSize: MainAxisSize.min,
@@ -95,8 +109,41 @@ class _AddMyAddressScreenState extends State<AddMyAddressScreen> {
                                 ))
                           ],
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Consumer<AuthProviders>(
+                                builder: (context, provider, child) {
+                              return CommonButtonWidget(
+                                  radius: 8,
+                                  fontSize: 12,
+                                  padding: EdgeInsets.only(
+                                      left: 40, right: 40, top: 20, bottom: 20),
+                                  text: "Add More".toUpperCase(),
+                                  onPressed: () {
+                                    provider.addAddress();
+                                  },
+                                  iconShow: true,
+                                  icon: const Icon(
+                                    Icons.add,
+                                    color: Colors.white,
+                                  ));
+                            })
+                          ],
+                        ),
+                        Consumer<AuthProviders>(
+                            builder: (context, provider, child) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: provider.addresses.length,
+                            itemBuilder: (context, index) {
+                              return AddressInputField(index: index);
+                            },
+                          );
+                        }),
                         const SizedBox(height: 20),
-                        commonTextFiledView(
+                        /*commonTextFiledView(
                             radius: 8,
                             topText: 10,
                             maxLines: 3,
@@ -163,7 +210,7 @@ class _AddMyAddressScreenState extends State<AddMyAddressScreen> {
                           topTextField: 10,
                           height: 45,
                           radius: 8,
-                        ),
+                        ),*/
                         const SizedBox(
                           height: 30,
                         ),
@@ -176,7 +223,47 @@ class _AddMyAddressScreenState extends State<AddMyAddressScreen> {
                               padding: EdgeInsets.only(
                                   left: 50, right: 50, top: 15, bottom: 15),
                               height: isMobile ? null : 40,
-                              onPressed: () async {},
+                              onPressed: () async {
+                                var providerProfile = context
+                                    .read<ProfileProvider>()
+                                    .userDetailsModel;
+                                List<Map<String, dynamic>> addressesJson =
+                                    context
+                                        .read<AuthProviders>()
+                                        .getAddressesInJson();
+                                print('${providerProfile?.user?.firstName}');
+                                Map<String, dynamic> body = {
+                                  "firstName":
+                                      '${providerProfile?.user?.firstName}',
+                                  "lastName":
+                                      '${providerProfile?.user?.lastName}',
+                                  "email": '${providerProfile?.user?.email}',
+                                  //"password": provider.tetPassword.text,
+                                  "dateOfBirth":
+                                      '${providerProfile?.user?.dateOfBirth}',
+                                  "phoneNumber":
+                                      '${providerProfile?.user?.phoneNumber}',
+                                  "role": "doctor",
+                                  // "licenseNumber": '${providerProfile?.user?.firstName}',
+                                  /*"profile": {
+                                    "qualification": {
+                                      "degree": tetDegree.text,
+                                      "year": tetYear.text,
+                                      "institution": tetInstitution.text
+                                    },
+                                    "experience": int.parse(tetExperience.text)
+                                  },*/
+                                  "clinicAddresses": addressesJson,
+                                  "gender": '${providerProfile?.user?.gender}',
+                                  // "specializations": provider.selectedItems,
+                                  // "clinicAddresses": addressesJson
+                                };
+
+                                context
+                                    .read<AddressProvider>()
+                                    .addAddress(context: context, body: body);
+                                print('==gender====${body.toString()}');
+                              },
                               colorButton: AppColors.colorGreen,
                               fontSize: 12,
                               text: widget.isEdit ? "Update" : "Add",
@@ -210,6 +297,81 @@ class _AddMyAddressScreenState extends State<AddMyAddressScreen> {
               ),
             ],
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class AddressInputField extends StatelessWidget {
+  final int index;
+
+  const AddressInputField({super.key, required this.index});
+
+  @override
+  Widget build(BuildContext context) {
+    var addressProvider = Provider.of<AuthProviders>(context, listen: false);
+
+    return Padding(
+      padding: const EdgeInsets.all(eight),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          commonTextFiledView(
+            topText: ten,
+            topTextField: 10,
+            title: "Full Address",
+            //  keyboardType: TextInputType.streetAddress,
+            hint: "",
+            maxLines: 1,
+
+            //   decoration: InputDecoration(labelText: 'Address'),
+            onChange: (value) {
+              addressProvider.updateAddress(index, 'address', value);
+            },
+          ),
+          commonTextFiledView(
+            title: "City",
+            topText: ten,
+            topTextField: 10,
+            //text: city,
+            onChange: (value) {
+              addressProvider.updateAddress(index, 'city', value);
+            },
+          ),
+          commonTextFiledView(
+            hint: "",
+            title: "State",
+            topText: ten,
+            topTextField: 10,
+            onChange: (value) {
+              addressProvider.updateAddress(index, 'state', value);
+            },
+          ),
+          commonTextFiledView(
+            //   text: zipCode,
+            topText: ten,
+            title: "Zip Code",
+            topTextField: 10,
+
+            //keyboardType: TextInputType.number,
+            // decoration: InputDecoration(labelText: 'Zip Code'),
+            onChange: (value) {
+              addressProvider.updateAddress(index, 'zipCode', value);
+            },
+          ),
+          if (index >
+              0) // Only show the delete button for dynamically added addresses
+            Align(
+              alignment: Alignment.centerRight,
+              child: IconButton(
+                icon: const Icon(Icons.delete, color: Colors.red),
+                onPressed: () {
+                  addressProvider.removeAddress(index);
+                },
+              ),
+            ),
+          //Divider(),
         ],
       ),
     );
