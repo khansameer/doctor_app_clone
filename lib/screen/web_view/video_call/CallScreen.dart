@@ -1,44 +1,58 @@
-
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:videosdk/videosdk.dart';
 
 class CallScreen extends StatefulWidget {
- // final bool isDoctor;
+  // final bool isDoctor;
 
-  const CallScreen({super.key, });
+  const CallScreen({
+    super.key,
+  });
 
   @override
   State<CallScreen> createState() => _CallScreenState();
 }
 
 class _CallScreenState extends State<CallScreen> {
-
   late Room _room;
   bool micEnabled = true;
   bool camEnabled = true;
   String meetingId = "3olc-wwhx-aghi";
-  String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlrZXkiOiIyYmNhN2IwYS03MGZiLTRkMGUtOGU1ZC1hOWYzZGQ5ZmVlMDkiLCJwZXJtaXNzaW9ucyI6WyJhbGxvd19qb2luIl0sImlhdCI6MTczMTA0NDExNiwiZXhwIjoxNzQ2NTk2MTE2fQ.ISjq5oGZUSpiQNTu0_cAEX3G0-lxx9z4UnC23Hi0ofE";
+  String token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlrZXkiOiIyYmNhN2IwYS03MGZiLTRkMGUtOGU1ZC1hOWYzZGQ5ZmVlMDkiLCJwZXJtaXNzaW9ucyI6WyJhbGxvd19qb2luIl0sImlhdCI6MTczMTA0NDExNiwiZXhwIjoxNzQ2NTk2MTE2fQ.ISjq5oGZUSpiQNTu0_cAEX3G0-lxx9z4UnC23Hi0ofE";
 
   Map<String, Participant> participants = {};
+
+  Future<void> requestPermissions() async {
+    await [Permission.camera, Permission.microphone].request();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _room.leave();
+  }
 
   @override
   void initState() {
     super.initState();
 
-    _room = VideoSDK.createRoom(
-      roomId: meetingId,
-      token: token,
-      displayName: "Patient",
-      micEnabled: micEnabled,
-      camEnabled: camEnabled,
-      defaultCameraIndex: 1,
-    );
+    requestPermissions().then((_) {
+      _room = VideoSDK.createRoom(
+        roomId: meetingId,
+        token: token,
+        displayName: "Patient",
+        micEnabled: micEnabled,
+        camEnabled: camEnabled,
+        defaultCameraIndex: 1,
+      );
 
-    // Event listeners and join room
-    setMeetingEventListener();
-    _room.join();
+      // Event listeners and join room
+      setMeetingEventListener();
+      _room.join();
+    });
   }
-
 
   void setMeetingEventListener() {
     _room.on(Events.roomJoined, () {
@@ -50,9 +64,9 @@ class _CallScreenState extends State<CallScreen> {
 
     _room.on(
       Events.participantJoined,
-          (Participant participant) {
+      (Participant participant) {
         setState(
-              () => participants.putIfAbsent(participant.id, () => participant),
+          () => participants.putIfAbsent(participant.id, () => participant),
         );
       },
     );
@@ -60,7 +74,7 @@ class _CallScreenState extends State<CallScreen> {
     _room.on(Events.participantLeft, (String participantId) {
       if (participants.containsKey(participantId)) {
         setState(
-              () => participants.remove(participantId),
+          () => participants.remove(participantId),
         );
       }
     });
@@ -71,31 +85,27 @@ class _CallScreenState extends State<CallScreen> {
     });
   }
 
-
   Future<bool> _onWillPop() async {
     _room.leave();
     return true;
   }
+
   @override
   Widget build(BuildContext context) {
     final localParticipant = _room.localParticipant;
-
-
 
     return WillPopScope(
       onWillPop: () => _onWillPop(),
       child: Scaffold(
         backgroundColor: Colors.black,
-
         body: Stack(
           children: [
             // Full-screen view for the main participant
             Positioned.fill(
               child: _room.participants.isNotEmpty
                   ? ParticipantTile(
-
-                participant: _room.participants.values.first,
-              )
+                      participant: _room.participants.values.first,
+                    )
                   : Center(child: CircularProgressIndicator()),
             ),
             // PIP view for the local participant
@@ -134,6 +144,7 @@ class _CallScreenState extends State<CallScreen> {
     );
   }
 }
+
 // Meeting controls widget
 class MeetingControls extends StatelessWidget {
   final void Function() onToggleMicButtonPressed;
@@ -197,6 +208,7 @@ class MeetingControls extends StatelessWidget {
     );
   }
 }
+
 // Participant tile widget
 class ParticipantTile extends StatefulWidget {
   final Participant participant;
@@ -243,18 +255,18 @@ class _ParticipantTileState extends State<ParticipantTile> {
       padding: const EdgeInsets.all(8.0),
       child: videoStream != null
           ? RTCVideoView(
-        videoStream?.renderer as RTCVideoRenderer,
-        objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
-      )
+              videoStream?.renderer as RTCVideoRenderer,
+              objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+            )
           : Container(
-        color: Colors.grey.shade800,
-        child: const Center(
-          child: Icon(
-            Icons.person,
-            size: 100,
-          ),
-        ),
-      ),
+              color: Colors.grey.shade800,
+              child: const Center(
+                child: Icon(
+                  Icons.person,
+                  size: 100,
+                ),
+              ),
+            ),
     );
   }
 }

@@ -24,7 +24,6 @@ import 'provider/address_provider.dart';
 import 'provider/prescription_provider.dart';
 import 'provider/profile_provider.dart';
 
-
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 List<SingleChildWidget> providers = [
@@ -40,7 +39,8 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider<PatientProvider>(create: (_) => PatientProvider()),
   ChangeNotifierProvider<ReportProvider>(create: (_) => ReportProvider()),
   ChangeNotifierProvider<AddressProvider>(create: (_) => AddressProvider()),
-  ChangeNotifierProvider<PrescriptionProvider>(create: (_) => PrescriptionProvider()),
+  ChangeNotifierProvider<PrescriptionProvider>(
+      create: (_) => PrescriptionProvider()),
 ];
 
 void main() async {
@@ -60,13 +60,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         navigatorKey: navigatorKey, // Set the navigatorKey
         title: appName,
-
-
         initialRoute: RouteName.splashScreen,
         onGenerateRoute: RouteGenerator.generateRoute,
-
-
-     //  home: MainVideoCall(),
+        // home: MainVideoCall(),
         debugShowCheckedModeBanner: false,
         builder: (context, child) {
           return MediaQuery(

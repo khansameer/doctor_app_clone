@@ -24,11 +24,11 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<DashboardProvider>().getUserName();
       context.read<AddressProvider>().getAddress(context: context);
-
     });
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
@@ -47,7 +47,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.only(left: 15, right: 16),
                   child: Row(
                     children: [
                       Expanded(
@@ -56,23 +56,22 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             CommonTextWidget(
-                              text: "MY ADDRESSES",
+                              text: "Clinic Address",
                               fontSize: 18,
                               fontWeight: FontWeight.w900,
                             ),
-                            CommonTextWidget(
-
+                            /* CommonTextWidget(
                               top: 5,
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
                               text: "Add addresses for future use.",
-                            ),
+                            ),*/
                           ],
                         ),
                       ),
                       Expanded(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Row(
                             mainAxisSize: MainAxisSize.min,
@@ -80,14 +79,22 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                               CommonButtonWidget(
                                 fontSize: 12,
                                 radius: 8,
-                                onPressed: (){
+                                iconShow: true,
+                                icon: Container(
+                                  margin: EdgeInsets.only(right: 5),
+                                  child: Icon(
+                                    Icons.add,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                onPressed: () {
                                   showDialog(
                                     barrierDismissible: false,
                                     context: context,
                                     builder: (BuildContext context) {
                                       return CustomAlertDialog(
                                         content: AddMyAddressScreen(
-      isEdit: false,
+                                          isEdit: false,
                                         ),
                                       );
                                     },
@@ -104,122 +111,191 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                     ],
                   ),
                 ),
-
-                Divider(thickness: 0.3,),
-
+                Divider(
+                  thickness: 0.3,
+                ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Consumer<AddressProvider>(
-                    builder: (context,provider,child) {
-                      return LayoutBuilder(
-                        builder: (context, constraints) {
-
-                          return GridView.builder(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            itemCount: provider.dummyAddresses.length, // Example: number of items
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: isTablet?1:isMobile?1:3,
-                              crossAxisSpacing: 30,
-                              mainAxisSpacing: 30,
-                              childAspectRatio: 3, // Adjust based on height requirements
-                            ),
-                           // padding: const EdgeInsets.fromLTRB(10, 20, 30, 40),
-                            itemBuilder: (context, index) {
-                              var data=provider.dummyAddresses[index];
-                              return Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.colorBgNew,
-                                  borderRadius: BorderRadius.circular(8)
-                                ),
-
-                                child: Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-
-                                    children: [
-
-                                      CommonTextWidget(text: context.read<DashboardProvider>().name,fontSize: 16,fontWeight: FontWeight.w700,
-                                      ),
-                                      CommonTextWidget(text: data.address1,top: 8,),
-                                      CommonTextWidget(text: '${data.address1},${data.city},${data.state},${data.city},${data.zipcode}',top: 5,),
-                                      CommonTextWidget(text: 'Ph:${data.phoneNumber}',top: 5,),
-
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        crossAxisAlignment: CrossAxisAlignment.end,
-                                        children: [
-
-                                          CommonButtonWidget(
-                                            text: "Edit",
-                                            onPressed: (){
-                                              showDialog(
-                                                barrierDismissible: false,
-                                                context: context,
-                                                builder: (BuildContext context) {
-                                                  return CustomAlertDialog(
-                                                    content: AddMyAddressScreen(
-                                                      isEdit: true,
-                                                      address: data,
-
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            },
-                                            colorBorder: Colors.black,
-                                            colorButton: Colors.white,
-                                            colorText:AppColors.colorTextNew,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 12,
-                                            icon:Container(
-                                              margin: EdgeInsets.only(right: 10),
-
-                                              child: setAssetImage(
-                                                  color: Colors.black,
-
-                                                  image: icEditIcon,width: 18,height: 18),
-                                            ),
-                                            iconShow: true,
-                                          ),
-                                          SizedBox(width: 20,),
-
-                                          CommonButtonWidget(
-                                            text: "Delete",
-                                            fontSize: 12,
-                                            onPressed: (){
-                                              provider.deleteItem(index);
-                                            },
-                                            fontWeight: FontWeight.w400,
-                                            colorButton: Colors.red.withOpacity(0.8),
-
-
-                                            icon:Container(
-                                              margin: EdgeInsets.only(right: 10),
-
-                                              child: setAssetImage(
-                                                  color: Colors.white,
-                                                  image: icDeleteIcon,width: 18,height: 18),
-                                            ),
-                                            iconShow: true,
-                                          )
-                                        ],
-                                      )
-                                    ],
+                      builder: (context, provider, child) {
+                    return LayoutBuilder(builder: (context, constraints) {
+                      return GridView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        itemCount: provider
+                            .dummyAddresses.length, // Example: number of items
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: isTablet
+                              ? 1
+                              : isMobile
+                                  ? 1
+                                  : 2,
+                          crossAxisSpacing: 30,
+                          mainAxisSpacing: 30,
+                          childAspectRatio:
+                              3, // Adjust based on height requirements
+                        ),
+                        // padding: const EdgeInsets.fromLTRB(10, 20, 30, 40),
+                        itemBuilder: (context, index) {
+                          var data = provider.dummyAddresses[index];
+                          return Container(
+                            decoration: BoxDecoration(
+                                color: AppColors.colorBgNew,
+                                borderRadius: BorderRadius.circular(8)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(25.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CommonTextWidget(
+                                    text:
+                                        context.read<DashboardProvider>().name,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
                                   ),
-                                ),
-                              );
-                            },
-
-
+                                  CommonTextWidget(
+                                    text: data.address1,
+                                    top: 8,
+                                  ),
+                                  CommonTextWidget(
+                                    text:
+                                        '${data.address1},${data.city},${data.state},${data.city},${data.zipcode}',
+                                    top: 5,
+                                  ),
+                                  CommonTextWidget(
+                                    text: 'Ph:${data.phoneNumber}',
+                                    top: 5,
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        MouseRegion(
+                                          onEnter: (_) {
+                                            provider.setHoverEdit(index);
+                                          },
+                                          onExit: (_) {
+                                            provider.setHoverEdit(null);
+                                          },
+                                          child: AnimatedContainer(
+                                            duration: const Duration(
+                                                milliseconds: 200),
+                                            child: CommonButtonWidget(
+                                              text: "Edit",
+                                              height: 40,
+                                              onPressed: () {
+                                                showDialog(
+                                                  barrierDismissible: false,
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return CustomAlertDialog(
+                                                      content:
+                                                          AddMyAddressScreen(
+                                                        isEdit: true,
+                                                        address: data,
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              colorBorder:
+                                                  provider.hoverEdit == index
+                                                      ? AppColors.colorTextNew
+                                                      : Colors.black,
+                                              colorButton:
+                                                  provider.hoverEdit == index
+                                                      ? Colors.white
+                                                      : AppColors.colorBgNew,
+                                              colorText:
+                                                  provider.hoverEdit == index
+                                                      ? AppColors.colorTextNew
+                                                      : AppColors.colorTextNew,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 12,
+                                              icon: Container(
+                                                margin:
+                                                    EdgeInsets.only(right: 10),
+                                                child: setAssetImage(
+                                                    color: provider.hoverEdit ==
+                                                            index
+                                                        ? AppColors.colorTextNew
+                                                        : Colors.black,
+                                                    image: icEditIcon,
+                                                    width: 14,
+                                                    height: 14),
+                                              ),
+                                              iconShow: true,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        MouseRegion(
+                                          onEnter: (_) {
+                                            provider.setHoverDelete(index);
+                                          },
+                                          onExit: (_) {
+                                            provider.setHoverDelete(null);
+                                          },
+                                          child: AnimatedContainer(
+                                            duration: const Duration(
+                                                milliseconds: 200),
+                                            child: CommonButtonWidget(
+                                              text: "Delete",
+                                              fontSize: 12,
+                                              height: 40,
+                                              onPressed: () {
+                                                provider.deleteItem(index);
+                                              },
+                                              fontWeight: FontWeight.w400,
+                                              /* colorButton:
+                                                  Colors.red.withOpacity(0.8),*/
+                                              colorBorder:
+                                                  provider.hoverDelete == index
+                                                      ? Colors.white
+                                                      : Colors.black,
+                                              colorButton:
+                                                  provider.hoverDelete == index
+                                                      ? Colors.redAccent
+                                                      : Colors.white,
+                                              colorText:
+                                                  provider.hoverDelete == index
+                                                      ? Colors.white
+                                                      : AppColors.colorTextNew,
+                                              icon: Container(
+                                                margin:
+                                                    EdgeInsets.only(right: 10),
+                                                child: setAssetImage(
+                                                    color:
+                                                        provider.hoverDelete ==
+                                                                index
+                                                            ? Colors.white
+                                                            : Colors.black,
+                                                    image: icDeleteIcon,
+                                                    width: 14,
+                                                    height: 14),
+                                              ),
+                                              iconShow: true,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
                           );
-                        }
+                        },
                       );
-                    }
-                  ),
+                    });
+                  }),
                 )
               ],
             ),

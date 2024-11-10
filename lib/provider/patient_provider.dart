@@ -5,6 +5,7 @@ import 'package:doctor_app/screen/web_view/model/patient_details_model.dart';
 import 'package:doctor_app/service/api_config.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 import '../service/api_services.dart';
 
@@ -34,7 +35,8 @@ class PatientProvider with ChangeNotifier {
     try {
       final response = await _service.callGetMethod(
           url: '${ApiConfig.getPatientDetails}/$userId/patients');
-
+      print('===error==$globalStatusCode');
+      print('===response==${json.decode(response)}');
       if (globalStatusCode == 200 || globalStatusCode == 201) {
         _patientDetailsModel =
             PatientDetailsModel.fromJson(json.decode(response));
@@ -47,6 +49,8 @@ class PatientProvider with ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _isAdding = false;
+      print('===error==$e');
+      print('===error==$globalStatusCode');
       notifyListeners();
     }
   }
@@ -54,6 +58,7 @@ class PatientProvider with ChangeNotifier {
   String? _selectedGender;
   String _searchQuery = "";
   String? _selectedLetter;
+
   List<Patients>? get patients {
     return _filteredPatients?.where((patient) {
       final matchesLetter = _selectedLetter == null ||
@@ -67,8 +72,28 @@ class PatientProvider with ChangeNotifier {
           .toString()
           .toLowerCase()
           .contains(_searchQuery.toLowerCase());
+
       return matchesLetter && matchesGender && matchesQuery;
     }).toList();
+  }
+
+  void filterFemalePatientsOver30() {
+    _filteredPatients = _patientDetailsModel?.patients.where((patient) {
+      final age = calculateAge(
+          DateTime.parse(patient.dateOfBirth ?? DateTime.now().toString()));
+      return patient.gender?.toLowerCase() == 'female' && age > 30;
+    }).toList();
+    notifyListeners(); // Use if you're working with a provider or similar state management
+  }
+
+  void filterFemalePatientsUnder30() {
+    _filteredPatients = _patientDetailsModel?.patients.where((patient) {
+      final age = calculateAge(
+          DateTime.parse(patient.dateOfBirth ?? DateTime.now().toString()));
+      return patient.gender?.toLowerCase() == 'female' && age < 30;
+    }).toList();
+
+    notifyListeners(); // Use if you're working with a provider or similar state management
   }
 
   Set<String>? get availableLetters {
@@ -88,6 +113,21 @@ class PatientProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void getAlLList() {
+    try {
+      _selectedLetter = null;
+      _selectedGender = null;
+      _searchQuery = "";
+      // Ensure _filteredPatients is set to the original full list of patients.
+      _filteredPatients = List.from(_patientDetailsModel?.patients ?? []);
+      notifyListeners();
+    } catch (e) {
+      print('Error retrieving all patients: $e');
+    }
+
+    notifyListeners();
+  }
+
   void updateSearchQuery(String query) {
     _searchQuery = query;
     notifyListeners();
@@ -98,6 +138,17 @@ class PatientProvider with ChangeNotifier {
     _selectedGender = null;
     _searchQuery = "";
     notifyListeners();
+  }
+
+  int calculateAge(DateTime dateOfBirth) {
+    final currentDate = DateTime.now();
+    int age = currentDate.year - dateOfBirth.year;
+    if (currentDate.month < dateOfBirth.month ||
+        (currentDate.month == dateOfBirth.month &&
+            currentDate.day < dateOfBirth.day)) {
+      age--;
+    }
+    return age;
   }
 
   Future uploadPatientFile({

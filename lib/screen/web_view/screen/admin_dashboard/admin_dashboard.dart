@@ -1,3 +1,4 @@
+import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:doctor_app/core/app_constants.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
@@ -8,6 +9,7 @@ import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/screen/authentication/model/login_model.dart';
+import 'package:doctor_app/screen/mobile_view/notification/notificatio_screen.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_dashboard_view.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/communication_screen.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/feedback/admin_feedback_screen.dart';
@@ -152,26 +154,39 @@ class _AdminDashboardState extends State<AdminDashboard> {
                           : Colors.white,
                       // color: Colors.white,
                     ),
-                    child: IconButton(
-                      hoverColor: Colors.transparent,
-                      onPressed: () {
-                        showDialog(
-                            barrierDismissible: false,
+                    child: Builder(
+                      builder: (context) => InkWell(
+                        hoverColor: Colors.transparent,
+                        onTap: () async {
+                          await showAlignedDialog(
                             context: context,
-                            builder: (BuildContext context) {
-                              return CustomAlertDialog(
-                                content: AdminNotificationScreen(
-                                  isDialog: true,
+                            isGlobal: false,
+                            barrierColor: Colors.transparent,
+                            avoidOverflow: false,
+                            targetAnchor: AlignmentDirectional(0.0, 1.0)
+                                .resolve(Directionality.of(context)),
+                            followerAnchor: AlignmentDirectional(0.0, -1.0)
+                                .resolve(Directionality.of(context)),
+                            builder: (dialogContext) {
+                              return Material(
+                                color: Colors.transparent,
+                                child: GestureDetector(
+                                  onTap: () =>
+                                      FocusScope.of(dialogContext).unfocus(),
+                                  child:
+                                      AdminNotificationScreen(isDialog: true),
                                 ),
                               );
-                            });
-                      },
-                      icon: Icon(
-                        Icons.notifications_none,
-                        color: provider.hoverNotification == 0
-                            ? Colors.white
-                            : AppColors.colorTextNew,
-                        size: 18,
+                            },
+                          );
+                        },
+                        child: Icon(
+                          Icons.notifications_none,
+                          color: provider.hoverNotification == 0
+                              ? Colors.white
+                              : AppColors.colorTextNew,
+                          size: 18,
+                        ),
                       ),
                     ),
                   ),
@@ -457,3 +472,30 @@ class _AdminDashboardState extends State<AdminDashboard> {
     );
   }
 }
+
+// Custom painter to draw the triangle
+class TrianglePainter extends CustomPainter {
+  final Color color;
+
+  TrianglePainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
+
+    final path = Path();
+    path.moveTo(size.width / 2, 0); // Start at top center
+    path.lineTo(0, size.height); // Bottom left
+    path.lineTo(size.width, size.height); // Bottom right
+    path.close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+// Notification popup with triangle

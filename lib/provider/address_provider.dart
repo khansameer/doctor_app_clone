@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../core/component/component.dart';
 import '../service/api_services.dart';
+
 class Address {
   String address1;
   String address2;
@@ -52,13 +53,30 @@ class Address {
   }
 }
 
-class AddressProvider with ChangeNotifier{
+class AddressProvider with ChangeNotifier {
   final _service = ApiService();
   bool _isFetching = false;
   bool _isAdding = false;
   bool get isAdding => _isAdding;
   bool get isFetching => _isFetching;
 
+  int? _hoverEdit;
+
+  int? get hoverEdit => _hoverEdit;
+
+  void setHoverEdit(int? index) {
+    _hoverEdit = index;
+    notifyListeners();
+  }
+
+  int? _hoverDelete;
+
+  int? get hoverDelete => _hoverDelete;
+
+  void setHoverDelete(int? index) {
+    _hoverDelete = index;
+    notifyListeners();
+  }
 
   Future getAddress({required BuildContext context}) async {
     String userId = await getUserID();
@@ -86,6 +104,34 @@ class AddressProvider with ChangeNotifier{
     }
   }
 
+  Future addAddress({
+    required BuildContext context,
+    required Map<String, dynamic> body,
+  }) async {
+    String userId = await getUserID();
+
+    _isFetching = true;
+    notifyListeners();
+    try {
+      final response = await _service.callPutMethodApiWithToken(
+          url: '${ApiConfig.getDoctor}/$userId', body: body);
+
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+        print(json.decode(response));
+        /*  _patientDetailsModel =
+            PatientDetailsModel.fromJson(json.decode(response));
+        _filteredPatients = _patientDetailsModel?.patients;*/
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
+      }
+
+      _isFetching = false;
+      notifyListeners();
+    } catch (e) {
+      _isFetching = false;
+      notifyListeners();
+    }
+  }
 
   // List of 20 dummy addresses
   List<Address> dummyAddresses = [
@@ -105,7 +151,7 @@ class AddressProvider with ChangeNotifier{
       city: 'Los Angeles',
       state: 'CA',
       country: 'USA',
-        zipcode: '90001',
+      zipcode: '90001',
     ),
     Address(
       address1: '91011 Pine Rd',
@@ -119,8 +165,6 @@ class AddressProvider with ChangeNotifier{
 
     // Continue with more entries...
   ];
-
-
 
   void deleteItem(int index) {
     dummyAddresses.removeAt(index);

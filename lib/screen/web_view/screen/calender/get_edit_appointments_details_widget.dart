@@ -147,15 +147,6 @@ class _GetEditAppointmentsDetailsWidgetState
                               ))
                         ],
                       ),
-                      /*Center(
-                        child: CommonTextWidget(
-                          text: "Appointment Details",
-                          fontSize: 16,
-                          textAlign: TextAlign.center,
-                          fontWeight: FontWeight.w700,
-                          top: 20,
-                        ),
-                      ),*/
                       commonTextFiledView(
                           height: 45,
                           fontSize: 14,
@@ -270,7 +261,7 @@ class _GetEditAppointmentsDetailsWidgetState
                                   "patientId": provider.selectedID,
                                   "doctorId": userId,
                                   "dateTime": dateTime.toIso8601String(),
-                                  "reason": tetReason.text,
+                                  "description": tetReason.text,
                                   "isVirtual": true,
                                 };
 
@@ -324,7 +315,7 @@ class _GetEditAppointmentsDetailsWidgetState
                           const SizedBox(
                             width: 10,
                           ),
-                          Expanded(
+                          /* Expanded(
                             child: CommonButtonWidget(
                               text: "Consult",
                               height: isMobile ? null : 40,
@@ -343,7 +334,7 @@ class _GetEditAppointmentsDetailsWidgetState
                               },
                               fontSize: 12,
                             ),
-                          ),
+                          ),*/
                         ],
                       )
                     ],

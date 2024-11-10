@@ -43,7 +43,7 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.title == "all") {
-        context.read<PatientProvider>().clearFilter();
+        context.read<PatientProvider>().getAlLList();
       } else if (widget.title == "all_male") {
         context.read<PatientProvider>().filterByGender("male");
       } else if (widget.title == "all_female") {
@@ -105,6 +105,15 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                       itemCount: provider.patients?.length ?? 0,
                       itemBuilder: (context, index) {
                         var data = provider.patients?[index];
+                        /*  var data = provider.patients?[index];
+                        final age = provider.calculateAge(DateTime.parse(
+                            data?.dateOfBirth.toString() ??
+                                DateTime.now().toString()));*/
+                        final dateOfBirthStr = data?.dateOfBirth?.toString();
+                        final dateOfBirth = dateOfBirthStr != null
+                            ? DateTime.parse(dateOfBirthStr)
+                            : DateTime.now();
+                        final age = provider.calculateAge(dateOfBirth);
                         return Container(
                           decoration: BoxDecoration(
                               color: AppColors.colorListView,
@@ -160,8 +169,9 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CommonTextWidget(
-                                  text: "28 years",
+                                  text: '$age',
                                   top: 5,
+                                  fontWeight: FontWeight.w500,
                                   fontSize: 13,
                                 ),
                                 isMobile

@@ -14,30 +14,30 @@ class SettingPrescriptionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size=MediaQuery.sizeOf(context);
-    return Column(
-
+    var size = MediaQuery.sizeOf(context);
+    return ListView(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CommonTextWidget(
-                      text: "Prescription",
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CommonTextWidget(
+                          text: "Prescription",
+                          fontSize: 18,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ],
                     ),
-
-                  ],
-                ),
-              ),
-              Expanded(
-                  child: Row(
+                  ),
+                  Expanded(
+                      child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Row(
@@ -46,7 +46,7 @@ class SettingPrescriptionScreen extends StatelessWidget {
                           CommonButtonWidget(
                             fontSize: 12,
                             radius: 8,
-                            onPressed: (){
+                            onPressed: () {
                               showDialog(
                                 barrierDismissible: false,
                                 context: context,
@@ -67,81 +67,109 @@ class SettingPrescriptionScreen extends StatelessWidget {
                       )
                     ],
                   ))
-            ],
-          ),
-        ),
-
-        Divider(thickness: 0.3,),
-
-        Consumer<PrescriptionProvider>(
-          builder: (context,provider,child) {
-            return Container(
-              width:size.width ,
-              padding: const EdgeInsets.all(0.0),
-              child: DataTable(
-                border: TableBorder.all(
-                  width: 1.0,
-                  color:AppColors.colorBgNew,
-
-                ),
-                columns:  [
-                  DataColumn(label: CommonTextWidget(text: 'Medicine',fontWeight: FontWeight.w900,)),
-                  DataColumn(label: CommonTextWidget(text: 'Frequency',fontWeight: FontWeight.w900,)),
-                  DataColumn(label: CommonTextWidget(text: 'Duration',fontWeight: FontWeight.w900,)),
-                  DataColumn(label: CommonTextWidget(text: 'Instructions',fontWeight: FontWeight.w900,)),
-                  DataColumn(
-                    numeric: true,
-
-                      label: CommonTextWidget(text: 'Action',fontWeight: FontWeight.w900,)),
                 ],
-                rows: provider.prescriptions
-                    .map(
-                      (prescription) => DataRow(
-                    cells: [
-                      DataCell(CommonTextWidget(text:prescription.tablet,fontSize: 12,)),
-                      DataCell(CommonTextWidget(text:prescription.frequency,fontSize: 12,)),
-                      DataCell(CommonTextWidget(text:prescription.duration,fontSize: 12,)),
-                      DataCell(CommonTextWidget(text:prescription.instructions,fontSize: 12,)),
-                      DataCell(
-
-                          Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-
-                            commonInkWell(
-                              onTap: (){
-                                showDialog(
-                                  barrierDismissible: false,
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return CustomAlertDialog(
-                                      content: AddPrescriptionScreen(
-                                        isEdit: true,
-                                        address: prescription,
+              ),
+            ),
+            Divider(
+              thickness: 0.3,
+            ),
+            Consumer<PrescriptionProvider>(builder: (context, provider, child) {
+              return Container(
+                width: size.width,
+                padding: const EdgeInsets.all(0.0),
+                child: DataTable(
+                  border: TableBorder.all(
+                    width: 1.0,
+                    color: AppColors.colorBgNew,
+                  ),
+                  columns: [
+                    DataColumn(
+                        label: CommonTextWidget(
+                      text: 'Medicine',
+                      fontWeight: FontWeight.w900,
+                    )),
+                    DataColumn(
+                        label: CommonTextWidget(
+                      text: 'Frequency',
+                      fontWeight: FontWeight.w900,
+                    )),
+                    DataColumn(
+                        label: CommonTextWidget(
+                      text: 'Duration',
+                      fontWeight: FontWeight.w900,
+                    )),
+                    DataColumn(
+                        label: CommonTextWidget(
+                      text: 'Instructions',
+                      fontWeight: FontWeight.w900,
+                    )),
+                    DataColumn(
+                        numeric: true,
+                        label: CommonTextWidget(
+                          text: 'Action',
+                          fontWeight: FontWeight.w900,
+                        )),
+                  ],
+                  rows: provider.prescriptions
+                      .map(
+                        (prescription) => DataRow(
+                          cells: [
+                            DataCell(CommonTextWidget(
+                              text: prescription.tablet,
+                              fontSize: 12,
+                            )),
+                            DataCell(CommonTextWidget(
+                              text: prescription.frequency,
+                              fontSize: 12,
+                            )),
+                            DataCell(CommonTextWidget(
+                              text: prescription.duration,
+                              fontSize: 12,
+                            )),
+                            DataCell(CommonTextWidget(
+                              text: prescription.instructions,
+                              fontSize: 12,
+                            )),
+                            DataCell(Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  commonInkWell(
+                                    onTap: () {
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return CustomAlertDialog(
+                                            content: AddPrescriptionScreen(
+                                              isEdit: true,
+                                              address: prescription,
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.only(right: 10),
+                                      child: Icon(
+                                        Icons.edit_outlined,
+                                        color: Colors.grey,
                                       ),
-                                    );
-                                  },
-                                );
-                              },
-                              child: Container(
-                                margin: EdgeInsets.only(right: 10),
-                                child: Icon(Icons.edit_outlined,color: Colors.grey,),
+                                    ),
+                                  )
+                                ],
                               ),
-                            )
+                            )),
                           ],
                         ),
-                      )),
-                    ],
-                  ),
-                )
-                    .toList(),
-              ),
-            );
-          }
-        )
+                      )
+                      .toList(),
+                ),
+              );
+            })
+          ],
+        ),
       ],
     );
   }

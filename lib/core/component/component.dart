@@ -125,7 +125,11 @@ String formatDate({required DateTime date, String? formatDate}) {
 }
 
 setAssetImage(
-    {required String image, double? width, double? height, BoxFit? fit,Color ?color}) {
+    {required String image,
+    double? width,
+    double? height,
+    BoxFit? fit,
+    Color? color}) {
   return Image.asset(
     color: color,
     image,
@@ -459,6 +463,46 @@ Widget showLoaderList() {
           color: Colors.white,
           animating: true,
         )),
+  );
+}
+
+commonHover(
+    {Color? colorBg,
+    Color? colorIcon,
+    void Function(PointerEnterEvent)? onEnter,
+    void Function(PointerExitEvent)? onExit}) {
+  return MouseRegion(
+    /* onEnter: (_) {
+      provider.setHoveredChat(index);
+    },*/
+    /*  onExit: (_) {
+      provider.setHoveredChat(null);
+    },*/
+    onExit: onExit,
+    child: AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      alignment: Alignment.topLeft,
+      width: 35,
+      decoration: BoxDecoration(
+          color:
+              colorBg /*provider.hoveredChat == index
+              ? AppColors.primary
+              : AppColors.colorBgNew*/
+          ,
+          shape: BoxShape.circle),
+      height: 35,
+      child: Center(
+        child: Icon(
+          size: 15,
+          Icons.message,
+          color:
+              colorIcon /* provider.hoveredChat == index
+              ? Colors.white
+              : */
+          ,
+        ),
+      ),
+    ),
   );
 }
 

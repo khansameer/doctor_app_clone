@@ -1,4 +1,6 @@
 import 'package:doctor_app/core/colors.dart';
+import 'package:doctor_app/core/common/common_button_widget.dart';
+import 'package:doctor_app/core/common/common_text_widget.dart';
 
 import 'package:doctor_app/core/common/common_textfield.dart';
 import 'package:doctor_app/core/component/component.dart';
@@ -6,6 +8,7 @@ import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:doctor_app/provider/patient_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:popover/popover.dart';
 import 'package:provider/provider.dart';
 
 class AdminPatientView extends StatelessWidget {
@@ -29,54 +32,111 @@ class TabView extends StatelessWidget {
       tabProvider.selectedIndex == 0,
       tabProvider.selectedIndex == 1,
       tabProvider.selectedIndex == 2,
-      // tabProvider.selectedIndex == 3,
     ];
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SizedBox(
-        height: size.height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            isMobile
-                ? Column(
-                    children: [
-                      _searchView(context: context),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      _viewToggleButtons(
-                          tabProvider: tabProvider,
-                          context: context,
-                          isSelected: isSelected),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 8,
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 20, top: 10),
-                          height: 40,
-                          child: _viewToggleButtons(
-                              tabProvider: tabProvider,
-                              context: context,
-                              isSelected: isSelected),
+      body: SafeArea(
+        child: SizedBox(
+          height: size.height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              isMobile
+                  ? Column(
+                      children: [
+                        _searchView(context: context),
+                        const SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      Expanded(
-                        child: _searchView(context: context),
-                      ),
-                    ],
-                  ),
-            Expanded(child: tabProvider.currentPatientPage)
-          ],
+                        _viewToggleButtons(
+                            tabProvider: tabProvider,
+                            context: context,
+                            isSelected: isSelected),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex: 5,
+                          child: Container(
+                            margin: const EdgeInsets.only(bottom: 20, top: 10),
+                            height: 40,
+                            child: _viewToggleButtons(
+                                tabProvider: tabProvider,
+                                context: context,
+                                isSelected: isSelected),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              _searchView(context: context),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              PopupMenuButton(
+                                offset: Offset(0, 50),
+                                color: Colors.white,
+                                icon: Icon(
+                                  Icons.filter_alt_outlined,
+                                  color: Colors.grey,
+                                ),
+                                onSelected: (value) {
+                                  if (value == "over_30") {
+                                    context
+                                        .read<PatientProvider>()
+                                        .filterFemalePatientsOver30();
+                                  } else if (value == "under_30") {
+                                    context
+                                        .read<PatientProvider>()
+                                        .filterFemalePatientsUnder30();
+                                  }
+                                  // your logic
+                                },
+                                itemBuilder: (BuildContext bc) {
+                                  return [
+                                    PopupMenuItem(
+                                      value: 'over_30',
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.female),
+                                          CommonTextWidget(
+                                              fontWeight: FontWeight.w600,
+                                              text: "Female Customer Over 30"),
+                                        ],
+                                      ),
+                                    ),
+                                    PopupMenuItem(
+                                      value: 'under_30',
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.female),
+                                          CommonTextWidget(
+                                              fontWeight: FontWeight.w600,
+                                              text: "Female Customer under 30"),
+                                        ],
+                                      ),
+                                    ),
+                                  ];
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+              Expanded(child: tabProvider.currentPatientPage)
+            ],
+          ),
         ),
       ),
     );
@@ -86,6 +146,7 @@ class TabView extends StatelessWidget {
     return SizedBox(
       height: 40,
       child: CommonTextField(
+        width: 200,
         onChange: (query) {
           context.read<PatientProvider>().updateSearchQuery(query);
         },
@@ -121,13 +182,18 @@ class TabView extends StatelessWidget {
           tabProvider.setPatientDetailsPage(value: "male", context: context);
         } else if (index == 2) {
           tabProvider.setPatientDetailsPage(value: "female", context: context);
-        }
+        } /*else if (index == 3) {
+         // tabProvider.setPatientDetailsPage(value: "female", context: context);
+        } else if (index == 4) {
+        //  tabProvider.setPatientDetailsPage(value: "female", context: context);
+        }*/
       },
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: isMobile ? 30 : 24.0),
           child: commonText(
             text: 'All',
+            fontSize: 13,
             fontWeight: FontWeight.w400,
             color: AppColors.colorGreen,
           ),
@@ -136,16 +202,34 @@ class TabView extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: isMobile ? 30 : 24.0),
           child: commonText(
               text: 'Men',
+              fontSize: 13,
               fontWeight: FontWeight.w400,
               color: AppColors.colorGreen),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: isMobile ? 30 : 24.0),
           child: commonText(
+              fontSize: 13,
               text: 'Women',
               fontWeight: FontWeight.w400,
               color: AppColors.colorGreen),
         ),
+        /*  Padding(
+          padding: EdgeInsets.symmetric(horizontal: isMobile ? 30 : 24.0),
+          child: commonText(
+              fontSize: 13,
+              text: 'Female Customer Over 30',
+              fontWeight: FontWeight.w400,
+              color: AppColors.colorGreen),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: isMobile ? 30 : 24.0),
+          child: commonText(
+              fontSize: 13,
+              text: 'Female Customer under 30',
+              fontWeight: FontWeight.w400,
+              color: AppColors.colorGreen),
+        ),*/
       ],
     );
   }

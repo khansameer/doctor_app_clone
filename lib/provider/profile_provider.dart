@@ -17,7 +17,7 @@ import 'package:image_cropper/image_cropper.dart';
 
 import '../service/api_config.dart';
 
-class ProfileProvider extends ChangeNotifier{
+class ProfileProvider extends ChangeNotifier {
   final _service = ApiService();
   bool get isFetching => _isFetching;
   bool _isFetching = false;
@@ -26,15 +26,14 @@ class ProfileProvider extends ChangeNotifier{
   FilePickerResult? get pickedFile => _pickedFile;
 
   Future<void> pickFiles({required BuildContext context}) async {
-
-    final result = await FilePickerHelper.pickFile( allowedExtensions: ['jpg', 'png']);
+    final result =
+        await FilePickerHelper.pickFile(allowedExtensions: ['jpg', 'png']);
     if (result != null) {
       _pickedFile = result;
-      setFilePath=result;
+      setFilePath = result;
       Uint8List? fileBytes = result.files.single.bytes;
       print('================_pickedFile${fileBytes}');
       notifyListeners();
-
     }
   }
 
@@ -49,7 +48,7 @@ class ProfileProvider extends ChangeNotifier{
           aspectRatioPresets: [
             CropAspectRatioPreset.original,
             CropAspectRatioPreset.square,
-          //  CropAspectRatioPresetCustom(),
+            //  CropAspectRatioPresetCustom(),
           ],
         ),
         IOSUiSettings(
@@ -57,7 +56,7 @@ class ProfileProvider extends ChangeNotifier{
           aspectRatioPresets: [
             CropAspectRatioPreset.original,
             CropAspectRatioPreset.square,
-          //  CropAspectRatioPresetCustom(), // IMPORTANT: iOS supports only one custom aspect ratio in preset list
+            //  CropAspectRatioPresetCustom(), // IMPORTANT: iOS supports only one custom aspect ratio in preset list
           ],
         ),
         WebUiSettings(
@@ -65,8 +64,8 @@ class ProfileProvider extends ChangeNotifier{
         ),
       ],
     );
-
   }
+
   set setFilePath(FilePickerResult path) {
     _pickedFile = path;
     print('================_pickedFile${_pickedFile?.files.length}');
@@ -82,6 +81,15 @@ class ProfileProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  String? _selectAppointment;
+
+  String? get selectAppointment => _selectAppointment;
+
+  set setAppointment(String newPin) {
+    _selectAppointment = newPin;
+    notifyListeners();
+  }
+
   String? _selectTimeZone;
 
   String? get selectTimeZone => _selectTimeZone;
@@ -91,7 +99,6 @@ class ProfileProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-
   String? _selectBloodGroup;
 
   String? get selectBloodGroup => _selectBloodGroup;
@@ -100,8 +107,6 @@ class ProfileProvider extends ChangeNotifier{
     _selectBloodGroup = newPin;
     notifyListeners();
   }
-
-
 
   String? _selectCountry;
 
@@ -120,7 +125,6 @@ class ProfileProvider extends ChangeNotifier{
     _selectLanguage = newPin;
     notifyListeners();
   }
-
 
   final List<String> itemGenderList = [
     'Male',
@@ -453,24 +457,27 @@ class ProfileProvider extends ChangeNotifier{
 
   bool get isUploading => _isUploading;
 
-  Future<int> uploadProfile({ File ?frontImage, required BuildContext context,  required Map<String, String> body})async{
+  Future<int> uploadProfile(
+      {File? frontImage,
+      required BuildContext context,
+      required Map<String, String> body}) async {
     _isUploading = true;
     notifyListeners();
-   // var url = Uri.parse("https://yourapi.com/upload");
+    // var url = Uri.parse("https://yourapi.com/upload");
     String userId = await getUserID();
     var request = http.MultipartRequest(
-      'PUT', Uri.parse( '${ApiConfig.getDoctor}/$userId'),
-
+      'PUT',
+      Uri.parse('${ApiConfig.getDoctor}/$userId'),
     );
     String? token = await getAuthToken();
     printWrapped("basedsdsdUrl--$token");
 
-    Map<String,String> headers={
-      "Authorization":"Bearer $token",
+    Map<String, String> headers = {
+      "Authorization": "Bearer $token",
       "Content-type": "multipart/form-data"
     };
     String? fileName = frontImage?.path.split('/').last;
-   /* frontImage!.path.isNotEmpty?  request.files.add(
+    /* frontImage!.path.isNotEmpty?  request.files.add(
       http.MultipartFile(
         'profilePicture',
         frontImage.readAsBytes().asStream(),
@@ -480,7 +487,7 @@ class ProfileProvider extends ChangeNotifier{
       ),
     ):null;*/
     request.headers.addAll(headers);
-   /* request.fields.addAll({
+    /* request.fields.addAll({
       "firstName": name??'',
       "lastName": category ?? '',
       "email": address??'',
@@ -490,23 +497,21 @@ class ProfileProvider extends ChangeNotifier{
       "role": longitude ?? '72.9018021',
     });*/
     request.fields.addAll(body);
-    print("request: "+request.toString());
+    print("request: " + request.toString());
     var res = await request.send();
     var response = await http.Response.fromStream(res);
 
     print('=======${response.statusCode}');
-    if(response.statusCode==200  || response.statusCode==201){
-
-    }
-    else{
+    if (response.statusCode == 200 || response.statusCode == 201) {
+    } else {
       final parsedJson = jsonDecode(response.body.toString());
       final message = parsedJson['message'].toString();
-      errorMessage=message;
-      commonSessionError(context: context,isAuth: true);
+      errorMessage = message;
+      commonSessionError(context: context, isAuth: true);
     }
-  //  _commonModel = CommonModel.fromJson(jsonDecode(response.body));
+    //  _commonModel = CommonModel.fromJson(jsonDecode(response.body));
 
-   /* if(_commonModel?.status==AppUtils.success){
+    /* if(_commonModel?.status==AppUtils.success){
       AppUtils.showMessage(context: context, message:"Profile successfully updated.",backgroundColor: Colors.green);
       // isEdit==true? Navigator.pushNamedAndRemoveUntil(context, RouteName.dashboard, (route) => false)
       if(isEdit==true){
@@ -535,32 +540,40 @@ class ProfileProvider extends ChangeNotifier{
       AppUtils.showMessageDialog(context: context,content:'${_commonModel?.error.toString()}',title: 'error'.tr().toCapitalize() );
     }*/
 //    final result = jsonDecode(response.body) as Map<String, dynamic>;
- //   print("This is response:${_commonModel?.error.toString()}");
+    //   print("This is response:${_commonModel?.error.toString()}");
     _isUploading = false;
     notifyListeners();
     return res.statusCode;
   }
+
   UserDetailsModel? _userDetailsModel;
 
   UserDetailsModel? get userDetailsModel => _userDetailsModel;
-  Future<void> getUserDetails(
-      {required BuildContext context}) async {
+  Future<void> getUserDetails({required BuildContext context}) async {
     _isFetching = true;
     notifyListeners();
     try {
       String userId = await getUserID();
       final response = await _service.callGetMethod(
-          url:'${ ApiConfig.getUserDetailsBYID}/$userId', );
+        url: '${ApiConfig.getUserDetailsBYID}/$userId',
+      );
       _userDetailsModel = UserDetailsModel.fromJson(json.decode(response));
 
       print('===$globalStatusCode');
       if (globalStatusCode == 200) {
-        if (_userDetailsModel?.user?.sId != null ) {
-          await PreferenceHelper.setString(key: PreferenceHelper.name, value: "${_userDetailsModel?.user?.firstName} ${_userDetailsModel?.user?.lastName}");
-          await PreferenceHelper.setString(key: PreferenceHelper.email, value: '${_userDetailsModel?.user?.email}');
-          await PreferenceHelper.setString(key: PreferenceHelper.userPhoto, value: '${_userDetailsModel?.user?.profile?.profilePicture}');
+        if (_userDetailsModel?.user?.sId != null) {
+          await PreferenceHelper.setString(
+              key: PreferenceHelper.name,
+              value:
+                  "${_userDetailsModel?.user?.firstName} ${_userDetailsModel?.user?.lastName}");
+          await PreferenceHelper.setString(
+              key: PreferenceHelper.email,
+              value: '${_userDetailsModel?.user?.email}');
+          await PreferenceHelper.setString(
+              key: PreferenceHelper.userPhoto,
+              value: '${_userDetailsModel?.user?.profile?.profilePicture}');
 
-       /*   await PreferenceHelper.setString(key: 'userData', value: jsonEncode(response));
+          /*   await PreferenceHelper.setString(key: 'userData', value: jsonEncode(response));
 
           await PreferenceHelper.setString(
               key: PreferenceHelper.name,
@@ -575,7 +588,7 @@ class ProfileProvider extends ChangeNotifier{
               key: PreferenceHelper.isLOGIN, value: true);*/
         }
       } else if (globalStatusCode == 401) {
-        commonSessionError(context: context,isAuth: true);
+        commonSessionError(context: context, isAuth: true);
       } else {}
     } catch (e) {
       // _registerModel = RegisterModel(message: 'server_error'.tr());
@@ -583,5 +596,4 @@ class ProfileProvider extends ChangeNotifier{
     _isFetching = false;
     notifyListeners();
   }
-
 }
