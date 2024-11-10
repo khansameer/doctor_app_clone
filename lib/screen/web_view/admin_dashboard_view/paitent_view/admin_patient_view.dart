@@ -8,7 +8,7 @@ import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:doctor_app/provider/patient_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:popover/popover.dart';
+
 import 'package:provider/provider.dart';
 
 class AdminPatientView extends StatelessWidget {
