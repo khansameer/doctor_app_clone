@@ -154,14 +154,14 @@ class _AdminDashboardState extends State<AdminDashboard> {
                           : Colors.white,
                       // color: Colors.white,
                     ),
-
-                    child:     Builder(
+                    child: Builder(
                       builder: (context) => InkWell(
                         hoverColor: Colors.transparent,
                         onTap: () async {
                           await showAlignedDialog(
                             context: context,
                             isGlobal: false,
+                            barrierColor: Colors.transparent,
                             avoidOverflow: false,
                             targetAnchor: AlignmentDirectional(0.0, 1.0)
                                 .resolve(Directionality.of(context)),
@@ -173,13 +173,14 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                 child: GestureDetector(
                                   onTap: () =>
                                       FocusScope.of(dialogContext).unfocus(),
-                                  child: AdminNotificationScreen(isDialog: true),
+                                  child:
+                                      AdminNotificationScreen(isDialog: true),
                                 ),
                               );
                             },
                           );
                         },
-                        child:Icon(
+                        child: Icon(
                           Icons.notifications_none,
                           color: provider.hoverNotification == 0
                               ? Colors.white
@@ -498,5 +499,3 @@ class TrianglePainter extends CustomPainter {
 }
 
 // Notification popup with triangle
-
-

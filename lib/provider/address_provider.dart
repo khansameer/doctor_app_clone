@@ -104,6 +104,35 @@ class AddressProvider with ChangeNotifier {
     }
   }
 
+  Future addAddress({
+    required BuildContext context,
+    required Map<String, dynamic> body,
+  }) async {
+    String userId = await getUserID();
+
+    _isFetching = true;
+    notifyListeners();
+    try {
+      final response = await _service.callPutMethodApiWithToken(
+          url: '${ApiConfig.getDoctor}/$userId', body: body);
+
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+        print(json.decode(response));
+        /*  _patientDetailsModel =
+            PatientDetailsModel.fromJson(json.decode(response));
+        _filteredPatients = _patientDetailsModel?.patients;*/
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
+      }
+
+      _isFetching = false;
+      notifyListeners();
+    } catch (e) {
+      _isFetching = false;
+      notifyListeners();
+    }
+  }
+
   // List of 20 dummy addresses
   List<Address> dummyAddresses = [
     Address(
