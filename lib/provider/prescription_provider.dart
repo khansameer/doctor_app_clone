@@ -90,12 +90,12 @@ class PrescriptionProvider with ChangeNotifier {
   ];
 
   List<String> whenToTake = ["morning", "afternoon", "night"];
-  List<String> _selectedItems = [];
+  List<String> _selectedDaysTake = [];
 
-  List<String> get selectedItems => _selectedItems;
+  List<String> get selectedDaysTake => _selectedDaysTake;
 
-  void setSelectedItems(List<String> items) {
-    _selectedItems = items;
+  void setSelectedDaysTake(List<String> items) {
+    _selectedDaysTake = items;
     notifyListeners();
   }
 
