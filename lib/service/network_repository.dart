@@ -148,6 +148,21 @@ Future callGETMethodWithQuery(String url, Map<String, dynamic> params) async {
   });
 }
 
+Future callGETMethodWithToken(String url) async {
+  String? token = await getAuthToken();
+  Map<String, String> commonHeadersToken = {
+    'Content-Type': 'application/json',
+    'accept': '*/*',
+    "Authorization":
+    token != null && token.toString().isNotEmpty ? "Bearer $token" : "",
+  };
+  return await http
+      .get(Uri.parse(url), headers: commonHeadersToken)
+      .then((http.Response response) {
+    return getResponse(response);
+  });
+}
+
 Future getResponse(Response response) async {
   globalStatusCode = response.statusCode;
   printWrapped("response--statusCode--${response.statusCode}");
