@@ -49,55 +49,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
               padding: const EdgeInsets.all(0.0),
               child: _commonUserList(
                   isMobile:
-                      isMobile) /*DefaultTabController(
-                  length: 1,
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              10,
-                            ),
-                            color: const Color.fromRGBO(250, 251, 253, 1),
-                          ),
-                          child: TabBar(
-                            unselectedLabelStyle: commonTextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 13,
-                            ),
-                            isScrollable: false,
-                            dividerColor: Colors.white,
-                            indicatorSize: TabBarIndicatorSize.tab,
-                            tabAlignment: TabAlignment.fill,
-
-                            indicator: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: AppColors.colorBgNew),
-                            labelStyle: commonTextStyle(
-                                fontSize: 13, fontWeight: FontWeight.w500),
-                            labelColor: AppColors.colorBlue,
-                            // indicatorColor: AppColors.colorTextNew,
-                            unselectedLabelColor: AppColors.colorBlue,
-
-                            tabs: const [
-                              Tab(text: 'Patients'),
-                              // Tab(text: 'Doctors'),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: TabBarView(
-                          children: [
-                            _commonUserList(isMobile: isMobile),
-                            _commonUserList(isMobile: isMobile)
-                          ],
-                        ),
-                      ),
-                    ],
-                  ))*/
+                      isMobile)
               ,
             ),
           ),

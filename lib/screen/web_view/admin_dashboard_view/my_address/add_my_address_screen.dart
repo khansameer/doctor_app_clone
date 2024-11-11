@@ -28,13 +28,6 @@ class AddMyAddressScreen extends StatefulWidget {
 }
 
 class _AddMyAddressScreenState extends State<AddMyAddressScreen> {
-  var tetLine1 = TextEditingController();
-  var tetLine2 = TextEditingController();
-  var tetPhone = TextEditingController();
-  var tetCity = TextEditingController();
-  var tetState = TextEditingController();
-  var tetZipCode = TextEditingController();
-  var tetCountry = TextEditingController();
 
   @override
   void initState() {
@@ -50,7 +43,7 @@ class _AddMyAddressScreenState extends State<AddMyAddressScreen> {
     var isMobile = Responsive.isMobile(context);
     var isDesktop = Responsive.isDesktop(context);
     var isTablet = Responsive.isTablet(context);
-
+    final formAddAddress = GlobalKey<FormState>();
     var width = MediaQuery.of(context).size.width;
 
     return SizedBox(
@@ -65,166 +58,173 @@ class _AddMyAddressScreenState extends State<AddMyAddressScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.all(15.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+            child: SingleChildScrollView(
+              child: Form(
+                key: formAddAddress,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CommonTextWidget(
-                      text: widget.isEdit ? "Edit Address" : "Add Address",
-                      fontSize: 16,
-                      textAlign: TextAlign.center,
-                      fontWeight: FontWeight.w700,
-                      // top: 20,
-                    ),
-                    IconButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        icon: const Icon(
-                          Icons.close,
-                          size: 18,
-                          color: Colors.black,
-                        ))
-                  ],
-                ),
-                /* Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Consumer<AuthProviders>(
-                        builder: (context, provider, child) {
-                      return CommonButtonWidget(
-                          radius: 8,
-                          fontSize: 12,
-                          padding: EdgeInsets.only(
-                              left: 40, right: 40, top: 20, bottom: 20),
-                          text: "Add More".toUpperCase(),
-                          onPressed: () {
-                            provider.addAddress();
-                          },
-                          iconShow: true,
-                          icon: const Icon(
-                            Icons.add,
-                            color: Colors.white,
-                          ));
-                    })
-                  ],
-                ),*/
-                Consumer<AuthProviders>(builder: (context, provider, child) {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: provider.addresses.length,
-                    itemBuilder: (context, index) {
-                      return AddressInputField(index: index);
-                    },
-                  );
-                }),
-
-                //
-                const SizedBox(height: 20),
-                const SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    CommonButtonWidget(
-                      radius: 8,
-                      padding: EdgeInsets.only(
-                          left: 50, right: 50, top: 15, bottom: 15),
-                      height: isMobile ? null : 40,
-                      onPressed: () async {
-                        var providerProfile =
-                            context.read<ProfileProvider>().doctorDetailsModel;
-                        List<Map<String, dynamic>> addressesJson =
-                            context.read<AuthProviders>().getAddressesInJson();
-                        print('${providerProfile?.firstName.toString()}');
-
-                        context.read<AuthProviders>().setSelectedItems(
-                            providerProfile!.specializations!
-                                .map((e) => e.sId as String)
-                                .toList());
-                        print(
-                            "=========${context.read<AuthProviders>().selectedItems}");
-
-                        Map<String, dynamic> body = {
-                          "firstName": '${providerProfile.firstName}',
-                          "lastName": '${providerProfile.lastName}',
-                          "email": '${providerProfile.email}',
-                          //"password": provider.tetPassword.text,
-                          "dateOfBirth": '${providerProfile.dateOfBirth}',
-                          "phoneNumber": '${providerProfile.phoneNumber}',
-                          "role": "doctor",
-                          "licenseNumber": '${providerProfile.licenseNumber}',
-                          "profile": {
-                            "qualification": {
-                              "degree":
-                                  '${providerProfile.profile?.qualification?[0].degree}',
-                              "year":
-                                  '${providerProfile.profile?.qualification?[0].year}',
-                              "institution":
-                                  '${providerProfile.profile?.qualification?[0].institution}'
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CommonTextWidget(
+                          text: widget.isEdit ? "Edit Address" : "Add Address",
+                          fontSize: 16,
+                          textAlign: TextAlign.center,
+                          fontWeight: FontWeight.w700,
+                          // top: 20,
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
                             },
-                            "experience": int.parse(
-                                '${providerProfile.profile?.experience}')
-                          },
-                          "clinicAddresses": addressesJson,
-                          "gender": '${providerProfile.gender}',
-                          "specializations":
-                              context.read<AuthProviders>().selectedItems
-                        };
-
-                        context
-                            .read<AddressProvider>()
-                            .addAddress(context: context, body: body)
-                            .then((value) {
-                          if (globalStatusCode == 200 ||
-                              globalStatusCode == 201) {
-                            showCommonDialog(
-                                context: context,
-                                title: "Success",
-                                content: 'Doctor updated successfully',
-                                isMessage: true);
-                          } else {
-                            showCommonDialog(
-                                context: context,
-                                title: "Error",
-                                content: '$errorMessage',
-                                isMessage: true);
-                          }
-                        });
-                        print('==gender====${body.toString()}');
-                      },
-                      colorButton: AppColors.colorGreen,
-                      fontSize: 12,
-                      text: widget.isEdit ? "Update" : "Add",
+                            icon: const Icon(
+                              Icons.close,
+                              size: 18,
+                              color: Colors.black,
+                            ))
+                      ],
                     ),
+                     Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Consumer<AuthProviders>(
+                            builder: (context, provider, child) {
+                          return CommonButtonWidget(
+                              radius: 8,
+                              fontSize: 12,
+                              padding: EdgeInsets.only(
+                                  left: 40, right: 40, top: 20, bottom: 20),
+                              text: "Add More".toUpperCase(),
+                              onPressed: () {
+                                provider.addAddress();
+                              },
+                              iconShow: true,
+                              icon: const Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              ));
+                        })
+                      ],
+                    ),
+                    Consumer<AuthProviders>(builder: (context, provider, child) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: provider.addresses.length,
+                        itemBuilder: (context, index) {
+                          return AddressInputField(index: index,key: formAddAddress,);
+                        },
+                      );
+                    }),
+                
+                    //
+                    const SizedBox(height: 20),
                     const SizedBox(
-                      width: 10,
+                      height: 30,
                     ),
-                    CommonButtonWidget(
-                      text: "Cancel",
-                      padding: EdgeInsets.only(
-                          left: 50, right: 50, top: 15, bottom: 15),
-                      radius: 8,
-                      height: isMobile ? null : 40,
-                      colorBorder: Colors.black,
-                      colorButton: Colors.white,
-                      colorText: Colors.black,
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      fontSize: 12,
-                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        CommonButtonWidget(
+                          radius: 8,
+                          padding: EdgeInsets.only(
+                              left: 50, right: 50, top: 15, bottom: 15),
+                          height: isMobile ? null : 40,
+                          onPressed: () async {
+
+
+                            var providerProfile =
+                                context.read<ProfileProvider>().doctorDetailsModel;
+                            List<Map<String, dynamic>> addressesJson =
+                                context.read<AuthProviders>().getAddressesInJson();
+                            print('${providerProfile?.firstName.toString()}');
+
+                            context.read<AuthProviders>().setSelectedItems(
+                                providerProfile!.specializations!
+                                    .map((e) => e.sId as String)
+                                    .toList());
+                            print(
+                                "=========${context.read<AuthProviders>().selectedItems}");
+
+                            Map<String, dynamic> body = {
+                              "firstName": '${providerProfile.firstName}',
+                              "lastName": '${providerProfile.lastName}',
+                              "email": '${providerProfile.email}',
+                              //"password": provider.tetPassword.text,
+                              "dateOfBirth": '${providerProfile.dateOfBirth}',
+                              "phoneNumber": '${providerProfile.phoneNumber}',
+                              "role": "doctor",
+                              "licenseNumber": '${providerProfile.licenseNumber}',
+                              "profile": {
+                                "qualification": {
+                                  "degree":
+                                      '${providerProfile.profile?.qualification?[0].degree}',
+                                  "year":
+                                      '${providerProfile.profile?.qualification?[0].year}',
+                                  "institution":
+                                      '${providerProfile.profile?.qualification?[0].institution}'
+                                },
+                                "experience": int.parse(
+                                    '${providerProfile.profile?.experience}')
+                              },
+                              "clinicAddresses": addressesJson,
+                              "gender": '${providerProfile.gender}',
+                              "specializations":
+                                  context.read<AuthProviders>().selectedItems
+                            };
+
+                            context
+                                .read<AddressProvider>()
+                                .addAddress(context: context, body: body)
+                                .then((value) {
+                              if (globalStatusCode == 200 ||
+                                  globalStatusCode == 201) {
+                                showCommonDialog(
+                                    context: context,
+                                    title: "Success",
+                                    content: 'Doctor updated successfully',
+                                    isMessage: true);
+                              } else {
+                                showCommonDialog(
+                                    context: context,
+                                    title: "Error",
+                                    content: '$errorMessage',
+                                    isMessage: true);
+                              }
+                            });
+                            print('==gender====${body.toString()}');
+                          },
+                          colorButton: AppColors.colorGreen,
+                          fontSize: 12,
+                          text: widget.isEdit ? "Update" : "Add",
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        CommonButtonWidget(
+                          text: "Cancel",
+                          padding: EdgeInsets.only(
+                              left: 50, right: 50, top: 15, bottom: 15),
+                          radius: 8,
+                          height: isMobile ? null : 40,
+                          colorBorder: Colors.black,
+                          colorButton: Colors.white,
+                          colorText: Colors.black,
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          fontSize: 12,
+                        ),
+                      ],
+                    )
                   ],
-                )
-              ],
+                ),
+              ),
             ),
           ),
           context.watch<AddressProvider>().isAdding
@@ -247,65 +247,100 @@ class AddressInputField extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(eight),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          commonTextFiledView(
-            topText: ten,
-            topTextField: 10,
-            title: "Full Address",
-            //  keyboardType: TextInputType.streetAddress,
-            hint: "",
-            maxLines: 1,
+      child: Form(
+        key: key,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            commonTextFiledView(
+              topText: ten,
+              topTextField: 10,
+              title: "Full Address",
+              keyboardType: TextInputType.streetAddress,
+              validator: (value) {
+                if (value.toString().trim().isEmpty) {
+                  return "Please enter full address";
+                }
 
-            //   decoration: InputDecoration(labelText: 'Address'),
-            onChange: (value) {
-              addressProvider.updateAddress(index, 'address', value);
-            },
-          ),
-          commonTextFiledView(
-            title: "City",
-            topText: ten,
-            topTextField: 10,
-            //text: city,
-            onChange: (value) {
-              addressProvider.updateAddress(index, 'city', value);
-            },
-          ),
-          commonTextFiledView(
-            hint: "",
-            title: "State",
-            topText: ten,
-            topTextField: 10,
-            onChange: (value) {
-              addressProvider.updateAddress(index, 'state', value);
-            },
-          ),
-          commonTextFiledView(
-            //   text: zipCode,
-            topText: ten,
-            title: "Zip Code",
-            topTextField: 10,
+                return null;
+              },
 
-            //keyboardType: TextInputType.number,
-            // decoration: InputDecoration(labelText: 'Zip Code'),
-            onChange: (value) {
-              addressProvider.updateAddress(index, 'zipCode', value);
-            },
-          ),
-          if (index >
-              0) // Only show the delete button for dynamically added addresses
-            Align(
-              alignment: Alignment.centerRight,
-              child: IconButton(
-                icon: const Icon(Icons.delete, color: Colors.red),
-                onPressed: () {
-                  addressProvider.removeAddress(index);
-                },
-              ),
+              hint: "",
+              maxLines: 1,
+
+              //   decoration: InputDecoration(labelText: 'Address'),
+              onChange: (value) {
+                addressProvider.updateAddress(index, 'address', value);
+              },
             ),
-          //Divider(),
-        ],
+            commonTextFiledView(
+              title: "City",
+
+              topText: ten,
+              topTextField: 10,
+              keyboardType: TextInputType.text,
+              validator: (value) {
+                if (value.toString().trim().isEmpty) {
+                  return "Please enter city";
+                }
+
+                return null;
+              },
+              //text: city,
+              onChange: (value) {
+                addressProvider.updateAddress(index, 'city', value);
+              },
+            ),
+            commonTextFiledView(
+              hint: "",
+              title: "State",
+              keyboardType: TextInputType.text,
+              validator: (value) {
+                if (value.toString().trim().isEmpty) {
+                  return "Please enter state";
+                }
+
+                return null;
+              },
+              topText: ten,
+              topTextField: 10,
+              onChange: (value) {
+                addressProvider.updateAddress(index, 'state', value);
+              },
+            ),
+            commonTextFiledView(
+              //   text: zipCode,
+              topText: ten,
+              title: "Zip Code",
+              topTextField: 10,
+              keyboardType: TextInputType.number,
+              validator: (value) {
+                if (value.toString().trim().isEmpty) {
+                  return "Please enter zip code";
+                }
+
+                return null;
+              },
+              //keyboardType: TextInputType.number,
+              // decoration: InputDecoration(labelText: 'Zip Code'),
+              onChange: (value) {
+                addressProvider.updateAddress(index, 'zipCode', value);
+              },
+            ),
+            if (index >
+                0) // Only show the delete button for dynamically added addresses
+              Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  icon: const Icon(Icons.delete, color: Colors.red),
+                  onPressed: () {
+                    addressProvider.removeAddress(index);
+                  },
+                ),
+              ),
+            //Divider(),
+          ],
+        ),
       ),
     );
   }

@@ -49,10 +49,11 @@ class _AddMyAddressScreenState extends State<AddPrescriptionScreen> {
     tetDurationValue.clear();
     tetTimesPerDay.clear();
     tetMedicine.clear();
+    context.read<PrescriptionProvider>().setSelectedDaysTake([]);
   }
 
-  List<String> whenToTake = ["morning", "afternoon", "night"];
-  List<String> _selectedDaysTake = [];
+/*  List<String> whenToTake = ["morning", "afternoon", "night"];
+  List<String> _selectedDaysTake = [];*/
   @override
   Widget build(BuildContext context) {
     var isMobile = Responsive.isMobile(context);
@@ -70,17 +71,18 @@ class _AddMyAddressScreenState extends State<AddPrescriptionScreen> {
               : isTablet
                   ? width * 0.3
                   : width * 0.19,
-      child: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Form(
-              key: formPrescription,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
+      child: SingleChildScrollView(
+        child: Form(
+          key: formPrescription,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -158,8 +160,9 @@ class _AddMyAddressScreenState extends State<AddPrescriptionScreen> {
                             SizedBox(
                               height: 10,
                             ),
-                            MultiSelectDialogField<String>(
-                              initialValue: _selectedDaysTake,
+                           /* MultiSelectDialogField<String>(
+                             // initialValue: _selectedDaysTake,
+                              initialValue: provider.selectedDaysTake,
                               selectedColor: AppColors.primary,
                               // searchHint: "Select time per day",
                               title: CommonTextWidget(
@@ -189,18 +192,60 @@ class _AddMyAddressScreenState extends State<AddPrescriptionScreen> {
                                     color: Colors.grey.withOpacity(0.20),
                                     width: 1),
                               ),
-                              items: whenToTake
+                              items: provider.whenToTake
                                   .map((e) => MultiSelectItem(e, e))
                                   .toList(),
                               listType: MultiSelectListType.LIST,
                               onConfirm: (selected) {
-                                setState(() {
+                              *//*  setState(() {
+
+                                  provider.setSelectedDaysTake(selected.toList());
                                   print('===length===${selected.length}');
-                                  _selectedDaysTake = selected.toList();
+                                 *//**//* _selectedDaysTake = selected.toList();*//**//*
                                   // _selectedDaysTake = selected.map((e) => e).toList();
-                                });
+                                });*//*
+                                provider.setSelectedDaysTake(
+                                    selected.map((e) => e.toLowerCase()).toList()
+                                );
+
+                               // print('===length===${provider.selectedDaysTake}');
+                               // provider.setSelectedDaysTake(selected.toList());
                               },
-                            ),
+                            ),*/
+                          Consumer<PrescriptionProvider>(
+                            builder: (context, provider, child) {
+                              return MultiSelectDialogField<String>(
+                                initialValue: provider.selectedDaysTake, // Make sure this matches the provider's current state
+                                selectedColor: AppColors.primary,
+                                title: CommonTextWidget(
+                                  text: "Select when to take",
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                searchTextStyle: commonTextStyle(fontSize: 12),
+                                selectedItemsTextStyle: commonTextStyle(color: Colors.green, fontSize: 12),
+                                itemsTextStyle: commonTextStyle(fontSize: 12),
+                                dialogHeight: size.height * 0.3,
+                                backgroundColor: Colors.white,
+                                checkColor: Colors.white,
+                                dialogWidth: 200,
+                                buttonIcon: const Icon(
+                                  Icons.keyboard_arrow_down_sharp,
+                                  color: Colors.grey,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(color: Colors.grey.withOpacity(0.20), width: 1),
+                                ),
+                                items: provider.whenToTake.map((e) => MultiSelectItem(e, e)).toList(),
+                                listType: MultiSelectListType.LIST,
+                                onConfirm: (selected) {
+                                  provider.setSelectedDaysTake(selected.map((e) => e).toList());
+                                },
+                              );
+                            },
+                          )
                           ],
                         )),
                         SizedBox(
@@ -280,7 +325,7 @@ class _AddMyAddressScreenState extends State<AddPrescriptionScreen> {
                                         false;
 
                                 if (isValid) {
-                                  if (_selectedDaysTake.isEmpty) {
+                                  if (provider.selectedDaysTake.isEmpty) {
                                     showCommonDialog(
                                         context: context,
                                         title: "Error",
@@ -292,7 +337,7 @@ class _AddMyAddressScreenState extends State<AddPrescriptionScreen> {
                                       "frequency": {
                                         "timesPerDay":
                                             int.parse(tetTimesPerDay.text),
-                                        "whenToTake": _selectedDaysTake
+                                        "whenToTake": provider.selectedDaysTake.map((item)=>item.toLowerCase()).toList()
                                       },
                                       "duration": {
                                         "value":
@@ -303,6 +348,8 @@ class _AddMyAddressScreenState extends State<AddPrescriptionScreen> {
                                       "instructions": tetInstructions.text,
                                       "isCommon": true
                                     };
+
+                                    print('====dsdsdsddd===${body.toString()}');
                                     print('=======${body.toString()}');
                                     provider
                                         .addPrescription(
@@ -355,15 +402,17 @@ class _AddMyAddressScreenState extends State<AddPrescriptionScreen> {
                         )
                       ],
                     ),
-                  ),
-                ],
+
+
+                   context.watch<PrescriptionProvider>().isAdding
+                        ? showLoaderList()
+                        : SizedBox.shrink()
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
-          context.watch<PrescriptionProvider>().isAdding
-              ? showLoaderList()
-              : SizedBox.shrink()
-        ],
+        ),
       ),
     );
   }

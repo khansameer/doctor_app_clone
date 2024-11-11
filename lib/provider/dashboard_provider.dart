@@ -584,8 +584,31 @@ class DashboardProvider extends ChangeNotifier {
     "Scheduled surgery for patient Ella Turner confirmed for next week.",
     "Request for second opinion on patient Matthew Mitchell's diagnosis."
   ];
+
+  final List<Appointment> _appointments = [
+    Appointment(hour: 9, type: AppointmentType.consultation),
+    Appointment(hour: 9, type: AppointmentType.sick),
+    Appointment(hour: 10, type: AppointmentType.consultation),
+    Appointment(hour: 11, type: AppointmentType.test),
+    Appointment(hour: 12, type: AppointmentType.checkup),
+    Appointment(hour: 13, type: AppointmentType.consultation),
+    Appointment(hour: 14, type: AppointmentType.checkup),
+    Appointment(hour: 15, type: AppointmentType.sick),
+    Appointment(hour: 16, type: AppointmentType.test),
+    Appointment(hour: 17, type: AppointmentType.checkup),
+  ];
+
+  List<Appointment> get appointments => _appointments;
 }
 
+enum AppointmentType { consultation, test, checkup, sick }
+
+class Appointment {
+  final int hour;
+  final AppointmentType type;
+
+  Appointment({required this.hour, required this.type});
+}
 class Booking {
   final String name;
   final String date;

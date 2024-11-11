@@ -12,7 +12,7 @@ class LegendItem extends StatelessWidget {
     return Row(
       children: [
         const SizedBox(width: 4),
-        Icon(Icons.circle_outlined, color: color, size: 14),
+          Icon(Icons.circle_outlined, color: color, size: 14),
         CommonTextWidget(
           text:  text,
           left: 5,

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "266192838254",
+    "project_id": "junohealthapp",
+    "storage_bucket": "junohealthapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266192838254:android:191ba3899ef5fe26ab107f",
+        "android_client_info": {
+          "package_name": "com.example.doctor_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPXs5xxAk4aQXielzxSGb5PhXBAzSY1ak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

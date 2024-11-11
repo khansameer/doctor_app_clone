@@ -60,9 +60,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         navigatorKey: navigatorKey, // Set the navigatorKey
         title: appName,
-        initialRoute: RouteName.splashScreen,
+       initialRoute: RouteName.splashScreen,
         onGenerateRoute: RouteGenerator.generateRoute,
-        // home: MainVideoCall(),
+     //   home: MainVideoCall(),
         debugShowCheckedModeBanner: false,
         builder: (context, child) {
           return MediaQuery(
