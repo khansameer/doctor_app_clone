@@ -45,6 +45,14 @@ class SettingPrescriptionScreen extends StatelessWidget {
                         children: [
                           CommonButtonWidget(
                             fontSize: 12,
+                            iconShow: true,
+                            icon: Container(
+                              margin: EdgeInsets.only(right: 5),
+                              child: Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              ),
+                            ),
                             radius: 8,
                             onPressed: () {
                               showDialog(

@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 import '../service/api_config.dart';
+import 'model/doctor_details_model.dart';
 
 class ProfileProvider extends ChangeNotifier {
   final _service = ApiService();
@@ -587,6 +588,34 @@ class ProfileProvider extends ChangeNotifier {
           await PreferenceHelper.setBool(
               key: PreferenceHelper.isLOGIN, value: true);*/
         }
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context, isAuth: true);
+      } else {}
+    } catch (e) {
+      // _registerModel = RegisterModel(message: 'server_error'.tr());
+    }
+    _isFetching = false;
+    notifyListeners();
+  }
+
+  DoctorDetailsModel? _doctorDetailsModel;
+
+  DoctorDetailsModel? get doctorDetailsModel => _doctorDetailsModel;
+  Future<void> getDoctorDetails({required BuildContext context}) async {
+    _isFetching = true;
+    notifyListeners();
+    try {
+      String userId = await getUserID();
+      final response = await _service.callGetMethod(
+        url: '${ApiConfig.getDoctor}/$userId/edit',
+      );
+      _doctorDetailsModel = DoctorDetailsModel.fromJson(json.decode(response));
+
+      print('==getDoctorDetails=$globalStatusCode');
+      if (globalStatusCode == 200) {
+        /*  if (_doctorDetailsModel?.?.sId != null) {
+
+        }*/
       } else if (globalStatusCode == 401) {
         commonSessionError(context: context, isAuth: true);
       } else {}

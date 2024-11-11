@@ -110,7 +110,7 @@ class AddressProvider with ChangeNotifier {
   }) async {
     String userId = await getUserID();
 
-    _isFetching = true;
+    _isAdding = true;
     notifyListeners();
     try {
       final response = await _service.callPutMethodApiWithToken(
@@ -118,17 +118,14 @@ class AddressProvider with ChangeNotifier {
 
       if (globalStatusCode == 200 || globalStatusCode == 201) {
         print(json.decode(response));
-        /*  _patientDetailsModel =
-            PatientDetailsModel.fromJson(json.decode(response));
-        _filteredPatients = _patientDetailsModel?.patients;*/
       } else if (globalStatusCode == 401) {
         commonSessionError(context: context);
       }
 
-      _isFetching = false;
+      _isAdding = false;
       notifyListeners();
     } catch (e) {
-      _isFetching = false;
+      _isAdding = false;
       notifyListeners();
     }
   }
