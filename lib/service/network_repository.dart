@@ -96,7 +96,8 @@ Future callPostMethodWithToken11(
   return await http.post(uri, headers: commonHeadersToken);
 }
 
-Future callDeleteMethod({required String url, Map<String, dynamic> ?params}) async {
+Future callDeleteMethod(
+    {required String url, Map<String, dynamic>? params}) async {
   String? token = await getAuthToken();
   Map<String, String> commonHeadersToken = {
     'Content-Type': 'application/json',
@@ -154,7 +155,7 @@ Future callGETMethodWithToken(String url) async {
     'Content-Type': 'application/json',
     'accept': '*/*',
     "Authorization":
-    token != null && token.toString().isNotEmpty ? "Bearer $token" : "",
+        token != null && token.toString().isNotEmpty ? "Bearer $token" : "",
   };
   return await http
       .get(Uri.parse(url), headers: commonHeadersToken)
@@ -165,8 +166,7 @@ Future callGETMethodWithToken(String url) async {
 
 Future getResponse(Response response) async {
   globalStatusCode = response.statusCode;
-  printWrapped("response--statusCode--${response.statusCode}");
-  printWrapped("response--${response.body}");
+
   if (globalStatusCode == 500 ||
       globalStatusCode == 502 ||
       globalStatusCode == 503) {

@@ -85,7 +85,7 @@ class AllViewScreen extends StatelessWidget {
                           color: Colors.grey,
                           fontWeight: FontWeight.w400),
                       title: commonText(
-                          text: '${data?.patientName.toString()}',
+                          text: '${data?.patient?.name.toString()}',
                           color: Colors.black),
                       subtitle: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -97,7 +97,7 @@ class AllViewScreen extends StatelessWidget {
                               fontSize: 12,
                               fontWeight: FontWeight.w400),
                           commonText(
-                              text: '${data?.doctorName.toString()}',
+                              text: '${data?.doctor?.name.toString()}',
                               fontSize: 12,
                               color: Colors.grey,
                               fontWeight: FontWeight.w400)
