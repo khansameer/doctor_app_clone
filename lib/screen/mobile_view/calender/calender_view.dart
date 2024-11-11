@@ -37,18 +37,18 @@ class _CalenderViewState extends State<CalenderView> {
     var provider = context.read<AppointmentsProvider>();
     var providerWatch = context.watch<AppointmentsProvider>();
     List<Appointment>? calendarAppointments =
-        provider.appointmentsModel?.appointments?.map((appointment) {
+        provider.appointmentsModel?.data?.appointments?.map((appointment) {
       if (appointment.patient != null) {
         DateTime dateTime =
             DateTime.parse(appointment.dateTime ?? DateTime.now().toString());
 
         return Appointment(
           startTime: dateTime,
-          id: appointment.sId,
+          id: appointment.id,
           notes: appointment.reason,
           endTime: dateTime.add(const Duration(hours: 1)),
           // Assuming 1 hour duration
-          subject: appointment.patientName.toString(),
+          subject: '${appointment.patient?.name.toString()}',
           color: Colors.blue, // Set a color for the appointment
         );
       } else {

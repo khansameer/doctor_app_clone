@@ -62,7 +62,7 @@ class AppointmentsProvider extends ChangeNotifier {
 
   DateTime _selectedDate = DateTime.now();
 
-  List<Appointments>? get appointments => _appointmentsModel?.appointments
+  List<Appointments>? get appointments => _appointmentsModel?.data?.appointments
       ?.where((appointment) =>
           appointment.dateTime
               ?.startsWith(_selectedDate.toString().substring(0, 10)) ??
@@ -215,7 +215,7 @@ class AppointmentsProvider extends ChangeNotifier {
 
     // Filter today's appointments
     List<Appointments>? todayAppointments =
-        _appointmentsModel?.appointments?.where((appointment) {
+        _appointmentsModel?.data?.appointments?.where((appointment) {
       if (appointment.dateTime == null) return false;
 
       DateTime dateTime = DateTime.parse(appointment.dateTime!);

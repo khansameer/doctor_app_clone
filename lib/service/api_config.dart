@@ -11,9 +11,9 @@ class ApiConfig {
   static const addProcedureCharges = '$baseUrl/procedure-charges';
   static const getDoctorAppointments = '$baseUrl/appointments/doctor';
   static const getPatientDetails = '$baseUrl/doctors';
+  // static const getPatientDetails = '$baseUrl/doctors';
   static const createAppointment = '$baseUrl/appointments';
   static const getUserDetailsBYID = '$baseUrl/users/edit';
   static const settingNotification = '$baseUrl/notifications';
   static const addPrescription = '$baseUrl/medications';
-
 }

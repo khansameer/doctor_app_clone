@@ -49,7 +49,7 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                   fontWeight: FontWeight.w400,
                 ),
                 title: commonText(
-                  text: data?.patientName.toString() ?? '',
+                  text: data?.patient?.name.toString() ?? '',
                   color: Colors.black,
                 ),
                 subtitle: Column(

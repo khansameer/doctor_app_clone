@@ -16,7 +16,6 @@ class AdminDashboardView extends StatefulWidget {
 }
 
 class _AdminDashboardViewState extends State<AdminDashboardView> {
-
   @override
   Widget build(BuildContext context) {
     var isMobile = Responsive.isMobile(context);
@@ -25,13 +24,13 @@ class _AdminDashboardViewState extends State<AdminDashboardView> {
           color: AppColors.colorBgNew, borderRadius: BorderRadius.circular(10)),
       child:
           Consumer<AdminDashboardProvider>(builder: (context, provider, child) {
-        return isMobile ? _mobile(provider) : _webView(provider,context);
+        return isMobile ? _mobile(provider) : _webView(provider, context);
       }),
     );
   }
 
-  _webView(AdminDashboardProvider provider,BuildContext context) {
-    var isTablet=Responsive.isTablet(context);
+  _webView(AdminDashboardProvider provider, BuildContext context) {
+    var isTablet = Responsive.isTablet(context);
     return ListView(
       children: [
         Row(
@@ -54,7 +53,7 @@ class _AdminDashboardViewState extends State<AdminDashboardView> {
               ),
             ),
             Expanded(
-                flex: isTablet?4:3,
+                flex: isTablet ? 4 : 3,
                 child: AdminUpComingAppointmentsView(
                   provider: provider,
                 ))
