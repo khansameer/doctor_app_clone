@@ -89,13 +89,20 @@ class PrescriptionProvider with ChangeNotifier {
             'Take at night for sleep. May cause drowsiness. Do not operate heavy machinery.'),
   ];
 
-  List<String> whenToTake = ["morning", "afternoon", "night"];
+  List<String> whenToTake = ["Morning", "Afternoon", "Night"];
   List<String> _selectedDaysTake = [];
 
   List<String> get selectedDaysTake => _selectedDaysTake;
 
+
+
+/*  void setSelectedDaysTake(List<String> items) {
+    _selectedDaysTake = items;
+    notifyListeners();
+  }*/
   void setSelectedDaysTake(List<String> items) {
     _selectedDaysTake = items;
+    print('Updated selectedDaysTake: $_selectedDaysTake'); // Debug print
     notifyListeners();
   }
 

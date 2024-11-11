@@ -3,11 +3,34 @@ import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-class AdminOverAllAppointment extends StatelessWidget {
+import '../../../core/string/string_utils.dart';
+
+class AdminOverAllAppointment extends StatefulWidget {
   const AdminOverAllAppointment({super.key, required this.provider});
   final AdminDashboardProvider provider;
 
+  @override
+  State<AdminOverAllAppointment> createState() => _AdminOverAllAppointmentState();
+}
+
+class _AdminOverAllAppointmentState extends State<AdminOverAllAppointment> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      DateTime today = DateTime.now();
+      DateTime tomorrow = today.add(Duration(days: 7));
+      String endDate = DateFormat(yyyMMdd).format(tomorrow);
+      context
+          .read<AdminDashboardProvider>()
+          .getUpComingAppointment(context: context,endDate:endDate )
+          .then((value) {});
+    });
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final List<double> listValue = [
@@ -57,8 +80,8 @@ class AdminOverAllAppointment extends StatelessWidget {
                       child: IconButton(
                           padding: EdgeInsets.zero,
                           onPressed: () {
-                            provider.previousItem();
-                            pageController.jumpToPage(provider.currentIndex);
+                            widget.provider.previousItem();
+                            pageController.jumpToPage(widget.provider.currentIndex);
                           },
                           icon: const Icon(
                             Icons.arrow_back_ios_new_outlined,
@@ -70,8 +93,8 @@ class AdminOverAllAppointment extends StatelessWidget {
                         child: IconButton(
                             padding: EdgeInsets.zero,
                             onPressed: () {
-                              provider.nextItem(provider.patients.length);
-                              pageController.jumpToPage(provider.currentIndex);
+                              widget.provider.nextItem(widget.provider.patients.length);
+                              pageController.jumpToPage(widget.provider.currentIndex);
                             },
                             icon: const Icon(
                               Icons.arrow_forward_ios_outlined,

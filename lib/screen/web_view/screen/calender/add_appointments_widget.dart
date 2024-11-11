@@ -67,14 +67,14 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
     });
   }
 
-  resetField() {
+  /*resetField() {
     tetDate.clear();
     tetTime.clear();
     tetDesc.clear();
     tetPatientName.clear();
     tetPatientPhone.clear();
     tetDesc.clear();
-  }
+  }*/
 
   @override
   void dispose() {
@@ -423,9 +423,9 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                                             .then((value) {
                                           if (globalStatusCode == 200 ||
                                               globalStatusCode == 201) {
-                                            resetField();
+                                         //   resetField();
                                             provider.selectedID == null;
-                                            Navigator.of(context).pop();
+                                            //Navigator.of(context).pop();
                                           }
                                         });
                                       }
@@ -453,7 +453,7 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                                     SchedulerBinding.instance
                                         .addPostFrameCallback((_) {
                                       setState(() {
-                                        resetField();
+                                        //resetField();
                                         provider.selectedID == null;
 
                                         Navigator.of(context).pop();

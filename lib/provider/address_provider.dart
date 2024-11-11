@@ -88,10 +88,8 @@ class AddressProvider with ChangeNotifier {
           url: '${ApiConfig.getDoctor}/$userId/edit');
 
       if (globalStatusCode == 200 || globalStatusCode == 201) {
-        print(json.decode(response));
-        /*  _patientDetailsModel =
-            PatientDetailsModel.fromJson(json.decode(response));
-        _filteredPatients = _patientDetailsModel?.patients;*/
+        print('=======Myaddrtesss ${json.decode(response)}');
+
       } else if (globalStatusCode == 401) {
         commonSessionError(context: context);
       }

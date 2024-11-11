@@ -1,5 +1,6 @@
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/common/common_textfield.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
@@ -26,6 +27,7 @@ class WebChatScreen extends StatelessWidget {
               ? size.width
               : size.width * 0.9,
       height: size.height,
+      
       //  margin: EdgeInsets.all(communication ? 10 : 0),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -152,50 +154,52 @@ class WebChatScreen extends StatelessWidget {
                 thickness: 0.3,
               ),
               Expanded(
-                child: ListView.builder(
-                  itemCount: chatModel.chatMessages.length,
-                  itemBuilder: (context, index) {
-                    if (chatModel.chatMessages[index].sentByUser) {
-                      return SenderMessageView(
-                        chatMessage: chatModel.chatMessages[index],
-                      );
-                    } else {
-                      return ReceiverMessageView(
-                        chatMessage: chatModel.chatMessages[index],
-                      );
-                    }
-                  },
+                child: Container(
+                  margin: EdgeInsets.only(left: size.width*0.1,right: size.width*0.1),
+                  child: ListView.builder(
+                    itemCount: chatModel.chatMessages.length,
+                    itemBuilder: (context, index) {
+                      if (chatModel.chatMessages[index].sentByUser) {
+                        return SenderMessageView(
+                          chatMessage: chatModel.chatMessages[index],
+                        );
+                      } else {
+                        return ReceiverMessageView(
+                          chatMessage: chatModel.chatMessages[index],
+                        );
+                      }
+                    },
+                  ),
                 ),
               ),
-              const Divider(
+             /* const Divider(
                 thickness: 0.3,
-              ),
-              Padding(
+              ),*/
+              Container(
+                margin: EdgeInsets.only(left: size.width*0.1,right: size.width*0.1),
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
                     const SizedBox(
                       width: 10,
                     ),
-                    const Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
+                     Expanded(
+                      child: CommonTextField(
+                        colorFill: Colors.white,
+                     borderColor: Colors.grey.withOpacity(0.40),
+                     iconWidget: IconButton(onPressed: (){}, icon: Icon(Icons.attachment_outlined,color: Colors.grey,)),
+                     suffixIcon:  Container(
+                       width: 50,
+                       height: 50,
+                       child: Center(
+                         child:
+                         setAssetImage(image: icSend, width: 20, height: 20,color: Colors.grey),
+                       ),
+                     ),
 
-                          //border: OutlineInputBorder(),
-                        ),
                       ),
                     ),
-                    Container(
-                      width: 50,
-                      height: 50,
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle, color: AppColors.colorBgNew),
-                      child: Center(
-                        child:
-                            setAssetImage(image: icSend, width: 20, height: 20),
-                      ),
-                    ),
+
                   ],
                 ),
               ),

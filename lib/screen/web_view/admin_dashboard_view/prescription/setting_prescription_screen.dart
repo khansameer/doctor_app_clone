@@ -19,6 +19,7 @@ class SettingPrescriptionScreen extends StatelessWidget {
       children: [
         Column(
           children: [
+
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Row(
@@ -78,14 +79,15 @@ class SettingPrescriptionScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Divider(
-              thickness: 0.3,
-            ),
+
             Consumer<PrescriptionProvider>(builder: (context, provider, child) {
               return Container(
                 width: size.width,
                 padding: const EdgeInsets.all(0.0),
+
+
                 child: DataTable(
+                  dividerThickness:0.3,
                   border: TableBorder.all(
                     width: 1.0,
                     color: AppColors.colorBgNew,

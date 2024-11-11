@@ -23,9 +23,10 @@ enum Gender { male, female }
 class AuthProviders extends ChangeNotifier {
   final _service = ApiService();
   bool _isFetching = false;
+  bool get isFetching => _isFetching;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-  bool get isFetching => _isFetching;
+
   bool _isAdding = false;
 
   bool get isAdding => _isAdding;

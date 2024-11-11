@@ -19,3 +19,12 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+keytool -list -v -keystore "D:\android_studio\.android\debug.keystore" -alias androiddebugkey -storepass android -keypass android
+
+android_studio\.android
+/* CommonButtonWidget(
+text: "Doctor",
+onPressed: (){
+Navigator.push(context, MaterialPageRoute(builder: (context)=>CallScreen()));
+},
+),*/

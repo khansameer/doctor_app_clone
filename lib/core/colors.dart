@@ -71,4 +71,10 @@ class AppColors {
   static const color4 = Color.fromRGBO(204, 204, 204, 1);
   static const colorText = Color.fromRGBO(20, 27, 96, 1);
   static const colorAmber = Color.fromRGBO(254, 193, 68, 1);
+  static const colorSick = Color.fromRGBO(241, 113, 5,1);
+  static const colorConsultation= Color.fromRGBO(4, 150, 255,1);
+  static const colorTest= Color.fromRGBO(52, 209, 191, 1);
+  static const colorCheckup= Color.fromRGBO(102, 101, 221,1);
+
+
 }

@@ -153,6 +153,8 @@ class AppointmentsProvider extends ChangeNotifier {
     try {
       final response = await _service.callPostMethodApiWithToken(
           url: ApiConfig.createAppointment, body: body);
+
+      print('==globalStatusCode==%${globalStatusCode}');
       _createAppointmentModel =
           CreateAppointmentModel.fromJson(json.decode(response));
       if (globalStatusCode == 200 || globalStatusCode == 201) {

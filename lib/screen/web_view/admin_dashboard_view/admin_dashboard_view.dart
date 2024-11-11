@@ -8,8 +8,15 @@ import 'package:doctor_app/screen/web_view/admin_dashboard_view/dashboard_patien
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AdminDashboardView extends StatelessWidget {
+class AdminDashboardView extends StatefulWidget {
   const AdminDashboardView({super.key});
+
+  @override
+  State<AdminDashboardView> createState() => _AdminDashboardViewState();
+}
+
+class _AdminDashboardViewState extends State<AdminDashboardView> {
+
   @override
   Widget build(BuildContext context) {
     var isMobile = Responsive.isMobile(context);

@@ -1,6 +1,15 @@
+import 'dart:convert';
+
+import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
+import 'package:doctor_app/provider/model/upcoming_appointment_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import '../core/string/string_utils.dart';
 import '../screen/web_view/admin_dashboard_view/paitent_view/admin_all_list_screen.dart';
+import '../service/api_config.dart';
+import '../service/api_services.dart';
+import '../service/gloable_status_code.dart';
 
 class Patient {
   final String name;
@@ -26,6 +35,25 @@ class Patient {
 }
 
 class AdminDashboardProvider with ChangeNotifier {
+
+  List<bool> _hoverStates = [];
+
+  // Initialize hover states based on the number of items
+  void initializeHoverStates(int itemCount) {
+    _hoverStates = List.generate(itemCount, (index) => false);
+  }
+  bool getHoverState(int index) => _hoverStates[index];
+
+  // Set the hover state for a specific index
+  void setHoverState(int index, bool isHovered) {
+    if (_hoverStates[index] != isHovered) {
+      _hoverStates[index] = isHovered;
+      notifyListeners();
+    }
+  }
+
+  // Get all hover states
+  List<bool> get hoverStates => _hoverStates;
   int? _hoveredChat;
 
   int? get hoveredChat => _hoveredChat;
@@ -43,6 +71,7 @@ class AdminDashboardProvider with ChangeNotifier {
     _hoveredVideoCall = index;
     notifyListeners();
   }
+
 
   int? _hoveredEdit;
 
@@ -1240,6 +1269,105 @@ class AdminDashboardProvider with ChangeNotifier {
     _isHovered = value;
     notifyListeners();
   }
+
+  //===================================================================================API Call===========================================
+  final _service = ApiService();
+  bool _isFetching = false;
+  bool get isFetching => _isFetching;
+  Future getAppointmentsByFilter({required BuildContext context,String ?status,String ?appointment_type}) async {
+
+    _isFetching = true;
+    notifyListeners();
+    try {
+      final response = await _service.callGetMethod(
+          url: '${ApiConfig.createAppointment}?status=$status&appointment_type=$appointment_type');
+      print('===error==$globalStatusCode');
+      print('===createAppointment==${json.decode(response)}');
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+    /*    _patientDetailsModel =
+            PatientDetailsModel.fromJson(json.decode(response));
+        _filteredPatients = _patientDetailsModel?.patients;*/
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
+      }
+
+      _isFetching = false;
+      notifyListeners();
+    } catch (e) {
+      _isFetching = false;
+      print('===error==$e');
+      print('===error==$globalStatusCode');
+      notifyListeners();
+    }
+  }
+
+  UpComingAppointmentModel? _upComingAppointmentModel;
+
+  UpComingAppointmentModel? get upComingAppointmentModel => _upComingAppointmentModel;
+
+  Future getUpComingAppointment({required BuildContext context,String ?startDate,String ?endDate}) async {
+    DateTime today = DateTime.now();
+    DateTime tomorrow = today.add(Duration(days: 1));
+
+    String todayFormatted = DateFormat(yyyMMdd).format(today);
+      String tomorrowFormatted = DateFormat(yyyMMdd).format(tomorrow);
+
+    _isFetching = true;
+    notifyListeners();
+    try {
+      final response = await _service.callGetMethod(
+          url: '${ApiConfig.createAppointment}?startDate=$todayFormatted&endDate=${endDate??tomorrowFormatted}');
+
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+        _upComingAppointmentModel = UpComingAppointmentModel.fromJson(json.decode(response));
+        print('===length==${_upComingAppointmentModel?.appointments?.length}');
+      } else if (globalStatusCode == 401) {
+        _upComingAppointmentModel = UpComingAppointmentModel(
+          appointments: []
+        );
+        commonSessionError(context: context);
+      }
+
+      _isFetching = false;
+      notifyListeners();
+    } catch (e) {
+      _upComingAppointmentModel = UpComingAppointmentModel(
+          appointments: []
+      );
+      _isFetching = false;
+      print('===error==$e');
+      print('===error==$globalStatusCode');
+      notifyListeners();
+    }
+  }
+  Future getAppointmentsByFilterWithData({required BuildContext context,String ?status,String ?appointment_type,String ?startDate,String ?endDate,String?page}) async {
+
+    _isFetching = true;
+    notifyListeners();
+    try {
+      final response = await _service.callGetMethod(
+          url: '${ApiConfig.createAppointment}?status=$status&appointment_type=$appointment_type&startDate=$startDate&endDate=$endDate&page=$page');
+      print('===error==$globalStatusCode');
+      print('===createAppointment==${json.decode(response)}');
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+        /*    _patientDetailsModel =
+            PatientDetailsModel.fromJson(json.decode(response));
+        _filteredPatients = _patientDetailsModel?.patients;*/
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
+      }
+
+      _isFetching = false;
+      notifyListeners();
+    } catch (e) {
+      _isFetching = false;
+      print('===error==$e');
+      print('===error==$globalStatusCode');
+      notifyListeners();
+    }
+  }
+
+
 }
 
 class ChatUser {

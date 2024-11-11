@@ -10,13 +10,62 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class AdminUpComingAppointmentsView extends StatelessWidget {
+import '../../../provider/model/upcoming_appointment_model.dart';
+
+class AdminUpComingAppointmentsView extends StatefulWidget {
   const AdminUpComingAppointmentsView({super.key, required this.provider});
   final AdminDashboardProvider provider;
 
   @override
+  State<AdminUpComingAppointmentsView> createState() => _AdminUpComingAppointmentsViewState();
+}
+
+class _AdminUpComingAppointmentsViewState extends State<AdminUpComingAppointmentsView> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+
+      context
+          .read<AdminDashboardProvider>()
+          .getUpComingAppointment(context: context)
+          .then((value) {});
+    });
+
+    super.initState();
+  }
+
+  Map<String, List<Appointments>> groupAppointmentsByDate(List<Appointments> appointments) {
+    Map<String, List<Appointments>> groupedAppointments = {};
+
+    for (var appointment in appointments) {
+      String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.parse(appointment.dateTime??DateTime.now.toString()));
+      if (groupedAppointments.containsKey(formattedDate)) {
+        groupedAppointments[formattedDate]?.add(appointment);
+      } else {
+        groupedAppointments[formattedDate] = [appointment];
+      }
+    }
+
+    return groupedAppointments;
+  }
+  @override
   Widget build(BuildContext context) {
+    var provider=context.read<AdminDashboardProvider>();
     var size = MediaQuery.sizeOf(context);
+  //  var groupedAppointmentsss = groupAppointmentsByDate(provider.upComingAppointmentModel?.appointments??[] );
+
+
+   // print('=======${groupedAppointmentsss.length}');
+    final appointments = provider.upComingAppointmentModel?.appointments ?? [];
+    Map<String, List> groupedAppointments = {};
+
+    for (var appointment in appointments) {
+      var dateKey = DateFormat('yyyy-MM-dd').format(DateTime.parse(appointment.dateTime??DateTime.now().toString()));
+      if (!groupedAppointments.containsKey(dateKey)) {
+        groupedAppointments[dateKey] = [];
+      }
+      groupedAppointments[dateKey]?.add(appointment);
+    }
 
     return Container(
       height: size.height,
@@ -26,332 +75,357 @@ class AdminUpComingAppointmentsView extends StatelessWidget {
           color: Colors.white, borderRadius: BorderRadius.circular(8)),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: ListView(
-          shrinkWrap: true,
+        child: Stack(
+          alignment: Alignment.center,
           children: [
-            CommonTextWidget(
-              text: "Upcoming appointments".toUpperCase(),
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-            ),
-            CommonTextWidget(
-              top: 12,
-              textColor: AppColors.colorActive,
-              fontWeight: FontWeight.w700,
-              fontSize: 12,
-              text: DateFormat(dMMYYYY).format(
-                DateTime.now(),
-              ),
-            ),
-            SizedBox(
-              height: size.height,
-              child: ListView.separated(
-                shrinkWrap: true,
-                itemCount: provider.patients.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                        /* color: provider.hoveredIndex == index
-                            ? AppColors.colorBgNew.withValues(alpha: 0.7)
-                            : Colors.transparent,*/
-                        borderRadius: BorderRadius.circular(8)),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                flex: 9,
-                                child: Row(
+            ListView(
+              shrinkWrap: true,
+              children: [
+                CommonTextWidget(
+                  text: "Upcoming appointments".toUpperCase(),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
+
+               /* SizedBox(
+                    height: size.height,
+                    child: AppointmentListView()),*/
+               SizedBox(
+                  height: size.height,
+                  child:appointments.isNotEmpty? ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: groupedAppointments.keys.length,
+                    itemBuilder: (context, dateIndex) {
+                      String dateKey = groupedAppointments.keys.elementAt(dateIndex);
+                      var appointmentsForDate = groupedAppointments[dateKey];
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CommonTextWidget(
+                            fontWeight: FontWeight.w600,
+                              textColor: AppColors.primary,
+                              text: DateFormat('d MMMM, yyyy').format(DateTime.parse(dateKey)),
+                            ),
+                          ),
+
+                          ListView.separated(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: appointmentsForDate?.length??0,
+                            itemBuilder: (context, index) {
+                              var aptData = appointmentsForDate?[index];
+                              return Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: Column(
                                   children: [
-                                    commonInkWell(
-                                      /*onEnter: (event) {
-                                        provider.setHoveredProfile(index);
-                                        */ /*showProfileDialog(context);
-                                        context.read<ReportProvider>().setName =
-                                            provider.patients[index].name
-                                                .toString();
-                                        context
-                                                .read<ReportProvider>()
-                                                .setImage =
-                                            provider.patients[index].profile
-                                                .toString();*/ /*
-                                      },
-                                      onExit: (_){
-                                        provider.setHoveredProfile(null);
-                                      },*/
-                                      child: commonProfileIcon(
-                                          width: 40,
-                                          height: 40,
-                                          path: provider
-                                                  .patients[index].profile ??
-                                              icDummyUser),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Flexible(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                    Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Row(
                                         children: [
-                                          commonInkWell(
-                                            onEnter: (event) {
-                                              //  showProfileDialog(context);
-                                              context
-                                                      .read<ReportProvider>()
-                                                      .setName =
-                                                  provider.patients[index].name
-                                                      .toString();
-                                              context
-                                                      .read<ReportProvider>()
-                                                      .setImage =
-                                                  provider
-                                                      .patients[index].profile
-                                                      .toString();
-                                            },
-                                            child: CommonTextWidget(
-                                              fontWeight: FontWeight.w600,
-                                              text:
-                                                  provider.patients[index].name,
-                                              fontSize: 14,
+                                          Expanded(
+                                            child: Row(
+                                              children: [
+                                                // Patient Profile Circle
+
+                                                commonImageNetworkWidget(
+                                                    width: 40,
+                                                    height: 40,
+                                                    path:aptData.patient.profilePicture),
+
+                                                const SizedBox(width: 10),
+                                                // Patient Name and Email
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    CommonTextWidget(
+                                                    text:   '${aptData.patient.name}',
+                                                     fontWeight: FontWeight.w600,
+                                                    ),
+                                                    CommonTextWidget(
+                                                      overflow: TextOverflow.ellipsis,
+                                                      text: '${aptData.patient.email}', fontSize: 10,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                          CommonTextWidget(
-                                            softWrap: true,
-                                            overflow: TextOverflow.ellipsis,
-                                            text: provider
-                                                .patients[index].description,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 10,
-                                            top: 5,
+
+                                          // Action Buttons (Message, Video Call, etc.)
+                                          Row(
+                                            children: [
+                                              MouseRegion(
+                                                onEnter: (_) {
+                                                //  widget.provider.setHoveredChat(index);
+                                                },
+                                                onExit: (_) {
+                                                 // widget.provider.setHoveredChat(null);
+                                                },
+                                                child: AnimatedContainer(
+                                                  duration:
+                                                  const Duration(milliseconds: 200),
+                                                  alignment: Alignment.topLeft,
+                                                  width: 35,
+                                                  decoration: BoxDecoration(
+                                                      color: widget.provider.hoveredChat == index
+                                                          ? AppColors.primary
+                                                          : AppColors.colorBgNew,
+                                                      shape: BoxShape.circle),
+                                                  height: 35,
+                                                  child: Center(
+                                                    child: Icon(
+                                                      size: 15,
+                                                      Icons.message,
+                                                      color: widget.provider.hoveredChat == index
+                                                          ? Colors.white
+                                                          : Colors.grey,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              MouseRegion(
+                                                onEnter: (_) {
+                                                  widget.provider.setHoveredVideoCall(dateIndex);
+                                                },
+                                                onExit: (_) {
+                                                  widget.provider.setHoveredVideoCall(null);
+                                                },
+                                                child: AnimatedContainer(
+                                                  duration:
+                                                  const Duration(milliseconds: 200),
+                                                  alignment: Alignment.topLeft,
+                                                  width: 35,
+                                                  decoration: BoxDecoration(
+                                                      color:
+                                                      widget.provider.hoveredVideoCall == index
+                                                          ? AppColors.primary
+                                                          : AppColors.colorBgNew,
+                                                      shape: BoxShape.circle),
+                                                  height: 35,
+                                                  child: Center(
+                                                    child: Icon(
+                                                      size: 15,
+                                                      Icons.videocam,
+                                                      color:
+                                                      widget.provider.hoveredVideoCall == index
+                                                          ? Colors.white
+                                                          : Colors.grey,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              SizedBox(width: 10),
+                                              Builder(builder: (context) {
+                                                return commonInkWell(
+                                                  onTap: () {
+                                                  //*  context.read<ReportProvider>().setName =
+                                                        widget.provider.patients[index].name
+                                                            .toString();
+                                                    context
+                                                        .read<ReportProvider>()
+                                                        .setImage =
+                                                        widget.provider.patients[index].profile
+                                                            .toString();//*
+                                                    // showPopoverMenu(
+                                                    //     width: size.width*0.1,
+                                                    //     context: context,child:PatientProfileDialog() , size: size);
+                                                    showGeneralDialog(
+                                                      context: context,
+                                                      barrierLabel: "Barrier",
+                                                      barrierDismissible: true,
+                                                      barrierColor: Colors.black.withOpacity(0.6),
+                                                      transitionDuration: const Duration(milliseconds: 800),
+                                                      pageBuilder: (_, __, ___) {
+                                                        return Center(
+                                                          child: SizedBox(
+                                                            width: size.width * 0.2,
+                                                            child: ClipRRect(
+                                                                borderRadius: BorderRadius.circular(8),
+                                                                child: const PatientProfileDialog()),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Consumer<AdminDashboardProvider>(
+                                                      builder: (context, provider, child) {
+                                                        return MouseRegion(
+                                                          onEnter: (_) {
+                                                            provider.setHoveredEdit(index);
+                                                          },
+                                                          onExit: (_) {
+                                                            provider.setHoveredEdit(null);
+                                                          },
+                                                          child: AnimatedContainer(
+                                                            height: 35,
+                                                            duration: const Duration(
+                                                                milliseconds: 200),
+                                                            margin: const EdgeInsets.all(5),
+                                                            decoration: BoxDecoration(
+                                                                color: provider.hoveredEdit ==
+                                                                    index
+                                                                    ? AppColors.primary
+                                                                    : AppColors.colorBgNew,
+                                                                borderRadius:
+                                                                BorderRadius.circular(8)),
+                                                            child: Center(
+                                                              child: Padding(
+                                                                padding: const EdgeInsets.only(
+                                                                    left: 10.0, right: 10),
+                                                                child: CommonTextWidget(
+                                                                  fontSize: 12,
+                                                                  textColor:
+                                                                  provider.hoveredEdit ==
+                                                                      index
+                                                                      ? Colors.white
+                                                                      : null,
+                                                                  text: "View Profile",
+                                                                  fontWeight: FontWeight.w600,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }),
+                                                );
+                                              }),
+                                            ],
                                           ),
                                         ],
                                       ),
-                                    )
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.access_time, color: Colors.grey),
+                                          SizedBox(width: 10),
+                                          Text(
+                                            DateFormat('h:mm a').format(DateTime.parse(aptData.dateTime)),
+                                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  MouseRegion(
-                                    onEnter: (_) {
-                                      provider.setHoveredChat(index);
-                                    },
-                                    onExit: (_) {
-                                      provider.setHoveredChat(null);
-                                    },
-                                    child: AnimatedContainer(
-                                      duration:
-                                          const Duration(milliseconds: 200),
-                                      alignment: Alignment.topLeft,
-                                      width: 35,
-                                      decoration: BoxDecoration(
-                                          color: provider.hoveredChat == index
-                                              ? AppColors.primary
-                                              : AppColors.colorBgNew,
-                                          shape: BoxShape.circle),
-                                      height: 35,
-                                      child: Center(
-                                        child: Icon(
-                                          size: 15,
-                                          Icons.message,
-                                          color: provider.hoveredChat == index
-                                              ? Colors.white
-                                              : Colors.grey,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  MouseRegion(
-                                    onEnter: (_) {
-                                      provider.setHoveredVideoCall(index);
-                                    },
-                                    onExit: (_) {
-                                      provider.setHoveredVideoCall(null);
-                                    },
-                                    child: AnimatedContainer(
-                                      duration:
-                                          const Duration(milliseconds: 200),
-                                      alignment: Alignment.topLeft,
-                                      width: 35,
-                                      decoration: BoxDecoration(
-                                          color:
-                                              provider.hoveredVideoCall == index
-                                                  ? AppColors.primary
-                                                  : AppColors.colorBgNew,
-                                          shape: BoxShape.circle),
-                                      height: 35,
-                                      child: Center(
-                                        child: Icon(
-                                          size: 15,
-                                          Icons.videocam,
-                                          color:
-                                              provider.hoveredVideoCall == index
-                                                  ? Colors.white
-                                                  : Colors.grey,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Builder(builder: (context) {
-                                    return commonInkWell(
-                                      onTap: () {
-                                        context.read<ReportProvider>().setName =
-                                            provider.patients[index].name
-                                                .toString();
-                                        context
-                                                .read<ReportProvider>()
-                                                .setImage =
-                                            provider.patients[index].profile
-                                                .toString();
-                                        // showPopoverMenu(
-                                        //     width: size.width*0.1,
-                                        //     context: context,child:PatientProfileDialog() , size: size);
-                                        showProfileDialog(context);
-                                      },
-                                      child: Consumer<AdminDashboardProvider>(
-                                          builder: (context, provider, child) {
-                                        return MouseRegion(
-                                          onEnter: (_) {
-                                            provider.setHoveredEdit(index);
-                                          },
-                                          onExit: (_) {
-                                            provider.setHoveredEdit(null);
-                                          },
-                                          child: AnimatedContainer(
-                                            height: 35,
-                                            duration: const Duration(
-                                                milliseconds: 200),
-                                            margin: const EdgeInsets.all(5),
-                                            decoration: BoxDecoration(
-                                                color: provider.hoveredEdit ==
-                                                        index
-                                                    ? AppColors.primary
-                                                    : AppColors.colorBgNew,
-                                                borderRadius:
-                                                    BorderRadius.circular(8)),
-                                            child: Center(
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10.0, right: 10),
-                                                child: CommonTextWidget(
-                                                  fontSize: 12,
-                                                  textColor:
-                                                      provider.hoveredEdit ==
-                                                              index
-                                                          ? Colors.white
-                                                          : null,
-                                                  text: "View Profile",
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      }),
-                                    );
-                                  }),
-                                  /* MouseRegion(
-                                    onEnter: (_) {
-                                      provider.setHoveredEdit(index);
-                                    },
-                                    onExit: (_) {
-                                      provider.setHoveredEdit(null);
-                                    },
-                                    child: AnimatedContainer(
-                                      duration:
-                                          const Duration(milliseconds: 200),
-                                      alignment: Alignment.topLeft,
-                                      width: 35,
-                                      decoration: BoxDecoration(
-                                          color: provider.hoveredEdit == index
-                                              ? AppColors.primary
-                                              : AppColors.colorBgNew,
-                                          shape: BoxShape.circle),
-                                      height: 35,
-                                      child: Center(
-                                        child: Icon(
-                                          size: 15,
-                                          Icons.edit,
-                                          color: provider.hoveredEdit == index
-                                              ? Colors.white
-                                              : Colors.grey,
-                                        ),
-                                      ),
-                                    ),
-                                  ),*/
-                                ],
-                              )
-                            ],
+                              );
+                            },
+                            separatorBuilder: (BuildContext context, int index) {
+                              return Divider(thickness: 0.3);
+                            },
+                          ),
+
+                        ],
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const Divider(
+                        thickness: 0.3,
+                      );
+                    },
+                  ):Center(
+                    child: CommonTextWidget(text: "",),
+                  ),
+                )
+              ],
+            ),
+
+            context.watch<AdminDashboardProvider>().isFetching?showLoaderList():SizedBox.shrink()
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class AppointmentListView extends StatelessWidget {
+  Map<String, List<Appointments>> groupAppointmentsByDate(List<Appointments> appointments) {
+    Map<String, List<Appointments>> groupedAppointments = {};
+
+    for (var appointment in appointments) {
+      print('=====ph$appointments');
+      String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.parse(appointment.dateTime??DateTime.now.toString()));
+      if (groupedAppointments.containsKey(formattedDate)) {
+        groupedAppointments[formattedDate]?.add(appointment);
+      } else {
+        groupedAppointments[formattedDate] = [appointment];
+      }
+    }
+
+    return groupedAppointments;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => AdminDashboardProvider(),
+      child: Scaffold(
+
+        body: Consumer<AdminDashboardProvider>(
+          builder: (context, appointmentProvider, child) {
+            if (appointmentProvider.isFetching) {
+              return Center(child: CircularProgressIndicator());
+            }
+
+            final groupedAppointments = groupAppointmentsByDate(appointmentProvider.upComingAppointmentModel?.appointments??[]);
+
+            print('=groupedAppointments======${groupedAppointments.length}');
+
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: groupedAppointments.keys.length,
+              itemBuilder: (context, index) {
+                String date = groupedAppointments.keys.elementAt(index);
+                List<Appointments> appointmentsForDate = groupedAppointments[date]!;
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        DateFormat('yyyy-MM-dd').format(DateTime.parse(date)),
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    ...appointmentsForDate.map((appointment) {
+                      int? appointmentIndex = appointmentProvider.upComingAppointmentModel?.appointments?.indexOf(appointment)??0;
+
+                      return ListTile(
+                        title: Text('${appointment.patient?.name}'),
+                     //   subtitle: Text('${DateFormat('HH:mm').format('${appointment.dateTime}')} - ${appointment.appointmentType}'),
+
+                        trailing: MouseRegion(
+                          onEnter: (_) {
+                            appointmentProvider.setHoverState(appointmentIndex, true);
+                          },
+                          onExit: (_) {
+                            appointmentProvider.setHoverState(appointmentIndex, false);
+                          },
+                          child: Icon(
+                            Icons.video_call,
+                            color: appointmentProvider.getHoverState(appointmentIndex) ? Colors.green : Colors.blue,
                           ),
                         ),
-                        // / const Divider(thickness: 0.3,),
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.access_time,
-                                    color: AppColors.colorTextNew,
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  CommonTextWidget(
-                                    text: provider.patients[index].time,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                width: 50,
-                              ),
-                              /* Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  CommonTextWidget(
-                                    text: '\$${provider.patients[index].price}',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  )
-                                ],
-                              )*/
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return const Divider(
-                    thickness: 0.3,
-                  );
-                },
-              ),
-            )
-          ],
+                      );
+                    }).toList(),
+                  ],
+                );
+              },
+            );
+          },
         ),
       ),
     );

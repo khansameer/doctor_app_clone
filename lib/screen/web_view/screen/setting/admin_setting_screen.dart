@@ -59,8 +59,7 @@ class _AdminSettingScreenState extends State<AdminSettingScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
-    var isMobile = Responsive.isMobile(context);
-    var isTablet = Responsive.isTablet(context);
+
     return Consumer<DashboardProvider>(builder: (context, provider, child) {
       return Container(
         color: Colors.white,
@@ -95,9 +94,9 @@ class _AdminSettingScreenState extends State<AdminSettingScreen> {
                         color: AppColors.colorBgNew),
                     labelStyle: commonTextStyle(
                         fontSize: 13, fontWeight: FontWeight.w500),
-                    labelColor: AppColors.colorBlue,
+                    labelColor: AppColors.primary,
                     // indicatorColor: AppColors.colorTextNew,
-                    unselectedLabelColor: AppColors.colorBlue,
+                    unselectedLabelColor: AppColors.primary.withOpacity(0.50),
 
                     tabs: const [
                       Tab(text: 'Clinic Address'),
