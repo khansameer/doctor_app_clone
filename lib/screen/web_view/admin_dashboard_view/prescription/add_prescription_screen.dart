@@ -98,8 +98,8 @@ class _AddMyAddressScreenState extends State<AddPrescriptionScreen> {
                           children: [
                             CommonTextWidget(
                               text: widget.isEdit
-                                  ? "Edit Prescription"
-                                  : "Add Prescription",
+                                  ? "EDIT PRESECRIPTION"
+                                  : "ADD PRESECRIPTION",
                               fontSize: 16,
                               textAlign: TextAlign.center,
                               fontWeight: FontWeight.w700,
@@ -144,11 +144,11 @@ class _AddMyAddressScreenState extends State<AddPrescriptionScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             commonTextFiledView(
-                              title: "Time Par day",
+                              title: "Time Per day",
                               topText: 10,
                               validator: (value) {
                                 if (value.toString().trim().isEmpty) {
-                                  return "Please enter time par day";
+                                  return "Please enter time per day";
                                 }
 
                                 return null;

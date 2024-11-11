@@ -103,7 +103,7 @@ class _SettingPrescriptionScreenState extends State<SettingPrescriptionScreen> {
                                           right: 40,
                                           top: 20,
                                           bottom: 20),
-                                      text: "ADD Prescription",
+                                      text: "ADD PRESCRIPTION",
                                     ),
                                   ],
                                 )
