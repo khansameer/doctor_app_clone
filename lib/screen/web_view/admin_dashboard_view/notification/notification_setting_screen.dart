@@ -1,7 +1,10 @@
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/component/component.dart';
+import 'package:doctor_app/screen/web_view/admin_dashboard_view/notification/provider/setting_notification_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NotificationSettingScreen extends StatefulWidget {
   const NotificationSettingScreen({super.key});
@@ -12,15 +15,25 @@ class NotificationSettingScreen extends StatefulWidget {
 }
 
 class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
-  bool _switchValueNotification = true;
+  /* bool _switchValueNotification = true;
   bool _switchValueAppointment = true;
   bool _switchValuePatient = true;
   bool _switchValuEmergency = false;
   bool _switchValuGeneral = true;
-  bool _switchValuMessage = true;
+  bool _switchValuMessage = true;*/
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // Trigger the fetchItems method when the screen loads
+    Future.microtask(() =>
+        Provider.of<SettingNotificationProvider>(context, listen: false)
+            .getNotificationDetails(context: context));
+  }
 
   // Callback to update switch values
-  void _onSwitchChanged(String switchType, bool value) {
+/*  void _onSwitchChanged(String switchType, bool value) {
     setState(() {
       switch (switchType) {
         case 'notification':
@@ -43,109 +56,282 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
           break;
       }
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Column(
-          children: [
-            commonView(
-              title: "Notification Settings",
-              desc:
-                  "Customize how you receive important updates, reminders, and alerts about your patients and appointments.",
-              switchValue: _switchValueNotification,
-              onSwitchChanged: (value) =>
-                  _onSwitchChanged('notification', value),
-            ),
-            commonView(
-              title: "Appointment Reminders",
-              desc:
-                  "Get reminders for upcoming appointments, cancellations, or schedule changes to stay on top of your day",
-              switchValue: _switchValueAppointment,
-              onSwitchChanged: (value) =>
-                  _onSwitchChanged('appointment', value),
-            ),
-            commonView(
-              title: "Patient Updates",
-              desc:
-                  "Receive notifications when there are updates or changes in your patients' records, test results, or status",
-              switchValue: _switchValuePatient,
-              onSwitchChanged: (value) => _onSwitchChanged('patient', value),
-            ),
-            commonView(
-              title: "Emergency Alerts",
-              desc:
-                  "Enable alerts for critical patient cases or emergency situations requiring your immediate attention.",
-              switchValue: _switchValuEmergency,
-              onSwitchChanged: (value) => _onSwitchChanged('emergency', value),
-            ),
-            commonView(
-              title: "General Reminders",
-              desc:
-                  "Set up alerts for daily tasks, follow-up calls, and routine checks to ensure nothing is overlooked",
-              switchValue: _switchValuGeneral,
-              onSwitchChanged: (value) => _onSwitchChanged('general', value),
-            ),
-            commonView(
-              title: "Message Notifications",
-              desc:
-                  "Receive instant notifications when a new message or patient inquiry is received, ensuring timely responses",
-              switchValue: _switchValuMessage,
-              onSwitchChanged: (value) => _onSwitchChanged('message', value),
-            ),
-          ],
-        ),
-      ],
-    );
+    final provider = Provider.of<SettingNotificationProvider>(context);
+    return provider.isFetching
+        ? Center(child: showLoaderList())
+        : ListView(
+            children: [
+              Column(
+                children: [
+                  commonTitleView(
+                    title: "Email Notification",
+                  ),
+                  commonSubView(
+                      title: 'Appointments',
+                      onSwitchChanged: (bool) {
+                       provider
+                            .updateNotificationSetting(
+                          notificationType: 'email',
+                          fieldName: 'appointments',
+                          value: bool,
+                        );
+
+                      },
+                      switchValue:
+                          provider.notificationModel.email!.appointments!),
+
+                  commonSubView(
+                      title: 'Reminders',
+                      onSwitchChanged: (bool) {
+                        provider
+                            .updateNotificationSetting(
+                          notificationType: 'email',
+                          fieldName: 'reminders',
+                          value: bool,
+                        );
+
+                      },
+                      switchValue:
+                      provider.notificationModel.email!.reminders!),
+                  commonSubView(
+                      title: 'Prescriptions',
+                      onSwitchChanged: (bool) {
+                        provider
+                            .updateNotificationSetting(
+                          notificationType: 'email',
+                          fieldName: 'prescriptions',
+                          value: bool,
+                        );
+
+                      },
+                      switchValue:
+                      provider.notificationModel.email!.prescriptions!),
+                  commonSubView(
+                      title: 'Reports',
+                      onSwitchChanged: (bool) {
+                        provider
+                            .updateNotificationSetting(
+                          notificationType: 'email',
+                          fieldName: 'reports',
+                          value: bool,
+                        );
+
+                      },
+                      switchValue:
+                      provider.notificationModel.email!.reports!),
+                  commonSubView(
+                      title: 'Marketing',
+                      onSwitchChanged: (bool) {
+                        provider
+                            .updateNotificationSetting(
+                          notificationType: 'email',
+                          fieldName: 'marketing',
+                          value: bool,
+                        );
+
+                      },
+                      switchValue:
+                      provider.notificationModel.email!.marketing!),
+                ],
+              ),
+              Column(
+                children: [
+                  commonTitleView(
+                    title: "SMS Notification",
+                  ),
+                  commonSubView(
+                      title: 'Appointments',
+                      onSwitchChanged: (bool) {
+                        provider
+                            .updateNotificationSetting(
+                          notificationType: 'email',
+                          fieldName: 'appointments',
+                          value: bool,
+                        );
+
+                      },
+                      switchValue:
+                      provider.notificationModel.sms!.appointments!),
+
+                  commonSubView(
+                      title: 'Reminders',
+                      onSwitchChanged: (bool) {
+                        provider
+                            .updateNotificationSetting(
+                          notificationType: 'email',
+                          fieldName: 'reminders',
+                          value: bool,
+                        );
+
+                      },
+                      switchValue:
+                      provider.notificationModel.sms!.reminders!),
+                  commonSubView(
+                      title: 'Prescriptions',
+                      onSwitchChanged: (bool) {
+                        provider
+                            .updateNotificationSetting(
+                          notificationType: 'email',
+                          fieldName: 'prescriptions',
+                          value: bool,
+                        );
+
+                      },
+                      switchValue:
+                      provider.notificationModel.sms!.prescriptions!),
+                  commonSubView(
+                      title: 'Reports',
+                      onSwitchChanged: (bool) {
+                        provider
+                            .updateNotificationSetting(
+                          notificationType: 'email',
+                          fieldName: 'reports',
+                          value: bool,
+                        );
+
+                      },
+                      switchValue:
+                      provider.notificationModel.sms!.reports!),
+                  commonSubView(
+                      title: 'Marketing',
+                      onSwitchChanged: (bool) {
+                        provider
+                            .updateNotificationSetting(
+                          notificationType: 'email',
+                          fieldName: 'marketing',
+                          value: bool,
+                        );
+
+                      },
+                      switchValue:
+                      provider.notificationModel.sms!.marketing!),
+                ],
+              ),
+              Column(
+                children: [
+                  commonTitleView(
+                    title: "Push Notification",
+                  ),
+                  commonSubView(
+                      title: 'Appointments',
+                      onSwitchChanged: (bool) {
+                        provider
+                            .updateNotificationSetting(
+                          notificationType: 'email',
+                          fieldName: 'appointments',
+                          value: bool,
+                        );
+
+                      },
+                      switchValue:
+                      provider.notificationModel.push!.appointments!),
+
+                  commonSubView(
+                      title: 'Reminders',
+                      onSwitchChanged: (bool) {
+                        provider
+                            .updateNotificationSetting(
+                          notificationType: 'email',
+                          fieldName: 'reminders',
+                          value: bool,
+                        );
+
+                      },
+                      switchValue:
+                      provider.notificationModel.push!.reminders!),
+                  commonSubView(
+                      title: 'Prescriptions',
+                      onSwitchChanged: (bool) {
+                        provider
+                            .updateNotificationSetting(
+                          notificationType: 'email',
+                          fieldName: 'prescriptions',
+                          value: bool,
+                        );
+
+                      },
+                      switchValue:
+                      provider.notificationModel.push!.prescriptions!),
+                  commonSubView(
+                      title: 'Reports',
+                      onSwitchChanged: (bool) {
+                        provider
+                            .updateNotificationSetting(
+                          notificationType: 'email',
+                          fieldName: 'reports',
+                          value: bool,
+                        );
+
+                      },
+                      switchValue:
+                      provider.notificationModel.push!.reports!),
+                  commonSubView(
+                      title: 'Marketing',
+                      onSwitchChanged: (bool) {
+                        provider
+                            .updateNotificationSetting(
+                          notificationType: 'email',
+                          fieldName: 'marketing',
+                          value: bool,
+                        );
+
+                      },
+                      switchValue:
+                      provider.notificationModel.sms!.marketing!),
+                ],
+              ),
+            ],
+          );
   }
 
-  Widget commonView({
+  Widget commonTitleView({
     required String title,
-    required String desc,
-    required bool switchValue,
-    required Function(bool) onSwitchChanged,
   }) {
-    return Container(
+    return Container(width: double.infinity,
       margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: AppColors.colorBgNew,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: ListTile(
-        leading: Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle,
-          ),
-          child: Center(
-            child: Icon(
-              Icons.notifications_none,
-              color: AppColors.colorTextNew,
-              size: 20,
-            ),
-          ),
-        ),
-        title: CommonTextWidget(
+      child: Container(
+       child: CommonTextWidget(
           text: title,
           fontSize: 14,
           fontWeight: FontWeight.w600,
         ),
-        subtitle: CommonTextWidget(
-          text: desc,
-          fontSize: 11,
-          top: 5,
-          fontWeight: FontWeight.w400,
-        ),
-        trailing: CupertinoSwitch(
-          value: switchValue,
-          onChanged: onSwitchChanged,
-        ),
       ),
     );
   }
+
+  Widget commonSubView({
+    required String title,
+    required bool switchValue,
+    required Function(bool) onSwitchChanged,
+  }) {
+    return Container(
+
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CommonTextWidget(
+            text: title,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+          CupertinoSwitch(
+            value: switchValue,
+            onChanged: onSwitchChanged,
+          )
+        ],
+      ),
+
+    );
+  }
+
+
 }
