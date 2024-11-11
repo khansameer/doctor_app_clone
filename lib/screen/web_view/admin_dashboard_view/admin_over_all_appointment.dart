@@ -13,13 +13,14 @@ class AdminOverAllAppointment extends StatefulWidget {
   final AdminDashboardProvider provider;
 
   @override
-  State<AdminOverAllAppointment> createState() => _AdminOverAllAppointmentState();
+  State<AdminOverAllAppointment> createState() =>
+      _AdminOverAllAppointmentState();
 }
 
 class _AdminOverAllAppointmentState extends State<AdminOverAllAppointment> {
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    /*WidgetsBinding.instance.addPostFrameCallback((_) {
       DateTime today = DateTime.now();
       DateTime tomorrow = today.add(Duration(days: 7));
       String endDate = DateFormat(yyyMMdd).format(tomorrow);
@@ -28,9 +29,10 @@ class _AdminOverAllAppointmentState extends State<AdminOverAllAppointment> {
           .getUpComingAppointment(context: context,endDate:endDate )
           .then((value) {});
     });
-
+*/
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     final List<double> listValue = [
@@ -81,7 +83,8 @@ class _AdminOverAllAppointmentState extends State<AdminOverAllAppointment> {
                           padding: EdgeInsets.zero,
                           onPressed: () {
                             widget.provider.previousItem();
-                            pageController.jumpToPage(widget.provider.currentIndex);
+                            pageController
+                                .jumpToPage(widget.provider.currentIndex);
                           },
                           icon: const Icon(
                             Icons.arrow_back_ios_new_outlined,
@@ -93,8 +96,10 @@ class _AdminOverAllAppointmentState extends State<AdminOverAllAppointment> {
                         child: IconButton(
                             padding: EdgeInsets.zero,
                             onPressed: () {
-                              widget.provider.nextItem(widget.provider.patients.length);
-                              pageController.jumpToPage(widget.provider.currentIndex);
+                              widget.provider
+                                  .nextItem(widget.provider.patients.length);
+                              pageController
+                                  .jumpToPage(widget.provider.currentIndex);
                             },
                             icon: const Icon(
                               Icons.arrow_forward_ios_outlined,
@@ -123,7 +128,6 @@ class _AdminOverAllAppointmentState extends State<AdminOverAllAppointment> {
         swapAnimationDuration: Duration(milliseconds: 1000), // Optional
         swapAnimationCurve: Curves.linear, // Optional
         BarChartData(
-
           borderData: FlBorderData(
             show: false,
             border: Border.all(color: Colors.grey),
