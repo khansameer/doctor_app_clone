@@ -56,18 +56,18 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
     var isMobile = Responsive.isMobile(context);
     return Consumer<AppointmentsProvider>(builder: (context, provider, child) {
       List<Appointment>? calendarAppointments =
-          provider.appointmentsModel?.appointments?.map((appointment) {
+          provider.appointmentsModel?.data?.appointments?.map((appointment) {
         if (appointment.patient != null) {
           DateTime dateTime =
               DateTime.parse(appointment.dateTime ?? DateTime.now().toString());
 
           return Appointment(
             startTime: dateTime,
-            id: appointment.sId,
+            id: appointment.id,
             notes: appointment.reason,
-            endTime: dateTime.add(const Duration(hours: 1 )),
+            endTime: dateTime.add(const Duration(hours: 1)),
             // Assuming 1 hour duration
-            subject: appointment.patientName.toString(),
+            subject: '${appointment.patient?.name.toString()}',
             color: AppColors.colorGreen, // Set a color for the appointment
           );
         } else {
@@ -280,14 +280,14 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                 ),
               ),
               Padding(
-                              padding: EdgeInsets.symmetric(
-                horizontal: isMobile ? 35 : 50.0, vertical: 5),
-                              child: commonText(
-              fontWeight: FontWeight.w400,
-              color: AppColors.colorGreen,
-              text: 'Month',
-                              ),
-                            )
+                padding: EdgeInsets.symmetric(
+                    horizontal: isMobile ? 35 : 50.0, vertical: 5),
+                child: commonText(
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.colorGreen,
+                  text: 'Month',
+                ),
+              )
             ],
           ),
         ),
@@ -302,11 +302,10 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
       onTap: (CalendarTapDetails details) {
         if (details.appointments != null && details.appointments!.isNotEmpty) {
           Appointment tappedAppointment = details.appointments!.first;
-          String? appointmentId = '${tappedAppointment.id }';
+          String? appointmentId = '${tappedAppointment.id}';
           if (kDebugMode) {
             print('Appointment ID: $appointmentId');
           }
-
 
           showDialog(
               barrierDismissible: false,

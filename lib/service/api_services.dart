@@ -3,6 +3,7 @@ import 'package:doctor_app/service/network_repository.dart';
 class ApiService {
   Future<String> callPostMethodApi(
       {required Map<String, dynamic> body, required String url}) async {
+    print('====url$url');
     var response = await callPostMethod(url, body);
 
     return response;
@@ -10,12 +11,12 @@ class ApiService {
 
   Future<String> callPostMethodApiWithToken(
       {required Map<String, dynamic> body, required String url}) async {
+    print('====url$url');
     var response = await callPostMethodWithToken(url, body);
     return response;
   }
 
-  Future<String> callGetMethodApiWithToken(
-      {required String url}) async {
+  Future<String> callGetMethodApiWithToken({required String url}) async {
     var response = await callGETMethodWithToken(url);
     return response;
   }
@@ -48,7 +49,9 @@ class ApiService {
     String? key,
   }) async {
     print('callDeleteMethods  $url');
-    var response = await callDeleteMethod(url: url, );
+    var response = await callDeleteMethod(
+      url: url,
+    );
 
     return response;
   }

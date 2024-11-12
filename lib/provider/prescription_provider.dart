@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../core/component/component.dart';
 import '../service/gloable_status_code.dart';
+import 'model/PrescriptionDetailsModel.dart';
 
 class Prescription {
   final String tablet;
@@ -26,80 +27,12 @@ class PrescriptionProvider with ChangeNotifier {
   bool _isAdding = false;
   bool get isAdding => _isAdding;
   bool get isFetching => _isFetching;
-  final List<Prescription> prescriptions = [
-    Prescription(
-        tablet: 'Paracetamol 500mg',
-        frequency: 'Twice a day',
-        duration: '5 days',
-        instructions:
-            'Take one tablet after meals. Do not exceed the prescribed dosage.'),
-    Prescription(
-        tablet: 'Amoxicillin 250mg',
-        frequency: 'Three times a day',
-        duration: '7 days',
-        instructions:
-            'Take one tablet every 8 hours. Complete the full course even if you feel better.'),
-    Prescription(
-        tablet: 'Lisinopril 10mg',
-        frequency: 'Once a day',
-        duration: 'Ongoing',
-        instructions:
-            'Take in the morning, with or without food. Monitor blood pressure regularly.'),
-    Prescription(
-        tablet: 'Metformin 500mg',
-        frequency: 'Twice a day',
-        duration: '14 days',
-        instructions:
-            'Take with meals to reduce stomach upset. Monitor blood sugar levels.'),
-    Prescription(
-        tablet: 'Ibuprofen 400mg',
-        frequency: 'Every 6 hours',
-        duration: '3 days',
-        instructions:
-            'Take with food to avoid gastric irritation. Do not exceed 3 doses in 24 hours.'),
-    Prescription(
-        tablet: 'Atorvastatin 20mg',
-        frequency: 'Once a day',
-        duration: 'Ongoing',
-        instructions:
-            'Take in the evening. Avoid grapefruit while on this medication.'),
-    Prescription(
-        tablet: 'Cetirizine 10mg',
-        frequency: 'Once a day',
-        duration: '10 days',
-        instructions:
-            'Take at night. May cause drowsiness, so avoid driving after taking it.'),
-    Prescription(
-        tablet: 'Omeprazole 20mg',
-        frequency: 'Once a day',
-        duration: '7 days',
-        instructions:
-            'Take in the morning before breakfast. Do not crush or chew the tablet.'),
-    Prescription(
-        tablet: 'Salbutamol Inhaler 100mcg',
-        frequency: 'As needed',
-        duration: 'Ongoing',
-        instructions:
-            'Inhale 1-2 puffs during asthma attacks. Wait 1 minute before using again.'),
-    Prescription(
-        tablet: 'Diazepam 5mg',
-        frequency: 'Once a day',
-        duration: '7 days',
-        instructions:
-            'Take at night for sleep. May cause drowsiness. Do not operate heavy machinery.'),
-  ];
 
   List<String> whenToTake = ["Morning", "Afternoon", "Night"];
   List<String> _selectedDaysTake = [];
 
   List<String> get selectedDaysTake => _selectedDaysTake;
 
-
-
-/*  void setSelectedDaysTake(List<String> items) {
-    _selectedDaysTake = items;
-    notifyListeners();
-  }*/
   void setSelectedDaysTake(List<String> items) {
     _selectedDaysTake = items;
     print('Updated selectedDaysTake: $_selectedDaysTake'); // Debug print
@@ -118,6 +51,64 @@ class PrescriptionProvider with ChangeNotifier {
 
       if (globalStatusCode == 200 || globalStatusCode == 201) {
         print(json.decode(response));
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
+      }
+
+      _isAdding = false;
+      notifyListeners();
+    } catch (e) {
+      _isAdding = false;
+      notifyListeners();
+    }
+  }
+
+  PrescriptionDetailsModel? _prescriptionDetailsModel;
+
+  PrescriptionDetailsModel? get prescriptionDetailsModel =>
+      _prescriptionDetailsModel;
+
+  Future getPrescription({
+    required BuildContext context,
+  }) async {
+    _isFetching = true;
+    notifyListeners();
+    try {
+      final response = await _service.callGetMethodApiWithToken(
+        url: ApiConfig.addPrescription,
+      );
+
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+        _prescriptionDetailsModel =
+            PrescriptionDetailsModel.fromJson(json.decode(response));
+        print('===length==${_prescriptionDetailsModel?.medications?.length}');
+        print(json.decode(response));
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
+      }
+
+      _isFetching = false;
+      notifyListeners();
+    } catch (e) {
+      _isFetching = false;
+      notifyListeners();
+    }
+  }
+
+  Future deletePrescription({
+    required BuildContext context,
+    String? id,
+  }) async {
+    _isAdding = true;
+    notifyListeners();
+    try {
+      final response = await _service.callDeleteMethods(
+        url: '${ApiConfig.addPrescription}/$id',
+      );
+      print(globalStatusCode);
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+        print(json.decode(response));
+        getPrescription(context: context);
       } else if (globalStatusCode == 401) {
         commonSessionError(context: context);
       }

@@ -423,8 +423,9 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                                             .then((value) {
                                           if (globalStatusCode == 200 ||
                                               globalStatusCode == 201) {
-                                         //   resetField();
-                                            provider.selectedID == null;
+                                            //   resetField();
+                                            //provider.selectedID == null;
+                                            Navigator.of(context).pop();
                                             //Navigator.of(context).pop();
                                           }
                                         });

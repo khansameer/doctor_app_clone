@@ -54,7 +54,7 @@ class DashboardPatientView extends StatelessWidget {
               children: [
                 Expanded(
                   child: commonView(
-                    title: "No of completed appointments".toUpperCase(),
+                    title: "No. of completed appointments".toUpperCase(),
                     value: "50",
                     colorText: Colors.black,
                     bgColor: AppColors.colorBgNew,
@@ -62,7 +62,7 @@ class DashboardPatientView extends StatelessWidget {
                 ),
                 Expanded(
                   child: commonView(
-                    title: "No of upcoming appointments".toUpperCase(),
+                    title: "No. of upcoming appointments".toUpperCase(),
                     value: "40",
                     colorText: AppColors.primary,
                     bgColor: AppColors.colorBgNew,
@@ -70,7 +70,7 @@ class DashboardPatientView extends StatelessWidget {
                 ),
                 Expanded(
                   child: commonView(
-                    title: "No of missed appointments".toUpperCase(),
+                    title: "No. of missed appointments".toUpperCase(),
                     value: "5",
                     colorText: Colors.red.shade600,
                     bgColor: AppColors.colorBgNew,

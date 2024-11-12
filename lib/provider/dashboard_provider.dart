@@ -539,7 +539,7 @@ class DashboardProvider extends ChangeNotifier {
         content: "Dr. Richard provides excellent care and attention to detail.",
         items: []),
     DummyModel(
-        title: "George Harris",
+        title: "Linda Johnson",
         rating: "2.5 star",
         ratingValue: 2.5,
         icon: icPatientUser4,
