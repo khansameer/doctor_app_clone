@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/colors.dart';
+import '../../../core/common/custom_alert_dialog.dart';
 import '../../../provider/model/upcoming_appointment_model.dart';
 
 // Models for Appointment, Patient, and Doctor remain unchanged
@@ -19,7 +20,6 @@ class MainVideoCall extends StatefulWidget {
 }
 
 class _MainVideoCallState extends State<MainVideoCall> {
-
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -32,338 +32,315 @@ class _MainVideoCallState extends State<MainVideoCall> {
     super.initState();
   }
 
-  Color _iconColor = Colors.grey;
-
-
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
-    var provider=context.read<AdminDashboardProvider>();
-    List<bool> _isHovered = List.generate(provider.upComingAppointmentModel?.appointments?.length??0, (_) => false);
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        /*Consumer<AdminDashboardProvider>(
-          builder: (context, hoverStateProvider, child) {
+    var provider = context.read<AdminDashboardProvider>();
+    List<bool> _isHovered = List.generate(
+        provider.upComingAppointmentModel?.appointments?.length ?? 0,
+        (_) => false);
+    return SizedBox(
+      height: size.height,
+      child: Stack(
+        fit: StackFit.expand,
+        alignment: Alignment.center,
+        children: [
+          /*Consumer<AdminDashboardProvider>(
+            builder: (context, hoverStateProvider, child) {
 
-            return ;
-          },
-        */Container(
-          margin: const EdgeInsets.all(20),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(8)),
-          height: size.height,
-
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CommonTextWidget(
-                  text: "Upcoming appointments".toUpperCase(),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                ),
-
-                GroupedListView<Appointments, String>(
-                  elements: provider.upComingAppointmentModel?.appointments??[],
-                  shrinkWrap: true,
-                  groupBy: (patient) => DateFormat('yyyy-MM-dd').format(DateTime.parse(patient.dateTime??DateTime.now().toString())), // Group by category
-                  groupComparator: (value1, value2) => value2.compareTo(value1),
-                  //  itemComparator: (item1, item2) => item1['name'].compareTo(item2['name']),
-                  order: GroupedListOrder.DESC,
-                  useStickyGroupSeparators: true,
-                  separator: Divider(thickness: 0.3,),
-                  stickyHeaderBackgroundColor: Colors.transparent,
-                  groupSeparatorBuilder: (String value) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CommonTextWidget(
-                      text: value,
-                      fontWeight: FontWeight.w600,
-
-                      textColor: AppColors.primary,
-                    ),
+              return ;
+            },
+          */
+          Container(
+            margin: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            height: size.height,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: ListView(
+                children: [
+                  CommonTextWidget(
+                    text: "Upcoming appointments".toUpperCase(),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
                   ),
+                  GroupedListView<Appointments, String>(
+                    elements:
+                        provider.upComingAppointmentModel?.appointments ?? [],
+                    shrinkWrap: true,
+                    groupBy: (patient) => DateFormat('yyyy-MM-dd').format(
+                        DateTime.parse(patient.dateTime ??
+                            DateTime.now().toString())), // Group by category
+                    groupComparator: (value1, value2) =>
+                        value2.compareTo(value1),
+                    //  itemComparator: (item1, item2) => item1['name'].compareTo(item2['name']),
+                    order: GroupedListOrder.DESC,
+                    useStickyGroupSeparators: true,
+                    separator: Divider(
+                      thickness: 0.3,
+                    ),
+                    stickyHeaderBackgroundColor: Colors.transparent,
+                    groupSeparatorBuilder: (String value) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CommonTextWidget(
+                        text: value,
+                        fontWeight: FontWeight.w600,
+                        textColor: AppColors.primary,
+                      ),
+                    ),
 
-                  indexedItemBuilder: (c, element,index) {
-                    return SizedBox(
-                      child: Column(
+                    indexedItemBuilder: (c, element, index) {
+                      return SizedBox(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        commonImageNetworkWidget(
+                                            width: 40,
+                                            boxFit: BoxFit.cover,
+                                            height: 40,
+                                            path: element
+                                                .patient?.profilePicture),
 
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Row(
-                                    children: [
-                                      commonImageNetworkWidget(
-                                          width: 40,
-                                          boxFit:
-                                          BoxFit.cover,
-                                          height: 40,
-                                          path: element
-                                              .patient
-                                              ?.profilePicture),
-
-                                      const SizedBox(width: 10),
-                                      // Patient Name and Email
-                                      Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment
-                                            .start,
-                                        children: [
-                                          CommonTextWidget(
-                                            text:
-                                            '${element.patient?.name}',
-                                            fontWeight:
-                                            FontWeight.w600,
-                                          ),
-                                          CommonTextWidget(
-                                            overflow:
-                                            TextOverflow
-                                                .ellipsis,
-                                            text:
-                                            '${element.patient?.email}',
-                                            fontSize: 10,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                        const SizedBox(width: 10),
+                                        // Patient Name and Email
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            CommonTextWidget(
+                                              text: '${element.patient?.name}',
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                            CommonTextWidget(
+                                              overflow: TextOverflow.ellipsis,
+                                              text: '${element.patient?.email}',
+                                              fontSize: 10,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
 
-                                // Action Buttons (Message, Video Call, etc.)
-                                Row(
-                                  children: [
-                                    MouseRegion(
-                                      onEnter: (_) {
-                                        //  widget.provider.setHoveredChat(index);
-                                      },
-                                      onExit: (_) {
-                                        // widget.provider.setHoveredChat(null);
-                                      },
-                                      child: AnimatedContainer(
-                                        duration:
-                                        const Duration(
-                                            milliseconds:
-                                            200),
-                                        alignment:
-                                        Alignment.topLeft,
-                                        width: 35,
-                                        decoration: BoxDecoration(
-                                            color: AppColors
-                                                .colorBgNew,
-                                            shape: BoxShape.circle
-                                          /*  color: widget
-                                      .provider
-                                      .hoveredChat ==
-                                      index
-                                      ? AppColors
-                                      .primary
-                                      : AppColors
-                                      .colorBgNew,
-                                  shape: BoxShape
-                                      .circle*/),
-                                        height: 35,
-                                        child: Center(
-                                          child: Icon(
-                                            size: 15,
-                                            Icons.message,
-                                            color: Colors.grey,
-                                            /*  color: widget
-                                      .provider
-                                      .hoveredChat ==
-                                      index
-                                      ? Colors.white
-                                      : Colors.grey,*/
+                                  // Action Buttons (Message, Video Call, etc.)
+                                  Row(
+                                    children: [
+                                      MouseRegion(
+                                        onEnter: (_) {
+                                          //  widget.provider.setHoveredChat(index);
+                                        },
+                                        onExit: (_) {
+                                          // widget.provider.setHoveredChat(null);
+                                        },
+                                        child: AnimatedContainer(
+                                          duration:
+                                              const Duration(milliseconds: 200),
+                                          alignment: Alignment.topLeft,
+                                          width: 35,
+                                          decoration: BoxDecoration(
+                                              color: AppColors.colorBgNew,
+                                              shape: BoxShape.circle
+                                              /*  color: widget
+                                        .provider
+                                        .hoveredChat ==
+                                        index
+                                        ? AppColors
+                                        .primary
+                                        : AppColors
+                                        .colorBgNew,
+                                    shape: BoxShape
+                                        .circle*/
+                                              ),
+                                          height: 35,
+                                          child: Center(
+                                            child: Icon(
+                                              size: 15,
+                                              Icons.message,
+                                              color: Colors.grey,
+                                              /*  color: widget
+                                        .provider
+                                        .hoveredChat ==
+                                        index
+                                        ? Colors.white
+                                        : Colors.grey,*/
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    MouseRegion(
-
-                                      onEnter: (_) {
-                                        setState(() {
-                                          _isHovered[index] = true;
-                                          //  _isHovered = true; // Mark the current item as hovered
-                                        });
-                                      },
-                                      onExit: (_) {
-                                        setState(() {
-                                          _isHovered[index] = false;
-                                          //   _iconColor = Colors.grey; // Reset icon color when hover ends
-                                        });
-                                      },
-                                      child: AnimatedContainer(
-                                        duration:
-                                        const Duration(
-                                            milliseconds:
-                                            200),
-                                        alignment:
-                                        Alignment.topLeft,
-                                        width: 35,
-                                        decoration: BoxDecoration(
-                                            color:  AppColors
-                                                .colorBgNew,
-                                            shape: BoxShape.circle
-                                          /*   color: widget
-                                      .provider
-                                      .hoveredVideoCall ==
-                                      index
-                                      ? AppColors
-                                      .primary
-                                      : AppColors
-                                      .colorBgNew,
-                                  shape: BoxShape
-                                      .circle*/),
-                                        height: 35,
-                                        child: Center(
-                                          child: IconButton(
-                                              highlightColor: AppColors
-                                                  .primary,
-                                              hoverColor:_isHovered[index] ?Colors.white:AppColors.primary,
-                                              onPressed: (){}, icon: Icon(
-                                            size: 15,
-                                            Icons.videocam,
-                                            color: _isHovered[index] ?Colors.white : Colors.grey,
-
-                                          )),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      MouseRegion(
+                                        onEnter: (_) {
+                                          setState(() {
+                                            _isHovered[index] = true;
+                                            //  _isHovered = true; // Mark the current item as hovered
+                                          });
+                                        },
+                                        onExit: (_) {
+                                          setState(() {
+                                            _isHovered[index] = false;
+                                            //   _iconColor = Colors.grey; // Reset icon color when hover ends
+                                          });
+                                        },
+                                        child: AnimatedContainer(
+                                          duration:
+                                              const Duration(milliseconds: 200),
+                                          alignment: Alignment.topLeft,
+                                          width: 35,
+                                          decoration: BoxDecoration(
+                                              color: AppColors.colorBgNew,
+                                              shape: BoxShape.circle
+                                              /*   color: widget
+                                        .provider
+                                        .hoveredVideoCall ==
+                                        index
+                                        ? AppColors
+                                        .primary
+                                        : AppColors
+                                        .colorBgNew,
+                                    shape: BoxShape
+                                        .circle*/
+                                              ),
+                                          height: 35,
+                                          child: Center(
+                                            child: IconButton(
+                                                highlightColor:
+                                                    AppColors.primary,
+                                                hoverColor: _isHovered[index]
+                                                    ? Colors.white
+                                                    : AppColors.primary,
+                                                onPressed: () {},
+                                                icon: Icon(
+                                                  size: 15,
+                                                  Icons.videocam,
+                                                  color: _isHovered[index]
+                                                      ? Colors.white
+                                                      : Colors.grey,
+                                                )),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Builder(builder: (context) {
-                                      return commonInkWell(
-                                        onTap: () async {
+                                      SizedBox(width: 5),
+                                      Builder(builder: (context) {
+                                        return commonInkWell(
+                                          onTap: () async {
+                                            showDialog(
+                                                barrierDismissible: false,
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return CustomAlertDialog(
+                                                    content: SizedBox(
+                                                        width: size.width * 0.2,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          child:
+                                                              PatientProfileDialog(
+                                                                  appointment:
+                                                                      element),
+                                                        )),
+                                                  );
+                                                });
+                                            /* await showDialog(
+                                              useRootNavigator: true,
+                                              // targetAnchor: Alignment.topLeft,
+                                              context: context,
+                                              // isGlobal: false,
+                                              barrierColor: Colors.transparent,
 
-
-                                          await showAlignedDialog(
-                                            context: context,
-                                            isGlobal: false,
-
-                                            barrierColor: Colors.transparent,
-                                            avoidOverflow: false,
-
-
-                                            targetAnchor: AlignmentDirectional(1, 1.0)
-                                                .resolve(Directionality.of(context)),
-                                            followerAnchor: AlignmentDirectional(1, -1.0)
-                                                .resolve(Directionality.of(context)),
-                                            builder: (dialogContext) {
-                                              return Material(
-                                                color: Colors.transparent,
-                                                child: GestureDetector(
-                                                  onTap: () =>
-                                                      FocusScope.of(dialogContext).unfocus(),
-                                                  child:
-                                                  SizedBox(
-                                                      width:
-                                                      size.width *
-                                                          0.2,
-                                                      child: PatientProfileDialog(
-                                                          appointment:element)),
-                                                ),
-                                              );
-                                            },
-                                          );
-
-
+                                              builder: (dialogContext) {
+                                                return SizedBox(
+                                                    width: size.width * 0.2,
+                                                    child: PatientProfileDialog(
+                                                        appointment: element));
+                                              },
+                                            );*/
+                                          },
+                                          child:
+                                              Consumer<AdminDashboardProvider>(
+                                                  builder: (context, provider,
+                                                      child) {
+                                            return MouseRegion(
+                                              /*  onEnter: (_) {
+                                          provider
+                                              .setHoveredEdit(
+                                              index);
                                         },
-                                        child: Consumer<
-                                            AdminDashboardProvider>(
-                                            builder: (context,
-                                                provider,
-                                                child) {
-                                              return MouseRegion(
-                                                /*  onEnter: (_) {
-                                        provider
-                                            .setHoveredEdit(
-                                            index);
-                                      },
-                                      onExit: (_) {
-                                        provider
-                                            .setHoveredEdit(
-                                            null);
-                                      },*/
-                                                child:
-                                                AnimatedContainer(
-                                                  height: 35,
-                                                  duration:
-                                                  const Duration(
-                                                      milliseconds:
-                                                      200),
-                                                  margin:
-                                                  const EdgeInsets
-                                                      .all(5),
-                                                  decoration: BoxDecoration(
-                                                      color: AppColors
-                                                          .colorBgNew,
-                                                      /*    color: provider
-                                                .hoveredEdit ==
-                                                index
-                                                ? AppColors
-                                                .primary
-                                                : AppColors
-                                                .colorBgNew,*/
-                                                      borderRadius:
-                                                      BorderRadius
-                                                          .circular(
-                                                          8)),
-                                                  child: Center(
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                          .only(
-                                                          left:
-                                                          10.0,
-                                                          right:
-                                                          10),
-                                                      child:
-                                                      CommonTextWidget(
-                                                        fontSize:
-                                                        12,
-                                                        /* textColor: provider.hoveredEdit ==
+                                        onExit: (_) {
+                                          provider
+                                              .setHoveredEdit(
+                                              null);
+                                        },*/
+                                              child: AnimatedContainer(
+                                                height: 35,
+                                                duration: const Duration(
+                                                    milliseconds: 200),
+                                                margin: const EdgeInsets.all(5),
+                                                decoration: BoxDecoration(
+                                                    color: AppColors.colorBgNew,
+                                                    /*    color: provider
+                                                  .hoveredEdit ==
                                                   index
-                                                  ? Colors
-                                                  .white
-                                                  : null,*/
-                                                        text:
-                                                        "View Profile",
-                                                        fontWeight:
-                                                        FontWeight
-                                                            .w600,
-                                                      ),
+                                                  ? AppColors
+                                                  .primary
+                                                  : AppColors
+                                                  .colorBgNew,*/
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8)),
+                                                child: Center(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10.0,
+                                                            right: 10),
+                                                    child: CommonTextWidget(
+                                                      fontSize: 12,
+                                                      /* textColor: provider.hoveredEdit ==
+                                                    index
+                                                    ? Colors
+                                                    .white
+                                                    : null,*/
+                                                      text: "View Profile",
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                     ),
                                                   ),
                                                 ),
-                                              );
-                                            }),
-                                      );
-                                    }),
-                                  ],
-                                ),
-                              ],
+                                              ),
+                                            );
+                                          }),
+                                        );
+                                      }),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                )
-              ],
+                          ],
+                        ),
+                      );
+                    },
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        context.watch<AdminDashboardProvider>().isFetching
-            ? showLoaderList()
-            : SizedBox.shrink()
-      ],
+          context.watch<AdminDashboardProvider>().isFetching
+              ? showLoaderList()
+              : SizedBox.shrink()
+        ],
+      ),
     );
   }
 }
@@ -470,7 +447,7 @@ _createGroupedListView(List<Appointments>? appointments,Size size) {
                                   : AppColors
                                   .colorBgNew,
                               shape: BoxShape
-                                  .circle*//*
+                                  .circle*/ /*
 ),
                           height: 35,
                           child: Center(
@@ -484,7 +461,7 @@ _createGroupedListView(List<Appointments>? appointments,Size size) {
                                   .hoveredChat ==
                                   index
                                   ? Colors.white
-                                  : Colors.grey,*//*
+                                  : Colors.grey,*/ /*
 
                             ),
                           ),
@@ -527,7 +504,7 @@ _createGroupedListView(List<Appointments>? appointments,Size size) {
                                   : AppColors
                                   .colorBgNew,
                               shape: BoxShape
-                                  .circle*//*
+                                  .circle*/ /*
 ),
                           height: 35,
                           child: Center(
@@ -598,7 +575,7 @@ _createGroupedListView(List<Appointments>? appointments,Size size) {
                                     provider
                                         .setHoveredEdit(
                                         null);
-                                  },*//*
+                                  },*/ /*
 
                                   child:
                                   AnimatedContainer(
@@ -620,7 +597,7 @@ _createGroupedListView(List<Appointments>? appointments,Size size) {
                                             ? AppColors
                                             .primary
                                             : AppColors
-                                            .colorBgNew,*//*
+                                            .colorBgNew,*/ /*
 
                                         borderRadius:
                                         BorderRadius
@@ -643,7 +620,7 @@ _createGroupedListView(List<Appointments>? appointments,Size size) {
                                               index
                                               ? Colors
                                               .white
-                                              : null,*//*
+                                              : null,*/ /*
 
                                           text:
                                           "View Profile",

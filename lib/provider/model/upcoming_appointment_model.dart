@@ -1,9 +1,10 @@
 class UpComingAppointmentModel {
-  List<Appointments> ?appointments;
+  List<Appointments>? appointments;
   Pagination? pagination;
   Filters? filters;
 
-  UpComingAppointmentModel({required this.appointments, this.pagination, this.filters});
+  UpComingAppointmentModel(
+      {required this.appointments, this.pagination, this.filters});
 
   UpComingAppointmentModel.fromJson(Map<String, dynamic> json) {
     if (json['appointments'] != null) {
@@ -16,7 +17,7 @@ class UpComingAppointmentModel {
         ? Pagination.fromJson(json['pagination'])
         : null;
     filters =
-    json['filters'] != null ? Filters.fromJson(json['filters']) : null;
+        json['filters'] != null ? Filters.fromJson(json['filters']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -45,12 +46,12 @@ class Appointments {
 
   Appointments(
       {this.id,
-        this.dateTime,
-        this.status,
-        this.appointmentType,
-        this.isVirtual,
-        this.patient,
-        this.doctor});
+      this.dateTime,
+      this.status,
+      this.appointmentType,
+      this.isVirtual,
+      this.patient,
+      this.doctor});
 
   Appointments.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -59,9 +60,8 @@ class Appointments {
     appointmentType = json['appointment_type'];
     isVirtual = json['isVirtual'];
     patient =
-    json['patient'] != null ? Patient.fromJson(json['patient']) : null;
-    doctor =
-    json['doctor'] != null ? Doctor.fromJson(json['doctor']) : null;
+        json['patient'] != null ? Patient.fromJson(json['patient']) : null;
+    doctor = json['doctor'] != null ? Doctor.fromJson(json['doctor']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -88,8 +88,17 @@ class Patient {
   String? phoneNumber;
   String? profilePicture;
   String? gender;
+  String? dateOfBirth;
+  Profile? profile;
 
-  Patient({this.id, this.name, this.email, this.phoneNumber});
+  Patient(
+      {this.id,
+      this.name,
+      this.email,
+      this.phoneNumber,
+      this.gender,
+      this.dateOfBirth,
+      this.profile});
 
   Patient.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -98,6 +107,10 @@ class Patient {
     phoneNumber = json['phoneNumber'];
     profilePicture = json['profilePicture'];
     gender = json['gender'];
+    dateOfBirth = json['dateOfBirth'];
+    profile =
+        json['profile'] != null ? Profile.fromJson(json['profile']) : null;
+    //profile = json['profile'];
   }
 
   Map<String, dynamic> toJson() {
@@ -108,6 +121,10 @@ class Patient {
     data['phoneNumber'] = phoneNumber;
     data['profilePicture'] = profilePicture;
     data['gender'] = gender;
+    data['dateOfBirth'] = dateOfBirth;
+    if (profile != null) {
+      data['profile'] = profile!.toJson();
+    }
     return data;
   }
 }
@@ -131,6 +148,23 @@ class Doctor {
   }
 }
 
+class Profile {
+  String? profilePicture;
+
+  Profile({this.profilePicture});
+
+  Profile.fromJson(Map<String, dynamic> json) {
+    profilePicture = json['profilePicture'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['profilePicture'] = profilePicture;
+
+    return data;
+  }
+}
+
 class Pagination {
   int? currentPage;
   int? totalPages;
@@ -140,10 +174,10 @@ class Pagination {
 
   Pagination(
       {this.currentPage,
-        this.totalPages,
-        this.totalAppointments,
-        this.hasNextPage,
-        this.hasPreviousPage});
+      this.totalPages,
+      this.totalAppointments,
+      this.hasNextPage,
+      this.hasPreviousPage});
 
   Pagination.fromJson(Map<String, dynamic> json) {
     currentPage = json['currentPage'];

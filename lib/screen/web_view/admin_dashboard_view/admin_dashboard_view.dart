@@ -70,16 +70,16 @@ class _AdminDashboardViewState extends State<AdminDashboardView> {
               ),
             ),
 
-           /* Expanded(
+            /* Expanded(
                 flex: isTablet ? 4 : 3,
                 child: AdminUpComingAppointmentsView(
                   provider: provider,
                 ))*/
             Expanded(
-                flex: isTablet ? 4 : 3,
-                child: MainVideoCall(
-
-                ))
+                flex: isTablet ? 4 : 4,
+                child: SizedBox(
+                    height: MediaQuery.sizeOf(context).height,
+                    child: MainVideoCall()))
           ],
         ),
       ],

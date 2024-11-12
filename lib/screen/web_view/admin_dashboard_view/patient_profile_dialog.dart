@@ -10,16 +10,20 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class PatientProfileDialog extends StatelessWidget {
-  const PatientProfileDialog({super.key,this.aptData,this.appointment, });
- final dynamic aptData;
-  final Appointments ?appointment;
+  const PatientProfileDialog({
+    super.key,
+    this.aptData,
+    this.appointment,
+  });
+  final dynamic aptData;
+  final Appointments? appointment;
   String removeSpecialSymbolsAndEnsureSpace(String input) {
     // Replace special symbols with space and trim leading/trailing spaces
     return input.replaceAll(RegExp(r'[^a-zA-Z0-9\s]+'), ' ').trim();
   }
+
   @override
   Widget build(BuildContext context) {
-    print('==appointmeidnt=id====${appointment?.doctor?.name}');
     return Material(
       color: AppColors.colorBgNew,
       child: SizedBox(
@@ -31,10 +35,10 @@ class PatientProfileDialog extends StatelessWidget {
               children: [
                 _commonIcon(icon: Icons.edit),
                 _commonIcon(
-
-                    icon: Icons.close,onTap: (){
-                  Navigator.of(context).pop();
-                }),
+                    icon: Icons.close,
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    }),
               ],
             ),
             Row(
@@ -46,11 +50,10 @@ class PatientProfileDialog extends StatelessWidget {
                   children: [
                     commonImageNetworkWidget(
                         width: 50,
-                        boxFit:
-                        BoxFit.cover,
+                        boxFit: BoxFit.cover,
                         height: 50,
-                        path: '${appointment?.patient?.profilePicture}'),
-
+                        path:
+                            '${appointment?.patient?.profile?.profilePicture}'),
                   ],
                 ),
                 const SizedBox(
@@ -95,24 +98,29 @@ class PatientProfileDialog extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  _commonAvailableView(title: '${appointment?.patient?.phoneNumber}'),
+                  _commonAvailableView(
+                      title: '${appointment?.patient?.phoneNumber}'),
                   const SizedBox(
                     height: 10,
                   ),
                   _commonAvailableView(
-                    title: '${appointment?.patient?.phoneNumber}',
-                      icon: Icons.date_range),
+                      title: '${appointment?.patient?.email}',
+                      icon: Icons.email),
                   const SizedBox(
                     height: 10,
                   ),
                   _commonAvailableView(
-                      title: '${appointment?.patient?.gender.toString().toCapitalize()}',
+                      title:
+                          '${appointment?.patient?.gender.toString().toCapitalize()}',
                       icon: Icons.person),
                   const SizedBox(
                     height: 10,
                   ),
-                 /* _commonAvailableView(
-                      title: "Token Not Available", icon: Icons.token)*/
+                  _commonAvailableView(
+                      title: appointment?.patient?.dateOfBirth != null
+                          ? '${appointment?.patient?.dateOfBirth.toString().toString().toCapitalize()}'
+                          : "",
+                      icon: Icons.cake)
                 ],
               ),
             ),
@@ -137,8 +145,9 @@ class PatientProfileDialog extends StatelessWidget {
                       Expanded(
                         child: RichText(
                           text: TextSpan(
-                            text:removeSpecialSymbolsAndEnsureSpace('${appointment?.appointmentType.toString().toCapitalize()} ') ,
-                           // text: 'asassaas',
+                            text: removeSpecialSymbolsAndEnsureSpace(
+                                '${appointment?.appointmentType.toString().toCapitalize()} '),
+                            // text: 'asassaas',
                             style: commonTextStyle(
                                 fontWeight: FontWeight.w600, fontSize: 12),
                             children: <TextSpan>[
@@ -148,7 +157,8 @@ class PatientProfileDialog extends StatelessWidget {
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400)),
                               TextSpan(
-                                  text: 'Dr.${appointment?.doctor?.name.toString()}',
+                                  text:
+                                      'Dr.${appointment?.doctor?.name.toString()}',
                                   style: commonTextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12)),
@@ -158,7 +168,10 @@ class PatientProfileDialog extends StatelessWidget {
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400)),
                               TextSpan(
-                                  text: DateFormat('yyyy-MM-dd hh:mm:a').format(DateTime.parse(appointment?.dateTime.toString()??DateTime.now().toString())),
+                                  text: DateFormat('yyyy-MM-dd hh:mm:a').format(
+                                      DateTime.parse(
+                                          appointment?.dateTime.toString() ??
+                                              DateTime.now().toString())),
                                   style: commonTextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600)),
@@ -174,19 +187,19 @@ class PatientProfileDialog extends StatelessWidget {
                     ],
                   ),
                   Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                  CommonButtonWidget(
-                    text: "No Show",
-                    top: 20,
-                    fontSize: 12,
-                    borderWidth: 0.5,
-                    colorText: AppColors.colorTextNew,
-                    colorButton: Colors.transparent,
-                    colorBorder: Colors.black,
-                  ),
-                                 ],
-                                    )
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      CommonButtonWidget(
+                        text: "No Show",
+                        top: 20,
+                        fontSize: 12,
+                        borderWidth: 0.5,
+                        colorText: AppColors.colorTextNew,
+                        colorButton: Colors.transparent,
+                        colorBorder: Colors.black,
+                      ),
+                    ],
+                  )
                 ],
               ),
             )
@@ -196,12 +209,12 @@ class PatientProfileDialog extends StatelessWidget {
     );
   }
 
-  _commonIcon({IconData? icon,VoidCallback? onTap,Color ?color}) {
+  _commonIcon({IconData? icon, VoidCallback? onTap, Color? color}) {
     return IconButton(
-        onPressed:onTap,
+        onPressed: onTap,
         icon: Icon(
           icon ?? Icons.copy_outlined,
-          color: color??Colors.grey,
+          color: color ?? Colors.grey,
         ));
   }
 
