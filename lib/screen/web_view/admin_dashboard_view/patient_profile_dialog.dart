@@ -2,15 +2,24 @@ import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
+import 'package:doctor_app/core/context_extension.dart';
+import 'package:doctor_app/provider/model/upcoming_appointment_model.dart';
 import 'package:doctor_app/provider/report_provier.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class PatientProfileDialog extends StatelessWidget {
-  const PatientProfileDialog({super.key});
-
+  const PatientProfileDialog({super.key,this.aptData,this.appointment, });
+ final dynamic aptData;
+  final Appointments ?appointment;
+  String removeSpecialSymbolsAndEnsureSpace(String input) {
+    // Replace special symbols with space and trim leading/trailing spaces
+    return input.replaceAll(RegExp(r'[^a-zA-Z0-9\s]+'), ' ').trim();
+  }
   @override
   Widget build(BuildContext context) {
+    print('==appointmeidnt=id====${appointment?.doctor?.name}');
     return Material(
       color: AppColors.colorBgNew,
       child: SizedBox(
@@ -20,9 +29,6 @@ class PatientProfileDialog extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-
-                // _commonIcon(),
-            //    _commonIcon(),
                 _commonIcon(icon: Icons.edit),
                 _commonIcon(
 
@@ -38,8 +44,13 @@ class PatientProfileDialog extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    commonProfileIcon(
-                        path: context.read<ReportProvider>().image)
+                    commonImageNetworkWidget(
+                        width: 50,
+                        boxFit:
+                        BoxFit.cover,
+                        height: 50,
+                        path: '${appointment?.patient?.profilePicture}'),
+
                   ],
                 ),
                 const SizedBox(
@@ -51,13 +62,13 @@ class PatientProfileDialog extends StatelessWidget {
                   children: [
                     CommonTextWidget(
                       fontWeight: FontWeight.w700,
-                      text: context.read<ReportProvider>().name,
+                      text: '${appointment?.patient?.name}',
                       fontSize: 16,
                     ),
                     CommonTextWidget(
                       top: 5,
                       fontWeight: FontWeight.w400,
-                      text: "1402",
+                      text: '${appointment?.patient?.email}',
                       textColor: Colors.grey,
                       fontSize: 12,
                     ),
@@ -84,20 +95,24 @@ class PatientProfileDialog extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  _commonAvailableView(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  _commonAvailableView(icon: Icons.credit_card_outlined),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  _commonAvailableView(icon: Icons.credit_card_outlined),
+                  _commonAvailableView(title: '${appointment?.patient?.phoneNumber}'),
                   const SizedBox(
                     height: 10,
                   ),
                   _commonAvailableView(
-                      title: "Token Not Available", icon: Icons.token)
+                    title: '${appointment?.patient?.phoneNumber}',
+                      icon: Icons.date_range),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  _commonAvailableView(
+                      title: '${appointment?.patient?.gender.toString().toCapitalize()}',
+                      icon: Icons.person),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                 /* _commonAvailableView(
+                      title: "Token Not Available", icon: Icons.token)*/
                 ],
               ),
             ),
@@ -122,27 +137,28 @@ class PatientProfileDialog extends StatelessWidget {
                       Expanded(
                         child: RichText(
                           text: TextSpan(
-                            text: 'Video Consultation ',
+                            text:removeSpecialSymbolsAndEnsureSpace('${appointment?.appointmentType.toString().toCapitalize()} ') ,
+                           // text: 'asassaas',
                             style: commonTextStyle(
                                 fontWeight: FontWeight.w600, fontSize: 12),
                             children: <TextSpan>[
                               TextSpan(
-                                  text: 'with ',
+                                  text: ' with ',
                                   style: commonTextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400)),
                               TextSpan(
-                                  text: 'Dr. Richard Stevens',
+                                  text: 'Dr.${appointment?.doctor?.name.toString()}',
                                   style: commonTextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12)),
                               TextSpan(
-                                  text: ' at',
+                                  text: ' at ',
                                   style: commonTextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400)),
                               TextSpan(
-                                  text: ' 9:45',
+                                  text: DateFormat('yyyy-MM-dd hh:mm:a').format(DateTime.parse(appointment?.dateTime.toString()??DateTime.now().toString())),
                                   style: commonTextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600)),

@@ -99,15 +99,18 @@ Future callPostMethodWithToken11(
 Future callDeleteMethod(
     {required String url, Map<String, dynamic>? params}) async {
   String? token = await getAuthToken();
+
+  print('===${url}');
   Map<String, String> commonHeadersToken = {
     'Content-Type': 'application/json',
     'accept': '*/*',
     "Authorization":
         token != null && token.toString().isNotEmpty ? "Bearer $token" : "",
   };
+
   return await http
       .delete(Uri.parse(url),
-          body: utf8.encode(json.encode(params)), headers: commonHeadersToken)
+         headers: commonHeadersToken)
       .then((http.Response response) {
     return getResponse(response);
   });

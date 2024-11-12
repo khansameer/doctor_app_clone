@@ -1,5 +1,6 @@
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -20,39 +21,21 @@ class AdminOverAllAppointment extends StatefulWidget {
 class _AdminOverAllAppointmentState extends State<AdminOverAllAppointment> {
   @override
   void initState() {
-    /*WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       DateTime today = DateTime.now();
       DateTime tomorrow = today.add(Duration(days: 7));
       String endDate = DateFormat(yyyMMdd).format(tomorrow);
       context
           .read<AdminDashboardProvider>()
-          .getUpComingAppointment(context: context,endDate:endDate )
+          .getDashboardWeeklyGraph(context: context,endDate:endDate )
           .then((value) {});
     });
-*/
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<double> listValue = [
-      20,
-      80,
-      45,
-      90,
-      25,
-      36,
-      85,
-    ];
-    final List<String> listLabel = [
-      'Mon',
-      'Tue',
-      "Wed",
-      "Thu",
-      "Fri",
-      "Sat",
-      "Sun"
-    ];
 
     final PageController pageController = PageController();
     var size = MediaQuery.sizeOf(context);
@@ -60,61 +43,80 @@ class _AdminOverAllAppointmentState extends State<AdminOverAllAppointment> {
       margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(8)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              children: [
-                Expanded(
-                    child: CommonTextWidget(
-                  text: "Weekly Appointments".toUpperCase(),
-                  fontWeight: FontWeight.w800,
-                )),
-                Expanded(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+          Consumer<AdminDashboardProvider>(
+            builder: (context,provider,child) {
+
+                final labels = provider.chartData.map((item) => item.day).toList();
+                final barValues = provider.chartData.map((item) => item.count.toDouble()).toList();
+
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Flexible(
-                      child: IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {
-                            widget.provider.previousItem();
-                            pageController
-                                .jumpToPage(widget.provider.currentIndex);
-                          },
-                          icon: const Icon(
-                            Icons.arrow_back_ios_new_outlined,
-                            color: Colors.grey,
-                            size: 16,
-                          )),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                              child: CommonTextWidget(
+                                text: "Weekly Appointments".toUpperCase(),
+                                fontWeight: FontWeight.w800,
+                              )),
+                          Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Flexible(
+                                    child: IconButton(
+                                        padding: EdgeInsets.zero,
+                                        onPressed: () {
+                                          widget.provider.previousItem();
+                                          pageController
+                                              .jumpToPage(widget.provider.currentIndex);
+                                        },
+                                        icon: const Icon(
+                                          Icons.arrow_back_ios_new_outlined,
+                                          color: Colors.grey,
+                                          size: 16,
+                                        )),
+                                  ),
+                                  Flexible(
+                                      child: IconButton(
+                                          padding: EdgeInsets.zero,
+                                          onPressed: () {
+                                            widget.provider
+                                                .nextItem(widget.provider.patients.length);
+                                            pageController
+                                                .jumpToPage(widget.provider.currentIndex);
+                                          },
+                                          icon: const Icon(
+                                            Icons.arrow_forward_ios_outlined,
+                                            color: Colors.grey,
+                                            size: 16,
+                                          )))
+                                ],
+                              ))
+                        ],
+                      ),
                     ),
-                    Flexible(
-                        child: IconButton(
-                            padding: EdgeInsets.zero,
-                            onPressed: () {
-                              widget.provider
-                                  .nextItem(widget.provider.patients.length);
-                              pageController
-                                  .jumpToPage(widget.provider.currentIndex);
-                            },
-                            icon: const Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              color: Colors.grey,
-                              size: 16,
-                            )))
+                    SizedBox(
+                      height: size.height * 0.29,
+                      child: commonBarchart(barValues: barValues??[], labels: labels??[]),
+                    ),
                   ],
-                ))
-              ],
-            ),
+                );
+
+            },
+
+
+
+
           ),
-          SizedBox(
-            height: size.height * 0.29,
-            child: commonBarchart(barValues: listValue, labels: listLabel),
-          ),
+          context.watch<AdminDashboardProvider>().isLoading?showLoaderList():SizedBox.shrink()
         ],
       ),
     );
@@ -134,7 +136,7 @@ class _AdminOverAllAppointmentState extends State<AdminOverAllAppointment> {
           ),
           backgroundColor: Colors.white,
           alignment: BarChartAlignment.spaceAround,
-          maxY: 100,
+          maxY: 25,
           // Adjust to cover all values
           barTouchData: BarTouchData(enabled: false),
           titlesData: FlTitlesData(

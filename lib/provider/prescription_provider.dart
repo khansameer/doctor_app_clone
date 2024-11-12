@@ -105,6 +105,7 @@ class PrescriptionProvider with ChangeNotifier {
       final response = await _service.callDeleteMethods(
         url: '${ApiConfig.addPrescription}/$id',
       );
+      print('====$response');
       print(globalStatusCode);
       if (globalStatusCode == 200 || globalStatusCode == 201) {
         print(json.decode(response));

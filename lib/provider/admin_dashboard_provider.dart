@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/provider/model/upcoming_appointment_model.dart';
+import 'package:doctor_app/provider/model/weekly_graph_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../core/string/string_utils.dart';
@@ -10,6 +11,7 @@ import '../screen/web_view/admin_dashboard_view/paitent_view/admin_all_list_scre
 import '../service/api_config.dart';
 import '../service/api_services.dart';
 import '../service/gloable_status_code.dart';
+import 'model/DashboardCountModel.dart';
 
 class Patient {
   final String name;
@@ -1284,9 +1286,7 @@ class AdminDashboardProvider with ChangeNotifier {
       print('===error==$globalStatusCode');
       print('===createAppointment==${json.decode(response)}');
       if (globalStatusCode == 200 || globalStatusCode == 201) {
-    /*    _patientDetailsModel =
-            PatientDetailsModel.fromJson(json.decode(response));
-        _filteredPatients = _patientDetailsModel?.patients;*/
+
       } else if (globalStatusCode == 401) {
         commonSessionError(context: context);
       }
@@ -1320,6 +1320,8 @@ class AdminDashboardProvider with ChangeNotifier {
 
       if (globalStatusCode == 200 || globalStatusCode == 201) {
         _upComingAppointmentModel = UpComingAppointmentModel.fromJson(json.decode(response));
+
+        print('===appResponse==${json.decode(response)}');
         print('===length==${_upComingAppointmentModel?.appointments?.length}');
       } else if (globalStatusCode == 401) {
         _upComingAppointmentModel = UpComingAppointmentModel(
@@ -1340,19 +1342,60 @@ class AdminDashboardProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-  Future getAppointmentsByFilterWithData({required BuildContext context,String ?status,String ?appointment_type,String ?startDate,String ?endDate,String?page}) async {
+
+
+  Future getUpComingAppointmentDemo({required BuildContext context,String ?startDate,String ?endDate}) async {
+    DateTime today = DateTime.now();
+    DateTime tomorrow = today.add(Duration(days: 1));
+
+    String todayFormatted = DateFormat(yyyMMdd).format(today);
+    String tomorrowFormatted = DateFormat(yyyMMdd).format(tomorrow);
 
     _isFetching = true;
     notifyListeners();
     try {
       final response = await _service.callGetMethod(
-          url: '${ApiConfig.createAppointment}?status=$status&appointment_type=$appointment_type&startDate=$startDate&endDate=$endDate&page=$page');
+          url: '${ApiConfig.createAppointment}?startDate=$todayFormatted&endDate=${endDate??tomorrowFormatted}');
+
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+        _upComingAppointmentModel = UpComingAppointmentModel.fromJson(json.decode(response));
+        print('===length==${_upComingAppointmentModel?.appointments?.length}');
+      } else if (globalStatusCode == 401) {
+        _upComingAppointmentModel = UpComingAppointmentModel(
+            appointments: []
+        );
+        commonSessionError(context: context);
+      }
+
+      _isFetching = false;
+      notifyListeners();
+    } catch (e) {
+      _upComingAppointmentModel = UpComingAppointmentModel(
+          appointments: []
+      );
+      _isFetching = false;
+      print('===error==$e');
+      print('===error==$globalStatusCode');
+      notifyListeners();
+    }
+  }
+
+  DashboardCountModel? _dashboardCountModel;
+  DashboardCountModel? get dashboardCountModel => _dashboardCountModel;
+  Future getDashboardCountData({required BuildContext context,String ?status,String ?appointment_type,String ?startDate,String ?endDate,String?page}) async {
+
+    _isFetching = true;
+    notifyListeners();
+    String  userID=await getUserID();
+    try {
+      final response = await _service.callGetMethod(
+          url: '${ApiConfig.createAppointment}/doctor/$userID/stats');
       print('===error==$globalStatusCode');
       print('===createAppointment==${json.decode(response)}');
       if (globalStatusCode == 200 || globalStatusCode == 201) {
-        /*    _patientDetailsModel =
-            PatientDetailsModel.fromJson(json.decode(response));
-        _filteredPatients = _patientDetailsModel?.patients;*/
+        _dashboardCountModel =
+            DashboardCountModel.fromJson(json.decode(response));
+
       } else if (globalStatusCode == 401) {
         commonSessionError(context: context);
       }
@@ -1361,8 +1404,39 @@ class AdminDashboardProvider with ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _isFetching = false;
-      print('===error==$e');
+
+      notifyListeners();
+    }
+  }
+  List<WeeklyGraphModel> _chartData = [];
+
+
+  List<WeeklyGraphModel> get chartData => _chartData;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+  Future getDashboardWeeklyGraph({required BuildContext context,String ?status,String ?appointment_type,String ?startDate,String ?endDate,String?page}) async {
+
+    _isFetching = true;
+    notifyListeners();
+    String  userID=await getUserID();
+    try {
+      final response = await _service.callGetMethod(
+          url: '${ApiConfig.createAppointment}/weekly-counts/$userID');
       print('===error==$globalStatusCode');
+      print('===createAppointment==${json.decode(response)}');
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+
+        List<dynamic> jsonResponse = json.decode(response);
+        _chartData = jsonResponse.map((e) => WeeklyGraphModel.fromJson(e)).toList();
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
+      }
+
+      _isFetching = false;
+      notifyListeners();
+    } catch (e) {
+      _isFetching = false;
+
       notifyListeners();
     }
   }

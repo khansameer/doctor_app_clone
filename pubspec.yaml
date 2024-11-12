@@ -57,7 +57,7 @@ dependencies:
 
   image_cropper: ^8.0.2
   image_picker: ^1.1.2
-
+  grouped_list: ^6.0.0
   videosdk: any
   aligned_dialog: ^0.0.7
 
