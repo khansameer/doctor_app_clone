@@ -107,7 +107,7 @@ class _MainVideoCallState extends State<MainVideoCall> {
                                             boxFit: BoxFit.cover,
                                             height: 40,
                                             path: element
-                                                .patient?.profilePicture),
+                                                .patient?.profile?.profilePicture),
 
                                         const SizedBox(width: 10),
                                         // Patient Name and Email
