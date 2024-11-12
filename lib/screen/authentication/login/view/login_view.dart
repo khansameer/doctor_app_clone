@@ -316,19 +316,12 @@ class _MobileViewState extends State<MobileView> {
         .callLoginApi(context: context, body: body, isLogin: true)
         .then((value) async {
       if (provider.loginModel?.token != null) {
-        if (tetEmail.text == "mathew.hadens@gmail.com") {
-          await PreferenceHelper.setString(
-              key: PreferenceHelper.role, value: "doctor");
-        } else if (tetEmail.text == "richard.stevens@gmail.com") {
-          await PreferenceHelper.setString(
-              key: PreferenceHelper.role, value: "patient");
-        } else {}
         if (kIsWeb)
           pushNamedAndRemoveUntil(
               context: context, routeName: RouteName.adminDashboardScreen);
       } else {
         pushNamedAndRemoveUntil(
-            context: context, routeName: RouteName.adminDashboardScreen);
+            context: context, routeName: RouteName.dashboardScreen);
       }
 
       widget.formLoginKey.currentState?.save();
