@@ -3,6 +3,7 @@ import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
+import 'package:doctor_app/core/context_extension.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/address_provider.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/my_address/add_my_address_screen.dart';
@@ -36,6 +37,7 @@ class _AddMyAddressScreenState extends State<AddPrescriptionScreen> {
   void initState() {
     super.initState();
     if (widget.isEdit) {
+      var provider = context.read<PrescriptionProvider>();
       tetMedicine.text = '${widget.address?.name.toString()}';
       tetTimesPerDay.text =
           '${widget.address?.frequency?.timesPerDay.toString()}';

@@ -328,7 +328,7 @@ class _MobileViewState extends State<MobileView> {
               context: context, routeName: RouteName.adminDashboardScreen);
       } else {
         pushNamedAndRemoveUntil(
-            context: context, routeName: RouteName.dashboardScreen);
+            context: context, routeName: RouteName.adminDashboardScreen);
       }
 
       widget.formLoginKey.currentState?.save();
