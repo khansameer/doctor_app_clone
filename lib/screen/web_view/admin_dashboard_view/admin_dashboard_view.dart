@@ -3,6 +3,7 @@ import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_over_all_appointment.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_patient_graph.dart';
+import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_pie_graph.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_upcomming_appointments_view.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/dashboard_patient_view.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,22 @@ class _AdminDashboardViewState extends State<AdminDashboardView> {
                   DashboardPatientView(
                     provider: provider,
                   ),
-                  const AdminPatientGraph(),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 500,
+                          child: const AdminPatientGraph(),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 500,
+                          child: AdminPieGraph(),
+                        ),
+                      )
+                    ],
+                  ),
                   AdminOverAllAppointment(
                     provider: provider,
                   ),
@@ -72,7 +88,7 @@ class _AdminDashboardViewState extends State<AdminDashboardView> {
             DashboardPatientView(
               provider: provider,
             ),
-            const AdminPatientGraph(),
+            const AdminPatientGraph(), const AdminPieGraph(),
             AdminOverAllAppointment(
               provider: provider,
             ),
