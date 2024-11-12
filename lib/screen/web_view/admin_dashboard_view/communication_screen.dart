@@ -25,11 +25,11 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var isMobile = Responsive.isMobile(context);
-    var isTablet=Responsive.isTablet(context);
+    var isTablet = Responsive.isTablet(context);
     return Row(
       children: [
         Expanded(
-          flex: isTablet?3:2,
+          flex: isTablet ? 3 : 2,
           child: Container(
             decoration: BoxDecoration(
                 color: Colors.white,
@@ -47,18 +47,16 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
             margin: const EdgeInsets.only(left: 10, right: 10),
             child: Padding(
               padding: const EdgeInsets.all(0.0),
-              child: _commonUserList(
-                  isMobile:
-                      isMobile)
-              ,
+              child: _commonUserList(isMobile: isMobile),
             ),
           ),
         ),
         isMobile
             ? const SizedBox.shrink()
-            : const Expanded(
+            : Expanded(
                 flex: 5,
                 child: WebChatScreen(
+                  chatRoomId: "Sameer",
                   communication: true,
                 ),
               ),
@@ -110,7 +108,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                         children: [
                           commonInkWell(
                             onEnter: (event) {
-                             // showProfileDialog(context);
+                              // showProfileDialog(context);
                               context.read<ReportProvider>().setName =
                                   data.name.toString();
                               context.read<ReportProvider>().setImage =
@@ -140,7 +138,7 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                         children: [
                           commonInkWell(
                             onEnter: (event) {
-                           //   showProfileDialog(context);
+                              //   showProfileDialog(context);
                               context.read<ReportProvider>().setName =
                                   data.name.toString();
                               context.read<ReportProvider>().setImage =
@@ -165,10 +163,11 @@ class _CommunicationScreenState extends State<CommunicationScreen> {
                               barrierDismissible: false,
                               context: context,
                               builder: (BuildContext context) {
-                                return const CustomAlertDialog(
-                                  insetPadding: EdgeInsets.symmetric(
+                                return CustomAlertDialog(
+                                  insetPadding: const EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 10),
                                   content: WebChatScreen(
+                                    chatRoomId: "Sameer",
                                     communication: false,
                                   ),
                                 );

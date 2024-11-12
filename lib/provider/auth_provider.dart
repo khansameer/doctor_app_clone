@@ -90,8 +90,6 @@ class AuthProviders extends ChangeNotifier {
 
   redirectToLogin({required BuildContext context, int? seconds = 0}) {
     Timer(Duration(seconds: seconds ?? 3), () async {
-
-
       if (await PreferenceHelper.getBool(key: PreferenceHelper.isLOGIN) ==
           true) {
         if (kIsWeb) {
@@ -173,10 +171,16 @@ class AuthProviders extends ChangeNotifier {
       print('===$globalStatusCode');
       if (globalStatusCode == 200) {
         if (_loginModel?.token != null && _loginModel?.userId != null) {
-
-          await PreferenceHelper.setString(key: PreferenceHelper.name, value: "${_loginModel?.user?.firstName} ${_loginModel?.user?.lastName}");
-          await PreferenceHelper.setString(key: PreferenceHelper.email, value: '${_loginModel?.user?.email}');
-          await PreferenceHelper.setString(key: PreferenceHelper.userPhoto, value: '${_loginModel?.user?.profile?.profilePicture}');
+          await PreferenceHelper.setString(
+              key: PreferenceHelper.name,
+              value:
+                  "${_loginModel?.user?.firstName} ${_loginModel?.user?.lastName}");
+          await PreferenceHelper.setString(
+              key: PreferenceHelper.email,
+              value: '${_loginModel?.user?.email}');
+          await PreferenceHelper.setString(
+              key: PreferenceHelper.userPhoto,
+              value: '${_loginModel?.user?.profile?.profilePicture}');
           await PreferenceHelper.setString(
               key: PreferenceHelper.authToken, value: '${_loginModel?.token}');
           await PreferenceHelper.setString(
@@ -185,7 +189,7 @@ class AuthProviders extends ChangeNotifier {
               key: PreferenceHelper.isLOGIN, value: true);
         }
       } else if (globalStatusCode == 401) {
-        commonSessionError(context: context,isAuth: true);
+        commonSessionError(context: context, isAuth: true);
       } else {}
     } catch (e) {
       // _registerModel = RegisterModel(message: 'server_error'.tr());
@@ -195,8 +199,7 @@ class AuthProviders extends ChangeNotifier {
   }
 
   Future<void> saveUserData(Map<String, dynamic> data) async {
-  //  final prefs = await SharedPreferences.getInstance();
-
+    //  final prefs = await SharedPreferences.getInstance();
   }
 
   //==============================================================Get specializations List==================================================
@@ -235,7 +238,7 @@ class AuthProviders extends ChangeNotifier {
             .map((dynamic item) => SpecializationsModel.fromJson(item))
             .toList();
       } else if (globalStatusCode == 401) {
-        commonSessionError(context: context,isAuth: true);
+        commonSessionError(context: context, isAuth: true);
       } else {
         _specializationsList = [];
       }
@@ -284,7 +287,7 @@ class AuthProviders extends ChangeNotifier {
       if (globalStatusCode == 200 || globalStatusCode == 201) {
         if (_signupModel?.doctor?.sId != null) {}
       } else if (globalStatusCode == 401) {
-        commonSessionError(context: context,isAuth: true);
+        commonSessionError(context: context, isAuth: true);
       } else {
         showCommonDialog(
             context: context,
@@ -358,8 +361,8 @@ class AuthProviders extends ChangeNotifier {
   List<Map<String, dynamic>> getAddressesInJson() {
     return addresses.map((address) => address.toJson()).toList();
   }
-
 }
+
 class Address {
   String address;
   String city;

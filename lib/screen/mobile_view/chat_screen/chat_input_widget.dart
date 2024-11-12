@@ -86,7 +86,7 @@ class ChatInputWidget extends StatelessWidget {
                       size: twenty,
                     ),
                     onPressed: () {
-                      chatProvider.sendMessage();
+                      /// chatProvider.sendMessage();
                     },
                   ),
                 ),

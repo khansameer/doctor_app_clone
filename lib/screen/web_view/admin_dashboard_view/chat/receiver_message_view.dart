@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ReceiverMessageView extends StatelessWidget {
-  const ReceiverMessageView({super.key, this.chatMessage});
-  final ChatMessage? chatMessage;
+  const ReceiverMessageView({super.key, this.msg});
+  final String? msg;
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +21,14 @@ class ReceiverMessageView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            CommonTextWidget(
-              text:
+            /*CommonTextWidget(
+              text: msg.toString(),
+              */ /*text:
                   "${chatMessage?.sender.toString()}, ${DateFormat('hh:mm a').format(DateTime.parse('${chatMessage?.date.toString()}'))}",
-              left: 15,
+            */ /*  left: 15,
               fontSize: 10,
               top: 20,
-            ),
+            ),*/
             Container(
               decoration: BoxDecoration(
                   color: AppColors.colorBgNew,
@@ -39,7 +40,7 @@ class ReceiverMessageView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   CommonTextWidget(
-                    text: chatMessage?.message.toString(),
+                    text: msg.toString(),
                   )
                 ],
               ),

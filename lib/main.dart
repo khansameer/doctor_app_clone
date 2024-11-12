@@ -17,10 +17,12 @@ import 'package:doctor_app/screen/web_view/video_call/RoomScreen.dart';
 import 'package:doctor_app/screen/web_view/video_call/demo_screen.dart';
 import 'package:doctor_app/screen/web_view/video_call/main_video_call.dart';
 import 'package:doctor_app/shared_preferences/preference_helper.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'core/firebase/firebase_options.dart';
 import 'provider/address_provider.dart';
 import 'provider/prescription_provider.dart';
 import 'provider/profile_provider.dart';
@@ -50,6 +52,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   PreferenceHelper.load().then((value) {});
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -63,9 +68,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         navigatorKey: navigatorKey, // Set the navigatorKey
         title: appName,
-       initialRoute: RouteName.splashScreen,
+        initialRoute: RouteName.splashScreen,
         onGenerateRoute: RouteGenerator.generateRoute,
-     //   home: MainVideoCall(),
+        //   home: MainVideoCall(),
         debugShowCheckedModeBanner: false,
         builder: (context, child) {
           return MediaQuery(

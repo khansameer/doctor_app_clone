@@ -60,6 +60,9 @@ dependencies:
   grouped_list: ^6.0.0
   videosdk: any
   aligned_dialog: ^0.0.7
+  cloud_firestore: ^5.4.5
+  firebase_core: ^3.7.0
+
 
   #videosdk: ^1.2.3
 

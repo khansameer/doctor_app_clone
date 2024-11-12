@@ -162,6 +162,15 @@ Future getAuthToken() async {
   return token;
 }
 
+Future getRole() async {
+  String? token = await PreferenceHelper.getString(key: PreferenceHelper.role);
+
+  if (kDebugMode) {
+    print('=================token$token');
+  }
+  return token;
+}
+
 Future getName() async {
   String? name = await PreferenceHelper.getString(key: PreferenceHelper.name);
 

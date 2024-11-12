@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Patient {
@@ -65,15 +66,6 @@ class ChatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void sendMessage() {
-    if (tetChat.text.isNotEmpty) {
-      _messages.add(ChatMessage(
-          text: tetChat.text, isSentByMe: true, time: DateTime.now()));
-      tetChat.text = '';
-      notifyListeners();
-    }
-  }
-
   void receiveMessage(String message) {
     _messages.add(
         ChatMessage(text: message, isSentByMe: false, time: DateTime.now()));
@@ -109,4 +101,32 @@ class ChatProvider extends ChangeNotifier {
   ];
 
   List<Patient> get patients => _patients;
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Stream<List<Map<String, dynamic>>> getMessages(String chatRoomId) {
+    return _firestore
+        .collection('chatRooms')
+        .doc(chatRoomId)
+        .collection('messages')
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
+  }
+
+  Future<void> sendMessage(
+      {String? chatRoomId, required String message, String? senderId}) async {
+    if (message.isEmpty) return;
+
+    await _firestore
+        .collection('chatRooms')
+        .doc(chatRoomId)
+        .collection('messages')
+        .add({
+      'message': message,
+      'senderId': senderId,
+      'timestamp': FieldValue.serverTimestamp(),
+    });
+    notifyListeners();
+  }
 }
