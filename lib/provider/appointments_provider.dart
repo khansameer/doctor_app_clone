@@ -45,7 +45,7 @@ class AppointmentsProvider extends ChangeNotifier {
 
   List<String> appointmentType = [
     "Routine Checkup",
-    "Emergency",
+  //  "Emergency",
     "Consultation",
     "Sick Visit",
     "Examination",

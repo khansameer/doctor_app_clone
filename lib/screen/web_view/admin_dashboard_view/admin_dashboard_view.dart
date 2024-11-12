@@ -5,6 +5,7 @@ import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_over_all_a
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_patient_graph.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_upcomming_appointments_view.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/dashboard_patient_view.dart';
+import 'package:doctor_app/screen/web_view/video_call/main_video_call.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -52,10 +53,16 @@ class _AdminDashboardViewState extends State<AdminDashboardView> {
                 ],
               ),
             ),
-            Expanded(
+
+           /* Expanded(
                 flex: isTablet ? 4 : 3,
                 child: AdminUpComingAppointmentsView(
                   provider: provider,
+                ))*/
+            Expanded(
+                flex: isTablet ? 4 : 3,
+                child: MainVideoCall(
+
                 ))
           ],
         ),

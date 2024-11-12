@@ -87,6 +87,7 @@ class Patient {
   String? email;
   String? phoneNumber;
   String? profilePicture;
+  String? gender;
 
   Patient({this.id, this.name, this.email, this.phoneNumber});
 
@@ -96,6 +97,7 @@ class Patient {
     email = json['email'];
     phoneNumber = json['phoneNumber'];
     profilePicture = json['profilePicture'];
+    gender = json['gender'];
   }
 
   Map<String, dynamic> toJson() {
@@ -105,6 +107,7 @@ class Patient {
     data['email'] = email;
     data['phoneNumber'] = phoneNumber;
     data['profilePicture'] = profilePicture;
+    data['gender'] = gender;
     return data;
   }
 }

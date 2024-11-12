@@ -1,188 +1,194 @@
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-class DashboardPatientView extends StatelessWidget {
+import '../../../core/string/string_utils.dart';
+
+class DashboardPatientView extends StatefulWidget {
   const DashboardPatientView({super.key, required this.provider});
 
   final AdminDashboardProvider provider;
 
   @override
+  State<DashboardPatientView> createState() => _DashboardPatientViewState();
+}
+
+class _DashboardPatientViewState extends State<DashboardPatientView> {
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context
+          .read<AdminDashboardProvider>()
+          .getDashboardCountData(context: context)
+          .then((value) {});
+    });
+
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
+    DateTime startDate = DateTime.now(); // Oct 1
+    DateTime tomorrow = startDate.add(Duration(days: 30));
+
+    String todayFormatted = DateFormat('MMM d').format(startDate);
+    String tomorrowFormatted = DateFormat("MMM d").format(tomorrow);
+
     return Container(
       padding: const EdgeInsets.all(0),
       margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(8)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
+      child: Stack(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: CommonTextWidget(
-                  left: 5,
-                  text: "appointments".toUpperCase(),
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: CommonTextWidget(
-
-                  right: 5,
-                  text: "Oct 1 - Oct 30".toUpperCase(),
-                  textColor: Colors.green.shade300,
-                  fontWeight: FontWeight.w800,
-                  textAlign: TextAlign.right,
-                ),
-              ),
-            ],
-          ),
-          const Divider(
-            thickness: 0.3,
-          ),
-         // commonView(),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: commonView(
-                    title: "No. of completed appointments".toUpperCase(),
-                    value: "50",
-                    colorText: Colors.black,
-                    bgColor: AppColors.colorBgNew,
-                  ),
-                ),
-                Expanded(
-                  child: commonView(
-                    title: "No. of upcoming appointments".toUpperCase(),
-                    value: "40",
-                    colorText: AppColors.primary,
-                    bgColor: AppColors.colorBgNew,
-                  ),
-                ),
-                Expanded(
-                  child: commonView(
-                    title: "No. of missed appointments".toUpperCase(),
-                    value: "5",
-                    colorText: Colors.red.shade600,
-                    bgColor: AppColors.colorBgNew,
-                  ),
-                ),
-              ],
-            ),
-          )
-          /* Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: Row(
-              children: [
-                Expanded(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
                     child: CommonTextWidget(
-                  text: "Next Patient".toUpperCase(),
-                  fontWeight: FontWeight.w800,
-                )),
-                Expanded(
+                      left: 5,
+                      text: "appointments".toUpperCase(),
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: CommonTextWidget(
+
+                      right: 5,
+                      text: "$todayFormatted - $tomorrowFormatted".toUpperCase(),
+                      textColor: Colors.green.shade300,
+                      fontWeight: FontWeight.w800,
+                      textAlign: TextAlign.right,
+                    ),
+                  ),
+                ],
+              ),
+              const Divider(
+                thickness: 0.3,
+              ),
+             // commonView(),
+              Consumer<AdminDashboardProvider>(
+                builder: (context,provider,child) {
+                  return Padding(
+                    padding: const EdgeInsets.all(12.0),
                     child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          child: commonView(
+                            title: "No. of completed appointments".toUpperCase(),
+                            value: provider.dashboardCountModel?.completed!=null?'${provider.dashboardCountModel?.completed}':"0",
+                            colorText: Colors.black,
+                            bgColor: AppColors.colorBgNew,
+                          ),
+                        ),
+                        Expanded(
+                          child: commonView(
+                            title: "No. of upcoming appointments".toUpperCase(),
+                            value: provider.dashboardCountModel?.upcoming!=null?'${provider.dashboardCountModel?.upcoming}':"0",
+
+                            colorText: AppColors.primary,
+                            bgColor: AppColors.colorBgNew,
+                          ),
+                        ),
+                        Expanded(
+                          child: commonView(
+                            title: "No. of missed appointments".toUpperCase(),
+
+                            value: provider.dashboardCountModel?.missed!=null?'${provider.dashboardCountModel?.missed}':"0",
+                            colorText: Colors.red.shade600,
+                            bgColor: AppColors.colorBgNew,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              )
+              /* Padding(
+                padding: const EdgeInsets.all(0.0),
+                child: Row(
                   children: [
-                    IconButton(
-                        padding: EdgeInsets.zero,
-                        onPressed: () {
-                          provider.previousItem();
-                          pageControllerPatientView
-                              .jumpToPage(provider.currentIndex);
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back_ios_new_outlined,
-                          color: Colors.grey,
-                          size: 16,
-                        )),
-                    IconButton(
-                        padding: EdgeInsets.zero,
-                        onPressed: () {
-                          provider.nextItem(provider.patients.length);
-                          pageControllerPatientView
-                              .jumpToPage(provider.currentIndex);
-                          // buttonCarouselController.nextPage();
-                        },
-                        icon: const Icon(
-                          Icons.arrow_forward_ios_outlined,
-                          color: Colors.grey,
-                          size: 16,
-                        ))
+                    Expanded(
+                        child: CommonTextWidget(
+                      text: "Next Patient".toUpperCase(),
+                      fontWeight: FontWeight.w800,
+                    )),
+                    Expanded(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                            padding: EdgeInsets.zero,
+                            onPressed: () {
+                              provider.previousItem();
+                              pageControllerPatientView
+                                  .jumpToPage(provider.currentIndex);
+                            },
+                            icon: const Icon(
+                              Icons.arrow_back_ios_new_outlined,
+                              color: Colors.grey,
+                              size: 16,
+                            )),
+                        IconButton(
+                            padding: EdgeInsets.zero,
+                            onPressed: () {
+                              provider.nextItem(provider.patients.length);
+                              pageControllerPatientView
+                                  .jumpToPage(provider.currentIndex);
+                              // buttonCarouselController.nextPage();
+                            },
+                            icon: const Icon(
+                              Icons.arrow_forward_ios_outlined,
+                              color: Colors.grey,
+                              size: 16,
+                            ))
+                      ],
+                    ))
                   ],
-                ))
-              ],
-            ),
-          ),
-          SizedBox(
-            height: isDeskTop
-                ? size.height * 0.14
-                : isTablet
-                    ? size.height * 0.15
-                    : size.height * 0.13,
-            child: PageView.builder(
-                controller: pageControllerPatientView,
-                onPageChanged: (value) {
-                  provider.currentIndex == value;
-                },
-                itemCount: provider.patients.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.all(0.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                flex: 9,
-                                child: Row(
-                                  children: [
-                                    commonInkWell(
-                                      onEnter: (event) {
-                                        showProfileDialog(context);
-                                        context.read<ReportProvider>().setName =
-                                            provider.patients[index].name
-                                                .toString();
-                                        context
-                                                .read<ReportProvider>()
-                                                .setImage =
-                                            provider.patients[index].profile
-                                                .toString();
-                                      },
-                                      child: commonProfileIcon(
-                                          width: 40,
-                                          height: 40,
-                                          path: provider
-                                                  .patients[index].profile ??
-                                              icDummyUsers),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                ),
+              ),
+              SizedBox(
+                height: isDeskTop
+                    ? size.height * 0.14
+                    : isTablet
+                        ? size.height * 0.15
+                        : size.height * 0.13,
+                child: PageView.builder(
+                    controller: pageControllerPatientView,
+                    onPageChanged: (value) {
+                      provider.currentIndex == value;
+                    },
+                    itemCount: provider.patients.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.all(0.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    flex: 9,
+                                    child: Row(
                                       children: [
                                         commonInkWell(
                                           onEnter: (event) {
                                             showProfileDialog(context);
-                                            context
-                                                    .read<ReportProvider>()
-                                                    .setName =
+                                            context.read<ReportProvider>().setName =
                                                 provider.patients[index].name
                                                     .toString();
                                             context
@@ -191,105 +197,138 @@ class DashboardPatientView extends StatelessWidget {
                                                 provider.patients[index].profile
                                                     .toString();
                                           },
-                                          child: CommonTextWidget(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            text: provider.patients[index].name,
-                                          ),
+                                          child: commonProfileIcon(
+                                              width: 40,
+                                              height: 40,
+                                              path: provider
+                                                      .patients[index].profile ??
+                                                  icDummyUsers),
                                         ),
-                                        CommonTextWidget(
-                                          text: provider
-                                              .patients[index].description,
-                                          fontSize: 11,
-                                          top: 5,
+                                        const SizedBox(
+                                          width: 10,
                                         ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            commonInkWell(
+                                              onEnter: (event) {
+                                                showProfileDialog(context);
+                                                context
+                                                        .read<ReportProvider>()
+                                                        .setName =
+                                                    provider.patients[index].name
+                                                        .toString();
+                                                context
+                                                        .read<ReportProvider>()
+                                                        .setImage =
+                                                    provider.patients[index].profile
+                                                        .toString();
+                                              },
+                                              child: CommonTextWidget(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w700,
+                                                text: provider.patients[index].name,
+                                              ),
+                                            ),
+                                            CommonTextWidget(
+                                              text: provider
+                                                  .patients[index].description,
+                                              fontSize: 11,
+                                              top: 5,
+                                            ),
+                                          ],
+                                        )
                                       ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
-                                  child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Flexible(
-                                    child: MouseRegion(
-                                      onEnter: (_) => provider.setHover(true),
-                                      onExit: (_) => provider.setHover(false),
-                                      child: AnimatedContainer(
-                                        alignment: Alignment.topLeft,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                            color: provider.isHovered
-                                                ? AppColors.colorBlue
-                                                : AppColors.colorBgNew,
-                                            */ /*color: AppColors.colorBgNew,*/ /*
-                                            shape: BoxShape.circle),
-                                        height: 40,
-                                        duration:
-                                            const Duration(milliseconds: 200),
-                                        child: Center(
-                                          child: Icon(
-                                            size: 18,
-                                            Icons.call_sharp,
-                                            color: provider.isHovered
-                                                ? Colors.white
-                                                : Colors.grey,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                      child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Flexible(
+                                        child: MouseRegion(
+                                          onEnter: (_) => provider.setHover(true),
+                                          onExit: (_) => provider.setHover(false),
+                                          child: AnimatedContainer(
+                                            alignment: Alignment.topLeft,
+                                            width: 40,
+                                            decoration: BoxDecoration(
+                                                color: provider.isHovered
+                                                    ? AppColors.colorBlue
+                                                    : AppColors.colorBgNew,
+                                                */ /*color: AppColors.colorBgNew,*/ /*
+                                                shape: BoxShape.circle),
+                                            height: 40,
+                                            duration:
+                                                const Duration(milliseconds: 200),
+                                            child: Center(
+                                              child: Icon(
+                                                size: 18,
+                                                Icons.call_sharp,
+                                                color: provider.isHovered
+                                                    ? Colors.white
+                                                    : Colors.grey,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
+                                    ],
+                                  ))
                                 ],
-                              ))
-                            ],
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      const Divider(
-                        thickness: 0.3,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(0.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                                child: Row(
+                          const Divider(
+                            thickness: 0.3,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: Row(
                               children: [
-                                const Icon(
-                                  Icons.access_time,
-                                  color: AppColors.colorTextNew,
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                CommonTextWidget(
-                                  text: provider.patients[index].time,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                )
+                                Expanded(
+                                    child: Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.access_time,
+                                      color: AppColors.colorTextNew,
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    CommonTextWidget(
+                                      text: provider.patients[index].time,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    )
+                                  ],
+                                )),
+                                const Expanded(
+                                    child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Icon(
+                                      Icons.more_horiz,
+                                      color: AppColors.colorTextNew,
+                                    ),
+                                  ],
+                                ))
                               ],
-                            )),
-                            const Expanded(
-                                child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Icon(
-                                  Icons.more_horiz,
-                                  color: AppColors.colorTextNew,
-                                ),
-                              ],
-                            ))
-                          ],
-                        ),
-                      )
-                    ],
-                  );
-                }),
-          ),*/
+                            ),
+                          )
+                        ],
+                      );
+                    }),
+              ),*/
+            ],
+          ),
+   //       context.read<AdminDashboardProvider>().isFetching?showLoaderList():SizedBox.shrink()
         ],
       ),
     );

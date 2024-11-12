@@ -10,6 +10,8 @@ import 'package:doctor_app/screen/web_view/admin_dashboard_view/prescription/add
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../service/gloable_status_code.dart';
+
 class SettingPrescriptionScreen extends StatefulWidget {
   const SettingPrescriptionScreen({super.key});
 
@@ -219,14 +221,21 @@ class _SettingPrescriptionScreenState extends State<SettingPrescriptionScreen> {
                                                     btnNegative: "No",
                                                     btnPositive: "Delete",
                                                     onPressPositive: () {
-                                                      Navigator.of(context)
-                                                          .pop();
+
                                                       provider
                                                           .deletePrescription(
                                                               context: context,
                                                               id: prescription
                                                                   .sId
-                                                                  .toString());
+                                                                  .toString()).then((value){
+                                                        if (globalStatusCode == 200 ||
+                                                            globalStatusCode == 201) {
+                                                          //   resetField();
+                                                          //provider.selectedID == null;
+                                                          Navigator.of(context).pop();
+                                                          //Navigator.of(context).pop();
+                                                        }
+                                                      });
                                                     },
                                                     onPressNegative: () {
                                                       Navigator.of(context)

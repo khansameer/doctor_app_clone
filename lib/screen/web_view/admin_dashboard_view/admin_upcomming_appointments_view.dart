@@ -1,3 +1,4 @@
+import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
@@ -56,9 +57,7 @@ class _AdminUpComingAppointmentsViewState
   Widget build(BuildContext context) {
     var provider = context.read<AdminDashboardProvider>();
     var size = MediaQuery.sizeOf(context);
-    //  var groupedAppointmentsss = groupAppointmentsByDate(provider.upComingAppointmentModel?.appointments??[] );
 
-    // print('=======${groupedAppointmentsss.length}');
     final appointments = provider.upComingAppointmentModel?.appointments ?? [];
     Map<String, List> groupedAppointments = {};
 
@@ -91,9 +90,6 @@ class _AdminUpComingAppointmentsViewState
                   fontWeight: FontWeight.w700,
                 ),
 
-                /* SizedBox(
-                    height: size.height,
-                    child: AppointmentListView()),*/
                 SizedBox(
                   height: size.height,
                   child: appointments.isNotEmpty
@@ -103,6 +99,8 @@ class _AdminUpComingAppointmentsViewState
                           itemBuilder: (context, dateIndex) {
                             String dateKey =
                                 groupedAppointments.keys.elementAt(dateIndex);
+
+
                             var appointmentsForDate =
                                 groupedAppointments[dateKey];
                             return Column(
@@ -136,16 +134,14 @@ class _AdminUpComingAppointmentsViewState
                                                 Expanded(
                                                   child: Row(
                                                     children: [
-                                                      Expanded(
-                                                        child: commonImageNetworkWidget(
-                                                            width: 40,
-                                                            boxFit:
-                                                                BoxFit.cover,
-                                                            height: 40,
-                                                            path: aptData
-                                                                .patient
-                                                                .profilePicture),
-                                                      ),
+                                                      commonImageNetworkWidget(
+                                                          width: 40,
+                                                          boxFit:
+                                                              BoxFit.cover,
+                                                          height: 40,
+                                                          path: aptData
+                                                              .patient
+                                                              .profilePicture),
 
                                                       const SizedBox(width: 10),
                                                       // Patient Name and Email
@@ -269,57 +265,42 @@ class _AdminUpComingAppointmentsViewState
                                                     SizedBox(width: 5),
                                                     Builder(builder: (context) {
                                                       return commonInkWell(
-                                                        onTap: () {
-                                                          //*  context.read<ReportProvider>().setName =
-                                                          widget
-                                                              .provider
-                                                              .patients[index]
-                                                              .name
-                                                              .toString();
-                                                          context
-                                                                  .read<
-                                                                      ReportProvider>()
-                                                                  .setImage =
-                                                              widget
-                                                                  .provider
-                                                                  .patients[
-                                                                      index]
-                                                                  .profile
-                                                                  .toString(); //*
-                                                          // showPopoverMenu(
-                                                          //     width: size.width*0.1,
-                                                          //     context: context,child:PatientProfileDialog() , size: size);
-                                                          showGeneralDialog(
-                                                            context: context,
-                                                            barrierLabel:
-                                                                "Barrier",
-                                                            barrierDismissible:
-                                                                true,
-                                                            barrierColor: Colors
-                                                                .black
-                                                                .withOpacity(
-                                                                    0.6),
-                                                            transitionDuration:
-                                                                const Duration(
-                                                                    milliseconds:
-                                                                        800),
-                                                            pageBuilder:
-                                                                (_, __, ___) {
-                                                              return Center(
-                                                                child: SizedBox(
-                                                                  width:
-                                                                      size.width *
-                                                                          0.2,
-                                                                  child: ClipRRect(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              8),
-                                                                      child:
-                                                                          const PatientProfileDialog()),
-                                                                ),
-                                                              );
-                                                            },
+                                                        onTap: () async {
+
+
+                                                          var data=appointments[dateIndex];
+                                                          await showAlignedDialog(
+                                                          context: context,
+                                                          isGlobal: false,
+
+                                                          barrierColor: Colors.transparent,
+                                                          avoidOverflow: false,
+
+
+                                                          targetAnchor: AlignmentDirectional(1, 1.0)
+                                                              .resolve(Directionality.of(context)),
+                                                          followerAnchor: AlignmentDirectional(1, -1.0)
+                                                              .resolve(Directionality.of(context)),
+                                                          builder: (dialogContext) {
+                                                            return Material(
+                                                              color: Colors.transparent,
+                                                              child: GestureDetector(
+                                                                onTap: () =>
+                                                                    FocusScope.of(dialogContext).unfocus(),
+                                                                child:
+                                                                SizedBox(
+                                                                    width:
+                                                                    size.width *
+                                                                        0.2,
+                                                                    child: PatientProfileDialog(
+                                                                appointment: appointments[dateIndex],
+                                                                      aptData: aptData,)),
+                                                              ),
+                                                            );
+                                                          },
                                                           );
+
+
                                                         },
                                                         child: Consumer<
                                                                 AdminDashboardProvider>(
@@ -449,97 +430,5 @@ class _AdminUpComingAppointmentsViewState
   }
 }
 
-class AppointmentListView extends StatelessWidget {
-  Map<String, List<Appointments>> groupAppointmentsByDate(
-      List<Appointments> appointments) {
-    Map<String, List<Appointments>> groupedAppointments = {};
 
-    for (var appointment in appointments) {
-      print('=====ph$appointments');
-      String formattedDate = DateFormat('yyyy-MM-dd').format(
-          DateTime.parse(appointment.dateTime ?? DateTime.now.toString()));
-      if (groupedAppointments.containsKey(formattedDate)) {
-        groupedAppointments[formattedDate]?.add(appointment);
-      } else {
-        groupedAppointments[formattedDate] = [appointment];
-      }
-    }
 
-    return groupedAppointments;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AdminDashboardProvider(),
-      child: Scaffold(
-        body: Consumer<AdminDashboardProvider>(
-          builder: (context, appointmentProvider, child) {
-            if (appointmentProvider.isFetching) {
-              return Center(child: CircularProgressIndicator());
-            }
-
-            final groupedAppointments = groupAppointmentsByDate(
-                appointmentProvider.upComingAppointmentModel?.appointments ??
-                    []);
-
-            print('=groupedAppointments======${groupedAppointments.length}');
-
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: groupedAppointments.keys.length,
-              itemBuilder: (context, index) {
-                String date = groupedAppointments.keys.elementAt(index);
-                List<Appointments> appointmentsForDate =
-                    groupedAppointments[date]!;
-
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        DateFormat('yyyy-MM-dd').format(DateTime.parse(date)),
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    ...appointmentsForDate.map((appointment) {
-                      int? appointmentIndex = appointmentProvider
-                              .upComingAppointmentModel?.appointments
-                              ?.indexOf(appointment) ??
-                          0;
-
-                      return ListTile(
-                        title: Text('${appointment.patient?.name}'),
-                        //   subtitle: Text('${DateFormat('HH:mm').format('${appointment.dateTime}')} - ${appointment.appointmentType}'),
-
-                        trailing: MouseRegion(
-                          onEnter: (_) {
-                            appointmentProvider.setHoverState(
-                                appointmentIndex, true);
-                          },
-                          onExit: (_) {
-                            appointmentProvider.setHoverState(
-                                appointmentIndex, false);
-                          },
-                          child: Icon(
-                            Icons.video_call,
-                            color: appointmentProvider
-                                    .getHoverState(appointmentIndex)
-                                ? Colors.green
-                                : Colors.blue,
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ],
-                );
-              },
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
