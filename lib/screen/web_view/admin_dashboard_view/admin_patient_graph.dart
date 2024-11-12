@@ -4,6 +4,7 @@ import 'package:doctor_app/core/common/legend_item.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
 
@@ -25,6 +26,12 @@ class PatientsPaceChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final appointments = Provider.of<DashboardProvider>(context).appointments;
 
+    DateTime currentDate = DateTime.now();
+    DateTime tenDaysBefore = currentDate.subtract(Duration(days: 10));
+    DateTime tenDaysAfter = currentDate.add(Duration(days: 10));
+
+    String formattedBeforeDate = DateFormat('MMM d').format(tenDaysBefore);
+    String formattedAfterDate = DateFormat('MMM d').format(tenDaysAfter);
     // Group appointments by hour for stacked bars
     Map<int, List<Appointment>> appointmentsByHour = {};
     for (var appointment in appointments) {
@@ -41,7 +48,7 @@ class PatientsPaceChart extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
-mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -50,10 +57,22 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 child: CommonTextWidget(
                   text: "patient demographics".toUpperCase(),
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 12,
                 ),
               ),
               Padding(
+                padding: const EdgeInsets.all(10),
+                child: CommonTextWidget(
+                  right: 5,
+                  fontSize: 12,
+                  text: "$formattedBeforeDate - $formattedAfterDate"
+                      .toUpperCase(),
+                  textColor: Colors.green.shade300,
+                  fontWeight: FontWeight.w800,
+                  textAlign: TextAlign.right,
+                ),
+              ),
+              /* Padding(
                 padding: const EdgeInsets.all(0),
                 child: CommonTextWidget(
                   text: "Oct 1 - Oct 30".toUpperCase(),
@@ -62,15 +81,13 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   textColor: Colors.black,
                   textAlign: TextAlign.right,
                 ),
-              )
+              )*/
             ],
           ),
           const SizedBox(
             height: 10,
           ),
-          Container(
-            child: WorldMap()
-          )
+          Container(child: WorldMap())
         ],
       ),
     );
@@ -433,7 +450,8 @@ class _WorldMapState extends State<WorldMap> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         // Legend for dot colors
         SfMaps(

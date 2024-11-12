@@ -57,7 +57,7 @@ class _MainVideoCallState extends State<MainVideoCall> {
                 color: Colors.white, borderRadius: BorderRadius.circular(8)),
             height: size.height,
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(10.0),
               child: ListView(
                 children: [
                   CommonTextWidget(
@@ -82,11 +82,12 @@ class _MainVideoCallState extends State<MainVideoCall> {
                     ),
                     stickyHeaderBackgroundColor: Colors.transparent,
                     groupSeparatorBuilder: (String value) => Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(
+                          left: 0.0, right: 0, top: 8, bottom: 8),
                       child: CommonTextWidget(
                         text: value,
                         fontWeight: FontWeight.w600,
-                        textColor: AppColors.primary,
+                        textColor: Colors.green.shade300,
                       ),
                     ),
 

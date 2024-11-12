@@ -18,7 +18,6 @@ class DashboardPatientView extends StatefulWidget {
 }
 
 class _DashboardPatientViewState extends State<DashboardPatientView> {
-
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -30,13 +29,15 @@ class _DashboardPatientViewState extends State<DashboardPatientView> {
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    DateTime startDate = DateTime.now(); // Oct 1
-    DateTime tomorrow = startDate.add(Duration(days: 30));
+    DateTime currentDate = DateTime.now();
+    DateTime tenDaysBefore = currentDate.subtract(Duration(days: 10));
+    DateTime tenDaysAfter = currentDate.add(Duration(days: 10));
 
-    String todayFormatted = DateFormat('MMM d').format(startDate);
-    String tomorrowFormatted = DateFormat("MMM d").format(tomorrow);
+    String formattedBeforeDate = DateFormat('MMM d').format(tenDaysBefore);
+    String formattedAfterDate = DateFormat('MMM d').format(tenDaysAfter);
 
     return Container(
       padding: const EdgeInsets.all(0),
@@ -64,9 +65,9 @@ class _DashboardPatientViewState extends State<DashboardPatientView> {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: CommonTextWidget(
-
                       right: 5,
-                      text: "$todayFormatted - $tomorrowFormatted".toUpperCase(),
+                      text: "$formattedBeforeDate - $formattedAfterDate"
+                          .toUpperCase(),
                       textColor: Colors.green.shade300,
                       fontWeight: FontWeight.w800,
                       textAlign: TextAlign.right,
@@ -77,44 +78,47 @@ class _DashboardPatientViewState extends State<DashboardPatientView> {
               const Divider(
                 thickness: 0.3,
               ),
-             // commonView(),
+              // commonView(),
               Consumer<AdminDashboardProvider>(
-                builder: (context,provider,child) {
-                  return Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: commonView(
-                            title: "No. of completed appointments".toUpperCase(),
-                            value: provider.dashboardCountModel?.completed!=null?'${provider.dashboardCountModel?.completed}':"0",
-                            colorText: Colors.black,
-                            bgColor: AppColors.colorBgNew,
-                          ),
+                  builder: (context, provider, child) {
+                return Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: commonView(
+                          title: "No. of completed appointments".toUpperCase(),
+                          value: provider.dashboardCountModel?.completed != null
+                              ? '${provider.dashboardCountModel?.completed}'
+                              : "0",
+                          colorText: Colors.black,
+                          bgColor: AppColors.colorBgNew,
                         ),
-                        Expanded(
-                          child: commonView(
-                            title: "No. of upcoming appointments".toUpperCase(),
-                            value: provider.dashboardCountModel?.upcoming!=null?'${provider.dashboardCountModel?.upcoming}':"0",
-
-                            colorText: AppColors.primary,
-                            bgColor: AppColors.colorBgNew,
-                          ),
+                      ),
+                      Expanded(
+                        child: commonView(
+                          title: "No. of upcoming appointments".toUpperCase(),
+                          value: provider.dashboardCountModel?.upcoming != null
+                              ? '${provider.dashboardCountModel?.upcoming}'
+                              : "0",
+                          colorText: AppColors.primary,
+                          bgColor: AppColors.colorBgNew,
                         ),
-                        Expanded(
-                          child: commonView(
-                            title: "No. of missed appointments".toUpperCase(),
-
-                            value: provider.dashboardCountModel?.missed!=null?'${provider.dashboardCountModel?.missed}':"0",
-                            colorText: Colors.red.shade600,
-                            bgColor: AppColors.colorBgNew,
-                          ),
+                      ),
+                      Expanded(
+                        child: commonView(
+                          title: "No. of missed appointments".toUpperCase(),
+                          value: provider.dashboardCountModel?.missed != null
+                              ? '${provider.dashboardCountModel?.missed}'
+                              : "0",
+                          colorText: Colors.red.shade600,
+                          bgColor: AppColors.colorBgNew,
                         ),
-                      ],
-                    ),
-                  );
-                }
-              )
+                      ),
+                    ],
+                  ),
+                );
+              })
               /* Padding(
                 padding: const EdgeInsets.all(0.0),
                 child: Row(
@@ -328,7 +332,7 @@ class _DashboardPatientViewState extends State<DashboardPatientView> {
               ),*/
             ],
           ),
-   //       context.read<AdminDashboardProvider>().isFetching?showLoaderList():SizedBox.shrink()
+          //       context.read<AdminDashboardProvider>().isFetching?showLoaderList():SizedBox.shrink()
         ],
       ),
     );

@@ -3,6 +3,7 @@ import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
@@ -31,6 +32,12 @@ class PatientsPaceChart extends StatelessWidget {
           .add(appointment);
     }
 
+    DateTime currentDate = DateTime.now();
+    DateTime tenDaysBefore = currentDate.subtract(Duration(days: 10));
+    DateTime tenDaysAfter = currentDate.add(Duration(days: 10));
+
+    String formattedBeforeDate = DateFormat('MMM d').format(tenDaysBefore);
+    String formattedAfterDate = DateFormat('MMM d').format(tenDaysAfter);
     return Container(
       margin: const EdgeInsets.all(20),
       padding: const EdgeInsets.all(16),
@@ -49,25 +56,27 @@ class PatientsPaceChart extends StatelessWidget {
                 child: CommonTextWidget(
                   text: "patient Dirstribution".toUpperCase(),
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 12,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(0),
+                padding: const EdgeInsets.all(10),
                 child: CommonTextWidget(
-                  text: "Oct 1 - Oct 30".toUpperCase(),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 14,
-                  textColor: Colors.black,
+                  right: 5,
+                  fontSize: 12,
+                  text: "$formattedBeforeDate - $formattedAfterDate"
+                      .toUpperCase(),
+                  textColor: Colors.green.shade300,
+                  fontWeight: FontWeight.w800,
                   textAlign: TextAlign.right,
                 ),
-              )
+              ),
             ],
           ),
           const SizedBox(
             height: 10,
           ),
-         Container(child: DoughnutChartExample())
+          Container(child: DoughnutChartExample())
         ],
       ),
     );
@@ -83,10 +92,12 @@ class DoughnutChartExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Stack(
-          alignment: Alignment.center,fit: StackFit.loose,
+          alignment: Alignment.center,
+          fit: StackFit.loose,
           children: [
             SfCircularChart(
               series: <CircularSeries>[
@@ -117,7 +128,6 @@ class DoughnutChartExample extends StatelessWidget {
           ],
         ),
         Column(
-         
           children: [
             Row(
               children: [
