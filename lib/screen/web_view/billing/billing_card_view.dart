@@ -1,4 +1,3 @@
-
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/provider/billing_provider.dart';
 import 'package:flutter/material.dart';
@@ -6,11 +5,8 @@ import 'package:provider/provider.dart';
 
 import '../../../core/colors.dart';
 import '../../../core/component/component.dart';
-import '../../../core/responsive.dart';
-import '../../../provider/admin_dashboard_provider.dart';
-import '../admin_dashboard_view/paitent_details/doctor_note_view.dart';
-import 'billing_card_active_view.dart';
 
+import 'billing_card_active_view.dart';
 
 class BillingCardView extends StatelessWidget {
   const BillingCardView({super.key});
@@ -26,7 +22,7 @@ class BillingCardView extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
       ),
-      child:  DefaultTabController(
+      child: DefaultTabController(
         length: 2,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -48,7 +44,6 @@ class BillingCardView extends StatelessWidget {
                   dividerColor: Colors.white,
                   indicatorSize: TabBarIndicatorSize.tab,
                   tabAlignment: TabAlignment.fill,
-
                   indicator: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       color: AppColors.colorBgNew),
@@ -63,7 +58,9 @@ class BillingCardView extends StatelessWidget {
               ),
             ),
 
-            Divider(thickness: 0.3,),
+            Divider(
+              thickness: 0.3,
+            ),
             // Use Expanded here to fill the remaining space
             Expanded(
               child: TabBarView(
@@ -71,8 +68,11 @@ class BillingCardView extends StatelessWidget {
                   BillingCardActiveView(), // Content for the first tab
                   Container(
                     child: Center(
-                      child: CommonTextWidget(text: "You did not archive any cards yet",fontSize: 18,
-                      fontWeight: FontWeight.w800,),
+                      child: CommonTextWidget(
+                        text: "You did not archive any cards yet",
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ), // Content for the second tab
                 ],
@@ -82,9 +82,5 @@ class BillingCardView extends StatelessWidget {
         ),
       ),
     );
-
   }
-
-
-
 }

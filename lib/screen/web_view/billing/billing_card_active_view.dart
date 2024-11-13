@@ -12,77 +12,95 @@ class BillingCardActiveView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BillingProvider>(
-      builder: (context,provider,child) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
+    return Consumer<BillingProvider>(builder: (context, provider, child) {
+      return Container(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView.separated(
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.separated(
                   shrinkWrap: true,
-
                   itemCount: provider.cards.length,
-                  itemBuilder: (context,index){
-                bool isSelected = provider.selectedIndex == index;
-                var data= provider.cards[index];
-                return ListTile(
-                  contentPadding: EdgeInsets.all(5),
-                  leading: Container(
-                    width: 60,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black,width: 1),
-                      borderRadius: BorderRadius.circular(8)
-                    ),
-                    height: 60,
-
-                    child: Center(
-                      child: setAssetImage(image: data['icon']??icVisa),
-                    ),
-                  ),
-                  subtitle: Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-
-                        CommonTextWidget(text: "Edit",fontSize: 12,textColor: AppColors.colorBlue,),
-                        SizedBox(width: 20,),
-                        CommonTextWidget(text: "Archived",fontSize: 12,textColor: AppColors.colorBlue,)
-                      ],
-                    ),
-                  ),
-                  title: CommonTextWidget(text:data['name']??'',
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,),
-                  trailing: isSelected
-                      ? Icon(
-                      size: 28,
-                      Icons.check_circle, color: Colors.green)
-                      : Icon(
-                    size: 28,
-                    Icons.check_circle,color: Colors.grey.withOpacity(0.40),),
-                  onTap: () {
-                    provider.selectCard(index);
+                  itemBuilder: (context, index) {
+                    bool isSelected = provider.selectedIndex == index;
+                    var data = provider.cards[index];
+                    return ListTile(
+                      contentPadding: EdgeInsets.all(5),
+                      leading: Container(
+                        width: 60,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black, width: 1),
+                            borderRadius: BorderRadius.circular(8)),
+                        height: 60,
+                        child: Center(
+                          child: setAssetImage(image: data['icon'] ?? icVisa),
+                        ),
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CommonTextWidget(
+                              text: "Edit",
+                              fontSize: 12,
+                              textColor: AppColors.colorBlue,
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            CommonTextWidget(
+                              text: "Archived",
+                              fontSize: 12,
+                              textColor: AppColors.colorBlue,
+                            )
+                          ],
+                        ),
+                      ),
+                      title: CommonTextWidget(
+                        text: data['name'] ?? '',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      trailing: isSelected
+                          ? Icon(
+                              size: 28, Icons.check_circle, color: Colors.green)
+                          : Icon(
+                              size: 28,
+                              Icons.check_circle,
+                              color: Colors.grey.withOpacity(0.40),
+                            ),
+                      onTap: () {
+                        provider.selectCard(index);
+                      },
+                    );
                   },
-                );
-
-              }, separatorBuilder: (BuildContext context, int index) { return Divider(thickness: 0.3,); },),
+                  separatorBuilder: (BuildContext context, int index) {
+                    return Divider(
+                      thickness: 0.3,
+                    );
+                  },
+                ),
+              ),
             ),
-            Spacer(),
-            Divider(thickness: 0.3,),
+            Divider(
+              thickness: 0.3,
+            ),
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: CommonButtonWidget(text: "Add new card",
-              left: 30,
-              radius: 8,
-
-              right: 30,
-              height: 40,),
+              child: CommonButtonWidget(
+                text: "Add new card",
+                left: 30,
+                radius: 8,
+                right: 30,
+                height: 40,
+              ),
             )
           ],
-        );
-      }
-    );
+        ),
+      );
+    });
   }
 }
