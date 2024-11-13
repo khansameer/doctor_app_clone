@@ -11,6 +11,7 @@ import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/provider/patient_provider.dart';
 import 'package:doctor_app/provider/procedure_provider.dart';
 import 'package:doctor_app/provider/report_provier.dart';
+import 'package:doctor_app/screen/web_view/admin_dashboard_view/feedback/provider/feedback_provider.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/notification/provider/setting_notification_provider.dart';
 import 'package:doctor_app/screen/web_view/video_call/MeetingScreen.dart';
 import 'package:doctor_app/screen/web_view/video_call/RoomScreen.dart';
@@ -46,6 +47,8 @@ List<SingleChildWidget> providers = [
       create: (_) => PrescriptionProvider()),
   ChangeNotifierProvider<SettingNotificationProvider>(
       create: (_) => SettingNotificationProvider()),
+  ChangeNotifierProvider<FeedbackProvider>(
+      create: (_) => FeedbackProvider()),
 ];
 
 void main() async {

@@ -16,4 +16,5 @@ class ApiConfig {
   static const getUserDetailsBYID = '$baseUrl/users/edit';
   static const settingNotification = '$baseUrl/notifications';
   static const addPrescription = '$baseUrl/medications';
+  static const getFeedback = '$baseUrl/feedback/doctor/672a8e078137e27f0cb18f84';
 }
