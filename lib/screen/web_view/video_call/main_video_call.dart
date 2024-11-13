@@ -70,8 +70,9 @@ class _MainVideoCallState extends State<MainVideoCall> {
                         provider.upComingAppointmentModel?.appointments ?? [],
                     shrinkWrap: true,
                     groupBy: (patient) => DateFormat('yyyy-MM-dd').format(
-                        DateTime.parse(patient.dateTime ??
-                            DateTime.now().toString())), // Group by category
+                        DateTime.parse(
+                            patient.dateTime ?? DateTime.now().toString())),
+                    // Group by category
                     groupComparator: (value1, value2) =>
                         value2.compareTo(value1),
                     //  itemComparator: (item1, item2) => item1['name'].compareTo(item2['name']),
@@ -100,14 +101,38 @@ class _MainVideoCallState extends State<MainVideoCall> {
                               child: Row(
                                 children: [
                                   Expanded(
+
                                     child: Row(
                                       children: [
-                                        commonImageNetworkWidget(
+                                        MouseRegion(cursor: SystemMouseCursors.click,
+                                          onEnter: (details) {
+                                            if (!provider.isProfileDialogOpen) {
+                                              provider.showProfileOverlay(
+                                                  size, element, context);
+                                            }
+                                          },
+                                          onExit: (_) {
+                                            if (provider.isProfileDialogOpen) {
+                                              provider
+                                                  .hideProfileOverlay();
+                                            }
+                                          },
+                                          child: Container(
+                                            child: commonImageNetworkWidget(
+                                                width: 40,
+                                                height: 40,
+                                                boxFit: BoxFit.cover,
+                                                path: element.patient?.profile
+                                                    ?.profilePicture),
+                                          ),
+                                        ),
+
+                                        /*commonImageNetworkWidget(
                                             width: 40,
                                             boxFit: BoxFit.cover,
                                             height: 40,
                                             path: element
-                                                .patient?.profile?.profilePicture),
+                                                .patient?.profile?.profilePicture),*/
 
                                         const SizedBox(width: 10),
                                         // Patient Name and Email

@@ -25,7 +25,7 @@ class PatientProfileDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.colorBgNew,
+      color: AppColors.colorWhite,
       child: SizedBox(
         child: Column(
           mainAxisSize: MainAxisSize.min,
