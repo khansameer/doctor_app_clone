@@ -128,20 +128,20 @@ class PatientProvider with ChangeNotifier {
     }).toList();
   }
 
-  void filterFemalePatientsOver30() {
+  void filterFemalePatientsOver30({required String gender}) {
     _filteredPatients = _patientDetailsModel?.patients.where((patient) {
       final age = calculateAge(
           DateTime.parse(patient.dateOfBirth ?? DateTime.now().toString()));
-      return patient.gender?.toLowerCase() == 'female' && age > 30;
+      return patient.gender?.toLowerCase() == gender && age > 30;
     }).toList();
     notifyListeners(); // Use if you're working with a provider or similar state management
   }
 
-  void filterFemalePatientsUnder30() {
+  void filterFemalePatientsUnder30({required String gender}) {
     _filteredPatients = _patientDetailsModel?.patients.where((patient) {
       final age = calculateAge(
           DateTime.parse(patient.dateOfBirth ?? DateTime.now().toString()));
-      return patient.gender?.toLowerCase() == 'female' && age < 30;
+      return patient.gender?.toLowerCase() == gender && age < 30;
     }).toList();
 
     notifyListeners(); // Use if you're working with a provider or similar state management

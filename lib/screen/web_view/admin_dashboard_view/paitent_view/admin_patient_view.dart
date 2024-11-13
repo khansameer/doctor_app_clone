@@ -94,12 +94,29 @@ class TabView extends StatelessWidget {
                                   if (value == "over_30") {
                                     context
                                         .read<PatientProvider>()
-                                        .filterFemalePatientsOver30();
+                                        .filterFemalePatientsOver30(
+                                            gender: "female");
                                   } else if (value == "under_30") {
                                     context
                                         .read<PatientProvider>()
-                                        .filterFemalePatientsUnder30();
+                                        .filterFemalePatientsUnder30(
+                                            gender: 'female');
+                                  } else if (value == "under_30_men") {
+                                    context
+                                        .read<PatientProvider>()
+                                        .filterFemalePatientsUnder30(
+                                            gender: 'male');
+                                  } else if (value == "over_30_men") {
+                                    context
+                                        .read<PatientProvider>()
+                                        .filterFemalePatientsOver30(
+                                            gender: "male");
+                                  } else if (value == "all") {
+                                    context
+                                        .read<PatientProvider>()
+                                        .getAlLList();
                                   }
+
                                   // your logic
                                 },
                                 itemBuilder: (BuildContext bc) {
@@ -123,6 +140,39 @@ class TabView extends StatelessWidget {
                                           CommonTextWidget(
                                               fontWeight: FontWeight.w600,
                                               text: "Female Customer under 30"),
+                                        ],
+                                      ),
+                                    ),
+                                    PopupMenuItem(
+                                      value: 'under_30_men',
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.female),
+                                          CommonTextWidget(
+                                              fontWeight: FontWeight.w600,
+                                              text: "Man Customer under 30"),
+                                        ],
+                                      ),
+                                    ),
+                                    PopupMenuItem(
+                                      value: 'over_30_men',
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.female),
+                                          CommonTextWidget(
+                                              fontWeight: FontWeight.w600,
+                                              text: "Man Customer Over 30"),
+                                        ],
+                                      ),
+                                    ),
+                                    PopupMenuItem(
+                                      value: 'all',
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.female),
+                                          CommonTextWidget(
+                                              fontWeight: FontWeight.w600,
+                                              text: "Show All Patients"),
                                         ],
                                       ),
                                     ),
