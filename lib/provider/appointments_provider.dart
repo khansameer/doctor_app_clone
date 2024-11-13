@@ -12,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../screen/web_view/admin_dashboard_view/PatientProfileDialogCalender.dart';
 import '../screen/web_view/admin_dashboard_view/patient_profile_dialog.dart';
 
 class AppointmentsProvider extends ChangeNotifier {
@@ -241,12 +242,11 @@ class AppointmentsProvider extends ChangeNotifier {
     return todayAppointments;
   }
 
-  /* bool isProfileDialogOpen = false;
+  bool isProfileDialogOpen = false;
   // Initialize hover states based on the number of items
   OverlayEntry? overlayEntry;
 
-  void showProfileOverlay(
-      var size, Appointments element, BuildContext context) {
+  void showProfileOverlay(var size, BuildContext context) {
     if (!isProfileDialogOpen) {
       isProfileDialogOpen = true;
       notifyListeners();
@@ -268,7 +268,9 @@ class AppointmentsProvider extends ChangeNotifier {
                   borderRadius: BorderRadius.circular(8),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: PatientProfileDialog(appointment: element),
+                    child: Container(
+                      height: 500,
+                    ),
                   ),
                 ),
               ),
@@ -277,7 +279,7 @@ class AppointmentsProvider extends ChangeNotifier {
         },
       );
 
-      Overlay.of(context)?.insert(overlayEntry!);
+      Overlay.of(context).insert(overlayEntry!);
     }
   }
 
@@ -288,5 +290,5 @@ class AppointmentsProvider extends ChangeNotifier {
       isProfileDialogOpen = false;
       notifyListeners();
     }
-  }*/
+  }
 }

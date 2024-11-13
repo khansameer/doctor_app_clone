@@ -156,7 +156,10 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                             flex: 7,
                             child: SizedBox(
                                 height: size.height * 0.7,
-                                child: commonSfCalendar(calendarAppointments)),
+                                child: commonSfCalendar(
+                                    calendarAppointments: calendarAppointments,
+                                    provider: provider,
+                                    size: size)),
                           ),
                         ],
                       ),
@@ -336,48 +339,10 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
     );
   }
 
-  Widget appointmentBuilder(BuildContext context,
-      CalendarAppointmentDetails calendarAppointmentDetails) {
-    final Appointment appointment =
-        calendarAppointmentDetails.appointments.first;
-
-    return Column(
-      children: [
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          // onEnter: (details) {
-          //   if (!provider.isProfileDialogOpen) {
-          //     provider.showProfileOverlay(
-          //         size, element, context);
-          //   }
-          // },
-          // onExit: (_) {
-          //   if (provider.isProfileDialogOpen) {
-          //     provider.hideProfileOverlay();
-          //   }
-          // },
-          child: Container(
-            width: calendarAppointmentDetails.bounds.width,
-            height: calendarAppointmentDetails.bounds.height,
-            color: appointment.color,
-            child: Center(
-              child: CommonTextWidget(
-                fontSize: 12,
-                textColor: Colors.white,
-                //text: '${appointment.subject}${DateFormat(' (hh:mm a').format(appointment.startTime)}-${DateFormat('hh:mm a)').format(appointment.endTime)}',
-                text: '${appointment.subject}',
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-        )
-      ],
-    );
-  }
-
   commonSfCalendar(
-    List<Appointment>? calendarAppointments,
-  ) {
+      {List<Appointment>? calendarAppointments,
+      required AppointmentsProvider provider,
+      required Size size}) {
     return SfCalendar(
       view: CalendarView.week,
       allowedViews: <CalendarView>[
@@ -393,7 +358,42 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
       ],
       timeSlotViewSettings:
           TimeSlotViewSettings(timelineAppointmentHeight: 200),
-      appointmentBuilder: appointmentBuilder,
+      appointmentBuilder: (BuildContext context,
+          CalendarAppointmentDetails calendarAppointmentDetails) {
+        final Appointment appointment =
+            calendarAppointmentDetails.appointments.first;
+        return Column(
+          children: [
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              onEnter: (details) {
+                if (!provider.isProfileDialogOpen) {
+                  provider.showProfileOverlay(size, context);
+                }
+              },
+              onExit: (_) {
+                if (provider.isProfileDialogOpen) {
+                  provider.hideProfileOverlay();
+                }
+              },
+              child: Container(
+                width: calendarAppointmentDetails.bounds.width,
+                height: calendarAppointmentDetails.bounds.height,
+                color: appointment.color,
+                child: Center(
+                  child: CommonTextWidget(
+                    fontSize: 12,
+                    textColor: Colors.white,
+                    //text: '${appointment.subject}${DateFormat(' (hh:mm a').format(appointment.startTime)}-${DateFormat('hh:mm a)').format(appointment.endTime)}',
+                    text: '${appointment.subject}',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            )
+          ],
+        );
+      },
       controller: _calendarController,
       headerHeight: 0,
       onTap: (CalendarTapDetails details) {
