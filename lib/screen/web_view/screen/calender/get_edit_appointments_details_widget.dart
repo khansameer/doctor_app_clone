@@ -4,6 +4,7 @@ import 'package:doctor_app/core/common/common_drop_down_view.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/date_time_utils.dart';
 import 'package:doctor_app/core/component/component.dart';
+import 'package:doctor_app/core/context_extension.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/appointments_provider.dart';
 import 'package:doctor_app/provider/patient_provider.dart';
@@ -71,22 +72,26 @@ class _GetEditAppointmentsDetailsWidgetState
               '${provider.appointmentsDetailsModel?.dateTime.toString()}',
               format: DateTimeUtils.hhmmss)
           : '';
+
+
       if (!isDatePicked) {
         tetDate.text = formattedDate; // Only set if date not picked manually
       }
       if (!isTimePicked) {
-        tetTime.text = formattedTime; // Only set if date not picked manually
+        tetTime.text = formattedTime;
+        print('====${formattedTime}');
+        // Only set if date not picked manually
       }
 
       tetReason.text = provider.appointmentsDetailsModel?.reason != null
           ? '${provider.appointmentsDetailsModel?.reason.toString()}'
           : '';
 
-      if (provider.appointmentsDetailsModel?.patient?.sId != null) {
-        provider.updateValue(
-            '${provider.appointmentsDetailsModel?.patient?.firstName} ${provider.appointmentsDetailsModel?.patient?.lastName}');
-        provider.updateID('${provider.appointmentsDetailsModel?.patient?.sId}');
-      }
+       /* if (provider.appointmentsDetailsModel?.patient?.sId != null) {
+          provider.updateValue(
+              '${provider.appointmentsDetailsModel?.patient?.firstName.toString().toLowerCase()} ${provider.appointmentsDetailsModel?.patient?.lastName.toString().toLowerCase()}');
+          provider.updateID('${provider.appointmentsDetailsModel?.patient?.sId}');
+        }*/
     });
   }
 

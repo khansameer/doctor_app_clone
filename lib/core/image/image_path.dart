@@ -49,3 +49,5 @@ const icPatientUser11 = '$baseImagePath/patient_m_profile8.jpg';
 const icUserErrorImage = '$baseImagePath/ic_user_error.png';
 const icEditIcon = '$baseImagePath/ic_edit_icon.png';
 const icDeleteIcon = '$baseImagePath/ic_delete_icon.png';
+const icVisa = '$baseImagePath/ic_visa.png';
+const icMaster = '$baseImagePath/ic_money.png';

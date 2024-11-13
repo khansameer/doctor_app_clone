@@ -43,9 +43,6 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
     DateTime? now = widget.dateTime;
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      //final provider = Provider.of<PatientProvider>(context, listen: false);
-      /*tetTime.text = "${now?.hour}:${now?.minute}:${now?.second}";
-      tetDate.text = '${now?.year}-${now?.month}-${now?.day}';*/
       if (now != null) {
         // Format the time with AM/PM
         tetTime.text = DateFormat('hh:mm a').format(now);
@@ -67,14 +64,7 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
     });
   }
 
-  /*resetField() {
-    tetDate.clear();
-    tetTime.clear();
-    tetDesc.clear();
-    tetPatientName.clear();
-    tetPatientPhone.clear();
-    tetDesc.clear();
-  }*/
+
 
   @override
   void dispose() {

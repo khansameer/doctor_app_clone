@@ -6,6 +6,7 @@ import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 
 import 'package:doctor_app/provider/auth_provider.dart';
 import 'package:doctor_app/provider/appointments_provider.dart';
+import 'package:doctor_app/provider/billing_provider.dart';
 import 'package:doctor_app/provider/chat_provider.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/provider/patient_provider.dart';
@@ -49,6 +50,7 @@ List<SingleChildWidget> providers = [
       create: (_) => SettingNotificationProvider()),
   ChangeNotifierProvider<FeedbackProvider>(
       create: (_) => FeedbackProvider()),
+  ChangeNotifierProvider<BillingProvider>(create: (_) => BillingProvider()),
 ];
 
 void main() async {
