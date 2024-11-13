@@ -127,13 +127,18 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                                 ? const SizedBox.shrink()
                                 : _viewButtonView(
                                     isMobile: isMobile, index: index),
-                            leading: commonInkWell(
-                                onEnter: (event) {
-                                  // showProfileDialog(context);
-                                  context.read<ReportProvider>().setName =
-                                      '${data?.firstName.toString()} ${data?.lastName.toString()}';
-                                  context.read<ReportProvider>().setImage =
-                                      icPatientUser4;
+                            leading: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                onEnter: (details) {
+                                  if (!provider.isProfileDialogOpen) {
+                                    provider.showProfileOverlay(
+                                        size, data!, context);
+                                  }
+                                },
+                                onExit: (_) {
+                                  if (provider.isProfileDialogOpen) {
+                                    provider.hideProfileOverlay();
+                                  }
                                 },
                                 child: SizedBox(
                                   width: 40,

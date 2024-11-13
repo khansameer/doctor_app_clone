@@ -240,21 +240,64 @@ class _AdminDashboardState extends State<AdminDashboard> {
             const SizedBox(
               width: 40,
             ),
-            PopupMenuButton<int>(
-              color: Colors.white,
-              constraints: const BoxConstraints.tightFor(width: twoHundred),
-              elevation: zero,
-              offset: const Offset(zero, thirty),
-              onSelected: (value) {},
-              itemBuilder: (context) => [],
-              child: commonInkWell(
-                onTap: () {},
-                child: const Icon(
+            // PopupMenuButton(
+            //   color: Colors.white,
+            //   constraints: const BoxConstraints.tightFor(width: twoHundred),
+            //   elevation: zero,
+            //   offset: const Offset(zero, thirty),
+            //   onSelected: (value) {},
+            //   itemBuilder: (context) => [
+            //     new PopupMenuItem<String>(
+            //         child: new Text('Doge'), value: 'Doge'),
+            //     new PopupMenuItem<String>(
+            //         child: new Text('Lion'), value: 'Lion'),
+            //   ],
+            //   child: commonInkWell(
+            //     onTap: () {},
+            //     child: const Icon(
+            //       Icons.keyboard_arrow_down_sharp,
+            //       color: Colors.grey,
+            //     ),
+            //   ),
+            // ),
+            PopupMenuButton(
+                color: Colors.white,
+                icon: Icon(
                   Icons.keyboard_arrow_down_sharp,
                   color: Colors.grey,
                 ),
-              ),
-            ),
+                onSelected: (value) {
+                  // your logic
+                  setState(() {
+                    /// selectedItem = value.toString();
+                  });
+
+                  print(value);
+                  commonLogoutDialog(
+                      width: isMobile ? size.width * zero9 : size.width * 0.2,
+                      contextAd: context,
+                      isDesktop: isDesktop,
+                      isMobile: isMobile);
+                },
+                itemBuilder: (BuildContext bc) {
+                  return [
+                    PopupMenuItem(
+                      value: '/hello',
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.logout,
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          CommonTextWidget(text: "Logout"),
+                        ],
+                      ),
+                    ),
+                  ];
+                }),
             const SizedBox(
               width: 30,
             ),

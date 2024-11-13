@@ -10,6 +10,9 @@ import 'package:doctor_app/service/api_services.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+import '../screen/web_view/admin_dashboard_view/patient_profile_dialog.dart';
 
 class AppointmentsProvider extends ChangeNotifier {
   final _service = ApiService();
@@ -45,7 +48,7 @@ class AppointmentsProvider extends ChangeNotifier {
 
   List<String> appointmentType = [
     "Routine Checkup",
-  //  "Emergency",
+    //  "Emergency",
     "Consultation",
     "Sick Visit",
     "Examination",
@@ -106,6 +109,13 @@ class AppointmentsProvider extends ChangeNotifier {
       _isFetching = false;
       notifyListeners();
     }
+  }
+
+  List<String>? get uniqueAppointmentTypes {
+    return _appointmentsModel?.data?.appointments
+        ?.map((appointment) => appointment.appointmentType.toString())
+        .toSet()
+        .toList();
   }
 
   GetAppointmentsDetailsModel? _appointmentsDetailsModel;
@@ -230,4 +240,53 @@ class AppointmentsProvider extends ChangeNotifier {
 
     return todayAppointments;
   }
+
+  /* bool isProfileDialogOpen = false;
+  // Initialize hover states based on the number of items
+  OverlayEntry? overlayEntry;
+
+  void showProfileOverlay(
+      var size, Appointments element, BuildContext context) {
+    if (!isProfileDialogOpen) {
+      isProfileDialogOpen = true;
+      notifyListeners();
+
+      overlayEntry = OverlayEntry(
+        builder: (BuildContext context) {
+          return Positioned(
+            top: 100, // Adjust this to position the overlay as needed
+            left: (size.width - size.width * 0.2) / 2,
+            child: Material(
+              color: Colors
+                  .transparent, // Ensures only the dialog area is affected
+              child: SizedBox(
+                width: size.width * 0.22,
+                height: 380, // Adjust height as needed
+                child: Material(
+                  color: Colors.white, // Set the background color of the dialog
+                  elevation: 8.0, // Add shadow/elevation
+                  borderRadius: BorderRadius.circular(8),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: PatientProfileDialog(appointment: element),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+
+      Overlay.of(context)?.insert(overlayEntry!);
+    }
+  }
+
+  void hideProfileOverlay() {
+    if (isProfileDialogOpen && overlayEntry != null) {
+      overlayEntry?.remove();
+      overlayEntry = null;
+      isProfileDialogOpen = false;
+      notifyListeners();
+    }
+  }*/
 }

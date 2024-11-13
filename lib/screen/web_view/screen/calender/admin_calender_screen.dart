@@ -3,12 +3,14 @@ import 'package:doctor_app/core/common/custom_alert_dialog.dart';
 import 'package:doctor_app/core/common/legend_item.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
+import 'package:doctor_app/core/context_extension.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/appointments_provider.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/get_edit_appointments_details_widget.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -61,6 +63,9 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
           DateTime dateTime =
               DateTime.parse(appointment.dateTime ?? DateTime.now().toString());
 
+          var type = removeSpecialSymbolsAndEnsureSpace(
+              '${appointment.appointmentType?.toString().toCapitalize()}');
+
           return Appointment(
             startTime: dateTime,
             id: appointment.id,
@@ -68,7 +73,13 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
             endTime: dateTime.add(const Duration(hours: 1)),
             // Assuming 1 hour duration
             subject: '${appointment.patient?.name.toString()}',
-            color: AppColors.colorGreen, // Set a color for the appointment
+            color: type == 'Consultation'
+                ? AppColors.colorBlue
+                : type == 'Routine checkup'
+                    ? AppColors.colorSurgery
+                    : type == "Emergency"
+                        ? Colors.red
+                        : Colors.black,
           );
         } else {
           return Appointment(
@@ -177,7 +188,36 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                                       text: "Sick visit"),
                                 ],
                               )
-                            : const Row(
+                            : Container(
+                                width: size.width,
+                                height: 50.0, // Adjust the height as needed
+                                child: provider
+                                            .uniqueAppointmentTypes?.length !=
+                                        null
+                                    ? ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        shrinkWrap: true,
+                                        itemCount: provider
+                                            .uniqueAppointmentTypes?.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          var type =
+                                              removeSpecialSymbolsAndEnsureSpace(
+                                                  '${provider.uniqueAppointmentTypes?[index].toString().toCapitalize()}');
+                                          return LegendItem(
+                                              color: type == 'Consultation'
+                                                  ? AppColors.colorBlue
+                                                  : type == 'Routine checkup'
+                                                      ? AppColors.colorSurgery
+                                                      : type == "Emergency"
+                                                          ? Colors.red
+                                                          : Colors.black,
+                                              text: removeSpecialSymbolsAndEnsureSpace(
+                                                  '${provider.uniqueAppointmentTypes?[index].toString().toCapitalize()}'));
+                                        },
+                                      )
+                                    : SizedBox.shrink(),
+                              ) /*const Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   LegendItem(
@@ -199,7 +239,8 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                                       color: AppColors.colorDrawerLight,
                                       text: "Sick visit"),
                                 ],
-                              ),
+                              )*/
+                        ,
                       ),
                     ],
                   ),
@@ -295,8 +336,64 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
     );
   }
 
-  commonSfCalendar(List<Appointment>? calendarAppointments) {
+  Widget appointmentBuilder(BuildContext context,
+      CalendarAppointmentDetails calendarAppointmentDetails) {
+    final Appointment appointment =
+        calendarAppointmentDetails.appointments.first;
+
+    return Column(
+      children: [
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          // onEnter: (details) {
+          //   if (!provider.isProfileDialogOpen) {
+          //     provider.showProfileOverlay(
+          //         size, element, context);
+          //   }
+          // },
+          // onExit: (_) {
+          //   if (provider.isProfileDialogOpen) {
+          //     provider.hideProfileOverlay();
+          //   }
+          // },
+          child: Container(
+            width: calendarAppointmentDetails.bounds.width,
+            height: calendarAppointmentDetails.bounds.height,
+            color: appointment.color,
+            child: Center(
+              child: CommonTextWidget(
+                fontSize: 12,
+                textColor: Colors.white,
+                //text: '${appointment.subject}${DateFormat(' (hh:mm a').format(appointment.startTime)}-${DateFormat('hh:mm a)').format(appointment.endTime)}',
+                text: '${appointment.subject}',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  commonSfCalendar(
+    List<Appointment>? calendarAppointments,
+  ) {
     return SfCalendar(
+      view: CalendarView.week,
+      allowedViews: <CalendarView>[
+        CalendarView.day,
+        CalendarView.workWeek,
+        CalendarView.week,
+        CalendarView.month,
+        CalendarView.timelineDay,
+        CalendarView.timelineWeek,
+        CalendarView.timelineWorkWeek,
+        CalendarView.timelineMonth,
+        CalendarView.schedule
+      ],
+      timeSlotViewSettings:
+          TimeSlotViewSettings(timelineAppointmentHeight: 200),
+      appointmentBuilder: appointmentBuilder,
       controller: _calendarController,
       headerHeight: 0,
       onTap: (CalendarTapDetails details) {
@@ -333,7 +430,6 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
       },
       backgroundColor: Colors.white,
       headerStyle: const CalendarHeaderStyle(backgroundColor: Colors.white),
-      view: CalendarView.week,
       dataSource: AppointmentDataSource(calendarAppointments ?? []),
     );
   }

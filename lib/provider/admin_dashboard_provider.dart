@@ -39,13 +39,13 @@ class Patient {
 }
 
 class AdminDashboardProvider with ChangeNotifier {
-
   List<bool> _hoverStates = [];
   bool isProfileDialogOpen = false;
   // Initialize hover states based on the number of items
   OverlayEntry? overlayEntry;
 
-  void showProfileOverlay(var size, Appointments element, BuildContext context) {
+  void showProfileOverlay(
+      var size, Appointments element, BuildContext context) {
     if (!isProfileDialogOpen) {
       isProfileDialogOpen = true;
       notifyListeners();
@@ -53,16 +53,17 @@ class AdminDashboardProvider with ChangeNotifier {
       overlayEntry = OverlayEntry(
         builder: (BuildContext context) {
           return Positioned(
-            top: 100,  // Adjust this to position the overlay as needed
+            top: 100, // Adjust this to position the overlay as needed
             left: (size.width - size.width * 0.2) / 2,
             child: Material(
-              color: Colors.transparent,  // Ensures only the dialog area is affected
+              color: Colors
+                  .transparent, // Ensures only the dialog area is affected
               child: SizedBox(
                 width: size.width * 0.22,
-                height: 380,  // Adjust height as needed
+                height: 380, // Adjust height as needed
                 child: Material(
-                  color: Colors.white,  // Set the background color of the dialog
-                  elevation: 8.0,       // Add shadow/elevation
+                  color: Colors.white, // Set the background color of the dialog
+                  elevation: 8.0, // Add shadow/elevation
                   borderRadius: BorderRadius.circular(8),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
@@ -87,44 +88,24 @@ class AdminDashboardProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-  void hideProfileDialog(BuildContext context) {
-    print('PrintHide---->');
-    if (isProfileDialogOpen) {
-    Future.delayed(Duration(milliseconds: 100), () {
 
-        Navigator.of(context).pop(); // Close the dialog
-        isProfileDialogOpen = false;
-        notifyListeners();
-
-    });
-    }
-
-  }
-  void showProfileDialog(var size, Appointments element,context) {
+  void showProfileDialog(var size, Appointments element, context) {
     print('PrintEnter---->');
     // Adding a delay to ensure that the dialog is called properly after build context is ready
     if (!isProfileDialogOpen) {
-    Future.delayed(Duration(milliseconds: 100), () {
-
+      Future.delayed(Duration(milliseconds: 100), () {
         isProfileDialogOpen = true;
         notifyListeners();
         showDialog(
             barrierDismissible: false,
-
             context: context,
-            builder:
-                (BuildContext context) {
+            builder: (BuildContext context) {
               return CustomAlertDialog(
                 content: SizedBox(
                     width: size.width * 0.2,
                     child: ClipRRect(
-                      borderRadius:
-                      BorderRadius
-                          .circular(8),
-                      child:
-                      PatientProfileDialog(
-                          appointment:
-                          element),
+                      borderRadius: BorderRadius.circular(8),
+                      child: PatientProfileDialog(appointment: element),
                     )),
               );
             }).then((_) {
@@ -132,14 +113,14 @@ class AdminDashboardProvider with ChangeNotifier {
           isProfileDialogOpen = false;
           notifyListeners();
         });
-
-    });
+      });
     }
   }
 
   void initializeHoverStates(int itemCount) {
     _hoverStates = List.generate(itemCount, (index) => false);
   }
+
   bool getHoverState(int index) => _hoverStates[index];
 
   // Set the hover state for a specific index
@@ -170,7 +151,6 @@ class AdminDashboardProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
   int? _hoveredEdit;
 
   int? get hoveredEdit => _hoveredEdit;
@@ -188,7 +168,6 @@ class AdminDashboardProvider with ChangeNotifier {
     _hoveredProfile = index;
     notifyListeners();
   }
-
 
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
@@ -1372,17 +1351,19 @@ class AdminDashboardProvider with ChangeNotifier {
   final _service = ApiService();
   bool _isFetching = false;
   bool get isFetching => _isFetching;
-  Future getAppointmentsByFilter({required BuildContext context,String ?status,String ?appointment_type}) async {
-
+  Future getAppointmentsByFilter(
+      {required BuildContext context,
+      String? status,
+      String? appointment_type}) async {
     _isFetching = true;
     notifyListeners();
     try {
       final response = await _service.callGetMethod(
-          url: '${ApiConfig.createAppointment}?status=$status&appointment_type=$appointment_type');
+          url:
+              '${ApiConfig.createAppointment}?status=$status&appointment_type=$appointment_type');
       print('===error==$globalStatusCode');
       print('===createAppointment==${json.decode(response)}');
       if (globalStatusCode == 200 || globalStatusCode == 201) {
-
       } else if (globalStatusCode == 401) {
         commonSessionError(context: context);
       }
@@ -1399,48 +1380,13 @@ class AdminDashboardProvider with ChangeNotifier {
 
   UpComingAppointmentModel? _upComingAppointmentModel;
 
-  UpComingAppointmentModel? get upComingAppointmentModel => _upComingAppointmentModel;
+  UpComingAppointmentModel? get upComingAppointmentModel =>
+      _upComingAppointmentModel;
 
-  Future getUpComingAppointment({required BuildContext context,String ?startDate,String ?endDate}) async {
-    DateTime today = DateTime.now();
-    DateTime tomorrow = today.add(Duration(days: 1));
-
-    String todayFormatted = DateFormat(yyyMMdd).format(today);
-      String tomorrowFormatted = DateFormat(yyyMMdd).format(tomorrow);
-
-    _isFetching = true;
-    notifyListeners();
-    try {
-      final response = await _service.callGetMethod(
-          url: '${ApiConfig.createAppointment}?startDate=$todayFormatted&endDate=${endDate??tomorrowFormatted}');
-
-      if (globalStatusCode == 200 || globalStatusCode == 201) {
-        _upComingAppointmentModel = UpComingAppointmentModel.fromJson(json.decode(response));
-
-        print('===appResponse==${json.decode(response)}');
-        print('===length==${_upComingAppointmentModel?.appointments?.length}');
-      } else if (globalStatusCode == 401) {
-        _upComingAppointmentModel = UpComingAppointmentModel(
-          appointments: []
-        );
-        commonSessionError(context: context);
-      }
-
-      _isFetching = false;
-      notifyListeners();
-    } catch (e) {
-      _upComingAppointmentModel = UpComingAppointmentModel(
-          appointments: []
-      );
-      _isFetching = false;
-      print('===error==$e');
-      print('===error==$globalStatusCode');
-      notifyListeners();
-    }
-  }
-
-
-  Future getUpComingAppointmentDemo({required BuildContext context,String ?startDate,String ?endDate}) async {
+  Future getUpComingAppointment(
+      {required BuildContext context,
+      String? startDate,
+      String? endDate}) async {
     DateTime today = DateTime.now();
     DateTime tomorrow = today.add(Duration(days: 1));
 
@@ -1451,24 +1397,61 @@ class AdminDashboardProvider with ChangeNotifier {
     notifyListeners();
     try {
       final response = await _service.callGetMethod(
-          url: '${ApiConfig.createAppointment}?startDate=$todayFormatted&endDate=${endDate??tomorrowFormatted}');
+          url:
+              '${ApiConfig.createAppointment}?startDate=$todayFormatted&endDate=${endDate ?? tomorrowFormatted}');
 
       if (globalStatusCode == 200 || globalStatusCode == 201) {
-        _upComingAppointmentModel = UpComingAppointmentModel.fromJson(json.decode(response));
+        _upComingAppointmentModel =
+            UpComingAppointmentModel.fromJson(json.decode(response));
+
+        print('===appResponse==${json.decode(response)}');
         print('===length==${_upComingAppointmentModel?.appointments?.length}');
       } else if (globalStatusCode == 401) {
-        _upComingAppointmentModel = UpComingAppointmentModel(
-            appointments: []
-        );
+        _upComingAppointmentModel = UpComingAppointmentModel(appointments: []);
         commonSessionError(context: context);
       }
 
       _isFetching = false;
       notifyListeners();
     } catch (e) {
-      _upComingAppointmentModel = UpComingAppointmentModel(
-          appointments: []
-      );
+      _upComingAppointmentModel = UpComingAppointmentModel(appointments: []);
+      _isFetching = false;
+      print('===error==$e');
+      print('===error==$globalStatusCode');
+      notifyListeners();
+    }
+  }
+
+  Future getUpComingAppointmentDemo(
+      {required BuildContext context,
+      String? startDate,
+      String? endDate}) async {
+    DateTime today = DateTime.now();
+    DateTime tomorrow = today.add(Duration(days: 1));
+
+    String todayFormatted = DateFormat(yyyMMdd).format(today);
+    String tomorrowFormatted = DateFormat(yyyMMdd).format(tomorrow);
+
+    _isFetching = true;
+    notifyListeners();
+    try {
+      final response = await _service.callGetMethod(
+          url:
+              '${ApiConfig.createAppointment}?startDate=$todayFormatted&endDate=${endDate ?? tomorrowFormatted}');
+
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+        _upComingAppointmentModel =
+            UpComingAppointmentModel.fromJson(json.decode(response));
+        print('===length==${_upComingAppointmentModel?.appointments?.length}');
+      } else if (globalStatusCode == 401) {
+        _upComingAppointmentModel = UpComingAppointmentModel(appointments: []);
+        commonSessionError(context: context);
+      }
+
+      _isFetching = false;
+      notifyListeners();
+    } catch (e) {
+      _upComingAppointmentModel = UpComingAppointmentModel(appointments: []);
       _isFetching = false;
       print('===error==$e');
       print('===error==$globalStatusCode');
@@ -1478,11 +1461,16 @@ class AdminDashboardProvider with ChangeNotifier {
 
   DashboardCountModel? _dashboardCountModel;
   DashboardCountModel? get dashboardCountModel => _dashboardCountModel;
-  Future getDashboardCountData({required BuildContext context,String ?status,String ?appointment_type,String ?startDate,String ?endDate,String?page}) async {
-
+  Future getDashboardCountData(
+      {required BuildContext context,
+      String? status,
+      String? appointment_type,
+      String? startDate,
+      String? endDate,
+      String? page}) async {
     _isFetching = true;
     notifyListeners();
-    String  userID=await getUserID();
+    String userID = await getUserID();
     try {
       final response = await _service.callGetMethod(
           url: '${ApiConfig.createAppointment}/doctor/$userID/stats');
@@ -1491,7 +1479,6 @@ class AdminDashboardProvider with ChangeNotifier {
       if (globalStatusCode == 200 || globalStatusCode == 201) {
         _dashboardCountModel =
             DashboardCountModel.fromJson(json.decode(response));
-
       } else if (globalStatusCode == 401) {
         commonSessionError(context: context);
       }
@@ -1504,26 +1491,31 @@ class AdminDashboardProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-  List<WeeklyGraphModel> _chartData = [];
 
+  List<WeeklyGraphModel> _chartData = [];
 
   List<WeeklyGraphModel> get chartData => _chartData;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-  Future getDashboardWeeklyGraph({required BuildContext context,String ?status,String ?appointment_type,String ?startDate,String ?endDate,String?page}) async {
-
+  Future getDashboardWeeklyGraph(
+      {required BuildContext context,
+      String? status,
+      String? appointment_type,
+      String? startDate,
+      String? endDate,
+      String? page}) async {
     _isFetching = true;
     notifyListeners();
-    String  userID=await getUserID();
+    String userID = await getUserID();
     try {
       final response = await _service.callGetMethod(
           url: '${ApiConfig.createAppointment}/weekly-counts/$userID');
       print('===error==$globalStatusCode');
       print('===createAppointment==${json.decode(response)}');
       if (globalStatusCode == 200 || globalStatusCode == 201) {
-
         List<dynamic> jsonResponse = json.decode(response);
-        _chartData = jsonResponse.map((e) => WeeklyGraphModel.fromJson(e)).toList();
+        _chartData =
+            jsonResponse.map((e) => WeeklyGraphModel.fromJson(e)).toList();
       } else if (globalStatusCode == 401) {
         commonSessionError(context: context);
       }
@@ -1536,8 +1528,6 @@ class AdminDashboardProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-
-
 }
 
 class ChatUser {

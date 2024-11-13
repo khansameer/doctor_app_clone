@@ -25,6 +25,10 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+String removeSpecialSymbolsAndEnsureSpace(String input) {
+  return input.replaceAll(RegExp(r'[^a-zA-Z0-9\s]+'), ' ').trim();
+}
+
 void showProfileDialog(BuildContext context) {
   var size = MediaQuery.sizeOf(context);
   showGeneralDialog(

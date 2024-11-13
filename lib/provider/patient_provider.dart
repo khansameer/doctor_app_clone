@@ -5,8 +5,11 @@ import 'package:doctor_app/screen/web_view/model/patient_details_model.dart';
 import 'package:doctor_app/service/api_config.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../screen/web_view/admin_dashboard_view/patient_profile_dialog.dart';
+import '../screen/web_view/admin_dashboard_view/patient_profile_dialog_patient.dart';
 import '../service/api_services.dart';
 
 class PatientProvider with ChangeNotifier {
@@ -20,6 +23,54 @@ class PatientProvider with ChangeNotifier {
   List<Patients>? _filteredPatients;
   List<Patients>? get filteredPatients => _filteredPatients;
   String? _selectedID;
+
+  bool isProfileDialogOpen = false;
+  // Initialize hover states based on the number of items
+  OverlayEntry? overlayEntry;
+
+  void showProfileOverlay(var size, Patients element, BuildContext context) {
+    if (!isProfileDialogOpen) {
+      isProfileDialogOpen = true;
+      notifyListeners();
+
+      overlayEntry = OverlayEntry(
+        builder: (BuildContext context) {
+          return Positioned(
+            top: 100, // Adjust this to position the overlay as needed
+            left: (size.width - size.width * 0.2) / 2,
+            child: Material(
+              color: Colors
+                  .transparent, // Ensures only the dialog area is affected
+              child: SizedBox(
+                width: size.width * 0.22,
+                height: 380, // Adjust height as needed
+                child: Material(
+                  color: Colors.white, // Set the background color of the dialog
+                  elevation: 8.0, // Add shadow/elevation
+                  borderRadius: BorderRadius.circular(8),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: PatientProfileDialogPatient(appointment: element),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+
+      Overlay.of(context)?.insert(overlayEntry!);
+    }
+  }
+
+  void hideProfileOverlay() {
+    if (isProfileDialogOpen && overlayEntry != null) {
+      overlayEntry?.remove();
+      overlayEntry = null;
+      isProfileDialogOpen = false;
+      notifyListeners();
+    }
+  }
 
   String? get selectedID => _selectedID;
   void updateID(String? data) {

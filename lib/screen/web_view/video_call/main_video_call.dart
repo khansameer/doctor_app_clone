@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../../../core/colors.dart';
 import '../../../core/common/custom_alert_dialog.dart';
 import '../../../provider/model/upcoming_appointment_model.dart';
+import '../admin_dashboard_view/paitent_view/admin_patient_details_view.dart';
 
 // Models for Appointment, Patient, and Doctor remain unchanged
 
@@ -101,10 +102,10 @@ class _MainVideoCallState extends State<MainVideoCall> {
                               child: Row(
                                 children: [
                                   Expanded(
-
                                     child: Row(
                                       children: [
-                                        MouseRegion(cursor: SystemMouseCursors.click,
+                                        MouseRegion(
+                                          cursor: SystemMouseCursors.click,
                                           onEnter: (details) {
                                             if (!provider.isProfileDialogOpen) {
                                               provider.showProfileOverlay(
@@ -113,8 +114,7 @@ class _MainVideoCallState extends State<MainVideoCall> {
                                           },
                                           onExit: (_) {
                                             if (provider.isProfileDialogOpen) {
-                                              provider
-                                                  .hideProfileOverlay();
+                                              provider.hideProfileOverlay();
                                             }
                                           },
                                           child: Container(
@@ -263,34 +263,11 @@ class _MainVideoCallState extends State<MainVideoCall> {
                                                 context: context,
                                                 builder:
                                                     (BuildContext context) {
-                                                  return CustomAlertDialog(
-                                                    content: SizedBox(
-                                                        width: size.width * 0.2,
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                          child:
-                                                              PatientProfileDialog(
-                                                                  appointment:
-                                                                      element),
-                                                        )),
+                                                  return const CustomAlertDialog(
+                                                    content:
+                                                        AdminPatientDetailsView(),
                                                   );
                                                 });
-                                            /* await showDialog(
-                                              useRootNavigator: true,
-                                              // targetAnchor: Alignment.topLeft,
-                                              context: context,
-                                              // isGlobal: false,
-                                              barrierColor: Colors.transparent,
-
-                                              builder: (dialogContext) {
-                                                return SizedBox(
-                                                    width: size.width * 0.2,
-                                                    child: PatientProfileDialog(
-                                                        appointment: element));
-                                              },
-                                            );*/
                                           },
                                           child:
                                               Consumer<AdminDashboardProvider>(
