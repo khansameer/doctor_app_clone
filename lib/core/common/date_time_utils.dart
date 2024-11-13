@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 class DateTimeUtils {
  static String yyyyMMdd="yyyy-MM-dd";
  static String hhmmss="hh:mm";
+ //static String hhmmssa="hh:mma";
   // A static method to format the date
   static String formatDate(String dateStr, {String format = 'yyyy-MM-dd HH:mm'}) {
     try {
@@ -58,8 +59,13 @@ class DateTimeUtils {
        initialTime: timeOfDay);
 
    if (time != null) {
+     print('=======${time}');
 
-     getTime("${time.hour}:${time.minute}");
+     final int hour = time.hour > 12 ? time.hour - 12 : (time.hour == 0 ? 12 : time.hour);
+
+     final String period = time.hour >= 12 ? 'PM' : 'AM';
+     final String minute = time.minute.toString().padLeft(2, '0');
+      getTime("$hour:$minute $period");
      /*setState(() {
        _timeC.text = "${time.hour}:${time.minute}";
      });*/

@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 import '../../../mobile_view/profile/edit_profile_screen.dart';
 import '../../admin_dashboard_view/prescription/setting_prescription_screen.dart';
+import '../../billing/setting_billing_view.dart';
 
 class AdminSettingScreen extends StatefulWidget {
   const AdminSettingScreen({super.key});
@@ -118,7 +119,9 @@ class _AdminSettingScreenState extends State<AdminSettingScreen> {
                     const MyAddressScreen(),
                     const NotificationSettingScreen(),
                     const ErrorPage(),
-                    const ErrorPage(),
+                    Container(
+                        color: AppColors.colorBgNew,
+                        child: const SettingBillingView()),
                     const SettingPrescriptionScreen(),
                     const ErrorPage(),
                     const ErrorPage(),
