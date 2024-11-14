@@ -14,6 +14,7 @@ class CallScreen extends StatefulWidget {
 }
 
 class _CallScreenState extends State<CallScreen> {
+  bool isRoomInitialized = false;
   late Room _room;
   bool micEnabled = true;
   bool camEnabled = true;
@@ -47,7 +48,7 @@ class _CallScreenState extends State<CallScreen> {
         camEnabled: camEnabled,
         defaultCameraIndex: 1,
       );
-
+      isRoomInitialized = true; // Mark as initialized
       // Event listeners and join room
       setMeetingEventListener();
       _room.join();
@@ -57,8 +58,8 @@ class _CallScreenState extends State<CallScreen> {
   void setMeetingEventListener() {
     _room.on(Events.roomJoined, () {
       setState(() {
-        participants.putIfAbsent(
-            _room.localParticipant.id, () => _room.localParticipant);
+        /*participants.putIfAbsent(
+            _room.localParticipant.id, () => _room.localParticipant);*/
       });
     });
 
@@ -92,6 +93,14 @@ class _CallScreenState extends State<CallScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (!isRoomInitialized) {
+      return Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: CircularProgressIndicator(), // Show loading state
+        ),
+      );
+    }
     final localParticipant = _room.localParticipant;
 
     return WillPopScope(

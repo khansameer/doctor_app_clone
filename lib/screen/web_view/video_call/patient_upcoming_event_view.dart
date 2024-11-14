@@ -13,6 +13,7 @@ import '../../../core/colors.dart';
 import '../../../core/common/custom_alert_dialog.dart';
 import '../../../provider/model/upcoming_appointment_model.dart';
 import '../admin_dashboard_view/paitent_view/admin_patient_details_view.dart';
+import 'CallScreen.dart';
 
 class PatientUpcomingEventView extends StatefulWidget {
   const PatientUpcomingEventView({super.key});
@@ -225,7 +226,14 @@ class _MainVideoCallState extends State<PatientUpcomingEventView> {
                                                 height: 35,
                                                 child: Center(
                                                   child: IconButton(
-                                                      onPressed: () {},
+                                                      onPressed: () {
+                                                        /*Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        CallScreen()));*/
+                                                      },
                                                       icon: Icon(
                                                         size: 15,
                                                         Icons.videocam,
@@ -247,9 +255,14 @@ class _MainVideoCallState extends State<PatientUpcomingEventView> {
                                                       context: context,
                                                       builder: (BuildContext
                                                           context) {
-                                                        return  CustomAlertDialog(
+                                                        return CustomAlertDialog(
                                                           content:
-                                                              AdminPatientDetailsView(patientID: element.patient?.id??'',),
+                                                              AdminPatientDetailsView(
+                                                            patientID: element
+                                                                    .patient
+                                                                    ?.id ??
+                                                                '',
+                                                          ),
                                                         );
                                                       });
                                                 },
@@ -294,11 +307,11 @@ class _MainVideoCallState extends State<PatientUpcomingEventView> {
                                                           child:
                                                               CommonTextWidget(
                                                             fontSize: 12,
-                                                            textColor: provider.hoveredEdit ==
-                                                    index
-                                                    ? Colors
-                                                    .white
-                                                    : null,
+                                                            textColor: provider
+                                                                        .hoveredEdit ==
+                                                                    index
+                                                                ? Colors.white
+                                                                : null,
                                                             text:
                                                                 "View Profile",
                                                             fontWeight:
