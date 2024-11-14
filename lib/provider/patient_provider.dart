@@ -9,12 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../screen/web_view/admin_dashboard_view/patient_profile_dialog.dart';
-import '../screen/web_view/admin_dashboard_view/patient_profile_dialog_patient.dart';
+import '../screen/web_view/admin_dashboard_view/patient_profile_dialog.dart';
 import '../service/api_services.dart';
+import 'model/CommonPaitentDetailsModel.dart';
 
 class PatientProvider with ChangeNotifier {
   bool _isAdding = false;
   bool get isAdding => _isAdding;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
   final _service = ApiService();
   PatientDetailsModel? _patientDetailsModel;
 
@@ -25,10 +28,9 @@ class PatientProvider with ChangeNotifier {
   String? _selectedID;
 
   bool isProfileDialogOpen = false;
-  // Initialize hover states based on the number of items
   OverlayEntry? overlayEntry;
 
-  void showProfileOverlay(var size, Patients element, BuildContext context) {
+  void showProfileOverlay({var size, required String patientID, required BuildContext context}) {
     if (!isProfileDialogOpen) {
       isProfileDialogOpen = true;
       notifyListeners();
@@ -50,7 +52,7 @@ class PatientProvider with ChangeNotifier {
                   borderRadius: BorderRadius.circular(8),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: PatientProfileDialogPatient(appointment: element),
+                    child: PatientProfileDialog(patientID: patientID),
                   ),
                 ),
               ),
@@ -59,7 +61,7 @@ class PatientProvider with ChangeNotifier {
         },
       );
 
-      Overlay.of(context)?.insert(overlayEntry!);
+      Overlay.of(context).insert(overlayEntry!);
     }
   }
 
@@ -105,6 +107,38 @@ class PatientProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  CommonPatientDetailsModel? _commonPatientDetailsModel;
+
+  CommonPatientDetailsModel? get commonPatientDetailsModel => _commonPatientDetailsModel;
+
+  Future getPatientDetailsBYID({required BuildContext context,String? patientID}) async {
+    //String userId = await getUserID();
+
+    _isLoading = true;
+    notifyListeners();
+    try {
+      final response = await _service.callGetMethod(
+          url: '${ApiConfig.getPatients}/$patientID/details');
+      print('===error==$globalStatusCode');
+      print('===response==${json.decode(response)}');
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+        _commonPatientDetailsModel =
+            CommonPatientDetailsModel.fromJson(json.decode(response));
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
+      }
+
+      _isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+      print('===error==$e');
+      print('===error==$globalStatusCode');
+      notifyListeners();
+    }
+  }
+
 
   String? _selectedGender;
   String _searchQuery = "";

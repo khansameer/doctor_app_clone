@@ -232,11 +232,7 @@ class TabView extends StatelessWidget {
           tabProvider.setPatientDetailsPage(value: "male", context: context);
         } else if (index == 2) {
           tabProvider.setPatientDetailsPage(value: "female", context: context);
-        } /*else if (index == 3) {
-         // tabProvider.setPatientDetailsPage(value: "female", context: context);
-        } else if (index == 4) {
-        //  tabProvider.setPatientDetailsPage(value: "female", context: context);
-        }*/
+        }
       },
       children: [
         Padding(
@@ -264,22 +260,7 @@ class TabView extends StatelessWidget {
               fontWeight: FontWeight.w400,
               color: AppColors.colorGreen),
         ),
-        /*  Padding(
-          padding: EdgeInsets.symmetric(horizontal: isMobile ? 30 : 24.0),
-          child: commonText(
-              fontSize: 13,
-              text: 'Female Customer Over 30',
-              fontWeight: FontWeight.w400,
-              color: AppColors.colorGreen),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: isMobile ? 30 : 24.0),
-          child: commonText(
-              fontSize: 13,
-              text: 'Female Customer under 30',
-              fontWeight: FontWeight.w400,
-              color: AppColors.colorGreen),
-        ),*/
+
       ],
     );
   }

@@ -10,8 +10,8 @@ class AppointmentsModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -41,15 +41,15 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.appointments != null) {
-      data['appointments'] = this.appointments!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (appointments != null) {
+      data['appointments'] = appointments!.map((v) => v.toJson()).toList();
     }
-    if (this.pagination != null) {
-      data['pagination'] = this.pagination!.toJson();
+    if (pagination != null) {
+      data['pagination'] = pagination!.toJson();
     }
-    if (this.filters != null) {
-      data['filters'] = this.filters!.toJson();
+    if (filters != null) {
+      data['filters'] = filters!.toJson();
     }
     return data;
   }
@@ -104,23 +104,23 @@ class Appointments {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['dateTime'] = this.dateTime;
-    data['status'] = this.status;
-    data['appointment_type'] = this.appointmentType;
-    data['reason'] = this.reason;
-    data['diagnosis'] = this.diagnosis;
-    data['notes'] = this.notes;
-    data['isVirtual'] = this.isVirtual;
-    data['meetingLink'] = this.meetingLink;
-    data['meetingId'] = this.meetingId;
-    data['followUp'] = this.followUp;
-    if (this.patient != null) {
-      data['patient'] = this.patient!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['dateTime'] = dateTime;
+    data['status'] = status;
+    data['appointment_type'] = appointmentType;
+    data['reason'] = reason;
+    data['diagnosis'] = diagnosis;
+    data['notes'] = notes;
+    data['isVirtual'] = isVirtual;
+    data['meetingLink'] = meetingLink;
+    data['meetingId'] = meetingId;
+    data['followUp'] = followUp;
+    if (patient != null) {
+      data['patient'] = patient!.toJson();
     }
-    if (this.doctor != null) {
-      data['doctor'] = this.doctor!.toJson();
+    if (doctor != null) {
+      data['doctor'] = doctor!.toJson();
     }
     return data;
   }
@@ -154,13 +154,13 @@ class Patient {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['phoneNumber'] = this.phoneNumber;
-    data['dateOfBirth'] = this.dateOfBirth;
-    data['gender'] = this.gender;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['email'] = email;
+    data['phoneNumber'] = phoneNumber;
+    data['dateOfBirth'] = dateOfBirth;
+    data['gender'] = gender;
 
     return data;
   }
@@ -185,12 +185,12 @@ class Doctor {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['phoneNumber'] = this.phoneNumber;
-    data['specialization'] = this.specialization;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['email'] = email;
+    data['phoneNumber'] = phoneNumber;
+    data['specialization'] = specialization;
     return data;
   }
 }
@@ -221,13 +221,13 @@ class Pagination {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['currentPage'] = this.currentPage;
-    data['totalPages'] = this.totalPages;
-    data['totalAppointments'] = this.totalAppointments;
-    data['hasNextPage'] = this.hasNextPage;
-    data['hasPreviousPage'] = this.hasPreviousPage;
-    data['limit'] = this.limit;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['currentPage'] = currentPage;
+    data['totalPages'] = totalPages;
+    data['totalAppointments'] = totalAppointments;
+    data['hasNextPage'] = hasNextPage;
+    data['hasPreviousPage'] = hasPreviousPage;
+    data['limit'] = limit;
     return data;
   }
 }
@@ -248,11 +248,11 @@ class Filters {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['appointment_type'] = this.appointmentType;
-    if (this.dateRange != null) {
-      data['dateRange'] = this.dateRange!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['appointment_type'] = appointmentType;
+    if (dateRange != null) {
+      data['dateRange'] = dateRange!.toJson();
     }
     return data;
   }
@@ -270,9 +270,9 @@ class DateRange {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['startDate'] = this.startDate;
-    data['endDate'] = this.endDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['startDate'] = startDate;
+    data['endDate'] = endDate;
     return data;
   }
 }

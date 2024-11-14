@@ -24,7 +24,6 @@ class PatientsPaceChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final appointments = Provider.of<DashboardProvider>(context).appointments;
 
-    // Group appointments by hour for stacked bars
     Map<int, List<Appointment>> appointmentsByHour = {};
     for (var appointment in appointments) {
       appointmentsByHour

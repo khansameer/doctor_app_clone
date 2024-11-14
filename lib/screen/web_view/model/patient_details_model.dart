@@ -77,6 +77,18 @@ class Patients {
     }
     return data;
   }
+  String get mappedGender {
+    if (gender != null) {
+      if (gender!.toLowerCase() == 'male') {
+        return 'Male';
+      } else if (gender!.toLowerCase() == 'female') {
+        return 'Female';
+      } else {
+        return 'Other';
+      }
+    }
+    return 'Other'; // default to 'Other' if gender is null or doesn't match
+  }
 }
 
 class Profile {

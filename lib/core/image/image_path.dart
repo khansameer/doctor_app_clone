@@ -51,3 +51,4 @@ const icEditIcon = '$baseImagePath/ic_edit_icon.png';
 const icDeleteIcon = '$baseImagePath/ic_delete_icon.png';
 const icVisa = '$baseImagePath/ic_visa.png';
 const icMaster = '$baseImagePath/ic_money.png';
+const icNoDataFound = '$baseImagePath/ic_no_datas.png';

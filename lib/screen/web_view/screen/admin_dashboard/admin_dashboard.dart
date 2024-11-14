@@ -261,7 +261,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
             //   ),
             // ),
             PopupMenuButton(
+              elevation: 0,
+                constraints: const BoxConstraints.tightFor(width: 200,),
                 color: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8.0))
+                ),
                 icon: Icon(
                   Icons.keyboard_arrow_down_sharp,
                   color: Colors.grey,

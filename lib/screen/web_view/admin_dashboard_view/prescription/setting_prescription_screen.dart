@@ -2,6 +2,7 @@ import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/custom_alert_dialog.dart';
+import 'package:doctor_app/core/common/error_page.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/context_extension.dart';
 import 'package:doctor_app/provider/prescription_provider.dart';
@@ -119,7 +120,7 @@ class _SettingPrescriptionScreenState extends State<SettingPrescriptionScreen> {
                         return Container(
                           width: size.width,
                           padding: const EdgeInsets.all(0.0),
-                          child: DataTable(
+                          child:globalStatusCode==200 || globalStatusCode==201? DataTable(
                             dividerThickness: 0.3,
                             border: TableBorder.all(
                               width: 1.0,
@@ -262,7 +263,7 @@ class _SettingPrescriptionScreenState extends State<SettingPrescriptionScreen> {
                                   ),
                                 )
                                 .toList(),
-                          ),
+                          ):ErrorPage(),
                         );
                       })
                     ],

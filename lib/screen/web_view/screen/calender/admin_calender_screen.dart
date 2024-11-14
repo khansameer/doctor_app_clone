@@ -6,11 +6,11 @@ import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/context_extension.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/appointments_provider.dart';
+import 'package:doctor_app/provider/patient_provider.dart';
 import 'package:doctor_app/screen/web_view/screen/calender/get_edit_appointments_details_widget.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -69,6 +69,8 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
           return Appointment(
             startTime: dateTime,
             id: appointment.id,
+
+            recurrenceId: appointment.patient?.id,
             notes: appointment.reason,
             endTime: dateTime.add(const Duration(hours: 1)),
             // Assuming 1 hour duration
@@ -158,7 +160,7 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                                 height: size.height * 0.7,
                                 child: commonSfCalendar(
                                     calendarAppointments: calendarAppointments,
-                                    provider: provider,
+
                                     size: size)),
                           ),
                         ],
@@ -191,7 +193,7 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                                       text: "Sick visit"),
                                 ],
                               )
-                            : Container(
+                            : SizedBox(
                                 width: size.width,
                                 height: 50.0, // Adjust the height as needed
                                 child: provider
@@ -341,9 +343,12 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
 
   commonSfCalendar(
       {List<Appointment>? calendarAppointments,
-      required AppointmentsProvider provider,
+
       required Size size}) {
+
+    var provider=context.read<PatientProvider>();
     return SfCalendar(
+      monthViewSettings: MonthViewSettings(showAgenda: true),
       view: CalendarView.week,
       allowedViews: <CalendarView>[
         CalendarView.day,
@@ -357,18 +362,25 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
         CalendarView.schedule
       ],
       timeSlotViewSettings:
-          TimeSlotViewSettings(timelineAppointmentHeight: 200),
+          TimeSlotViewSettings(
+
+              //dayFormat: 'EEEE', dateFormat: 'dd', timeFormat: 'HH:mm a',
+              timelineAppointmentHeight: 200),
       appointmentBuilder: (BuildContext context,
           CalendarAppointmentDetails calendarAppointmentDetails) {
         final Appointment appointment =
             calendarAppointmentDetails.appointments.first;
+
+
         return Column(
           children: [
             MouseRegion(
               cursor: SystemMouseCursors.click,
               onEnter: (details) {
                 if (!provider.isProfileDialogOpen) {
-                  provider.showProfileOverlay(size, context);
+                  String? patientID = '${appointment.recurrenceId}';
+
+                  provider.showProfileOverlay(size: size,context:  context,patientID:patientID );
                 }
               },
               onExit: (_) {
@@ -384,8 +396,8 @@ class _CalenderNewScreenState extends State<AdminCalenderScreen> {
                   child: CommonTextWidget(
                     fontSize: 12,
                     textColor: Colors.white,
-                    //text: '${appointment.subject}${DateFormat(' (hh:mm a').format(appointment.startTime)}-${DateFormat('hh:mm a)').format(appointment.endTime)}',
-                    text: '${appointment.subject}',
+
+                    text: appointment.subject,
                     textAlign: TextAlign.center,
                   ),
                 ),

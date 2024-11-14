@@ -316,12 +316,19 @@ class _MobileViewState extends State<MobileView> {
         .callLoginApi(context: context, body: body, isLogin: true)
         .then((value) async {
       if (provider.loginModel?.token != null) {
-        if (kIsWeb)
+        if (kIsWeb){
           pushNamedAndRemoveUntil(
               context: context, routeName: RouteName.adminDashboardScreen);
+        }
+        else
+          {
+            pushNamedAndRemoveUntil(
+                context: context, routeName: RouteName.dashboardScreen);
+          }
+
       } else {
-        pushNamedAndRemoveUntil(
-            context: context, routeName: RouteName.dashboardScreen);
+
+        commonSessionError(context: context,isAuth: true,message: "Something went wrong please try again");
       }
 
       widget.formLoginKey.currentState?.save();

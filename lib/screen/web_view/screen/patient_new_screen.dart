@@ -28,41 +28,13 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
           .then((value) {});
     });
     sideMenu.addListener((index) {
-      //   pageController.jumpToPage(index);
+
     });
     super.initState();
   }
 
-  bool isFirstTime = true;
-  bool isShowBG = true;
 
-  List<Map<String, dynamic>> outerList = [
-    {
-      'title': 'Patients',
-      'items': [
-        'All Patients',
-      ]
-    },
-    /*{
-      'title': 'Groups',
-      'items': [
-        'My Groups',
-        'Memberships',
-      ]
-    },*/
-    {
-      'title': 'Categories',
-      'items': [
-        'All Female Customer',
-        'All Male Customer',
-        'Female Customer Over 30',
-        'Female Customer under 30'
-      ]
-    },
-  ];
 
-  int selectedOuterIndex = 0;
-  int selectedInnerIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -92,41 +64,7 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
               child: const Padding(
                 padding: EdgeInsets.all(16),
                 child: AdminPatientView(),
-              ) /*DefaultTabController(length: 2, child: Column(
-                children: [
-                  Container(
-                    color: colorBGWithOpacity, // Background color for the TabBar
-                    child:  TabBar(
-                      dividerColor: Colors.transparent,
-                      labelColor: colorText,
-                      labelStyle: commonTextStyle(fontWeight: FontWeight.w700),
-                      unselectedLabelColor:colorText,
-                      indicatorColor:colorText,
-                      tabs: [
-                        Tab(text: "Appointment"),
-                        Tab(text: "Paitent"),
-
-                      ],
-                    ),
-                  ),
-                  const Expanded(
-                    // Content for each tab
-                    child: TabBarView(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(16),
-                          child: AdminCalenderScreen(),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(16),
-                          child: AdminPatientView(),
-                        ),
-
-                      ],
-                    ),
-                  ),
-                ],
-              ))*/
+              )
               ,
             ),
           ],
@@ -135,100 +73,4 @@ class _PatientNewScreenState extends State<PatientNewScreen> {
     });
   }
 
-  _view(
-      {required bool isMobile,
-      required DashboardProvider provider,
-      required Size size}) {
-    return ListView(
-      children: [
-        Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                    flex: isMobile ? 3 : 1,
-                    child: Container(
-                      height: size.height,
-                      decoration: const BoxDecoration(
-                        color: AppColors.colorBG,
-                        /*  border: Border.a(vertical: BorderSide(
-                              color: Colors.red,width:1
-                            ))*/
-                      ),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount:
-                            outerList.length, // Number of outer list items
-                        itemBuilder: (context, outerIndex) {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Outer list title
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CommonTextWidget(
-                                  text: outerList[outerIndex]['title'],
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-
-                              // Inner ListView
-                              ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount:
-                                    outerList[outerIndex]['items'].length,
-                                itemBuilder: (context1, innerIndex) {
-                                  bool isSelected =
-                                      selectedOuterIndex == outerIndex &&
-                                          selectedInnerIndex == innerIndex;
-                                  return GestureDetector(
-                                    onTap: () {
-                                      provider.setPatientDetailsPage(
-                                          context: context,
-                                          value:
-                                              '${outerList[outerIndex]['items'][innerIndex]}');
-
-                                      selectedOuterIndex = outerIndex;
-                                      selectedInnerIndex = innerIndex;
-                                    },
-                                    child: Container(
-                                      color: isSelected
-                                          ? AppColors.colorActive
-                                          : AppColors.colorBG,
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: CommonTextWidget(
-                                          textColor:
-                                              isSelected ? Colors.white : null,
-                                          text: outerList[outerIndex]['items']
-                                              [innerIndex],
-                                          fontSize: 12),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    )),
-                Expanded(
-                  flex: 8,
-                  child: SizedBox(
-                    height: size.height,
-                    child: provider.currentPatientPage,
-                  ),
-                )
-              ],
-            )
-          ],
-        ),
-      ],
-    );
-  }
 }

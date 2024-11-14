@@ -1,11 +1,9 @@
 import 'dart:convert';
 
-import 'package:doctor_app/core/common/custom_alert_dialog.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/provider/model/upcoming_appointment_model.dart';
 import 'package:doctor_app/provider/model/weekly_graph_model.dart';
-import 'package:doctor_app/screen/web_view/admin_dashboard_view/patient_profile_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../core/string/string_utils.dart';
@@ -40,82 +38,9 @@ class Patient {
 
 class AdminDashboardProvider with ChangeNotifier {
   List<bool> _hoverStates = [];
-  bool isProfileDialogOpen = false;
-  // Initialize hover states based on the number of items
-  OverlayEntry? overlayEntry;
 
-  void showProfileOverlay(
-      var size, Appointments element, BuildContext context) {
-    if (!isProfileDialogOpen) {
-      isProfileDialogOpen = true;
-      notifyListeners();
 
-      overlayEntry = OverlayEntry(
-        builder: (BuildContext context) {
-          return Positioned(
-            top: 100, // Adjust this to position the overlay as needed
-            left: (size.width - size.width * 0.2) / 2,
-            child: Material(
-              color: Colors
-                  .transparent, // Ensures only the dialog area is affected
-              child: SizedBox(
-                width: size.width * 0.22,
-                height: 380, // Adjust height as needed
-                child: Material(
-                  color: Colors.white, // Set the background color of the dialog
-                  elevation: 8.0, // Add shadow/elevation
-                  borderRadius: BorderRadius.circular(8),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: PatientProfileDialog(appointment: element),
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-      );
 
-      Overlay.of(context)?.insert(overlayEntry!);
-    }
-  }
-
-  void hideProfileOverlay() {
-    if (isProfileDialogOpen && overlayEntry != null) {
-      overlayEntry?.remove();
-      overlayEntry = null;
-      isProfileDialogOpen = false;
-      notifyListeners();
-    }
-  }
-
-  void showProfileDialog(var size, Appointments element, context) {
-    print('PrintEnter---->');
-    // Adding a delay to ensure that the dialog is called properly after build context is ready
-    if (!isProfileDialogOpen) {
-      Future.delayed(Duration(milliseconds: 100), () {
-        isProfileDialogOpen = true;
-        notifyListeners();
-        showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (BuildContext context) {
-              return CustomAlertDialog(
-                content: SizedBox(
-                    width: size.width * 0.2,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: PatientProfileDialog(appointment: element),
-                    )),
-              );
-            }).then((_) {
-          // When the dialog is closed, reset the dialog state
-          isProfileDialogOpen = false;
-          notifyListeners();
-        });
-      });
-    }
-  }
 
   void initializeHoverStates(int itemCount) {
     _hoverStates = List.generate(itemCount, (index) => false);
@@ -343,24 +268,24 @@ class AdminDashboardProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Widget _currentPatientPage = const AdminAllListScreen(
+  Widget _currentPatientPage = const AdminPatientAllListView(
     title: "all",
   );
   Widget get currentPatientPage => _currentPatientPage;
   void setPatientDetailsPage(
       {required String value, required BuildContext context}) {
     if (value == "all") {
-      _currentPatientPage = const AdminAllListScreen(
+      _currentPatientPage = const AdminPatientAllListView(
         title: "all",
       );
 
       notifyListeners();
     } else if (value == "female") {
-      _currentPatientPage = const AdminAllListScreen(title: "all_female");
+      _currentPatientPage = const AdminPatientAllListView(title: "all_female");
 
       notifyListeners();
     } else if (value == "male") {
-      _currentPatientPage = const AdminAllListScreen(title: "all_male");
+      _currentPatientPage = const AdminPatientAllListView(title: "all_male");
     } else {
       /*_currentPatientPage = const AdminAllListScreen();*/
     }
@@ -1361,8 +1286,7 @@ class AdminDashboardProvider with ChangeNotifier {
       final response = await _service.callGetMethod(
           url:
               '${ApiConfig.createAppointment}?status=$status&appointment_type=$appointment_type');
-      print('===error==$globalStatusCode');
-      print('===createAppointment==${json.decode(response)}');
+
       if (globalStatusCode == 200 || globalStatusCode == 201) {
       } else if (globalStatusCode == 401) {
         commonSessionError(context: context);
@@ -1372,8 +1296,7 @@ class AdminDashboardProvider with ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _isFetching = false;
-      print('===error==$e');
-      print('===error==$globalStatusCode');
+
       notifyListeners();
     }
   }

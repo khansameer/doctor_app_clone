@@ -3,6 +3,7 @@ import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_drop_down_view.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/common_textfield.dart';
+import 'package:doctor_app/core/common/error_page.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
@@ -387,7 +388,7 @@ class _AdminFeedbackScreenState extends State<AdminFeedbackScreen> {
                             provider.isFetching
                                 ? Center(child: showLoaderList())
                                 : provider.feedbackModel == null
-                                    ? Container()
+                                    ? ErrorPage()
                                     : ListView.builder(
                                         itemCount: provider.feedbackModel?.data
                                             ?.feedbacks?.length,

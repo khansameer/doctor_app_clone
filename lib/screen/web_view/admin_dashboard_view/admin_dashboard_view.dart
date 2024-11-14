@@ -4,9 +4,8 @@ import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_over_all_appointment.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_patient_graph.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_pie_graph.dart';
-import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_upcomming_appointments_view.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/dashboard_patient_view.dart';
-import 'package:doctor_app/screen/web_view/video_call/main_video_call.dart';
+import 'package:doctor_app/screen/web_view/video_call/patient_upcoming_event_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -50,13 +49,13 @@ class _AdminDashboardViewState extends State<AdminDashboardView> {
                   Row(
                     children: [
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           height: 500,
                           child: const AdminPatientGraph(),
                         ),
                       ),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           height: 500,
                           child: AdminPieGraph(),
                         ),
@@ -70,16 +69,11 @@ class _AdminDashboardViewState extends State<AdminDashboardView> {
               ),
             ),
 
-            /* Expanded(
-                flex: isTablet ? 4 : 3,
-                child: AdminUpComingAppointmentsView(
-                  provider: provider,
-                ))*/
             Expanded(
                 flex: isTablet ? 4 : 4,
                 child: SizedBox(
                     height: MediaQuery.sizeOf(context).height,
-                    child: MainVideoCall()))
+                    child: PatientUpcomingEventView()))
           ],
         ),
       ],
@@ -102,8 +96,7 @@ class _AdminDashboardViewState extends State<AdminDashboardView> {
             //
           ],
         ),
-        AdminUpComingAppointmentsView(
-          provider: provider,
+        PatientUpcomingEventView(
         )
       ],
     );

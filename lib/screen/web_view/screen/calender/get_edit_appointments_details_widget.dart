@@ -12,6 +12,7 @@ import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/colors.dart';
@@ -70,7 +71,7 @@ class _GetEditAppointmentsDetailsWidgetState
       String formattedTime = provider.appointmentsDetailsModel?.dateTime != null
           ? DateTimeUtils.formatDate(
               '${provider.appointmentsDetailsModel?.dateTime.toString()}',
-              format: DateTimeUtils.hhmmss)
+              format: DateTimeUtils.hhmmssa)
           : '';
 
 
@@ -94,6 +95,7 @@ class _GetEditAppointmentsDetailsWidgetState
         }*/
     });
   }
+
 
   @override
   void dispose() {
@@ -158,10 +160,10 @@ class _GetEditAppointmentsDetailsWidgetState
                           radius: 8,
                           topText: 5,
                           controller: tetDate,
-                          isReadOnly: true,
-                          onTap: () {
+                          suffixIcon: IconButton(onPressed: (){
                             DateTimeUtils.displayDatePicker(
                                 context: context,
+                                tetDate: tetDate,
                                 getDate: (value) {
                                   setState(() {
                                     isDatePicked = true;
@@ -170,6 +172,10 @@ class _GetEditAppointmentsDetailsWidgetState
                                   });
                                   //  tetDate.text=value;
                                 });
+                          }, icon: Icon(Icons.date_range,color: Colors.grey,)),
+                          isReadOnly: true,
+                          onTap: () {
+
                           },
                           topTextField: 10,
                           title: "Date"),
@@ -177,15 +183,17 @@ class _GetEditAppointmentsDetailsWidgetState
                           height: 45,
                           fontSize: 14,
                           topText: 10,
-                          isReadOnly: true,
-                          onTap: () {
+                          suffixIcon: IconButton(onPressed: (){
                             DateTimeUtils.displayTimePicker(
                                 context: context,
+                                tetTime: tetTime,
                                 getTime: (value) {
                                   tetTime.text = value;
                                   isTimePicked = true;
                                 });
-                          },
+                          }, icon: Icon(Icons.access_time_rounded,color: Colors.grey,)),
+                          isReadOnly: true,
+
                           controller: tetTime,
                           topTextField: 10,
                           radius: 8,
@@ -257,21 +265,38 @@ class _GetEditAppointmentsDetailsWidgetState
                               radius: 8,
                               onPressed: () async {
                                 String userId = await getUserID();
-                                String dateString =
-                                    "${tetDate.text}T${tetTime.text}:00.000Z";
 
-                                DateTime dateTime = DateTime.parse(dateString);
+                                String tetDateText = tetDate.text; // Assume tetDate.text is this value
+                                String tetTimeText = tetTime.text;
+                                DateTime parsedDate = DateFormat("yyyy-MM-dd").parse(tetDateText);
+                                String formattedDate = DateFormat("yyyy-MM-dd").format(parsedDate);
+
+                                print('===tetTimeText=====$tetTimeText');// Assume tetTime.text is this value
+                                print('===tetDateText=====$tetDateText');// Assume tetTime.text is this value
+                                // Convert time to 24-hour format
+                                // Parse and convert time to 24-hour format
+                                DateTime dateTime = DateFormat("hh:mm a").parse(tetTimeText);
+                                String timeIn24HourFormat = DateFormat("HH:mm").format(dateTime);
+
+                                // Format the final date string with date and time
+                                String dateString = "${formattedDate}T${timeIn24HourFormat}:00.000Z";
+                                //print(dateString);
+                                print('========$dateString');
+                                /* String dateString =
+                                    "${tetDate.text}T${tetTime.text}:00.000Z";*/
+
+                               DateTime dateTime11 = DateTime.parse(dateString);
 
                                 Map<String, dynamic> body = {
                                   "patientId": provider.selectedID,
                                   "doctorId": userId,
-                                  "dateTime": dateTime.toIso8601String(),
+                                  "dateTime": dateTime11.toIso8601String(),
                                   "description": tetReason.text,
                                   "isVirtual": true,
                                 };
 
                                 if (kDebugMode) {
-                                  print('=====${body.toString()}');
+                                  print('==bodys===${body.toString()}');
                                 }
                                 provider
                                     .updateAppointmentData(

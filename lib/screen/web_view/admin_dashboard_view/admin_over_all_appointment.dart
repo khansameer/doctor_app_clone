@@ -1,5 +1,6 @@
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/common/error_page.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/provider/admin_dashboard_provider.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -8,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/string/string_utils.dart';
+import '../../../service/gloable_status_code.dart';
 
 class AdminOverAllAppointment extends StatefulWidget {
   const AdminOverAllAppointment({super.key, required this.provider});
@@ -105,7 +107,7 @@ class _AdminOverAllAppointmentState extends State<AdminOverAllAppointment> {
                     ),
                     SizedBox(
                       height: size.height * 0.29,
-                      child: commonBarchart(barValues: barValues??[], labels: labels??[]),
+                      child: globalStatusCode==200 || globalStatusCode==201?commonBarchart(barValues: barValues, labels: labels):ErrorPage(),
                     ),
                   ],
                 );

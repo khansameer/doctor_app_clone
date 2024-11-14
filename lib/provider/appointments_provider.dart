@@ -8,12 +8,10 @@ import 'package:doctor_app/screen/web_view/screen/calender/model/get_appointment
 import 'package:doctor_app/service/api_config.dart';
 import 'package:doctor_app/service/api_services.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../screen/web_view/admin_dashboard_view/PatientProfileDialogCalender.dart';
-import '../screen/web_view/admin_dashboard_view/patient_profile_dialog.dart';
 
 class AppointmentsProvider extends ChangeNotifier {
   final _service = ApiService();
@@ -256,21 +254,17 @@ class AppointmentsProvider extends ChangeNotifier {
           return Positioned(
             top: 100, // Adjust this to position the overlay as needed
             left: (size.width - size.width * 0.2) / 2,
-            child: Material(
-              color: Colors
-                  .transparent, // Ensures only the dialog area is affected
-              child: SizedBox(
-                width: size.width * 0.22,
-                height: 380, // Adjust height as needed
-                child: Material(
-                  color: Colors.white, // Set the background color of the dialog
-                  elevation: 8.0, // Add shadow/elevation
+            child: SizedBox(
+              width: size.width * 0.22,
+
+              child: Material(
+                color: Colors.white, // Set the background color of the dialog
+                elevation: 8.0, // Add shadow/elevation
+                borderRadius: BorderRadius.circular(8),
+                child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Container(
-                      height: 500,
-                    ),
+                  child: Container(
+                    height: 500,
                   ),
                 ),
               ),

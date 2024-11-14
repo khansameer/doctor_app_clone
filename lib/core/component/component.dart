@@ -400,7 +400,7 @@ commonProfileNetUrl({double? width, double? height, String? path}) {
 void showCommonDialog(
     {required BuildContext context,
     required String title,
-    required String content,
+     String ?content,
     String? btnPositive,
     String? btnNegative,
     bool isMessage = false,
@@ -443,11 +443,11 @@ void showCommonDialog(
           ));
 }
 
-commonSessionError({required BuildContext context, bool isAuth = false}) {
+commonSessionError({required BuildContext context, bool isAuth = false,String ?message}) {
   showCommonDialog(
     context: context,
     title: "Error",
-    content: errorMessage ?? '',
+    content: message??errorMessage  ,
     btnPositive: "Close",
     onPressPositive: () {
       if (!isAuth) {

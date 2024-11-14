@@ -1,10 +1,13 @@
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/common/error_page.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/notification/provider/setting_notification_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../service/gloable_status_code.dart';
 
 class NotificationSettingScreen extends StatefulWidget {
   const NotificationSettingScreen({super.key});
@@ -15,55 +18,24 @@ class NotificationSettingScreen extends StatefulWidget {
 }
 
 class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
-  /* bool _switchValueNotification = true;
-  bool _switchValueAppointment = true;
-  bool _switchValuePatient = true;
-  bool _switchValuEmergency = false;
-  bool _switchValuGeneral = true;
-  bool _switchValuMessage = true;*/
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // Trigger the fetchItems method when the screen loads
     Future.microtask(() =>
         Provider.of<SettingNotificationProvider>(context, listen: false)
             .getNotificationDetails(context: context));
   }
 
-  // Callback to update switch values
-/*  void _onSwitchChanged(String switchType, bool value) {
-    setState(() {
-      switch (switchType) {
-        case 'notification':
-          _switchValueNotification = value;
-          break;
-        case 'appointment':
-          _switchValueAppointment = value;
-          break;
-        case 'patient':
-          _switchValuePatient = value;
-          break;
-        case 'emergency':
-          _switchValuEmergency = value;
-          break;
-        case 'general':
-          _switchValuGeneral = value;
-          break;
-        case 'message':
-          _switchValuMessage = value;
-          break;
-      }
-    });
-  }*/
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<SettingNotificationProvider>(context);
     return provider.isFetching
         ? Center(child: showLoaderList())
-        : ListView(
+        : globalStatusCode==200 || globalStatusCode==201?
+    ListView(
             children: [
               Column(
                 children: [
@@ -82,7 +54,7 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
 
                       },
                       switchValue:
-                          provider.notificationModel.email!.appointments!),
+                          provider.notificationModel?.email?.appointments??false),
 
                   commonSubView(
                       title: 'Reminders',
@@ -96,7 +68,7 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
 
                       },
                       switchValue:
-                      provider.notificationModel.email!.reminders!),
+                      provider.notificationModel?.email?.reminders??false),
                   commonSubView(
                       title: 'Prescriptions',
                       onSwitchChanged: (bool) {
@@ -109,7 +81,7 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
 
                       },
                       switchValue:
-                      provider.notificationModel.email!.prescriptions!),
+                      provider.notificationModel?.email?.prescriptions??false),
                   commonSubView(
                       title: 'Reports',
                       onSwitchChanged: (bool) {
@@ -122,7 +94,7 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
 
                       },
                       switchValue:
-                      provider.notificationModel.email!.reports!),
+                      provider.notificationModel?.email?.reports??false),
                   commonSubView(
                       title: 'Marketing',
                       onSwitchChanged: (bool) {
@@ -135,7 +107,7 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
 
                       },
                       switchValue:
-                      provider.notificationModel.email!.marketing!),
+                      provider.notificationModel?.email?.marketing??false),
                 ],
               ),
               Column(
@@ -155,7 +127,7 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
 
                       },
                       switchValue:
-                      provider.notificationModel.sms!.appointments!),
+                      provider.notificationModel?.sms?.appointments??false),
 
                   commonSubView(
                       title: 'Reminders',
@@ -169,7 +141,7 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
 
                       },
                       switchValue:
-                      provider.notificationModel.sms!.reminders!),
+                      provider.notificationModel?.sms?.reminders??false),
                   commonSubView(
                       title: 'Prescriptions',
                       onSwitchChanged: (bool) {
@@ -182,7 +154,7 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
 
                       },
                       switchValue:
-                      provider.notificationModel.sms!.prescriptions!),
+                      provider.notificationModel?.sms?.prescriptions??false),
                   commonSubView(
                       title: 'Reports',
                       onSwitchChanged: (bool) {
@@ -195,7 +167,7 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
 
                       },
                       switchValue:
-                      provider.notificationModel.sms!.reports!),
+                      provider.notificationModel?.sms?.reports??false),
                   commonSubView(
                       title: 'Marketing',
                       onSwitchChanged: (bool) {
@@ -208,7 +180,7 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
 
                       },
                       switchValue:
-                      provider.notificationModel.sms!.marketing!),
+                      provider.notificationModel?.sms?.marketing??false),
                 ],
               ),
               Column(
@@ -228,7 +200,7 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
 
                       },
                       switchValue:
-                      provider.notificationModel.push!.appointments!),
+                      provider.notificationModel?.push?.appointments??false),
 
                   commonSubView(
                       title: 'Reminders',
@@ -242,7 +214,7 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
 
                       },
                       switchValue:
-                      provider.notificationModel.push!.reminders!),
+                      provider.notificationModel?.push?.reminders??false),
                   commonSubView(
                       title: 'Prescriptions',
                       onSwitchChanged: (bool) {
@@ -255,7 +227,7 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
 
                       },
                       switchValue:
-                      provider.notificationModel.push!.prescriptions!),
+                      provider.notificationModel?.push?.prescriptions??false),
                   commonSubView(
                       title: 'Reports',
                       onSwitchChanged: (bool) {
@@ -268,7 +240,7 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
 
                       },
                       switchValue:
-                      provider.notificationModel.push!.reports!),
+                      provider.notificationModel?.push?.reports??false),
                   commonSubView(
                       title: 'Marketing',
                       onSwitchChanged: (bool) {
@@ -281,11 +253,13 @@ class _NotificationSettingScreenState extends State<NotificationSettingScreen> {
 
                       },
                       switchValue:
-                      provider.notificationModel.sms!.marketing!),
+                      provider.notificationModel?.sms?.marketing??false),
                 ],
               ),
             ],
-          );
+          ):Center(
+      child: ErrorPage(),
+    );
   }
 
   Widget commonTitleView({

@@ -2,6 +2,7 @@ import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/custom_alert_dialog.dart';
 
 import 'package:doctor_app/core/common/common_text_widget.dart';
+import 'package:doctor_app/core/common/error_page.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
@@ -14,18 +15,19 @@ import 'package:doctor_app/screen/web_view/admin_dashboard_view/chat/web_chat_sc
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../service/gloable_status_code.dart';
 import 'admin_patient_details_view.dart';
 
-class AdminAllListScreen extends StatefulWidget {
-  const AdminAllListScreen({super.key, this.title});
+class AdminPatientAllListView extends StatefulWidget {
+  const AdminPatientAllListView({super.key, this.title});
 
   final String? title;
 
   @override
-  State<AdminAllListScreen> createState() => _AdminAllListScreenState();
+  State<AdminPatientAllListView> createState() => _AdminAllListScreenState();
 }
 
-class _AdminAllListScreenState extends State<AdminAllListScreen> {
+class _AdminAllListScreenState extends State<AdminPatientAllListView> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -100,7 +102,7 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                       ),
                     ),
                   ),
-                  ListView.builder(
+                  globalStatusCode==200 || globalStatusCode==201? ListView.builder(
                       shrinkWrap: true,
                       itemCount: provider.patients?.length ?? 0,
                       itemBuilder: (context, index) {
@@ -132,7 +134,8 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                                 onEnter: (details) {
                                   if (!provider.isProfileDialogOpen) {
                                     provider.showProfileOverlay(
-                                        size, data!, context);
+                                      context: context,patientID:data?.sId??'' ,
+                                        size: size);
                                   }
                                 },
                                 onExit: (_) {
@@ -187,7 +190,7 @@ class _AdminAllListScreenState extends State<AdminAllListScreen> {
                             ),
                           ),
                         );
-                      }),
+                      }):ErrorPage(),
                 ],
               ),
             ],

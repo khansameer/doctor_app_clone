@@ -11,7 +11,7 @@ class SettingNotificationProvider with ChangeNotifier {
   final _service = ApiService();
   bool get isFetching => _isFetching;
   bool _isFetching = false;
-  late SettingNotificationModel notificationModel;
+   SettingNotificationModel? notificationModel;
 
   Future<void> getNotificationDetails({required BuildContext context}) async {
     _isFetching = true;
@@ -23,7 +23,7 @@ class SettingNotificationProvider with ChangeNotifier {
       );
       notificationModel = SettingNotificationModel.fromJson(json.decode(response));
 
-      print('===${notificationModel.email?.appointments}');
+      print('===${notificationModel?.email?.appointments}');
       if (globalStatusCode == 200) {
 
       } else if (globalStatusCode == 401) {
@@ -45,13 +45,12 @@ class SettingNotificationProvider with ChangeNotifier {
     // Access the Email, SMS, or Push notification setting
 
 
-    print('---->${notificationType}');
-    print('---->${fieldName}');
+
     var setting = notificationType == 'email'
-        ? notificationModel.email
+        ? notificationModel?.email
         : notificationType == 'sms'
-        ? notificationModel.sms
-        : notificationModel.push;
+        ? notificationModel?.sms
+        : notificationModel?.push;
 
     if (setting != null) {
       // Use a switch statement or if-else to update the desired field
