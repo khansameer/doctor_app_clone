@@ -32,6 +32,7 @@ class PatientsPaceChart extends StatelessWidget {
 
     String formattedBeforeDate = DateFormat('MMM d').format(tenDaysBefore);
     String formattedAfterDate = DateFormat('MMM d').format(tenDaysAfter);
+    String currentYear = DateFormat('yyyy').format(currentDate);
     // Group appointments by hour for stacked bars
     Map<int, List<Appointment>> appointmentsByHour = {};
     for (var appointment in appointments) {
@@ -65,7 +66,7 @@ class PatientsPaceChart extends StatelessWidget {
                 child: CommonTextWidget(
                   right: 5,
                   fontSize: 12,
-                  text: "$formattedBeforeDate - $formattedAfterDate"
+                  text: "$formattedBeforeDate - $formattedAfterDate, $currentYear"
                       .toUpperCase(),
                   textColor: Colors.green.shade300,
                   fontWeight: FontWeight.w800,

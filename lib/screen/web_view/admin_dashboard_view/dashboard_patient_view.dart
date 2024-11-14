@@ -38,6 +38,7 @@ class _DashboardPatientViewState extends State<DashboardPatientView> {
 
     String formattedBeforeDate = DateFormat('MMM d').format(tenDaysBefore);
     String formattedAfterDate = DateFormat('MMM d').format(tenDaysAfter);
+    String currentYear = DateFormat('yyyy').format(currentDate);
 
     return Container(
       padding: const EdgeInsets.all(0),
@@ -66,7 +67,7 @@ class _DashboardPatientViewState extends State<DashboardPatientView> {
                     padding: const EdgeInsets.all(10),
                     child: CommonTextWidget(
                       right: 5,
-                      text: "$formattedBeforeDate - $formattedAfterDate"
+                      text: "$formattedBeforeDate - $formattedAfterDate, $currentYear"
                           .toUpperCase(),
                       textColor: Colors.green.shade300,
                       fontWeight: FontWeight.w800,
