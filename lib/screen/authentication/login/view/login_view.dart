@@ -16,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../shared_preferences/preference_helper.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({required this.isMobile, super.key});

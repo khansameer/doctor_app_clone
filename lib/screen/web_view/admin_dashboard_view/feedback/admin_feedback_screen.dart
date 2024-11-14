@@ -1,16 +1,14 @@
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
-import 'package:doctor_app/core/common/common_drop_down_view.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/common/common_textfield.dart';
 import 'package:doctor_app/core/common/error_page.dart';
 import 'package:doctor_app/core/component/component.dart';
-import 'package:doctor_app/core/image/image_path.dart';
+
 import 'package:doctor_app/core/responsive.dart';
-import 'package:doctor_app/provider/dashboard_provider.dart';
-import 'package:doctor_app/provider/report_provier.dart';
+
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/feedback/provider/feedback_provider.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';

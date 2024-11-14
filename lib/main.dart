@@ -14,10 +14,7 @@ import 'package:doctor_app/provider/procedure_provider.dart';
 import 'package:doctor_app/provider/report_provier.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/feedback/provider/feedback_provider.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/notification/provider/setting_notification_provider.dart';
-import 'package:doctor_app/screen/web_view/video_call/MeetingScreen.dart';
-import 'package:doctor_app/screen/web_view/video_call/RoomScreen.dart';
-import 'package:doctor_app/screen/web_view/video_call/demo_screen.dart';
-import 'package:doctor_app/screen/web_view/video_call/patient_upcoming_event_view.dart';
+
 import 'package:doctor_app/shared_preferences/preference_helper.dart';
 import 'package:firebase_core/firebase_core.dart';
 

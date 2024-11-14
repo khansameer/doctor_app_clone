@@ -1,4 +1,4 @@
-import 'package:doctor_app/core/colors.dart';
+
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 import 'package:doctor_app/provider/patient_provider.dart';

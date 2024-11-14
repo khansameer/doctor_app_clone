@@ -2,14 +2,13 @@ import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:doctor_app/core/app_constants.dart';
 import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
-import 'package:doctor_app/core/common/custom_alert_dialog.dart';
+
 import 'package:doctor_app/core/common/error_page.dart';
 import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
-import 'package:doctor_app/screen/authentication/model/login_model.dart';
-import 'package:doctor_app/screen/mobile_view/notification/notificatio_screen.dart';
+
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_dashboard_view.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/communication_screen.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/feedback/admin_feedback_screen.dart';

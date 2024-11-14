@@ -1,5 +1,4 @@
 import 'package:doctor_app/core/colors.dart';
-import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 
 import 'package:doctor_app/core/common/common_textfield.dart';

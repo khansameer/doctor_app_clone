@@ -64,9 +64,9 @@ class Appointments {
   String? diagnosis;
   String? notes;
   bool? isVirtual;
-  Null? meetingLink;
-  Null? meetingId;
-  Null? followUp;
+  dynamic meetingLink;
+  dynamic meetingId;
+  dynamic followUp;
   Patient? patient;
   Doctor? doctor;
 
@@ -259,8 +259,8 @@ class Filters {
 }
 
 class DateRange {
-  Null? startDate;
-  Null? endDate;
+  dynamic startDate;
+  dynamic endDate;
 
   DateRange({this.startDate, this.endDate});
 

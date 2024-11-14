@@ -4,12 +4,10 @@ import 'package:doctor_app/core/component/component.dart';
 import 'package:doctor_app/screen/web_view/model/patient_details_model.dart';
 import 'package:doctor_app/service/api_config.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import 'package:flutter/material.dart';
 import '../screen/web_view/admin_dashboard_view/patient_profile_dialog.dart';
-import '../screen/web_view/admin_dashboard_view/patient_profile_dialog.dart';
+
 import '../service/api_services.dart';
 import 'model/CommonPaitentDetailsModel.dart';
 

@@ -1,12 +1,12 @@
-import 'package:doctor_app/core/colors.dart';
+
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
-import 'package:fl_chart/fl_chart.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_maps/maps.dart';
+
 
 class AdminPieGraph extends StatelessWidget {
   const AdminPieGraph({super.key});
