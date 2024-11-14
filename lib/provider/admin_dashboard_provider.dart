@@ -76,6 +76,16 @@ class AdminDashboardProvider with ChangeNotifier {
     notifyListeners();
   }
 
+
+  int? _hoveredAudioCall;
+
+  int? get hoveredAudioCall => _hoveredAudioCall;
+
+  void setHoveredAudioCall(int? index) {
+    _hoveredAudioCall = index;
+    notifyListeners();
+  }
+
   int? _hoveredEdit;
 
   int? get hoveredEdit => _hoveredEdit;
@@ -294,7 +304,7 @@ class AdminDashboardProvider with ChangeNotifier {
 
   //doctor note
   List<Map<String, String>> patientDoctorNotes = [
-    {
+    /*{
       "noteID": "DN001",
       "patientID": "P001",
       "patientName": "Alice Johnson",
@@ -453,10 +463,10 @@ class AdminDashboardProvider with ChangeNotifier {
       "date": "2024-10-20",
       "doctorName": "Dr. Megan Collins",
       "note": "Patient recovering well; follow-up in one month."
-    },
+    },*/
   ];
   List<Map<String, dynamic>> demographicsDetails = [
-    {
+    /*{
       "patientID": "P001",
       "name": "Alice Johnson",
       "age": 34,
@@ -695,99 +705,99 @@ class AdminDashboardProvider with ChangeNotifier {
       "maritalStatus": "Single",
       "ethnicity": "Caucasian",
       "language": "English",
-    },
+    },*/
   ];
   List<Map<String, dynamic>> patientReports = [
-    {
-      "reportID": "R001",
-      "patientID": "P001",
-      "patientName": "Alice Johnson",
-      "date": "2024-10-01",
-      "reportType": "Blood Test",
-      "doctorName": "Dr. Emily Smith",
-      "summary": "Normal hemoglobin and cholesterol levels."
-    },
-    {
-      "reportID": "R002",
-      "patientID": "P002",
-      "patientName": "James Williams",
-      "date": "2024-10-03",
-      "reportType": "X-Ray",
-      "doctorName": "Dr. John Doe",
-      "summary": "No fractures detected in the chest X-ray."
-    },
-    {
-      "reportID": "R003",
-      "patientID": "P003",
-      "patientName": "Sophia Brown",
-      "date": "2024-10-05",
-      "reportType": "MRI",
-      "doctorName": "Dr. Sarah Brown",
-      "summary": "Mild inflammation in the knee joint."
-    },
-    {
-      "reportID": "R004",
-      "patientID": "P004",
-      "patientName": "Liam Jones",
-      "date": "2024-10-07",
-      "reportType": "CT Scan",
-      "doctorName": "Dr. William Green",
-      "summary": "No abnormalities in the abdominal region."
-    },
-    {
-      "reportID": "R005",
-      "patientID": "P005",
-      "patientName": "Olivia Garcia",
-      "date": "2024-10-09",
-      "reportType": "Urine Test",
-      "doctorName": "Dr. Angela White",
-      "summary": "No signs of infection; all levels are normal."
-    },
-    {
-      "reportID": "R006",
-      "patientID": "P006",
-      "patientName": "Mason Miller",
-      "date": "2024-10-11",
-      "reportType": "Blood Pressure Check",
-      "doctorName": "Dr. Michael Lee",
-      "summary": "Blood pressure slightly elevated; recommend follow-up."
-    },
-    {
-      "reportID": "R007",
-      "patientID": "P007",
-      "patientName": "Emma Martinez",
-      "date": "2024-10-13",
-      "reportType": "Electrocardiogram (ECG)",
-      "doctorName": "Dr. Jennifer Adams",
-      "summary": "ECG shows regular heart rhythm."
-    },
-    {
-      "reportID": "R008",
-      "patientID": "P008",
-      "patientName": "Noah Rodriguez",
-      "date": "2024-10-15",
-      "reportType": "Lipid Profile",
-      "doctorName": "Dr. David Clark",
-      "summary": "High LDL levels; advised dietary changes."
-    },
-    {
-      "reportID": "R009",
-      "patientID": "P009",
-      "patientName": "Isabella Hernandez",
-      "date": "2024-10-17",
-      "reportType": "Allergy Test",
-      "doctorName": "Dr. Karen Lewis",
-      "summary": "Positive reaction to pollen and dust mites."
-    },
-    {
-      "reportID": "R010",
-      "patientID": "P010",
-      "patientName": "Ethan Lee",
-      "date": "2024-10-19",
-      "reportType": "Vision Test",
-      "doctorName": "Dr. George Walker",
-      "summary": "20/20 vision; no corrective lenses needed."
-    },
+    // {
+    //   "reportID": "R001",
+    //   "patientID": "P001",
+    //   "patientName": "Alice Johnson",
+    //   "date": "2024-10-01",
+    //   "reportType": "Blood Test",
+    //   "doctorName": "Dr. Emily Smith",
+    //   "summary": "Normal hemoglobin and cholesterol levels."
+    // },
+    // {
+    //   "reportID": "R002",
+    //   "patientID": "P002",
+    //   "patientName": "James Williams",
+    //   "date": "2024-10-03",
+    //   "reportType": "X-Ray",
+    //   "doctorName": "Dr. John Doe",
+    //   "summary": "No fractures detected in the chest X-ray."
+    // },
+    // {
+    //   "reportID": "R003",
+    //   "patientID": "P003",
+    //   "patientName": "Sophia Brown",
+    //   "date": "2024-10-05",
+    //   "reportType": "MRI",
+    //   "doctorName": "Dr. Sarah Brown",
+    //   "summary": "Mild inflammation in the knee joint."
+    // },
+    // {
+    //   "reportID": "R004",
+    //   "patientID": "P004",
+    //   "patientName": "Liam Jones",
+    //   "date": "2024-10-07",
+    //   "reportType": "CT Scan",
+    //   "doctorName": "Dr. William Green",
+    //   "summary": "No abnormalities in the abdominal region."
+    // },
+    // {
+    //   "reportID": "R005",
+    //   "patientID": "P005",
+    //   "patientName": "Olivia Garcia",
+    //   "date": "2024-10-09",
+    //   "reportType": "Urine Test",
+    //   "doctorName": "Dr. Angela White",
+    //   "summary": "No signs of infection; all levels are normal."
+    // },
+    // {
+    //   "reportID": "R006",
+    //   "patientID": "P006",
+    //   "patientName": "Mason Miller",
+    //   "date": "2024-10-11",
+    //   "reportType": "Blood Pressure Check",
+    //   "doctorName": "Dr. Michael Lee",
+    //   "summary": "Blood pressure slightly elevated; recommend follow-up."
+    // },
+    // {
+    //   "reportID": "R007",
+    //   "patientID": "P007",
+    //   "patientName": "Emma Martinez",
+    //   "date": "2024-10-13",
+    //   "reportType": "Electrocardiogram (ECG)",
+    //   "doctorName": "Dr. Jennifer Adams",
+    //   "summary": "ECG shows regular heart rhythm."
+    // },
+    // {
+    //   "reportID": "R008",
+    //   "patientID": "P008",
+    //   "patientName": "Noah Rodriguez",
+    //   "date": "2024-10-15",
+    //   "reportType": "Lipid Profile",
+    //   "doctorName": "Dr. David Clark",
+    //   "summary": "High LDL levels; advised dietary changes."
+    // },
+    // {
+    //   "reportID": "R009",
+    //   "patientID": "P009",
+    //   "patientName": "Isabella Hernandez",
+    //   "date": "2024-10-17",
+    //   "reportType": "Allergy Test",
+    //   "doctorName": "Dr. Karen Lewis",
+    //   "summary": "Positive reaction to pollen and dust mites."
+    // },
+    // {
+    //   "reportID": "R010",
+    //   "patientID": "P010",
+    //   "patientName": "Ethan Lee",
+    //   "date": "2024-10-19",
+    //   "reportType": "Vision Test",
+    //   "doctorName": "Dr. George Walker",
+    //   "summary": "20/20 vision; no corrective lenses needed."
+    // },
   ];
   List<Map<String, dynamic>> appointmentDetails = [
     {
@@ -892,7 +902,7 @@ class AdminDashboardProvider with ChangeNotifier {
     },
   ];
   List<Map<String, dynamic>> followUpDetails = [
-    {
+   /* {
       "patientID": "P001",
       "patientName": "Alice Johnson",
       "lastAppointmentDate": "2024-10-15",
@@ -931,10 +941,10 @@ class AdminDashboardProvider with ChangeNotifier {
       "nextFollowUpDate": "2024-11-18",
       "doctorName": "Dr. Angela White",
       "reason": "Allergy Treatment Review"
-    },
+    },*/
   ];
   List<Map<String, dynamic>> billingInfo = [
-    {
+    /*{
       "billID": "B001",
       "patientID": "P001",
       "patientName": "Alice Johnson",
@@ -988,7 +998,7 @@ class AdminDashboardProvider with ChangeNotifier {
       "paymentStatus": "Paid",
       "billingDate": "2024-10-19",
       "paymentMethod": "Debit Card"
-    },
+    },*/
   ];
 
   // for chat

@@ -3,10 +3,7 @@ import 'package:doctor_app/core/colors.dart';
 import 'package:doctor_app/core/common/common_button_widget.dart';
 import 'package:doctor_app/core/common/common_text_widget.dart';
 import 'package:doctor_app/core/component/component.dart';
-import 'package:doctor_app/core/context_extension.dart';
 import 'package:doctor_app/core/responsive.dart';
-import 'package:doctor_app/provider/address_provider.dart';
-import 'package:doctor_app/screen/web_view/admin_dashboard_view/my_address/add_my_address_screen.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
@@ -19,6 +16,7 @@ import '../../../../provider/prescription_provider.dart';
 
 class AddPrescriptionScreen extends StatefulWidget {
   const AddPrescriptionScreen({super.key, required this.isEdit, this.address});
+
   final bool isEdit;
   final Medications? address;
 
@@ -37,7 +35,6 @@ class _AddMyAddressScreenState extends State<AddPrescriptionScreen> {
   void initState() {
     super.initState();
     if (widget.isEdit) {
-      var provider = context.read<PrescriptionProvider>();
       tetMedicine.text = '${widget.address?.name.toString()}';
       tetTimesPerDay.text =
           '${widget.address?.frequency?.timesPerDay.toString()}';
@@ -59,7 +56,7 @@ class _AddMyAddressScreenState extends State<AddPrescriptionScreen> {
     tetDurationValue.clear();
     tetTimesPerDay.clear();
     tetMedicine.clear();
-    context.read<PrescriptionProvider>().setSelectedDaysTake([]);
+
   }
 
   @override
@@ -100,8 +97,8 @@ class _AddMyAddressScreenState extends State<AddPrescriptionScreen> {
                           children: [
                             CommonTextWidget(
                               text: widget.isEdit
-                                  ? "EDIT PRESECRIPTION"
-                                  : "ADD PRESECRIPTION",
+                                  ? "EDIT Prescription".toUpperCase()
+                                  : "ADD Prescription".toUpperCase(),
                               fontSize: 16,
                               textAlign: TextAlign.center,
                               fontWeight: FontWeight.w700,
@@ -168,63 +165,11 @@ class _AddMyAddressScreenState extends State<AddPrescriptionScreen> {
                             SizedBox(
                               height: 10,
                             ),
-                            /* MultiSelectDialogField<String>(
-                             // initialValue: _selectedDaysTake,
-                              initialValue: provider.selectedDaysTake,
-                              selectedColor: AppColors.primary,
-                              // searchHint: "Select time per day",
-                              title: CommonTextWidget(
-                                text: "Select when to take",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              searchTextStyle: commonTextStyle(fontSize: 12),
-                              selectedItemsTextStyle: commonTextStyle(
-                                  color: Colors.green, fontSize: 12),
-
-                              itemsTextStyle: commonTextStyle(fontSize: 12),
-
-                              dialogHeight: size.height * zero3,
-                              // 30% of screen height
-                              backgroundColor: Colors.white,
-                              checkColor: Colors.white,
-                              dialogWidth: twoHundred,
-                              buttonIcon: const Icon(
-                                Icons.keyboard_arrow_down_sharp,
-                                color: Colors.grey,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                    color: Colors.grey.withOpacity(0.20),
-                                    width: 1),
-                              ),
-                              items: provider.whenToTake
-                                  .map((e) => MultiSelectItem(e, e))
-                                  .toList(),
-                              listType: MultiSelectListType.LIST,
-                              onConfirm: (selected) {
-                              */ /*  setState(() {
-
-                                  provider.setSelectedDaysTake(selected.toList());
-                                  print('===length===${selected.length}');
-                                 */ /**/ /* _selectedDaysTake = selected.toList();*/ /**/ /*
-                                  // _selectedDaysTake = selected.map((e) => e).toList();
-                                });*/ /*
-                                provider.setSelectedDaysTake(
-                                    selected.map((e) => e.toLowerCase()).toList()
-                                );
-
-                               // print('===length===${provider.selectedDaysTake}');
-                               // provider.setSelectedDaysTake(selected.toList());
-                              },
-                            ),*/
                             Consumer<PrescriptionProvider>(
                               builder: (context, provider, child) {
                                 return MultiSelectDialogField<String>(
-                                  initialValue: provider
-                                      .selectedDaysTake, // Make sure this matches the provider's current state
+                                  initialValue: provider.selectedDaysTake,
+                                  // Make sure this matches the provider's current state
                                   selectedColor: AppColors.primary,
                                   title: CommonTextWidget(
                                     text: "Select when to take",
@@ -367,29 +312,51 @@ class _AddMyAddressScreenState extends State<AddPrescriptionScreen> {
                                       "isCommon": true
                                     };
 
-                                    print('====dsdsdsddd===${body.toString()}');
-                                    print('=======${body.toString()}');
-                                    provider
-                                        .addPrescription(
-                                            context: context, body: body)
-                                        .then((value) {
-                                      if (globalStatusCode == 200 ||
-                                          globalStatusCode == 201) {
-                                        showCommonDialog(
-                                            context: context,
-                                            title: "Success",
-                                            content:
-                                                'Prescription added successfully',
-                                            isMessage: true);
-                                        resetText();
-                                      } else {
-                                        showCommonDialog(
-                                            context: context,
-                                            title: "Error",
-                                            content: errorMessage ?? '',
-                                            isMessage: true);
-                                      }
-                                    });
+                                    if (widget.isEdit) {
+                                      print(
+                                          '====dsdsdsddd===${body.toString()}');
+                                      print('=======${body.toString()}');
+                                      provider
+                                          .editPrescription(
+                                        id: widget.address?.sId??"0",
+                                              context: context, body: body)
+                                          .then((value) {
+                                        if (globalStatusCode == 200 ||
+                                            globalStatusCode == 201) {
+                                          Navigator.of(context).pop();
+                                          resetText();
+                                          context.read<PrescriptionProvider>().setSelectedDaysTake([]);
+                                        } else {
+                                          showCommonDialog(
+                                              context: context,
+                                              title: "Error",
+                                              content: errorMessage ?? '',
+                                              isMessage: true);
+                                        }
+                                      });
+                                    }
+                                    else{
+                                      print('====dsdsdsddd===${body.toString()}');
+                                      print('=======${body.toString()}');
+                                      provider
+                                          .addPrescription(
+                                          context: context, body: body)
+                                          .then((value) {
+                                        if (globalStatusCode == 200 ||
+                                            globalStatusCode == 201) {
+
+                                          Navigator.of(context).pop();
+                                          resetText();
+                                          context.read<PrescriptionProvider>().setSelectedDaysTake([]);
+                                        } else {
+                                          showCommonDialog(
+                                              context: context,
+                                              title: "Error",
+                                              content: errorMessage ?? '',
+                                              isMessage: true);
+                                        }
+                                      });
+                                    }
                                   }
                                 } else {
                                   formPrescription.currentState?.save();

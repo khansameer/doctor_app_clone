@@ -11,6 +11,9 @@ import 'package:doctor_app/screen/web_view/admin_dashboard_view/my_address/add_m
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../service/gloable_status_code.dart';
+import 'edit_address_screen.dart';
+
 class MyAddressScreen extends StatefulWidget {
   const MyAddressScreen({super.key});
 
@@ -21,12 +24,14 @@ class MyAddressScreen extends StatefulWidget {
 class _MyAddressScreenState extends State<MyAddressScreen> {
   @override
   void initState() {
+
+    super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<DashboardProvider>().getUserName();
       context.read<AddressProvider>().getAddress(context: context);
     });
 
-    super.initState();
   }
 
   @override
@@ -34,96 +39,97 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
     var size = MediaQuery.sizeOf(context);
     var isTablet = Responsive.isTablet(context);
     var isMobile = Responsive.isMobile(context);
+    var provider=context.watch<AddressProvider>();
     return SafeArea(
-      child: Container(
-        padding: EdgeInsets.all(0),
-        width: size.width,
-        height: size.height,
-        child: ListView(
-          children: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
+        children: [
+          Container(
+            padding: EdgeInsets.all(0),
+            width: size.width,
+            height: size.height,
+            child: ListView(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 16),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CommonTextWidget(
-                              text: "Clinic Address",
-                              fontSize: 18,
-                              fontWeight: FontWeight.w900,
-                            ),
-                            /* CommonTextWidget(
-                              top: 5,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              text: "Add addresses for future use.",
-                            ),*/
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15, right: 16),
+                      child: Row(
                         children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              CommonButtonWidget(
-                                fontSize: 12,
-                                radius: 8,
-                                iconShow: true,
-                                icon: Container(
-                                  margin: EdgeInsets.only(right: 5),
-                                  child: Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                  ),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CommonTextWidget(
+                                  text: "Clinic Address",
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w900,
                                 ),
-                                onPressed: () {
-                                  showDialog(
-                                    barrierDismissible: false,
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return CustomAlertDialog(
-                                        content: AddMyAddressScreen(
-                                          isEdit: false,
-                                        ),
+                                /* CommonTextWidget(
+                                  top: 5,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  text: "Add addresses for future use.",
+                                ),*/
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                              child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  CommonButtonWidget(
+                                    fontSize: 12,
+                                    radius: 8,
+                                    iconShow: true,
+                                    icon: Container(
+                                      margin: EdgeInsets.only(right: 5),
+                                      child: Icon(
+                                        Icons.add,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return CustomAlertDialog(
+                                            content: EditAddressScreen(
+                                              isEdit: false,
+                                            ),
+                                          );
+                                        },
                                       );
                                     },
-                                  );
-                                },
-                                padding: EdgeInsets.only(
-                                    left: 40, right: 40, top: 20, bottom: 20),
-                                text: "ADD ADDRESS",
-                              ),
+                                    padding: EdgeInsets.only(
+                                        left: 40, right: 40, top: 15, bottom: 15),
+                                    text: "ADD ADDRESS",
+                                  ),
+                                ],
+                              )
                             ],
-                          )
+                          ))
                         ],
-                      ))
-                    ],
-                  ),
-                ),
-                Divider(
-                  thickness: 0.3,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Consumer<AddressProvider>(
-                      builder: (context, provider, child) {
-                    return LayoutBuilder(builder: (context, constraints) {
-                      return GridView.builder(
+                      ),
+                    ),
+                    Divider(
+                      thickness: 0.3,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: provider
+                          .getAddressModel?.addresses?.length!=null?GridView.builder(
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
                         itemCount: provider
-                            .dummyAddresses.length, // Example: number of items
+                            .getAddressModel?.addresses?.length, // Example: number of items
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: isTablet
                               ? 1
@@ -137,7 +143,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                         ),
                         // padding: const EdgeInsets.fromLTRB(10, 20, 30, 40),
                         itemBuilder: (context, index) {
-                          var data = provider.dummyAddresses[index];
+                          var data = provider.getAddressModel?.addresses?[index];
                           return Container(
                             decoration: BoxDecoration(
                                 color: AppColors.colorBgNew,
@@ -156,18 +162,18 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                                     fontWeight: FontWeight.w700,
                                   ),
                                   CommonTextWidget(
-                                    text: data.address1,
+                                    text: data?.address??'',
                                     top: 8,
                                   ),
                                   CommonTextWidget(
                                     text:
-                                        '${data.address1},${data.city},${data.state},${data.city},${data.zipcode}',
+                                        '${data?.city}, ${data?.state}, ${data?.zipCode}',
                                     top: 5,
                                   ),
-                                  CommonTextWidget(
+                                 /* CommonTextWidget(
                                     text: 'Ph:${data.phoneNumber}',
                                     top: 5,
-                                  ),
+                                  ),*/
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
@@ -195,9 +201,9 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                                                       (BuildContext context) {
                                                     return CustomAlertDialog(
                                                       content:
-                                                          AddMyAddressScreen(
+                                                      EditAddressScreen(
+                                                        address: data,
                                                         isEdit: true,
-                                                        //address: data,
                                                       ),
                                                     );
                                                   },
@@ -251,7 +257,35 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                                               fontSize: 12,
                                               height: 40,
                                               onPressed: () {
-                                                provider.deleteItem(index);
+                                                showCommonDialog(
+                                                    context: context,
+                                                    title: "Delete",
+                                                    btnNegative: "No",
+                                                    btnPositive: "Delete",
+                                                    onPressPositive: () {
+
+                                                      provider
+                                                          .deleteAddress(
+                                                          context: context,
+                                                          addressID: data?.sId
+                                                              .toString()).then((value){
+                                                        if (globalStatusCode == 200 ||
+                                                            globalStatusCode == 201) {
+                                                          //   resetField();
+                                                          //provider.selectedID == null;
+                                                          Navigator.of(context).pop();
+                                                          //Navigator.of(context).pop();
+                                                        }
+                                                      });
+                                                    },
+                                                    onPressNegative: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    content:
+                                                    "Are you sure want to delete record?",
+                                                    isMessage: false);
+                                              // provider.deleteAddress(context: context,addressID: data?.sId);
                                               },
                                               fontWeight: FontWeight.w400,
                                               /* colorButton:
@@ -293,14 +327,15 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                             ),
                           );
                         },
-                      );
-                    });
-                  }),
-                )
+                      ):SizedBox.shrink(),
+                    )
+                  ],
+                ),
               ],
             ),
-          ],
-        ),
+          ),
+          provider.isFetching || provider.isDeleting?showLoaderList():SizedBox.shrink()
+        ],
       ),
     );
   }

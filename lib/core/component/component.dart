@@ -27,6 +27,16 @@ import 'package:provider/provider.dart';
 String removeSpecialSymbolsAndEnsureSpace(String input) {
   return input.replaceAll(RegExp(r'[^a-zA-Z0-9\s]+'), ' ').trim();
 }
+int calculateAge(DateTime dateOfBirth) {
+  final currentDate = DateTime.now();
+  int age = currentDate.year - dateOfBirth.year;
+  if (currentDate.month < dateOfBirth.month ||
+      (currentDate.month == dateOfBirth.month &&
+          currentDate.day < dateOfBirth.day)) {
+    age--;
+  }
+  return age;
+}
 
 void showProfileDialog(BuildContext context) {
   var size = MediaQuery.sizeOf(context);
@@ -519,14 +529,16 @@ Widget commonImageNetworkWidget(
     {String? path,
     double? width,
     double? height,
+    double? borderRadius,
     Alignment? alignment,
+
     bool? isNotification = false,
     bool? isCircle = true,
     Color? iconColor,
     BoxFit? boxFit}) {
   return Center(
     child: ClipRRect(
-      borderRadius: BorderRadius.circular(100),
+      borderRadius: BorderRadius.circular(borderRadius??100),
       clipBehavior: isCircle == false ? Clip.none : Clip.antiAliasWithSaveLayer,
       child: Image.network(
         path ?? '',

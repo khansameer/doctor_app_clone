@@ -48,9 +48,12 @@ class PrescriptionProvider with ChangeNotifier {
     try {
       final response = await _service.callPostMethodApiWithToken(
           url: ApiConfig.addPrescription, body: body);
-
+      print("=========addPrescription=========${globalStatusCode}");
       if (globalStatusCode == 200 || globalStatusCode == 201) {
-        print(json.decode(response));
+        print("=========addPrescription=========${json.decode(response)}");
+        getPrescription(context: context);
+        notifyListeners();
+
       } else if (globalStatusCode == 401) {
         commonSessionError(context: context);
       }
@@ -62,6 +65,35 @@ class PrescriptionProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
+
+  Future editPrescription({
+    required BuildContext context,
+    required String id,
+    required Map<String, dynamic> body,
+  }) async {
+    _isAdding = true;
+    notifyListeners();
+    try {
+      final response = await _service.callPutMethodApiWithToken(
+          url: '${ApiConfig.addPrescription}/$id', body: body);
+
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+        print(json.decode(response));
+        getPrescription(context: context);
+        notifyListeners();
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
+      }
+
+      _isAdding = false;
+      notifyListeners();
+    } catch (e) {
+      _isAdding = false;
+      notifyListeners();
+    }
+  }
+
 
   PrescriptionDetailsModel? _prescriptionDetailsModel;
 

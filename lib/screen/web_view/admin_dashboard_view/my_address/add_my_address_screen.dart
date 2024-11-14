@@ -13,15 +13,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/app_constants.dart';
+import '../../../../provider/model/GetAddressModel.dart';
 import '../../../../provider/profile_provider.dart';
 
 class AddMyAddressScreen extends StatefulWidget {
   const AddMyAddressScreen({
     super.key,
     required this.isEdit,
+    this.address,
   });
   final bool isEdit;
-  //final Address? address;
+  final Address? address;
 
   @override
   State<AddMyAddressScreen> createState() => _AddMyAddressScreenState();
@@ -54,14 +56,14 @@ class _AddMyAddressScreenState extends State<AddMyAddressScreen> {
               : isTablet
                   ? width * 0.3
                   : width * 0.19,
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: SingleChildScrollView(
-              child: Form(
-                key: formAddAddress,
-                child: Column(
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: SingleChildScrollView(
+          child: Form(
+            key: formAddAddress,
+            child: Stack(
+              children: [
+                Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +122,7 @@ class _AddMyAddressScreenState extends State<AddMyAddressScreen> {
                         },
                       );
                     }),
-                
+
                     //
                     const SizedBox(height: 20),
                     const SizedBox(
@@ -155,7 +157,6 @@ class _AddMyAddressScreenState extends State<AddMyAddressScreen> {
                               "firstName": '${providerProfile.firstName}',
                               "lastName": '${providerProfile.lastName}',
                               "email": '${providerProfile.email}',
-                              //"password": provider.tetPassword.text,
                               "dateOfBirth": '${providerProfile.dateOfBirth}',
                               "phoneNumber": '${providerProfile.phoneNumber}',
                               "role": "doctor",
@@ -224,13 +225,13 @@ class _AddMyAddressScreenState extends State<AddMyAddressScreen> {
                     )
                   ],
                 ),
-              ),
+                context.watch<AddressProvider>().isAdding
+                    ? showLoaderList()
+                    : const SizedBox.shrink(),
+              ],
             ),
           ),
-          context.watch<AddressProvider>().isAdding
-              ? showLoaderList()
-              : const SizedBox.shrink(),
-        ],
+        ),
       ),
     );
   }

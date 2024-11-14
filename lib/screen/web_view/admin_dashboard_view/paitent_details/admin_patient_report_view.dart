@@ -11,7 +11,7 @@ class AdminPatientReportView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AdminDashboardProvider>(
         builder: (context, provider, child) {
-      return ListView.builder(
+      return provider.patientReports==[]?ListView.builder(
           shrinkWrap: true,
           itemCount: provider.patientReports.length,
           itemBuilder: (context, index) {
@@ -56,7 +56,13 @@ class AdminPatientReportView extends StatelessWidget {
                 ),
               ),
             );
-          });
+          }):Center(
+        child: CommonTextWidget(
+          text: "No Data Found",
+          fontWeight: FontWeight.w600,
+          fontSize: 16,
+        ),
+      );
     });
   }
 }

@@ -115,7 +115,7 @@ class _AdminAllListScreenState extends State<AdminPatientAllListView> {
                         final dateOfBirth = dateOfBirthStr != null
                             ? DateTime.parse(dateOfBirthStr)
                             : DateTime.now();
-                        final age = provider.calculateAge(dateOfBirth);
+                        final age = calculateAge(dateOfBirth);
                         return Container(
                           decoration: BoxDecoration(
                               color: AppColors.colorListView,
@@ -128,6 +128,7 @@ class _AdminAllListScreenState extends State<AdminPatientAllListView> {
                             trailing: isMobile
                                 ? const SizedBox.shrink()
                                 : _viewButtonView(
+                                patientID: data?.sId??'',
                                     isMobile: isMobile, index: index),
                             leading: MouseRegion(
                                 cursor: SystemMouseCursors.click,
@@ -184,6 +185,7 @@ class _AdminAllListScreenState extends State<AdminPatientAllListView> {
                                 ),
                                 isMobile
                                     ? _viewButtonView(
+                                        patientID: data?.sId??'',
                                         isMobile: isMobile, index: index)
                                     : const SizedBox.shrink()
                               ],
@@ -201,61 +203,15 @@ class _AdminAllListScreenState extends State<AdminPatientAllListView> {
     });
   }
 
-  _viewButtonView({required bool isMobile, required int index}) {
+  _viewButtonView({required bool isMobile, required int index,required String patientID}) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         commonInkWell(
           onTap: () {
             //  chatModel.chatUserInfoValue(data);
-            showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (BuildContext context) {
-                  return const CustomAlertDialog(
-                    content: WebChatScreen(
-                      communication: false,
-                    ),
-                  );
-                });
+
           },
-          child: Consumer<AdminDashboardProvider>(
-              builder: (context, provider, child) {
-            return MouseRegion(
-              onEnter: (_) {
-                provider.setHoveredChat(index);
-              },
-              onExit: (_) {
-                provider.setHoveredChat(null);
-              },
-              child: AnimatedContainer(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                    color: provider.hoveredChat == index
-                        ? AppColors.primary
-                        : AppColors.colorBgNew,
-                    shape: BoxShape.circle),
-                /* decoration: const BoxDecoration(
-                      color: Colors.white, shape: BoxShape.circle),*/
-                duration: const Duration(milliseconds: 200),
-                child: Center(
-                  child: Icon(
-                    Icons.chat,
-                    size: 20,
-                    color: provider.hoveredChat == index
-                        ? Colors.white
-                        : Colors.grey,
-                  ),
-                ),
-              ),
-            );
-          }),
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        Flexible(
           child: Consumer<AdminDashboardProvider>(
               builder: (context, provider, child) {
             return MouseRegion(
@@ -266,11 +222,99 @@ class _AdminAllListScreenState extends State<AdminPatientAllListView> {
                 provider.setHoveredVideoCall(null);
               },
               child: AnimatedContainer(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                    color: provider.hoveredVideoCall == index
+                        ? AppColors.primary
+                        : AppColors.colorBgNew,
+                    shape: BoxShape.circle),
+                /* decoration: const BoxDecoration(
+                      color: Colors.white, shape: BoxShape.circle),*/
+                duration: const Duration(milliseconds: 200),
+                child: Center(
+                  child: Icon(
+                    Icons.videocam_outlined,
+                    size: 20,
+                    color: provider.hoveredVideoCall == index
+                        ? Colors.white
+                        : Colors.grey,
+                  ),
+                ),
+              ),
+            );
+          }),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        commonInkWell(
+          onTap: () {
+            //  chatModel.chatUserInfoValue(data);
+            showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (BuildContext context) {
+                  return const CustomAlertDialog(
+                    content: WebChatScreen(
+                      chatRoomId: "Sameer",
+                      communication: false,
+                    ),
+                  );
+                });
+          },
+          child: Consumer<AdminDashboardProvider>(
+              builder: (context, provider, child) {
+                return MouseRegion(
+                  onEnter: (_) {
+                    provider.setHoveredChat(index);
+                  },
+                  onExit: (_) {
+                    provider.setHoveredChat(null);
+                  },
+                  child: AnimatedContainer(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: provider.hoveredChat == index
+                            ? AppColors.primary
+                            : AppColors.colorBgNew,
+                        shape: BoxShape.circle),
+                    /* decoration: const BoxDecoration(
+                      color: Colors.white, shape: BoxShape.circle),*/
+                    duration: const Duration(milliseconds: 200),
+                    child: Center(
+                      child: Icon(
+                        Icons.chat,
+                        size: 20,
+                        color: provider.hoveredChat == index
+                            ? Colors.white
+                            : Colors.grey,
+                      ),
+                    ),
+                  ),
+                );
+              }),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Flexible(
+          child: Consumer<AdminDashboardProvider>(
+              builder: (context, provider, child) {
+            return MouseRegion(
+              onEnter: (_) {
+                provider.setHoveredAudioCall(index);
+              },
+              onExit: (_) {
+                provider.setHoveredAudioCall(null);
+              },
+              child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 alignment: Alignment.topLeft,
                 width: 50,
                 decoration: BoxDecoration(
-                    color: provider.hoveredVideoCall == index
+                    color: provider.hoveredAudioCall == index
                         ? AppColors.primary
                         : AppColors.colorBgNew,
                     shape: BoxShape.circle),
@@ -279,7 +323,7 @@ class _AdminAllListScreenState extends State<AdminPatientAllListView> {
                   child: Icon(
                     size: 20,
                     Icons.call_sharp,
-                    color: provider.hoveredVideoCall == index
+                    color: provider.hoveredAudioCall == index
                         ? Colors.white
                         : Colors.grey,
                   ),
@@ -297,8 +341,8 @@ class _AdminAllListScreenState extends State<AdminPatientAllListView> {
                 barrierDismissible: false,
                 context: context,
                 builder: (BuildContext context) {
-                  return const CustomAlertDialog(
-                    content: AdminPatientDetailsView(),
+                  return  CustomAlertDialog(
+                    content: AdminPatientDetailsView(patientID: patientID??'',),
                   );
                 });
           },

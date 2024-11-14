@@ -11,7 +11,7 @@ class DoctorNoteView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AdminDashboardProvider>(
         builder: (context, provider, child) {
-      return ListView.builder(
+      return provider.patientDoctorNotes==[]?ListView.builder(
           shrinkWrap: true,
           itemCount: provider.patientDoctorNotes.length,
           itemBuilder: (context, index) {
@@ -61,7 +61,13 @@ class DoctorNoteView extends StatelessWidget {
                 ),
               ),
             );
-          });
+          }): Center(
+              child: CommonTextWidget(
+                text: "No Data Found",
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+              ),
+            );
     });
   }
 }

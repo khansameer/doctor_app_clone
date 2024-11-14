@@ -240,17 +240,7 @@ class _AddAppointmentsWidgetState extends State<AddAppointmentsWidget> {
                                 tetPatientPhone.text =
                                     '${suggestion.item?.phoneNumber.toString()}';
 
-                             //   String gender = suggestion.item?[0].mappedGender;
-                          /*      if (context
-                                    .read<ProfileProvider>()
-                                    .itemGenderList
-                                    .contains(
-                                        suggestion.item?.gender.toString().toLowerCase().toString())) {
-                                  print('---------------------------asassas${suggestion.item?.gender.toString()}');
-                                  providerApt.setGenderValue(
-                                      suggestion.item?.gender.toString());
-                                  //  provider.setGenderValue = data!.gender.toString().toCapitalize();
-                                }*/
+
                               });
 
                               if (suggestion.item?.gender != null) {

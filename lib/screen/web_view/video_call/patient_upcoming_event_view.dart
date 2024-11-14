@@ -247,9 +247,9 @@ class _MainVideoCallState extends State<PatientUpcomingEventView> {
                                                       context: context,
                                                       builder: (BuildContext
                                                           context) {
-                                                        return const CustomAlertDialog(
+                                                        return  CustomAlertDialog(
                                                           content:
-                                                              AdminPatientDetailsView(),
+                                                              AdminPatientDetailsView(patientID: element.patient?.id??'',),
                                                         );
                                                       });
                                                 },

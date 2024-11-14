@@ -1,57 +1,14 @@
 import 'dart:convert';
 
+import 'package:doctor_app/core/string/string_utils.dart';
 import 'package:doctor_app/service/api_config.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../core/component/component.dart';
 import '../service/api_services.dart';
+import 'model/GetAddressModel.dart';
 
-class Address {
-  String address1;
-  String address2;
-  String phoneNumber;
-  String city;
-  String state;
-  String country;
-  String zipcode;
-
-  Address({
-    required this.address1,
-    required this.address2,
-    required this.phoneNumber,
-    required this.city,
-    required this.state,
-    required this.country,
-    required this.zipcode,
-  });
-
-  // To create a map from the Address object (useful for JSON conversion)
-  Map<String, dynamic> toMap() {
-    return {
-      'address1': address1,
-      'address2': address2,
-      'phoneNumber': phoneNumber,
-      'city': city,
-      'state': state,
-      'country': country,
-      'zipcode': zipcode,
-    };
-  }
-
-  // To create an Address object from a map (useful for JSON parsing)
-  factory Address.fromMap(Map<String, dynamic> map) {
-    return Address(
-      address1: map['address1'],
-      address2: map['address2'],
-      phoneNumber: map['phoneNumber'],
-      city: map['city'],
-      state: map['state'],
-      country: map['country'],
-      zipcode: map['zipcode'],
-    );
-  }
-}
 
 class AddressProvider with ChangeNotifier {
   final _service = ApiService();
@@ -59,7 +16,8 @@ class AddressProvider with ChangeNotifier {
   bool _isAdding = false;
   bool get isAdding => _isAdding;
   bool get isFetching => _isFetching;
-
+  bool _isDeleting = false;
+  bool get isDeleting => _isDeleting;
   int? _hoverEdit;
 
   int? get hoverEdit => _hoverEdit;
@@ -78,6 +36,10 @@ class AddressProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  GetAddressModel? _getAddressModel;
+  GetAddressModel? get getAddressModel => _getAddressModel;
+
+
   Future getAddress({required BuildContext context}) async {
     String userId = await getUserID();
 
@@ -85,10 +47,13 @@ class AddressProvider with ChangeNotifier {
     notifyListeners();
     try {
       final response = await _service.callGetMethod(
-          url: '${ApiConfig.getDoctor}/$userId/edit');
+          url: '${ApiConfig.getDoctor}/$userId/addresses');
 
       if (globalStatusCode == 200 || globalStatusCode == 201) {
         print('=======Myaddrtesss ${json.decode(response)}');
+        _getAddressModel =
+            GetAddressModel.fromJson(json.decode(response));
+
 
       } else if (globalStatusCode == 401) {
         commonSessionError(context: context);
@@ -111,10 +76,11 @@ class AddressProvider with ChangeNotifier {
     _isAdding = true;
     notifyListeners();
     try {
-      final response = await _service.callPutMethodApiWithToken(
-          url: '${ApiConfig.getDoctor}/$userId', body: body);
+      final response = await _service.callPostMethodApiWithToken(
+          url: '${ApiConfig.getDoctor}/$userId/addresses', body: body);
 
       if (globalStatusCode == 200 || globalStatusCode == 201) {
+        getAddress(context: context);
         print(json.decode(response));
       } else if (globalStatusCode == 401) {
         commonSessionError(context: context);
@@ -128,41 +94,68 @@ class AddressProvider with ChangeNotifier {
     }
   }
 
-  // List of 20 dummy addresses
-  List<Address> dummyAddresses = [
-    Address(
-      address1: '1234 Elm St',
-      address2: 'Apt 5B',
-      phoneNumber: '+1 234-567-8901',
-      city: 'New York',
-      state: 'NY',
-      country: 'USA',
-      zipcode: '10001',
-    ),
-    Address(
-      address1: '5678 Oak Ave',
-      address2: 'Suite 4C',
-      phoneNumber: '+1 345-678-9012',
-      city: 'Los Angeles',
-      state: 'CA',
-      country: 'USA',
-      zipcode: '90001',
-    ),
-    Address(
-      address1: '91011 Pine Rd',
-      address2: 'Unit 7D',
-      phoneNumber: '+1 456-789-0123',
-      city: 'Chicago',
-      state: 'IL',
-      country: 'USA',
-      zipcode: '60601',
-    ),
 
-    // Continue with more entries...
-  ];
+  Future updateAddress({
+    required BuildContext context,
+    String? addressID,
+    required Map<String, dynamic> body,
+  }) async {
+    String userId = await getUserID();
+
+    _isAdding = true;
+    notifyListeners();
+    try {
+      final response = await _service.callPutMethodApiWithToken(
+          url: '${ApiConfig.getDoctor}/$userId/addresses/$addressID', body: body);
+
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+        print(json.decode(response));
+        getAddress(context: context);
+        notifyListeners();
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
+      }
+
+      _isAdding = false;
+      notifyListeners();
+    } catch (e) {
+      _isAdding = false;
+      notifyListeners();
+    }
+  }
+
+  Future deleteAddress({
+    required BuildContext context,
+    String? addressID,
+  }) async {
+    String userId = await getUserID();
+
+    _isDeleting = true;
+    notifyListeners();
+    try {
+      final response = await _service.callDeleteMethods(
+          url: '${ApiConfig.getDoctor}/$userId/addresses/$addressID');
+
+      if (globalStatusCode == 200 || globalStatusCode == 201) {
+        print(json.decode(response));
+        getAddress(context: context);
+        notifyListeners();
+      } else if (globalStatusCode == 401) {
+        commonSessionError(context: context);
+      }
+
+      _isDeleting = false;
+      notifyListeners();
+    } catch (e) {
+      _isDeleting = false;
+      notifyListeners();
+    }
+  }
+
+  // List of 20 dummy addresses
 
   void deleteItem(int index) {
-    dummyAddresses.removeAt(index);
+   // dummyAddresses.removeAt(index);
     notifyListeners(); // Notifies listeners to rebuild UI
   }
 }

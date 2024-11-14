@@ -35,6 +35,14 @@ class _SettingPrescriptionScreenState extends State<SettingPrescriptionScreen> {
 
     super.initState();
   }
+  InheritedWidget? myAncestor;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Capture a reference to the ancestor widget here
+    myAncestor = context.dependOnInheritedWidgetOfExactType<InheritedWidget>();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,8 +112,8 @@ class _SettingPrescriptionScreenState extends State<SettingPrescriptionScreen> {
                                       padding: EdgeInsets.only(
                                           left: 40,
                                           right: 40,
-                                          top: 20,
-                                          bottom: 20),
+                                          top: 15,
+                                          bottom: 15),
                                       text: "ADD PRESCRIPTION",
                                     ),
                                   ],
@@ -120,7 +128,7 @@ class _SettingPrescriptionScreenState extends State<SettingPrescriptionScreen> {
                         return Container(
                           width: size.width,
                           padding: const EdgeInsets.all(0.0),
-                          child:globalStatusCode==200 || globalStatusCode==201? DataTable(
+                          child:DataTable(
                             dividerThickness: 0.3,
                             border: TableBorder.all(
                               width: 1.0,
@@ -263,7 +271,7 @@ class _SettingPrescriptionScreenState extends State<SettingPrescriptionScreen> {
                                   ),
                                 )
                                 .toList(),
-                          ):ErrorPage(),
+                          ),
                         );
                       })
                     ],

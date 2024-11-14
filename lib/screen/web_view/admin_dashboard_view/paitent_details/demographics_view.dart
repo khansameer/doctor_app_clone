@@ -11,7 +11,7 @@ class DemographicsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AdminDashboardProvider>(
         builder: (context, provider, child) {
-      return ListView.builder(
+      return provider.demographicsDetails==[]?ListView.builder(
           shrinkWrap: true,
           itemCount: provider.demographicsDetails.length,
           itemBuilder: (context, index) {
@@ -157,7 +157,13 @@ class DemographicsView extends StatelessWidget {
                 //  trailing: CommonTextWidget(text: data['date'],fontWeight: FontWeight.w600,fontSize: 14,),
               ),
             );
-          });
+          }): Center(
+        child: CommonTextWidget(
+          text: "No Data Found",
+          fontWeight: FontWeight.w600,
+          fontSize: 16,
+        ),
+      );
     });
   }
 }
