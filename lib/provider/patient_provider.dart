@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:doctor_app/core/component/component.dart';
+import 'package:doctor_app/provider/model/docot_details_model.dart';
 import 'package:doctor_app/screen/web_view/model/patient_details_model.dart';
 import 'package:doctor_app/service/api_config.dart';
 import 'package:doctor_app/service/gloable_status_code.dart';
@@ -138,9 +139,60 @@ class PatientProvider with ChangeNotifier {
   }
 
 
+  List<String> doctorIds =["672b5d61ced0f0d5b9f064f8","672a8e078137e27f0cb18f84"];
+  List<DoctorDetailsModel> doctorDetailsList = []; // To store the fetched details
+
+  Future getDoctorList({required BuildContext context}) async {
+    String userId = await getUserID();
+    _isLoading = true;
+    notifyListeners();
+
+
+    doctorDetailsList.clear();
+    notifyListeners();
+
+      try {
+        for (String doctorId in doctorIds) {
+          final response = await _service.callGetMethod(
+              url: '${ApiConfig.getPatientDetails}/$doctorId/edit');
+
+          print('===Response for $doctorId==${json.decode(response)}');
+
+          if (globalStatusCode == 200 || globalStatusCode == 201) {
+
+            final details = DoctorDetailsModel.fromJson(json.decode(response));
+            if (!doctorDetailsList.any((item) => item.id == details.id)) {
+              doctorDetailsList.add(details);
+            }
+          //  doctorDetailsList.add(details);
+            notifyListeners();
+          } else if (globalStatusCode == 401) {
+            commonSessionError(context: context);
+            break; // Exit if there's a session error
+          }
+        }
+        notifyListeners();
+        print('==================doocc${doctorDetailsList.length}');
+    } catch (e) {
+        _isLoading = false;
+        print('===error==$e');
+        print('===error==$globalStatusCode');
+        notifyListeners();
+      }
+
+  }
+
   String? _selectedGender;
   String _searchQuery = "";
   String? _selectedLetter;
+  int _selectedUserIndex = 0;
+
+  int get selectedUserIndex => _selectedUserIndex;
+
+  void selectUser(int index) {
+    _selectedUserIndex = index;
+    notifyListeners();
+  }
 
   List<Patients>? get patients {
     return _filteredPatients?.where((patient) {

@@ -11,7 +11,7 @@ flutter build web
 This project is a starting point for a Flutter application.
 
 richard.stevens@gmail.com
-**mathew.hadens@gmail.com**
+** mathew.hadens@gmail.com **
 A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
@@ -36,3 +36,8 @@ junoprem66@gmail.com
 PremJuno@123 
 https://firebase.google.com/docs/hosting/frameworks/flutter
 https://github.com/SyncfusionExamples/customize-appointment-using-custom-builder-flutter-event-calendar
+{
+"email":"angelaw9878@gmail.com",
+"password":"India@123",
+"role":"patient"
+}

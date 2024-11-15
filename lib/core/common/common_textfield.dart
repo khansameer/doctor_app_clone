@@ -43,6 +43,7 @@ class CommonTextField extends StatelessWidget {
   bool? isHideBorder = false;
   bool? isFill = false;
   String? fontFamily;
+  void Function(String)? onFieldSubmitted;
   VoidCallback? onTap;
   Color? colorBg;
   EdgeInsetsGeometry? margin;
@@ -90,7 +91,8 @@ class CommonTextField extends StatelessWidget {
     this.isHideBorder,
     this.margin,
     this.padding,
-    this.focusNode
+    this.focusNode,
+    this.onFieldSubmitted,
   });
 
   @override
@@ -120,6 +122,7 @@ class CommonTextField extends StatelessWidget {
         onChanged: onChange,
         autofocus: autofocus ?? false,
         keyboardType: inputTypes,
+        onFieldSubmitted: onFieldSubmitted,
         autocorrect: false,
         onTap: onTap,
         obscureText: obscureText ?? false,

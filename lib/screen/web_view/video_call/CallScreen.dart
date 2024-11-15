@@ -26,6 +26,20 @@ class _CallScreenState extends State<CallScreen> {
 
   Future<void> requestPermissions() async {
     await [Permission.camera, Permission.microphone].request();
+    try {
+      //By default both audio and video permissions will be requested.
+      Map<String, bool>? reqAudioVideoPermissions = await VideoSDK.requestPermissions();
+      //For requesting just audio permission.
+      Map<String, bool>? reqAudioPermissions = await VideoSDK.requestPermissions(Permissions.audio);
+      //For requesting just video permission.
+      Map<String, bool>? reqVideoPermissions = await VideoSDK.requestPermissions(Permissions.video);
+      Map<String, bool>? reqVideoPermissions1 = await VideoSDK.requestPermissions(Permissions.video);
+      //For requesting both audio and video permissions.
+      // Map<String, bool>? reqAudioVideoPermissions = await VideoSDK.requestPermissions(Permissions.audio_video);
+
+    } catch (ex) {
+      print("Error in requestPermission ");
+    }
   }
 
   @override
@@ -35,9 +49,14 @@ class _CallScreenState extends State<CallScreen> {
     _room.leave();
   }
 
+  void requestMediaPermissions() async {
+
+  }
   @override
   void initState() {
     super.initState();
+
+
 
     requestPermissions().then((_) {
       _room = VideoSDK.createRoom(
@@ -58,8 +77,8 @@ class _CallScreenState extends State<CallScreen> {
   void setMeetingEventListener() {
     _room.on(Events.roomJoined, () {
       setState(() {
-        /*participants.putIfAbsent(
-            _room.localParticipant.id, () => _room.localParticipant);*/
+        participants.putIfAbsent(
+            _room.localParticipant.id, () => _room.localParticipant);
       });
     });
 
@@ -82,7 +101,7 @@ class _CallScreenState extends State<CallScreen> {
 
     _room.on(Events.roomLeft, () {
       participants.clear();
-      Navigator.popUntil(context, ModalRoute.withName('/'));
+      Navigator.pop(context);
     });
   }
 
@@ -121,8 +140,8 @@ class _CallScreenState extends State<CallScreen> {
             Positioned(
               top: 16,
               left: 16,
-              width: 100,
-              height: 150,
+              width: 300,
+              height: 300,
               child: ParticipantTile(
                 key: Key(localParticipant.id),
                 participant: localParticipant,
@@ -144,7 +163,10 @@ class _CallScreenState extends State<CallScreen> {
                 },
                 onLeaveButtonPressed: () {
                   _room.leave();
-                },
+                },/* onScreenShare: () {
+
+
+              }*/
               ),
             ),
           ],
@@ -159,12 +181,14 @@ class MeetingControls extends StatelessWidget {
   final void Function() onToggleMicButtonPressed;
   final void Function() onToggleCameraButtonPressed;
   final void Function() onLeaveButtonPressed;
+//  final void Function() onScreenShare;
 
   const MeetingControls({
     super.key,
     required this.onToggleMicButtonPressed,
     required this.onToggleCameraButtonPressed,
     required this.onLeaveButtonPressed,
+ //   required this.onScreenShare,
   });
 
   @override
@@ -188,6 +212,13 @@ class MeetingControls extends StatelessWidget {
           colorButton: Colors.white,
           onTap: onLeaveButtonPressed,
         ),
+        SizedBox(width: 20),
+       /* commButton(
+          icon: Icons.share,
+          colorBg: Colors.red,
+          colorButton: Colors.white,
+          onTap: onScreenShare,
+        ),*/
       ],
     );
   }
@@ -249,6 +280,7 @@ class _ParticipantTileState extends State<ParticipantTile> {
       if (stream.kind == 'video') {
         setState(() => videoStream = stream);
       }
+
     });
 
     widget.participant.on(Events.streamDisabled, (Stream stream) {

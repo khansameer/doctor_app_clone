@@ -115,7 +115,7 @@ class ChatProvider extends ChangeNotifier {
   }
 
   Future<void> sendMessage(
-      {String? chatRoomId, required String message, String? senderId}) async {
+      {String? chatRoomId, required String message, String? senderId,String? username}) async {
     if (message.isEmpty) return;
 
     await _firestore
@@ -124,6 +124,7 @@ class ChatProvider extends ChangeNotifier {
         .collection('messages')
         .add({
       'message': message,
+      'user_name': username,
       'senderId': senderId,
       'timestamp': FieldValue.serverTimestamp(),
     });

@@ -10,12 +10,12 @@ import cloud_firestore
 import device_info_plus
 import file_selector_macos
 import firebase_core
-import flutter_webrtc
 import iris_method_channel
 import path_provider_foundation
 import screen_retriever_macos
 import shared_preferences_foundation
 import videosdk
+import videosdk_webrtc
 import window_manager
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
@@ -24,11 +24,11 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   DeviceInfoPlusMacosPlugin.register(with: registry.registrar(forPlugin: "DeviceInfoPlusMacosPlugin"))
   FileSelectorPlugin.register(with: registry.registrar(forPlugin: "FileSelectorPlugin"))
   FLTFirebaseCorePlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseCorePlugin"))
-  FlutterWebRTCPlugin.register(with: registry.registrar(forPlugin: "FlutterWebRTCPlugin"))
   IrisMethodChannelPlugin.register(with: registry.registrar(forPlugin: "IrisMethodChannelPlugin"))
   PathProviderPlugin.register(with: registry.registrar(forPlugin: "PathProviderPlugin"))
   ScreenRetrieverMacosPlugin.register(with: registry.registrar(forPlugin: "ScreenRetrieverMacosPlugin"))
   SharedPreferencesPlugin.register(with: registry.registrar(forPlugin: "SharedPreferencesPlugin"))
   VideosdkPlugin.register(with: registry.registrar(forPlugin: "VideosdkPlugin"))
+  FlutterWebRTCPlugin.register(with: registry.registrar(forPlugin: "FlutterWebRTCPlugin"))
   WindowManagerPlugin.register(with: registry.registrar(forPlugin: "WindowManagerPlugin"))
 }

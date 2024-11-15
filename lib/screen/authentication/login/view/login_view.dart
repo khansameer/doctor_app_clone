@@ -173,6 +173,14 @@ class _MobileViewState extends State<MobileView> {
                     commonTextFiledView(
                         radius: 8,
                         focusNode: _passwordFocusNode,
+                        onFieldSubmitte: (value){
+                          final isValid =
+                              widget.formLoginKey.currentState?.validate() ??
+                                  false;
+                          if (isValid) {
+                            onButtonLogin(provider: provider);
+                          }
+                        },
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.visiblePassword,
                         controller: tetPassword,
@@ -308,7 +316,7 @@ class _MobileViewState extends State<MobileView> {
     Map<String, dynamic> body = {
       "email": tetEmail.text,
       "password": tetPassword.text,
-      "role": "doctor",
+      "role": "patient",
     };
 
     provider

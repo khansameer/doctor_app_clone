@@ -9,14 +9,9 @@ import 'package:doctor_app/core/image/image_path.dart';
 import 'package:doctor_app/core/responsive.dart';
 import 'package:doctor_app/provider/dashboard_provider.dart';
 
-import 'package:doctor_app/screen/web_view/admin_dashboard_view/admin_dashboard_view.dart';
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/communication_screen.dart';
-import 'package:doctor_app/screen/web_view/admin_dashboard_view/feedback/admin_feedback_screen.dart';
+
 import 'package:doctor_app/screen/web_view/admin_dashboard_view/notification/admin_notification_screen.dart';
-import 'package:doctor_app/screen/web_view/screen/calender/admin_calender_screen.dart';
-import 'package:doctor_app/screen/web_view/screen/patient_new_screen.dart';
-import 'package:doctor_app/screen/web_view/screen/report/admin_web_report.dart';
-import 'package:doctor_app/screen/web_view/screen/setting/admin_setting_screen.dart';
 
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
@@ -45,8 +40,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
   }
 
   final List<Widget> _pages = [
-    const AdminDashboardView(),
-    Container(
+    const CommunicationScreen(),
+   /* Container(
       color: AppColors.colorBgNew,
       padding: const EdgeInsets.all(sixteen),
       child: const AdminCalenderScreen(),
@@ -88,7 +83,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
       child: const Center(
         child: ErrorPage(),
       ),
-    ),
+    ),*/
   ];
 
   @override
@@ -261,6 +256,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
             // ),
             PopupMenuButton(
               elevation: 0,
+                offset: const Offset(zero, 45),
                 constraints: const BoxConstraints.tightFor(width: 200,),
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -272,21 +268,42 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 ),
                 onSelected: (value) {
                   // your logic
-                  setState(() {
-                    /// selectedItem = value.toString();
-                  });
+                  if(value=="profile"){
+
+                  }
+
+                  else
+                    {
+                      commonLogoutDialog(
+                          width: isMobile ? size.width * zero9 : size.width * 0.2,
+                          contextAd: context,
+                          isDesktop: isDesktop,
+                          isMobile: isMobile);
+                    }
 
                   print(value);
-                  commonLogoutDialog(
-                      width: isMobile ? size.width * zero9 : size.width * 0.2,
-                      contextAd: context,
-                      isDesktop: isDesktop,
-                      isMobile: isMobile);
+
                 },
                 itemBuilder: (BuildContext bc) {
                   return [
                     PopupMenuItem(
-                      value: '/hello',
+                      value: 'profile',
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.person,
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          CommonTextWidget(text: "Profile"),
+                        ],
+                      ),
+                    ),
+
+                    PopupMenuItem(
+                      value: 'logout',
                       child: Row(
                         children: [
                           Icon(
@@ -389,7 +406,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
       ),
       items: [
         SideMenuItem(
-          title: 'Dashboard',
+          title: 'Chat',
           onTap: (index, _) {
             setState(() {
               _selectedPage = 0;
@@ -402,8 +419,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
           icon: const Icon(Icons.dashboard),
           tooltipContent: "This is a tooltip for Dashboard item",
         ),
-        SideMenuItem(
-          title: 'Appointment',
+       /* SideMenuItem(
+          title: 'VideoCall',
           onTap: (index, _) {
             setState(() {
               _selectedPage = 1;
@@ -414,8 +431,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
           },
           icon: const Icon(Icons.calendar_month_sharp),
           tooltipContent: "This is a tooltip for Dashboard item",
-        ),
-        commonMenuDivider(),
+        ),*/
+      /*  commonMenuDivider(),
         SideMenuItem(
           title: 'Patients',
           onTap: (index, _) {
@@ -483,7 +500,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
           },
           icon: const Icon(Icons.thumb_up_alt_outlined),
         ),
-        commonMenuDivider(),
+        commonMenuDivider(),*/
         SideMenuItem(
           onTap: (index, _) {
             isMobile ? voidHidMenu() : null;

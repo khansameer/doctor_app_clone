@@ -145,7 +145,7 @@ class _AdminPatientDetailsViewState extends State<AdminPatientDetailsView> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                commonRow(title: "Height", desc: '${data?.profile.height??'0'}ft'),
+                                commonRow(title: "Height", desc: data?.profile.height??'0'),
                               ],
                             ),
                           ),

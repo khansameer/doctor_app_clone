@@ -20,7 +20,7 @@ class CallDemo extends StatelessWidget {
               text: "Call",
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AgoraVideoCall()));
+                    MaterialPageRoute(builder: (context) => CallScreen()));
               },
             ),
           ),

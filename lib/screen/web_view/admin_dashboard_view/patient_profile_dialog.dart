@@ -69,7 +69,7 @@ class _PatientProfileDialogPatientState extends State<PatientProfileDialog> {
                                   width: 50,
                                   boxFit: BoxFit.cover,
                                   height: 50,
-                                  path: data?.profile?.profilePicture),
+                                  path: data?.profile.profilePicture),
                             ],
                           ),
                           const SizedBox(

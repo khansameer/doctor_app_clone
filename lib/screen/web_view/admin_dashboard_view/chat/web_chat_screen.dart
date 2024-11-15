@@ -11,13 +11,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../provider/chat_provider.dart';
+import '../../video_call/CallScreen.dart';
 
 class WebChatScreen extends StatefulWidget {
   const WebChatScreen(
-      {super.key, required this.communication, this.chatRoomId});
+      {super.key, required this.communication, this.chatRoomId,this.name,this.profilePic});
 
   final bool communication;
   final String? chatRoomId;
+  final String? name;
+  final String? profilePic;
 
   @override
   State<WebChatScreen> createState() => _WebChatScreenState();
@@ -25,6 +28,8 @@ class WebChatScreen extends StatefulWidget {
 
 class _WebChatScreenState extends State<WebChatScreen> {
   String? userId;
+  String? username;
+  String doctorID="672a8e078137e27f0cb18f84";
   @override
   void initState() {
     super.initState();
@@ -33,11 +38,13 @@ class _WebChatScreenState extends State<WebChatScreen> {
 
   Future<void> getData() async {
     userId = await getUserID();
-    print('===userId==$userId');
+    username = await getName();
+
   }
 
   @override
   Widget build(BuildContext context) {
+    print('===chatRoomId==${widget.chatRoomId}');
     var size = MediaQuery.sizeOf(context);
     var isDesktop = Responsive.isDesktop(context);
     var isMobile = Responsive.isMobile(context);
@@ -95,27 +102,13 @@ class _WebChatScreenState extends State<WebChatScreen> {
                     isMobile
                         ? const SizedBox.shrink()
                         : commonInkWell(
-                            child: commonProfileIcon(
+                            child: commonImageNetworkWidget(
                                 width: 40,
                                 height: 40,
-                                path: context
-                                        .read<AdminDashboardProvider>()
-                                        .chatUserInfo
-                                        ?.profile ??
-                                    context
-                                        .read<AdminDashboardProvider>()
-                                        .patients[0]
-                                        .profile)),
+                                path: widget.profilePic)),
                     Flexible(
                       child: CommonTextWidget(
-                        text: context
-                                .read<AdminDashboardProvider>()
-                                .chatUserInfo
-                                ?.name ??
-                            context
-                                .read<AdminDashboardProvider>()
-                                .patients[0]
-                                .name,
+                        text: widget.name,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         left: 10,
@@ -127,39 +120,33 @@ class _WebChatScreenState extends State<WebChatScreen> {
                     child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.only(
-                          left: 25.0, right: 25, top: 10, bottom: 10),
-                      margin: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          color: AppColors.colorBgNew,
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Center(
-                        child: isMobile
-                            ? const Icon(Icons.history_edu_rounded)
-                            : CommonTextWidget(
-                                text: "Case History",
-                                textColor: AppColors.colorTextNew,
-                                fontWeight: FontWeight.w600,
-                              ),
-                      ),
-                    ),
+
                     const SizedBox(
                       width: 10,
                     ),
                     Flexible(
-                      child: Container(
-                        alignment: Alignment.topLeft,
-                        width: 40,
-                        decoration: const BoxDecoration(
-                            color: AppColors.colorBgNew,
-                            shape: BoxShape.circle),
-                        height: 40,
-                        child: const Center(
-                          child: Icon(
-                            size: 20,
-                            Icons.call_sharp,
-                            color: Colors.grey,
+                      child: commonInkWell(
+                        onTap: (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder:
+                                      (context) =>
+                                      CallScreen()));
+                        },
+                        child: Container(
+                          alignment: Alignment.topLeft,
+                          width: 40,
+                          decoration: const BoxDecoration(
+                              color: AppColors.colorBgNew,
+                              shape: BoxShape.circle),
+                          height: 40,
+                          child: const Center(
+                            child: Icon(
+                              size: 20,
+                              Icons.videocam_outlined,
+                              color: Colors.grey,
+                            ),
                           ),
                         ),
                       ),
@@ -182,7 +169,7 @@ class _WebChatScreenState extends State<WebChatScreen> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
                   }
-                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  if (!snapshot.hasData || snapshot.data?.length==null) {
                     return Center(child: Text('No messages yet.'));
                   }
                   final messages = snapshot.data!;
@@ -202,34 +189,7 @@ class _WebChatScreenState extends State<WebChatScreen> {
                           msg: message['message'] ?? '',
                         );
                       }
-                      /*  return Align(
-                        alignment: isMe
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft,
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 10),
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: isMe ? Colors.blue : Colors.grey[300],
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            message['message'] ?? '',
-                            style: TextStyle(
-                                color: isMe ? Colors.white : Colors.black),
-                          ),
-                        ),
-                      );*/
-                      /* if (chatModel.chatMessages[index].sentByUser) {
-                        return SenderMessageView(
-                          chatMessage: chatModel.chatMessages[index],
-                        );
-                      } else {
-                        return ReceiverMessageView(
-                          chatMessage: chatModel.chatMessages[index],
-                        );
-                      }*/
+
                     },
                   );
                 }),
@@ -243,80 +203,43 @@ class _WebChatScreenState extends State<WebChatScreen> {
               children: [
                 Expanded(
                   child: CommonTextField(
+                    inputTypes: TextInputType.text,
+                    onFieldSubmitted: (value) {
+                      final message = messageController.text.trim();
+                      chatProvider.sendMessage(
+                          chatRoomId: widget.chatRoomId ?? '',
+                          senderId: userId,
+                          message: message);
+                      messageController.clear();
+                    },
+                    textInputAction: TextInputAction.done,
                     suffixIcon: IconButton(
+                      focusNode: FocusNode(
+                        canRequestFocus: false,
+
+                      ),
                       icon: Icon(Icons.send),
+
                       onPressed: () {
                         final message = messageController.text.trim();
                         chatProvider.sendMessage(
                             chatRoomId: widget.chatRoomId ?? '',
                             senderId: userId,
+                            username: username,
                             message: message);
                         messageController.clear();
                       },
                     ),
                     colorFill: Colors.white,
                     controller: messageController,
-                    /* decoration: InputDecoration(
-                      hintText: 'Type a message...',
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey.withOpacity(0.2)
-                        )
-                      ),
-                    ),*/
+
                   ),
                 ),
-                /*    IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () {
-                    final message = messageController.text.trim();
-                    chatProvider.sendMessage(chatRoomId, message, userId);
-                    messageController.clear();
-                  },
-                ),*/
+
               ],
             ),
           ),
-          /*Container(
-            margin: EdgeInsets.only(
-                left: size.width * 0.1, right: size.width * 0.1),
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: CommonTextField(
-                    colorFill: Colors.white,
-                    borderColor: Colors.grey.withOpacity(0.40),
-                    iconWidget: IconButton(
-                        onPressed: () {
-                          final message = messageController.text.trim();
-                          chatProvider.sendMessage(
-                              chatRoomId ?? '', message, userId ?? '');
-                          messageController.clear();
-                        },
-                        icon: Icon(
-                          Icons.attachment_outlined,
-                          color: Colors.grey,
-                        )),
-                    suffixIcon: Container(
-                      width: 50,
-                      height: 50,
-                      child: Center(
-                        child: setAssetImage(
-                            image: icSend,
-                            width: 20,
-                            height: 20,
-                            color: Colors.grey),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),*/
+
         ],
       ),
     );
