@@ -132,7 +132,7 @@ class _WebChatScreenState extends State<WebChatScreen> {
                               MaterialPageRoute(
                                   builder:
                                       (context) =>
-                                      CallScreen()));
+                                      CallScreen(meetingId: '',)));
                         },
                         child: Container(
                           alignment: Alignment.topLeft,

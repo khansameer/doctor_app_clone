@@ -20,7 +20,7 @@ class CallDemo extends StatelessWidget {
               text: "Call",
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CallScreen()));
+                    MaterialPageRoute(builder: (context) => CallScreen(meetingId: '',)));
               },
             ),
           ),

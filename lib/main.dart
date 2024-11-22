@@ -21,6 +21,7 @@ import 'package:doctor_app/screen/web_view/admin_dashboard_view/notification/pro
 import 'package:doctor_app/screen/web_view/video_call/CallScreen.dart';
 
 import 'package:doctor_app/shared_preferences/preference_helper.dart';
+import 'package:doctor_app/video_skd/JoinScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 
@@ -89,9 +90,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         navigatorKey: navigatorKey, // Set the navigatorKey
         title: appName,
-        initialRoute: RouteName.splashScreen,
-        onGenerateRoute: RouteGenerator.generateRoute,
-        //  home: CallDemo(),
+/*        initialRoute: RouteName.splashScreen,
+        onGenerateRoute: RouteGenerator.generateRoute,*/
+          home: CallScreen(meetingId: ''),
         debugShowCheckedModeBanner: false,
         builder: (context, child) {
           return MediaQuery(

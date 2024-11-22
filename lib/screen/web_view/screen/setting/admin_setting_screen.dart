@@ -99,7 +99,7 @@ class _AdminSettingScreenState extends State<AdminSettingScreen> {
                     const MyAddressScreen(),
                     const NotificationSettingScreen(),
                     const ErrorPage(),
-                    Container(
+                        Container(
                         color: AppColors.colorBgNew,
                         child: const SettingBillingView()),
                     const SettingPrescriptionScreen(),
